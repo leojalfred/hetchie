@@ -53,7 +53,7 @@ nav {
   }
 }
 
-.main {
+.home {
   color: #fff;
   margin: 0 auto;
   max-width: 30rem;
@@ -90,7 +90,7 @@ nav {
     background-position: center;
   }
 
-  .main {
+  .home {
     margin: 0;
     text-align: left;
 
@@ -101,7 +101,7 @@ nav {
 }
 
 @include bp($xl) {
-  .main {
+  .home {
     max-width: 40rem;
   }
 }

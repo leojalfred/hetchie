@@ -20,9 +20,9 @@ function App() {
           Login
         </ButtonLink>
       </nav>
-      <main className="main container">
-        <h1 className="main__heading">hetchie</h1>
-        <p className="main__text">
+      <main className="home container">
+        <h1 className="home__heading">hetchie</h1>
+        <p className="home__text">
           Proident ex dolore aliqua enim magna reprehenderit elit proident do.
           Fugiat adipisicing aliqua consectetur voluptate Lorem minim anim sit
           reprehenderit aute enim adipisicing proident aute. Id fugiat magna
@@ -32,7 +32,7 @@ function App() {
           Velit culpa deserunt do velit duis mollit officia reprehenderit quis
           quis do commodo.
         </p>
-        <BigButtonLink className="main__button" to="/register">
+        <BigButtonLink className="home__button" to="/register">
           Get Started
         </BigButtonLink>
       </main>
