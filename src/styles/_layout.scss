@@ -1,0 +1,30 @@
+@import 'mixins';
+@import 'variables';
+
+.container {
+  padding: 1rem;
+}
+
+@include bp($s) {
+  .container {
+    padding: 2rem;
+  }
+}
+
+@include bp($m) {
+  .container {
+    padding: 3rem;
+  }
+}
+
+@include bp($l) {
+  .container {
+    padding: 4rem;
+  }
+}
+
+@include bp($xl) {
+  .container {
+    padding: 5rem;
+  }
+}

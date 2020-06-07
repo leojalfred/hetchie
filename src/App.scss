@@ -1,23 +1,25 @@
-@import './styles/mixins';
-@import './styles/variables';
+@import './styles/layout';
 
 body {
-  background: url(background.jpg) center center/cover no-repeat fixed;
+  background-attachment: fixed;
+  background-image: url(background.jpg);
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 nav {
   align-items: center;
   display: flex;
-  padding: 1rem;
 
   a {
-    color: white;
+    color: #fff;
     font-size: 0.8rem;
     text-decoration: none;
     transition: color $time;
 
     &:hover {
-      color: $yellow;
+      color: $orange;
     }
 
     &.brand {
@@ -40,36 +42,66 @@ nav {
     }
 
     &.login {
-      border: 1px solid #fff;
-      border-radius: 2rem;
-      box-shadow: $shadow-m;
+      color: #fff;
       margin-left: 1rem;
-      padding: 0.5rem 1rem;
-      transition: border-color $time, box-shadow $time, color $time,
-        transform $time;
 
       &:hover {
-        border-color: $yellow;
-        box-shadow: $shadow-l;
-        transform: translateY(-0.05rem);
-      }
-
-      &:active {
-        box-shadow: $shadow;
-        transform: translateY(0.05rem);
+        color: $orange;
+        background-color: #fff;
       }
     }
   }
+}
 
-  @include bp($s) {
-    padding: 2rem;
+.main {
+  color: #fff;
+  margin: 0 auto;
+  max-width: 30rem;
+  text-align: center;
 
-    a {
-      font-size: 1rem;
+  &__heading {
+    font-size: 4rem;
+    margin: 0;
+  }
 
-      &.brand p {
-        font-size: 2rem;
-      }
+  &__text {
+    font-size: 1rem;
+    margin-bottom: 1.8rem;
+  }
+
+  &__button:hover {
+    color: $orange;
+    background-color: #fff;
+  }
+}
+
+@include bp($s) {
+  nav a {
+    font-size: 1rem;
+
+    &.brand p {
+      font-size: 2rem;
     }
+  }
+}
+
+@include bp($m) {
+  body {
+    background-position: center;
+  }
+
+  .main {
+    margin: 0;
+    text-align: left;
+
+    &__text {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+@include bp($xl) {
+  .main {
+    max-width: 40rem;
   }
 }

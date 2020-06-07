@@ -1,0 +1,22 @@
+@import '../styles/variables';
+
+.button {
+  border: thin solid #fff;
+  border-radius: 2rem;
+  box-shadow: $shadow-m;
+  color: inherit;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  transition: background-color $time, box-shadow $time, color $time,
+    transform $time;
+
+  &:hover {
+    box-shadow: $shadow-l;
+  }
+
+  &:active {
+    box-shadow: $shadow;
+    transform: translateY(0.05rem);
+  }
+}
