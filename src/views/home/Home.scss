@@ -1,0 +1,52 @@
+@import '../../styles/layout';
+
+body {
+  background-attachment: fixed;
+  background-image: url(../../images/background.jpg);
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.home {
+  color: #fff;
+  margin: 0 auto;
+  max-width: 30rem;
+  text-align: center;
+
+  &__heading {
+    font-size: 4rem;
+    margin: 0;
+  }
+
+  &__text {
+    font-size: 1rem;
+    margin-bottom: 1.8rem;
+  }
+
+  &__button:hover {
+    color: $orange;
+    background-color: #fff;
+  }
+}
+
+@include bp($m) {
+  body {
+    background-position: center;
+  }
+
+  .home {
+    margin: 0;
+    text-align: left;
+
+    &__text {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+@include bp($xl) {
+  .home {
+    max-width: 40rem;
+  }
+}

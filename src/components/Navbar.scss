@@ -1,0 +1,58 @@
+@import '../styles/layout';
+
+.navbar {
+  align-items: center;
+  display: flex;
+
+  &__link {
+    color: #fff;
+    font-size: 0.8rem;
+    text-decoration: none;
+    transition: color $time;
+
+    &:hover {
+      color: $orange;
+    }
+
+    &--brand {
+      display: flex;
+      align-items: center;
+    }
+
+    &--about {
+      margin-left: auto;
+    }
+
+    &--login {
+      color: #fff;
+      margin-left: 1rem;
+
+      &:hover {
+        color: $orange;
+        background-color: #fff;
+      }
+    }
+  }
+
+  &__brand-logo {
+    width: 3rem;
+  }
+
+  &__brand-text {
+    font-family: 'BioRhyme', serif;
+    font-size: 1.4rem;
+    margin: 0 0 0 1rem;
+  }
+}
+
+@include bp($s) {
+  .navbar {
+    &__link {
+      font-size: 1rem;
+    }
+
+    &__brand-text {
+      font-size: 2rem;
+    }
+  }
+}
