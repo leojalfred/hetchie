@@ -1,17 +1,3 @@
 @import-normalize;
-
-body {
-  margin: 0;
-  font-family: 'Cabin', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: 'BioRhyme', serif;
-}
+@import './styles/layout';
+@import './styles/typography';

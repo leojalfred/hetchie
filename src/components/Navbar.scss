@@ -1,8 +1,10 @@
-@import '../styles/layout';
+@import '../styles/mixins';
+@import '../styles/variables';
 
 .navbar {
   align-items: center;
   display: flex;
+  padding-top: 1rem;
 
   &__link {
     color: #fff;
@@ -47,6 +49,8 @@
 
 @include bp($s) {
   .navbar {
+    padding-top: 2rem;
+
     &__link {
       font-size: 1rem;
     }

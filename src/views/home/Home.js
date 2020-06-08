@@ -5,9 +5,9 @@ import './Home.scss';
 
 function Home() {
   return (
-    <>
+    <div className="home">
       <Navbar />
-      <main className="home container">
+      <main className="home__main container">
         <h1 className="home__heading">hetchie</h1>
         <p className="home__text">
           Proident ex dolore aliqua enim magna reprehenderit elit proident do.
@@ -23,7 +23,7 @@ function Home() {
           Get Started
         </BigButtonLink>
       </main>
-    </>
+    </div>
   );
 }
 

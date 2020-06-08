@@ -1,18 +1,20 @@
-@import '../../styles/layout';
+@import '../../styles/mixins';
+@import '../../styles/variables';
 
-body {
+.home {
   background-attachment: fixed;
   background-image: url(../../images/background.jpg);
   background-position: left;
   background-repeat: no-repeat;
   background-size: cover;
-}
+  height: 100%;
 
-.home {
-  color: #fff;
-  margin: 0 auto;
-  max-width: 30rem;
-  text-align: center;
+  &__main {
+    color: #fff;
+    margin: 2rem auto 0 auto;
+    max-width: 30rem;
+    text-align: center;
+  }
 
   &__heading {
     font-size: 4rem;
@@ -30,14 +32,20 @@ body {
   }
 }
 
-@include bp($m) {
-  body {
-    background-position: center;
+@include bp(null, $m) {
+  .home__main {
+    margin-top: 4rem;
   }
+}
 
+@include bp($m) {
   .home {
-    margin: 0;
-    text-align: left;
+    background-position: center;
+
+    &__main {
+      margin: 2rem 0 0 0;
+      text-align: left;
+    }
 
     &__text {
       font-size: 1.2rem;
@@ -45,8 +53,15 @@ body {
   }
 }
 
+@include bp($l) {
+  .home__main {
+    margin-top: 4rem;
+  }
+}
+
 @include bp($xl) {
-  .home {
+  .home__main {
+    margin-top: 8rem;
     max-width: 40rem;
   }
 }

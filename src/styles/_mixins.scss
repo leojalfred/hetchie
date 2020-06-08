@@ -1,10 +1,14 @@
-@mixin bp($bp, $height: false) {
-  @if not $height {
-    @media (min-width: $bp) {
+@mixin bp($width, $height: null) {
+  @if ($width and $height) {
+    @media (min-height: $height) and (min-width: $width) {
+      @content;
+    }
+  } @else if $width {
+    @media (min-width: $width) {
       @content;
     }
   } @else {
-    @media (min-height: $bp) {
+    @media (min-height: $height) {
       @content;
     }
   }
