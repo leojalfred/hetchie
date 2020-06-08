@@ -13,12 +13,13 @@
   &__container {
     color: #fff;
     padding-bottom: 2rem;
+    padding-top: 2rem;
     text-align: center;
   }
 
   &__heading {
     font-size: 2rem;
-    margin: 2rem 0 0 0;
+    margin: 0;
   }
 
   &__main {
@@ -65,12 +66,12 @@
   .about {
     &__container {
       padding-bottom: 3rem;
+      padding-top: 3rem;
       text-align: left;
     }
 
     &__heading {
       font-size: 3rem;
-      margin-top: 3rem;
     }
 
     &__icon,
@@ -90,6 +91,11 @@
 
 @include bp($m) {
   .about {
+    &__container {
+      padding-bottom: 4rem;
+      padding-top: 4rem;
+    }
+
     &__main {
       display: flex;
       margin-top: 4rem;
@@ -118,6 +124,11 @@
 
 @include bp($l) {
   .about {
+    &__container {
+      padding-bottom: 8rem;
+      padding-top: 8rem;
+    }
+
     &__main {
       margin-top: 8rem;
     }
