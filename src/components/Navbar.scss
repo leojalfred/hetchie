@@ -28,6 +28,7 @@
     &--login {
       color: #fff;
       margin-left: 1rem;
+      transition: $button-transition;
 
       &:hover {
         color: $orange;
