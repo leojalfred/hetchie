@@ -1,0 +1,187 @@
+@import '../styles/mixins';
+@import '../styles/variables';
+
+.modal {
+  height: 100%;
+  outline: 0;
+
+  &__overlay {
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    transition: opacity $time;
+
+    &.ReactModal__Overlay--after-open {
+      opacity: 1;
+    }
+
+    &.ReactModal__Overlay--before-close {
+      opacity: 0;
+    }
+  }
+
+  &__image {
+    display: none;
+  }
+
+  &__main {
+    background-color: #fff;
+    height: 100%;
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  &__content {
+    color: $blue;
+    flex-grow: 1;
+    margin: 2rem;
+  }
+
+  &__topline {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__text {
+    max-width: 12rem;
+  }
+
+  &__close,
+  &__input-icon {
+    font-size: 1.6rem;
+  }
+
+  &__close {
+    margin-top: 0.1rem;
+  }
+
+  &__heading {
+    color: $yellow-orange;
+    margin: 0;
+  }
+
+  &__description {
+    font-weight: bold;
+    margin-bottom: 0;
+  }
+
+  &__form,
+  &__submit {
+    margin-top: 5rem;
+  }
+
+  &__input-group {
+    display: flex;
+    align-items: center;
+
+    &:first-of-type {
+      margin-bottom: 2rem;
+    }
+  }
+
+  &__input-icon {
+    flex: 1;
+    margin-left: -0.7rem;
+  }
+
+  &__input {
+    border: 0;
+    border-bottom: 2px solid $yellow-orange;
+    color: $blue;
+    flex: 5;
+    padding: 0.5rem;
+  }
+
+  &__submit {
+    border-color: $yellow-orange;
+    color: $yellow-orange;
+    margin-left: auto;
+  }
+
+  &__button {
+    background-color: transparent;
+    border: 0;
+    color: $blue;
+    font-weight: bold;
+    margin: 5rem auto 1rem auto;
+    transition: color 0.15s;
+
+    &:hover {
+      color: $yellow-orange;
+    }
+  }
+
+  &__button-icon {
+    margin-left: 0.2rem;
+  }
+
+  @include bp($s) {
+    border-radius: 7rem;
+    display: flex;
+    height: auto;
+    min-width: 90%;
+    overflow: hidden;
+
+    &__overlay {
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+    }
+
+    &__image {
+      background-attachment: fixed;
+      background-image: url(../images/bg-alt.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
+      display: block;
+      flex: 1;
+    }
+
+    &__icon,
+    &__wrapper {
+      margin: 3rem;
+    }
+
+    &__icon {
+      color: #fff;
+      font-size: 2rem;
+    }
+
+    &__wrapper {
+      height: auto;
+    }
+
+    &__main {
+      flex: 2;
+      height: auto;
+    }
+
+    &__content {
+      margin: 0;
+    }
+
+    &__text {
+      max-width: 100%;
+    }
+
+    &__close {
+      display: none;
+    }
+
+    &__button {
+      margin: 5rem auto 0 auto;
+    }
+  }
+
+  @include bp($xl) {
+    min-width: 70%;
+  }
+}
