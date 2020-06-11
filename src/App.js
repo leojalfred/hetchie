@@ -59,6 +59,7 @@ function App() {
         isOpen={modalLoginIsOpen}
         onRequestClose={closeLoginModal}
         shouldCloseOnOverlayClick={true}
+        closeTimeoutMS={200}
       >
         <div className="modal__image">
           <FontAwesomeIcon className="modal__icon" icon={faSignInAlt} />
