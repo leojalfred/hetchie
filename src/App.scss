@@ -110,7 +110,12 @@
     border: 0;
     color: $blue;
     font-weight: bold;
-    margin: 5rem 1rem 1rem 1rem;
+    margin: 5rem auto 1rem auto;
+    transition: color 0.15s;
+
+    &:hover {
+      color: $yellow-orange;
+    }
   }
 
   @include bp($s) {
@@ -168,7 +173,7 @@
     }
 
     &__button {
-      margin: 5rem 0 0 0;
+      margin: 5rem auto 0 auto;
     }
   }
 
