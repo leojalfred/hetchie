@@ -12,7 +12,8 @@
     text-decoration: none;
     transition: color $time;
 
-    &:hover {
+    &:hover,
+    &--active {
       color: $orange;
     }
 
