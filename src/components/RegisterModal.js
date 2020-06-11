@@ -4,43 +4,43 @@ import { faEnvelope, faTimesCircle } from '@fortawesome/free-regular-svg-icons';
 import {
   faLock,
   faLongArrowAltRight,
-  faSignInAlt,
+  faUserPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import { Formik, Form, Field } from 'formik';
 import Modal from './Modal';
 import Button from './BigButton';
 
-export default function LoginModal({
+export default function RegisterModal({
   isOpen,
-  closeLoginModal,
-  openRegisterModal,
+  closeRegisterModal,
+  openLoginModal,
 }) {
   function switchModals() {
-    closeLoginModal();
+    closeRegisterModal();
     setTimeout(() => {
-      openRegisterModal();
+      openLoginModal();
     }, 200);
   }
 
   return (
     <Modal
-      contentLabel="Login Modal"
+      contentLabel="Register Modal"
       isOpen={isOpen}
-      onRequestClose={closeLoginModal}
-      icon={faSignInAlt}
+      onRequestClose={closeRegisterModal}
+      icon={faUserPlus}
     >
       <div className="modal__content">
         <div className="modal__topline">
           <div className="modal__text">
-            <h2 className="modal__heading">Welcome back</h2>
+            <h2 className="modal__heading">Get started</h2>
             <p className="modal__description">
-              Log in to your account to optimize your bids
+              Create an account to start optimizing your bids
             </p>
           </div>
           <FontAwesomeIcon
             className="modal__close"
             icon={faTimesCircle}
-            onClick={closeLoginModal}
+            onClick={closeRegisterModal}
           />
         </div>
 
@@ -73,7 +73,7 @@ export default function LoginModal({
                 type="submit"
                 disabled={isSubmitting}
               >
-                Log in
+                Register
               </Button>
             </Form>
           )}
@@ -81,7 +81,7 @@ export default function LoginModal({
       </div>
 
       <button className="modal__button" type="button" onClick={switchModals}>
-        Create your account
+        Log in
         <FontAwesomeIcon
           className="modal__button-icon"
           icon={faLongArrowAltRight}

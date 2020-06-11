@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './views/home/Home';
 import About from './views/about/About';
 import LoginModal from './components/LoginModal';
+import RegisterModal from './components/RegisterModal';
 import './App.scss';
 
 export default function App() {
@@ -29,7 +30,11 @@ export default function App() {
           exact
           path="/"
           render={(props) => (
-            <Home {...props} openLoginModal={openLoginModal} />
+            <Home
+              {...props}
+              openLoginModal={openLoginModal}
+              openRegisterModal={openRegisterModal}
+            />
           )}
         />
         <Route
@@ -40,7 +45,16 @@ export default function App() {
           )}
         />
       </Switch>
-      <LoginModal isOpen={modalLoginIsOpen} onRequestClose={closeLoginModal} />
+      <LoginModal
+        isOpen={modalLoginIsOpen}
+        closeLoginModal={closeLoginModal}
+        openRegisterModal={openRegisterModal}
+      />
+      <RegisterModal
+        isOpen={modalRegisterIsOpen}
+        closeRegisterModal={closeRegisterModal}
+        openLoginModal={openLoginModal}
+      />
     </Router>
   );
 }

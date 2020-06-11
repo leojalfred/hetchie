@@ -1,9 +1,9 @@
 import React from 'react';
 import Navbar from '../../components/Navbar';
-import BigButtonLink from '../../components/BigButton';
+import BigButton from '../../components/BigButton';
 import './Home.scss';
 
-function Home({ openLoginModal }) {
+function Home({ openLoginModal, openRegisterModal }) {
   return (
     <div className="home">
       <Navbar openLoginModal={openLoginModal} />
@@ -19,9 +19,9 @@ function Home({ openLoginModal }) {
           Velit culpa deserunt do velit duis mollit officia reprehenderit quis
           quis do commodo.
         </p>
-        <BigButtonLink className="home__button" to="/register">
+        <BigButton className="home__button" onClick={openRegisterModal}>
           Get Started
-        </BigButtonLink>
+        </BigButton>
       </main>
     </div>
   );
