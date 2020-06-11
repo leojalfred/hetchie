@@ -14,11 +14,11 @@
     top: 0;
     transition: opacity $time;
 
-    &.ReactModal__Overlay--after-open {
+    &--after-open {
       opacity: 1;
     }
 
-    &.ReactModal__Overlay--before-close {
+    &--before-close {
       opacity: 0;
     }
   }

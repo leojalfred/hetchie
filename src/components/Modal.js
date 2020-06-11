@@ -15,7 +15,13 @@ export default function Modal({
   return (
     <ReactModal
       className="modal"
-      overlayClassName="modal__overlay"
+      overlayClassName={{
+        base: 'modal__overlay',
+        afterOpen: 'modal__overlay--after-open',
+        beforeClose: 'modal__overlay--before-close',
+      }}
+      portalClassName=""
+      bodyOpenClassName={null}
       contentLabel={contentLabel}
       isOpen={isOpen}
       onRequestClose={onRequestClose}
