@@ -168,4 +168,8 @@
       margin: 5rem 0 0 0;
     }
   }
+
+  @include bp($xl) {
+    min-width: 70%;
+  }
 }
