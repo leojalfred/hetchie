@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../images/logo.png';
-import ButtonLink from './ButtonLink';
+import Button from './Button';
 import './Navbar.scss';
 
-function Navbar() {
+export default function Navbar() {
   return (
     <nav className="navbar container">
       <Link className="navbar__link navbar__link--brand" to="/">
@@ -14,11 +14,13 @@ function Navbar() {
       <Link className="navbar__link navbar__link--about" to="/about">
         About
       </Link>
-      <ButtonLink className="navbar__link navbar__link--login" to="/login">
+      <Button
+        className="navbar__link navbar__link--login"
+        link={true}
+        to="/login"
+      >
         Login
-      </ButtonLink>
+      </Button>
     </nav>
   );
 }
-
-export default Navbar;

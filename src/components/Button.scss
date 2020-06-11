@@ -1,14 +1,17 @@
 @import '../styles/variables';
 
 .button {
+  background-color: transparent;
   border: thin solid #fff;
   border-radius: 2rem;
   box-shadow: $shadow-m;
   color: inherit;
-  display: inline-block;
+  cursor: pointer;
+  display: block;
   padding: 0.5rem 1rem;
   text-decoration: none;
   transition: $button-transition;
+  width: fit-content;
 
   &:hover {
     box-shadow: $shadow-l;

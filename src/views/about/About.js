@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGavel } from '@fortawesome/free-solid-svg-icons';
 import { faEnvelopeOpen } from '@fortawesome/free-regular-svg-icons';
 import Navbar from '../../components/Navbar';
-import BigButtonLink from '../../components/BigButtonLink';
+import BigButtonLink from '../../components/BigButton';
 import './About.scss';
 
 function About() {

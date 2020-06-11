@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from '../../components/Navbar';
-import BigButtonLink from '../../components/BigButtonLink';
+import BigButtonLink from '../../components/BigButton';
 import './Home.scss';
 
 function Home() {
