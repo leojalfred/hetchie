@@ -118,6 +118,10 @@
     }
   }
 
+  &__button-icon {
+    margin-left: 0.2rem;
+  }
+
   @include bp($s) {
     border-radius: 7rem;
     display: flex;

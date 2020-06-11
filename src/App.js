@@ -80,7 +80,7 @@ function App() {
                 />
               </div>
 
-              <Formik>
+              <Formik initialValues={{ email: '', password: '' }}>
                 {({ isSubmitting }) => (
                   <Form className="modal__form">
                     <div className="modal__input-group">
@@ -120,7 +120,11 @@ function App() {
             </div>
 
             <button className="modal__button" type="button">
-              Create your account <FontAwesomeIcon icon={faLongArrowAltRight} />
+              Create your account{' '}
+              <FontAwesomeIcon
+                className="modal__button-icon"
+                icon={faLongArrowAltRight}
+              />
             </button>
           </div>
         </div>
