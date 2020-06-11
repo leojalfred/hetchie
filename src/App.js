@@ -46,7 +46,6 @@ function App() {
         <Route
           exact
           path="/about"
-          component={About}
           render={(props) => (
             <About {...props} openLoginModal={openLoginModal} />
           )}

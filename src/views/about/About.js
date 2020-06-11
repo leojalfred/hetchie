@@ -6,7 +6,7 @@ import Navbar from '../../components/Navbar';
 import BigButtonLink from '../../components/BigButton';
 import './About.scss';
 
-function About({ openLoginModal, openRegisterModal }) {
+function About({ openLoginModal }) {
   return (
     <>
       <div className="about__jumbotron">
