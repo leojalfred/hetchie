@@ -76,6 +76,7 @@ function App() {
                 <FontAwesomeIcon
                   className="modal__close"
                   icon={faTimesCircle}
+                  onClick={closeLoginModal}
                 />
               </div>
 
