@@ -9,6 +9,7 @@ import {
 import { Formik, Form, Field } from 'formik';
 import Modal from './Modal';
 import Button from './BigButton';
+import './LoginModal.scss';
 
 export default function LoginModal({
   isOpen,

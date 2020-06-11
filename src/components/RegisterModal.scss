@@ -1,0 +1,40 @@
+@import '../styles/mixins';
+@import '../styles/variables';
+
+.modal {
+  &__input-line {
+    margin-bottom: 2rem;
+  }
+
+  &__input-group--register {
+    &:not(:last-of-type) {
+      margin-bottom: 1rem;
+    }
+
+    &.modal__email {
+      margin-bottom: 2rem;
+    }
+  }
+
+  @include bp($m) {
+    &__input-line {
+      display: flex;
+
+      &:not(:last-of-type) {
+        margin-bottom: 2rem;
+      }
+    }
+
+    &__input-group--register {
+      flex: 1;
+
+      &:not(.modal__email):not(:last-of-type) {
+        margin: 0 2rem 0 0;
+      }
+    }
+
+    &__email {
+      margin-bottom: 2rem;
+    }
+  }
+}
