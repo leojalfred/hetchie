@@ -3,10 +3,10 @@ import Navbar from '../../components/Navbar';
 import BigButtonLink from '../../components/BigButton';
 import './Home.scss';
 
-function Home() {
+function Home({ openLoginModal }) {
   return (
     <div className="home">
-      <Navbar />
+      <Navbar openLoginModal={openLoginModal} />
       <main className="home__main container">
         <h1 className="home__heading">hetchie</h1>
         <p className="home__text">

@@ -4,7 +4,7 @@ import logo from '../images/logo.png';
 import Button from './Button';
 import './Navbar.scss';
 
-export default function Navbar() {
+export default function Navbar({ openLoginModal }) {
   return (
     <nav className="navbar container">
       <Link className="navbar__link navbar__link--brand" to="/">
@@ -16,8 +16,7 @@ export default function Navbar() {
       </Link>
       <Button
         className="navbar__link navbar__link--login"
-        link={true}
-        to="/login"
+        onClick={openLoginModal}
       >
         Login
       </Button>

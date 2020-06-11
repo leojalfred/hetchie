@@ -17,13 +17,49 @@ import './App.scss';
 function App() {
   Modal.setAppElement('#root');
 
+  const [modalLoginIsOpen, setLoginIsOpen] = React.useState(false);
+  function openLoginModal() {
+    return setLoginIsOpen(true);
+  }
+  function closeLoginModal() {
+    return setLoginIsOpen(false);
+  }
+
+  const [modalRegisterIsOpen, setRegisterIsOpen] = React.useState(false);
+  function openRegisterModal() {
+    return setRegisterIsOpen(true);
+  }
+  function closeRegisterModal() {
+    return setRegisterIsOpen(false);
+  }
+
   return (
     <Router>
       <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/about" exact component={About} />
+        <Route
+          exact
+          path="/"
+          render={(props) => (
+            <Home {...props} openLoginModal={openLoginModal} />
+          )}
+        />
+        <Route
+          exact
+          path="/about"
+          component={About}
+          render={(props) => (
+            <About {...props} openLoginModal={openLoginModal} />
+          )}
+        />
       </Switch>
-      <Modal className="modal" overlayClassName="modal__overlay" isOpen={false}>
+      <Modal
+        className="modal"
+        overlayClassName="modal__overlay"
+        contentLabel="Login Modal"
+        isOpen={modalLoginIsOpen}
+        onRequestClose={closeLoginModal}
+        shouldCloseOnOverlayClick={true}
+      >
         <div className="modal__image">
           <FontAwesomeIcon className="modal__icon" icon={faSignInAlt} />
         </div>

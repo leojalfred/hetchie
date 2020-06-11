@@ -6,11 +6,11 @@ import Navbar from '../../components/Navbar';
 import BigButtonLink from '../../components/BigButton';
 import './About.scss';
 
-function About() {
+function About({ openLoginModal, openRegisterModal }) {
   return (
     <>
       <div className="about__jumbotron">
-        <Navbar />
+        <Navbar openLoginModal={openLoginModal} />
         <div className="about__container container">
           <h1 className="about__heading">About hetchie</h1>
         </div>
