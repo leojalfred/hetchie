@@ -104,6 +104,16 @@
     border-color: $yellow-orange;
     color: $yellow-orange;
     margin-left: auto;
+
+    &:hover {
+      background-color: $yellow-orange;
+      color: #fff;
+    }
+
+    &:disabled {
+      background-color: transparent;
+      color: $yellow-orange;
+    }
   }
 
   &__button {

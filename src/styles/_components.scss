@@ -6,4 +6,8 @@ input {
 button {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+
+  &:disabled {
+    cursor: default;
+  }
 }
