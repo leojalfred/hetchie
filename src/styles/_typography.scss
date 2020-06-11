@@ -2,9 +2,14 @@
 @import './variables';
 
 body {
-  font-family: 'Cabin', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body,
+button,
+input {
+  font-family: 'Cabin', sans-serif;
 }
 
 h1,
@@ -36,13 +41,4 @@ h2 {
   h2 {
     font-size: 2.4rem;
   }
-}
-
-button,
-input {
-  font-family: 'Cabin', sans-serif;
-}
-
-button {
-  -webkit-tap-highlight-color: transparent;
 }
