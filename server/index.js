@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import passport from 'passport';
 import keys from './config/keys';
-import users from './routes/api/users';
+import users from './routes/users';
 import passportConfig from './config/passport';
 
 const app = express();
@@ -28,7 +28,7 @@ try {
 app.use(passport.initialize());
 passportConfig(passport);
 
-app.use('/api/users', users);
+app.use('/users', users);
 
 const port = 3001;
 app.listen(port, () => console.log(`Server up and running on port ${port}!`));
