@@ -1,7 +1,10 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
-import { mongoURI as db } from './config/keys';
+import passport from 'passport';
+import keys from './config/keys';
+import users from './routes/api/users';
+import passportConfig from './config/passport';
 
 const app = express();
 app.use(
@@ -11,9 +14,21 @@ app.use(
 );
 app.use(bodyParser.json());
 
-mongoose
-  .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB successfully connected'))
-  .catch((err) => console.log(err));
+try {
+  (async () => {
+    await mongoose.connect(keys.db, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+  })();
+} catch (error) {
+  console.log(error);
+}
+
+app.use(passport.initialize());
+passportConfig(passport);
+
+app.use('/api/users', users);
+
 const port = 3001;
 app.listen(port, () => console.log(`Server up and running on port ${port}!`));

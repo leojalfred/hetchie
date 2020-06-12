@@ -7,5 +7,10 @@
     }
   },
   "plugins": ["prettier"],
-  "rules": {}
+  "rules": {
+    "consistent-return": "off",
+    "no-param-reassign": "off",
+    "no-shadow": "off",
+    "no-unused-vars": "warn"
+  }
 }
