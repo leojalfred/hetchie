@@ -9,6 +9,7 @@
   "plugins": ["prettier"],
   "rules": {
     "consistent-return": "off",
+    "no-console": "off",
     "no-param-reassign": "off",
     "no-shadow": "off",
     "no-unused-vars": "warn"

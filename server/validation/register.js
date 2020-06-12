@@ -1,7 +1,7 @@
 import Validator from 'validator';
 import isEmpty from 'is-empty';
 
-export default function validateRegisterInput({
+export default function validateRegister({
   first,
   last,
   email,

@@ -1,7 +1,7 @@
 import Validator from 'validator';
 import isEmpty from 'is-empty';
 
-export default function validateLoginInput({ email, password }) {
+export default function validateLogin({ email, password }) {
   const errors = {};
 
   email = !isEmpty(email) ? email : '';

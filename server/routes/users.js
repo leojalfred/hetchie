@@ -2,14 +2,13 @@ import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import keys from '../config/keys';
-import validateRegisterInput from '../validation/register';
-import validateLoginInput from '../validation/login';
+import validateRegister from '../validation/register';
+import validateLogin from '../validation/login';
 import User from '../models/User';
 
 const router = express.Router();
-
 router.post('/register', async ({ body }, response) => {
-  const { errors, isValid } = validateRegisterInput(body);
+  const { errors, isValid } = validateRegister(body);
   if (!isValid) return response.status(400).json(errors);
 
   const user = await User.findOne({ email: body.email });
@@ -40,8 +39,8 @@ router.post('/register', async ({ body }, response) => {
   });
 });
 
-router.post('/login', async ({ body }, response) => {
-  const { errors, isValid } = validateLoginInput(body);
+router.post('/validateLogin', async ({ body }, response) => {
+  const { errors, isValid } = validateLogin(body);
   if (!isValid) return response.status(400).json(errors);
 
   const { email, password } = body;
