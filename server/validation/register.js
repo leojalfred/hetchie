@@ -10,7 +10,22 @@ export default function validateRegister({
   password,
   confirm,
 }) {
-  const errors = {};
+  const errors = {
+    first: [],
+    last: [],
+    email: [],
+    school: [],
+    year: [],
+    password: [],
+    confirm: [],
+  };
+  const namePattern = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+$/u;
+  const passwordPattern = /.*(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[ !"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]).*/;
+  const date = new Date();
+  const yearOptions = {
+    allow_leading_zeroes: false,
+    min: date.getUTCFullYear(),
+  };
 
   first = !isEmpty(first) ? first : '';
   last = !isEmpty(last) ? last : '';
@@ -20,26 +35,38 @@ export default function validateRegister({
   password = !isEmpty(password) ? password : '';
   confirm = !isEmpty(confirm) ? confirm : '';
 
-  if (Validator.isEmpty(first)) errors.first = 'First name field is required';
-  if (Validator.isEmpty(last)) errors.last = 'Last name field is required';
+  if (Validator.isEmpty(first))
+    errors.first.push('First name field is required');
+  if (!Validator.matches(first, namePattern))
+    errors.first.push('First name field is not valid');
+  if (Validator.isEmpty(last)) errors.last.push('Last name field is required');
+  if (!Validator.matches(last, namePattern))
+    errors.last.push('Last name field is not valid');
 
-  if (Validator.isEmpty(email)) errors.email = 'Email field is required';
-  else if (!Validator.isEmail(email)) errors.email = 'Email is invalid';
+  if (Validator.isEmpty(email)) errors.email.push('Email field is required');
+  else if (!Validator.isEmail(email)) errors.email.push('Email is invalid');
 
-  if (Validator.isEmpty(school)) errors.school = 'School field is required';
+  if (Validator.isEmpty(school)) errors.school.push('School field is required');
   if (Validator.isEmpty(year))
-    errors.year = 'Graduation year field is required';
-  else if (!Validator.isInt(year)) errors.year = 'Graduation year is invalid';
+    errors.year.push('Graduation year field is required');
+  else if (!Validator.isInt(year, yearOptions))
+    errors.year.push('Graduation year is invalid');
 
   if (Validator.isEmpty(password))
-    errors.password = 'Password field is required';
+    errors.password.push('Password field is required');
+  if (!Validator.matches(password, passwordPattern))
+    errors.password.push('Password field is not valid');
   if (Validator.isEmpty(confirm))
-    errors.confirm = 'Confirm password field is required';
+    errors.confirm.push('Confirm password field is required');
+  if (!Validator.matches(confirm, passwordPattern))
+    errors.confirm.push('Confirm password field is not valid');
   if (!Validator.equals(password, confirm))
-    errors.confirm = 'Passwords must match';
+    errors.confirm.push('Passwords must match');
 
-  return {
-    errors,
-    isValid: isEmpty(errors),
-  };
+  let isValid = true;
+  Object.values(errors).forEach(value => {
+    if (!isEmpty(value)) isValid = false;
+  });
+
+  return { errors, isValid };
 }

@@ -39,7 +39,7 @@ router.post('/register', async ({ body }, response) => {
   });
 });
 
-router.post('/validateLogin', async ({ body }, response) => {
+router.post('/login', async ({ body }, response) => {
   const { errors, isValid } = validateLogin(body);
   if (!isValid) return response.status(400).json(errors);
 
