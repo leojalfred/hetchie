@@ -35,6 +35,7 @@
   "name": "server",
   "private": true,
   "scripts": {
+    "dev": "concurrently \"yarn start\" \"cd ../client && yarn start\"",
     "start": "nodemon --exec babel-node index.js"
   },
   "version": "1.0.0"
