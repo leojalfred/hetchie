@@ -48,29 +48,39 @@ export default function RegisterModal({
   yup.addMethod(yup.string, 'equalTo', equalTo);
 
   const RegisterSchema = yup.object().shape({
-    first: yup.string().required().matches(name, {
-      message: 'First name field is not valid',
+    first: yup.string().required('First name is required.').matches(name, {
+      message: 'First name is not valid.',
       excludeEmptyString: true,
     }),
-    last: yup.string().required().matches(name, {
-      message: 'Last name field is not valid',
+    last: yup.string().required('Last name is required.').matches(name, {
+      message: 'Last name is not valid.',
       excludeEmptyString: true,
     }),
-    email: yup.string().required().email(),
-    school: yup.string().required(),
-    year: yup.number().required().integer().min(year),
-    password: yup.string().required().matches(password.pattern, {
-      message: password.message,
-      excludeEmptyString: true,
-    }),
+    email: yup
+      .string()
+      .required('Email is required.')
+      .email('Email is not valid.'),
+    school: yup.string().required('School is required.'),
+    year: yup
+      .number()
+      .required('Graduation year is required.')
+      .integer('Graduation year must be an integer.')
+      .min(year, `Graduation year must be at least ${year}.`),
+    password: yup
+      .string()
+      .required('Password is required.')
+      .matches(password.pattern, {
+        message: password.message,
+        excludeEmptyString: true,
+      }),
     confirm: yup
       .string()
       .matches(password.pattern, {
         message: password.message,
         excludeEmptyString: true,
       })
-      .equalTo(yup.ref('password'), 'Passwords must match')
-      .required(),
+      .equalTo(yup.ref('password'), 'Passwords must match.')
+      .required('Confirm password is required.'),
   });
 
   function onSubmit(values, { setSubmitting }) {
