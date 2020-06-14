@@ -1,3 +1,5 @@
+import * as yup from 'yup';
+
 export const name = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+$/u;
 export const password = {
   message:
@@ -6,3 +8,14 @@ export const password = {
 };
 const date = new Date();
 export const year = date.getUTCFullYear();
+
+export const login = {
+  email: yup.string().required('Email is required.').email('Email is invalid.'),
+  password: yup
+    .string()
+    .required('Password is required.')
+    .matches(password.pattern, {
+      message: password.message,
+      excludeEmptyString: true,
+    }),
+};

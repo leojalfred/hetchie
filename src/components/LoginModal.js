@@ -1,4 +1,5 @@
 import React from 'react';
+import * as yup from 'yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faTimesCircle } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -6,7 +7,8 @@ import {
   faLongArrowAltRight,
   faSignInAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, ErrorMessage, Field } from 'formik';
+import { login } from '../scripts/validation';
 import Modal from './Modal';
 import Button from './BigButton';
 import './LoginModal.scss';
@@ -16,6 +18,13 @@ export default function LoginModal({
   closeLoginModal,
   openRegisterModal,
 }) {
+  const initialValues = { email: '', password: '' };
+  const LoginSchema = yup.object().shape(login);
+
+  function onSubmit(values, { setSubmitting }) {
+    console.log(values);
+  }
+
   function switchModals() {
     closeLoginModal();
     setTimeout(() => {
@@ -45,29 +54,47 @@ export default function LoginModal({
           />
         </div>
 
-        <Formik initialValues={{ email: '', password: '' }}>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={LoginSchema}
+          onSubmit={onSubmit}
+        >
           {({ isSubmitting }) => (
             <Form className="modal__form">
-              <div className="modal__input-group">
-                <FontAwesomeIcon
-                  className="modal__input-icon"
-                  icon={faEnvelope}
-                />
-                <Field
-                  className="modal__input"
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                />
+              <div className="modal__input-container">
+                <ErrorMessage name="email">
+                  {(message) => (
+                    <div className="modal__input-error">{message}</div>
+                  )}
+                </ErrorMessage>
+                <div className="modal__input-group">
+                  <FontAwesomeIcon
+                    className="modal__input-icon"
+                    icon={faEnvelope}
+                  />
+                  <Field
+                    className="modal__input"
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                  />
+                </div>
               </div>
-              <div className="modal__input-group">
-                <FontAwesomeIcon className="modal__input-icon" icon={faLock} />
-                <Field
-                  className="modal__input"
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                />
+              <div className="modal__input-container">
+                <ErrorMessage name="password">
+                  {(message) => (
+                    <div className="modal__input-error">{message}</div>
+                  )}
+                </ErrorMessage>
+                <div className="modal__input-group">
+                  <FontAwesomeIcon className="modal__input-icon" icon={faLock} />
+                  <Field
+                    className="modal__input"
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                  />
+                </div>
               </div>
               <Button
                 className="modal__submit"

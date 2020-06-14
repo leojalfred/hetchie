@@ -1,4 +1,5 @@
 import React from 'react';
+import * as yup from 'yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faTimesCircle } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -11,8 +12,7 @@ import {
   faUserPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import { Formik, Form, ErrorMessage, Field } from 'formik';
-import * as yup from 'yup';
-import { name, password, year } from '../scripts/validation';
+import { login, name, password, year } from '../scripts/validation';
 import Modal from './Modal';
 import Button from './BigButton';
 import './RegisterModal.scss';
@@ -48,6 +48,7 @@ export default function RegisterModal({
   yup.addMethod(yup.string, 'equalTo', equalTo);
 
   const RegisterSchema = yup.object().shape({
+    ...login,
     first: yup.string().required('First name is required.').matches(name, {
       message: 'First name is invalid.',
       excludeEmptyString: true,
@@ -56,23 +57,12 @@ export default function RegisterModal({
       message: 'Last name is invalid.',
       excludeEmptyString: true,
     }),
-    email: yup
-      .string()
-      .required('Email is required.')
-      .email('Email is invalid.'),
     school: yup.string().required('School is required.'),
     year: yup
       .number()
       .required('Graduation year is required.')
       .integer('Graduation year must be an integer.')
       .min(year, `Graduation year must be at least ${year}.`),
-    password: yup
-      .string()
-      .required('Password is required.')
-      .matches(password.pattern, {
-        message: password.message,
-        excludeEmptyString: true,
-      }),
     confirm: yup
       .string()
       .matches(password.pattern, {
@@ -121,10 +111,10 @@ export default function RegisterModal({
           validationSchema={RegisterSchema}
           onSubmit={onSubmit}
         >
-          {({ errors, isSubmitting }) => (
+          {({ isSubmitting }) => (
             <Form className="modal__form">
               <div className="modal__input-line">
-                <div className="modal__input-container">
+                <div className="modal__input-container modal__input-container--register">
                   <ErrorMessage name="first">
                     {(message) => (
                       <div className="modal__input-error">{message}</div>
@@ -144,7 +134,7 @@ export default function RegisterModal({
                   </div>
                 </div>
 
-                <div className="modal__input-container">
+                <div className="modal__input-container modal__input-container--register">
                   <ErrorMessage name="last">
                     {(message) => (
                       <div className="modal__input-error">{message}</div>
@@ -184,7 +174,7 @@ export default function RegisterModal({
               </div>
 
               <div className="modal__input-line">
-                <div className="modal__input-container">
+                <div className="modal__input-container modal__input-container--register">
                   <ErrorMessage name="school">
                     {(message) => (
                       <div className="modal__input-error">{message}</div>
@@ -204,7 +194,7 @@ export default function RegisterModal({
                   </div>
                 </div>
 
-                <div className="modal__input-container">
+                <div className="modal__input-container modal__input-container--register">
                   <ErrorMessage name="year">
                     {(message) => (
                       <div className="modal__input-error">{message}</div>
@@ -226,7 +216,7 @@ export default function RegisterModal({
               </div>
 
               <div className="modal__input-line">
-                <div className="modal__input-container">
+                <div className="modal__input-container modal__input-container--register">
                   <ErrorMessage name="password">
                     {(message) => (
                       <div className="modal__input-error">{message}</div>
@@ -246,7 +236,7 @@ export default function RegisterModal({
                   </div>
                 </div>
 
-                <div className="modal__input-container">
+                <div className="modal__input-container modal__input-container--register">
                   <ErrorMessage name="confirm">
                     {(message) => (
                       <div className="modal__input-error">{message}</div>

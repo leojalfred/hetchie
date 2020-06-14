@@ -208,12 +208,6 @@
     }
   }
 
-  @include bp($m) {
-    &__input-container:first-of-type {
-      margin: 0 2rem 0 0;
-    }
-  }
-
   @include bp($xl) {
     min-width: 70%;
   }

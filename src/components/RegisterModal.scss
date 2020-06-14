@@ -19,6 +19,10 @@
       }
     }
 
+    &__input-container--register:first-of-type {
+      margin: 0 2rem 0 0;
+    }
+
     &__input-group--register {
       flex: 1;
     }
