@@ -1,4 +1,4 @@
-import Validator from 'validator';
+import validator from 'validator';
 import isEmpty from 'is-empty';
 
 export default function validateRegister({
@@ -27,32 +27,30 @@ export default function validateRegister({
   password = !isEmpty(password) ? password : '';
   confirm = !isEmpty(confirm) ? confirm : '';
 
-  if (Validator.isEmpty(first)) errors.first = 'First name is required';
-  else if (!Validator.matches(first, namePattern))
-    errors.first = 'First name is not valid';
-  if (Validator.isEmpty(last)) errors.last = 'Last name is required';
-  else if (!Validator.matches(last, namePattern))
-    errors.last = 'Last name is not valid';
+  if (validator.isEmpty(first)) errors.first = 'First name is required.';
+  else if (!validator.matches(first, namePattern))
+    errors.first = 'First name is invalid.';
+  if (validator.isEmpty(last)) errors.last = 'Last name is required.';
+  else if (!validator.matches(last, namePattern))
+    errors.last = 'Last name is invalid.';
 
-  if (Validator.isEmpty(email)) errors.email = 'Email field is required';
-  else if (!Validator.isEmail(email)) errors.email = 'Email is invalid';
+  if (validator.isEmpty(email)) errors.email = 'Email is required.';
+  else if (!validator.isEmail(email)) errors.email = 'Email is invalid.';
 
-  if (Validator.isEmpty(school)) errors.school = 'School is required';
-  if (Validator.isEmpty(year))
-    errors.year = 'Graduation year field is required';
-  else if (!Validator.isInt(year, yearOptions))
-    errors.year = 'Graduation year is invalid';
+  if (validator.isEmpty(school)) errors.school = 'School is required.';
+  if (validator.isEmpty(year)) errors.year = 'Graduation year is required.';
+  else if (!validator.isInt(year, yearOptions))
+    errors.year = 'Graduation year is invalid.';
 
-  if (Validator.isEmpty(password))
-    errors.password = 'Password field is required';
-  else if (!Validator.matches(password, passwordPattern))
-    errors.password = 'Password field is not valid';
-  if (Validator.isEmpty(confirm))
-    errors.confirm = 'Confirm password field is required';
-  else if (!Validator.matches(confirm, passwordPattern))
-    errors.confirm = 'Confirm password field is not valid';
-  else if (!Validator.equals(password, confirm))
-    errors.confirm = 'Passwords must match';
+  if (validator.isEmpty(password)) errors.password = 'Password is required.';
+  else if (!validator.matches(password, passwordPattern))
+    errors.password = 'Password is invalid.';
+  if (validator.isEmpty(confirm))
+    errors.confirm = 'Confirm password is required.';
+  else if (!validator.matches(confirm, passwordPattern))
+    errors.confirm = 'Confirm password is invalid.';
+  else if (!validator.equals(password, confirm))
+    errors.confirm = 'Passwords must match.';
 
   let isValid = true;
   Object.values(errors).forEach(value => {
