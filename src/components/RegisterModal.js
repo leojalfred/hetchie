@@ -49,17 +49,17 @@ export default function RegisterModal({
 
   const RegisterSchema = yup.object().shape({
     first: yup.string().required('First name is required.').matches(name, {
-      message: 'First name is not valid.',
+      message: 'First name is invalid.',
       excludeEmptyString: true,
     }),
     last: yup.string().required('Last name is required.').matches(name, {
-      message: 'Last name is not valid.',
+      message: 'Last name is invalid.',
       excludeEmptyString: true,
     }),
     email: yup
       .string()
       .required('Email is required.')
-      .email('Email is not valid.'),
+      .email('Email is invalid.'),
     school: yup.string().required('School is required.'),
     year: yup
       .number()
