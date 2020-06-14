@@ -78,6 +78,22 @@
     margin-top: 5rem;
   }
 
+  &__input-container {
+    flex: 1;
+
+    &:first-of-type {
+      margin-bottom: 2rem;
+    }
+  }
+
+  &__input-error {
+    background-color: $red;
+    border-radius: 0.2rem;
+    color: #fff;
+    margin-bottom: 1rem;
+    padding: 1rem;
+  }
+
   &__input-group {
     display: flex;
     align-items: center;
@@ -87,8 +103,8 @@
     }
 
     .modal__input-icon {
-      width: 4rem;
-      margin-left: -0.5rem;
+      margin-right: 1rem;
+      width: 2rem;
     }
   }
 
@@ -189,6 +205,12 @@
 
     &__button {
       margin: 5rem auto 0 auto;
+    }
+  }
+
+  @include bp($m) {
+    &__input-container:first-of-type {
+      margin: 0 2rem 0 0;
     }
   }
 
