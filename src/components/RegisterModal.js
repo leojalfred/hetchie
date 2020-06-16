@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import * as yup from 'yup';
+import { Formik, Form, Field } from 'formik';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faTimesCircle } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -11,17 +14,47 @@ import {
   faSignature,
   faUserPlus,
 } from '@fortawesome/free-solid-svg-icons';
-import { Formik, Form, ErrorMessage, Field } from 'formik';
-import { login, name, password, year } from '../scripts/validation';
+import {
+  filterErrors,
+  filteredErrors,
+  login,
+  name,
+  password,
+  year,
+} from '../scripts/validation';
+import { registerUser } from '../actions/authActions';
 import Modal from './Modal';
 import Button from './BigButton';
 import './RegisterModal.scss';
 
-export default function RegisterModal({
+function RegisterModal({
   isOpen,
   closeRegisterModal,
   openLoginModal,
+  auth,
+  count,
+  history,
+  errors,
+  registerUser,
 }) {
+  useEffect(() => {
+    if (auth.isAuthenticated) history.push('/about');
+  }, [auth, history]);
+
+  const [serverErrors, setServerErrors] = useState({});
+  const isFirstRun = useRef(true);
+  useEffect(
+    (errors) => {
+      if (isFirstRun.current) {
+        isFirstRun.current = false;
+        return;
+      }
+
+      if (errors) setServerErrors(errors);
+    },
+    [count]
+  );
+
   const initialValues = {
     first: '',
     last: '',
@@ -46,7 +79,6 @@ export default function RegisterModal({
     });
   }
   yup.addMethod(yup.string, 'equalTo', equalTo);
-
   const RegisterSchema = yup.object().shape({
     ...login,
     first: yup.string().required('First name is required.').matches(name, {
@@ -60,6 +92,7 @@ export default function RegisterModal({
     school: yup.string().required('School is required.'),
     year: yup
       .number()
+      .typeError('Graduation year must be a number.')
       .required('Graduation year is required.')
       .integer('Graduation year must be an integer.')
       .min(year, `Graduation year must be at least ${year}.`),
@@ -73,8 +106,8 @@ export default function RegisterModal({
       .required('Confirm password is required.'),
   });
 
-  function onSubmit(values, { setSubmitting }) {
-    console.log(values);
+  function onSubmit(newUser, { setSubmitting }) {
+    registerUser(newUser, history);
   }
 
   function switchModals() {
@@ -111,160 +144,137 @@ export default function RegisterModal({
           validationSchema={RegisterSchema}
           onSubmit={onSubmit}
         >
-          {({ isSubmitting }) => (
-            <Form className="modal__form">
-              <div className="modal__input-line">
-                <div className="modal__input-container modal__input-container--register">
-                  <ErrorMessage name="first">
-                    {(message) => (
-                      <div className="modal__input-error">{message}</div>
-                    )}
-                  </ErrorMessage>
-                  <div className="modal__input-group modal__input-group--register">
-                    <FontAwesomeIcon
-                      className="modal__input-icon"
-                      icon={faSignature}
-                    />
-                    <Field
-                      className="modal__input"
-                      type="text"
-                      name="first"
-                      placeholder="First name"
-                    />
+          {({ errors, touched, isSubmitting }) => (
+            <>
+              {filterErrors(errors, touched)}
+              {filteredErrors.length > 0 && (
+                <div className="modal__input-errors">
+                  {filteredErrors.map((error, i) => (
+                    <p className="modal__input-error" key={i}>
+                      {errors[error]}
+                    </p>
+                  ))}
+                </div>
+              )}
+              <Form className="modal__form">
+                <div className="modal__input-line">
+                  <div className="modal__input-container modal__input-container--register">
+                    <div className="modal__input-group modal__input-group--register">
+                      <FontAwesomeIcon
+                        className="modal__input-icon"
+                        icon={faSignature}
+                      />
+                      <Field
+                        className="modal__input"
+                        type="text"
+                        name="first"
+                        placeholder="First name"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="modal__input-container modal__input-container--register">
+                    <div className="modal__input-group modal__input-group--register">
+                      <FontAwesomeIcon
+                        className="modal__input-icon"
+                        icon={faSignature}
+                      />
+                      <Field
+                        className="modal__input"
+                        type="text"
+                        name="last"
+                        placeholder="Last name"
+                      />
+                    </div>
                   </div>
                 </div>
 
-                <div className="modal__input-container modal__input-container--register">
-                  <ErrorMessage name="last">
-                    {(message) => (
-                      <div className="modal__input-error">{message}</div>
-                    )}
-                  </ErrorMessage>
-                  <div className="modal__input-group modal__input-group--register">
-                    <FontAwesomeIcon
-                      className="modal__input-icon"
-                      icon={faSignature}
-                    />
-                    <Field
-                      className="modal__input"
-                      type="text"
-                      name="last"
-                      placeholder="Last name"
-                    />
-                  </div>
+                <div className="modal__email modal__input-group modal__input-group--register">
+                  <FontAwesomeIcon
+                    className="modal__input-icon"
+                    icon={faEnvelope}
+                  />
+                  <Field
+                    className="modal__input"
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                  />
                 </div>
-              </div>
 
-              <ErrorMessage name="email">
-                {(message) => (
-                  <div className="modal__input-error">{message}</div>
-                )}
-              </ErrorMessage>
-              <div className="modal__email modal__input-group modal__input-group--register">
-                <FontAwesomeIcon
-                  className="modal__input-icon"
-                  icon={faEnvelope}
-                />
-                <Field
-                  className="modal__input"
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                />
-              </div>
+                <div className="modal__input-line">
+                  <div className="modal__input-container modal__input-container--register">
+                    <div className="modal__input-group modal__input-group--register">
+                      <FontAwesomeIcon
+                        className="modal__input-icon"
+                        icon={faSchool}
+                      />
+                      <Field
+                        className="modal__input"
+                        type="text"
+                        name="school"
+                        placeholder="School"
+                      />
+                    </div>
+                  </div>
 
-              <div className="modal__input-line">
-                <div className="modal__input-container modal__input-container--register">
-                  <ErrorMessage name="school">
-                    {(message) => (
-                      <div className="modal__input-error">{message}</div>
-                    )}
-                  </ErrorMessage>
-                  <div className="modal__input-group modal__input-group--register">
-                    <FontAwesomeIcon
-                      className="modal__input-icon"
-                      icon={faSchool}
-                    />
-                    <Field
-                      className="modal__input"
-                      type="text"
-                      name="school"
-                      placeholder="School"
-                    />
+                  <div className="modal__input-container modal__input-container--register">
+                    <div className="modal__input-group modal__input-group--register">
+                      <FontAwesomeIcon
+                        className="modal__input-icon"
+                        icon={faGraduationCap}
+                      />
+                      <Field
+                        className="modal__input"
+                        type="text"
+                        name="year"
+                        placeholder="Graduation year"
+                      />
+                    </div>
                   </div>
                 </div>
 
-                <div className="modal__input-container modal__input-container--register">
-                  <ErrorMessage name="year">
-                    {(message) => (
-                      <div className="modal__input-error">{message}</div>
-                    )}
-                  </ErrorMessage>
-                  <div className="modal__input-group modal__input-group--register">
-                    <FontAwesomeIcon
-                      className="modal__input-icon"
-                      icon={faGraduationCap}
-                    />
-                    <Field
-                      className="modal__input"
-                      type="text"
-                      name="year"
-                      placeholder="Graduation year"
-                    />
+                <div className="modal__input-line">
+                  <div className="modal__input-container modal__input-container--register">
+                    <div className="modal__input-group modal__input-group--register">
+                      <FontAwesomeIcon
+                        className="modal__input-icon"
+                        icon={faLock}
+                      />
+                      <Field
+                        className="modal__input"
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                      />
+                    </div>
                   </div>
-                </div>
-              </div>
 
-              <div className="modal__input-line">
-                <div className="modal__input-container modal__input-container--register">
-                  <ErrorMessage name="password">
-                    {(message) => (
-                      <div className="modal__input-error">{message}</div>
-                    )}
-                  </ErrorMessage>
-                  <div className="modal__input-group modal__input-group--register">
-                    <FontAwesomeIcon
-                      className="modal__input-icon"
-                      icon={faLock}
-                    />
-                    <Field
-                      className="modal__input"
-                      type="password"
-                      name="password"
-                      placeholder="Password"
-                    />
+                  <div className="modal__input-container modal__input-container--register">
+                    <div className="modal__input-group modal__input-group--register">
+                      <FontAwesomeIcon
+                        className="modal__input-icon"
+                        icon={faCheckCircle}
+                      />
+                      <Field
+                        className="modal__input"
+                        type="password"
+                        name="confirm"
+                        placeholder="Confirm password"
+                      />
+                    </div>
                   </div>
                 </div>
 
-                <div className="modal__input-container modal__input-container--register">
-                  <ErrorMessage name="confirm">
-                    {(message) => (
-                      <div className="modal__input-error">{message}</div>
-                    )}
-                  </ErrorMessage>
-                  <div className="modal__input-group modal__input-group--register">
-                    <FontAwesomeIcon
-                      className="modal__input-icon"
-                      icon={faCheckCircle}
-                    />
-                    <Field
-                      className="modal__input"
-                      type="password"
-                      name="confirm"
-                      placeholder="Confirm password"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <Button
-                className="modal__submit"
-                type="submit"
-                disabled={isSubmitting}
-              >
-                Register
-              </Button>
-            </Form>
+                <Button
+                  className="modal__submit"
+                  type="submit"
+                  disabled={isSubmitting}
+                >
+                  Register
+                </Button>
+              </Form>
+            </>
           )}
         </Formik>
       </div>
@@ -279,3 +289,14 @@ export default function RegisterModal({
     </Modal>
   );
 }
+
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+    errors: state.errors,
+  };
+}
+
+export default connect(mapStateToProps, { registerUser })(
+  withRouter(RegisterModal)
+);

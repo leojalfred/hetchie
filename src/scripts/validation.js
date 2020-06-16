@@ -19,3 +19,10 @@ export const login = {
       excludeEmptyString: true,
     }),
 };
+
+export let filteredErrors = [];
+export function filterErrors(errors, touched) {
+  filteredErrors = Object.keys(errors).filter(
+    (error) => touched[error] === true
+  );
+}

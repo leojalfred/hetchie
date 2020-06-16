@@ -48,6 +48,7 @@
   &__topline {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 5rem;
   }
 
   &__text {
@@ -73,11 +74,6 @@
     margin-bottom: 0;
   }
 
-  &__form,
-  &__submit {
-    margin-top: 5rem;
-  }
-
   &__input-container {
     flex: 1;
 
@@ -86,12 +82,20 @@
     }
   }
 
-  &__input-error {
+  &__input-errors {
     background-color: $red;
     border-radius: 0.2rem;
     color: #fff;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     padding: 1rem;
+  }
+
+  &__input-error {
+    margin: 0 0 1rem 0;
+
+    &:last-child {
+      margin: 0;
+    }
   }
 
   &__input-group {
@@ -119,7 +123,7 @@
   &__submit {
     border-color: $yellow-orange;
     color: $yellow-orange;
-    margin-left: auto;
+    margin: 5rem auto 0 0;
 
     &:hover {
       background-color: $yellow-orange;

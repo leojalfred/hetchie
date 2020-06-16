@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import * as yup from 'yup';
+import { Formik, Form, Field } from 'formik';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faTimesCircle } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -7,22 +10,45 @@ import {
   faLongArrowAltRight,
   faSignInAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import { Formik, Form, ErrorMessage, Field } from 'formik';
-import { login } from '../scripts/validation';
+import { filterErrors, filteredErrors, login } from '../scripts/validation';
+import { loginUser } from '../actions/authActions';
 import Modal from './Modal';
 import Button from './BigButton';
-import './LoginModal.scss';
 
-export default function LoginModal({
+function LoginModal({
   isOpen,
   closeLoginModal,
   openRegisterModal,
+  auth,
+  count,
+  history,
+  errors,
+  loginUser,
 }) {
+  useEffect(() => {
+    if (auth.isAuthenticated) history.push('/about');
+  }, [auth, history]);
+
+  const [serverErrors, setServerErrors] = useState({});
+  const isFirstRun = useRef(true);
+  useEffect(
+    (errors, history, auth) => {
+      if (isFirstRun.current) {
+        isFirstRun.current = false;
+        return;
+      }
+
+      if (auth.isAuthenticated) history.push('/about');
+      if (errors) setServerErrors(errors);
+    },
+    [count]
+  );
+
   const initialValues = { email: '', password: '' };
   const LoginSchema = yup.object().shape(login);
 
-  function onSubmit(values, { setSubmitting }) {
-    console.log(values);
+  function onSubmit(user, { setSubmitting }) {
+    loginUser(user);
   }
 
   function switchModals() {
@@ -59,51 +85,56 @@ export default function LoginModal({
           validationSchema={LoginSchema}
           onSubmit={onSubmit}
         >
-          {({ isSubmitting }) => (
-            <Form className="modal__form">
-              <div className="modal__input-container">
-                <ErrorMessage name="email">
-                  {(message) => (
-                    <div className="modal__input-error">{message}</div>
-                  )}
-                </ErrorMessage>
-                <div className="modal__input-group">
-                  <FontAwesomeIcon
-                    className="modal__input-icon"
-                    icon={faEnvelope}
-                  />
-                  <Field
-                    className="modal__input"
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                  />
+          {({ errors, touched, isSubmitting }) => (
+            <>
+              {filterErrors(errors, touched)}
+              {filteredErrors.length > 0 && (
+                <div className="modal__input-errors">
+                  {filteredErrors.map((error, i) => (
+                    <p className="modal__input-error" key={i}>
+                      {errors[error]}
+                    </p>
+                  ))}
                 </div>
-              </div>
-              <div className="modal__input-container">
-                <ErrorMessage name="password">
-                  {(message) => (
-                    <div className="modal__input-error">{message}</div>
-                  )}
-                </ErrorMessage>
-                <div className="modal__input-group">
-                  <FontAwesomeIcon className="modal__input-icon" icon={faLock} />
-                  <Field
-                    className="modal__input"
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                  />
+              )}
+              <Form className="modal__form">
+                <div className="modal__input-container">
+                  <div className="modal__input-group">
+                    <FontAwesomeIcon
+                      className="modal__input-icon"
+                      icon={faEnvelope}
+                    />
+                    <Field
+                      className="modal__input"
+                      type="email"
+                      name="email"
+                      placeholder="Email"
+                    />
+                  </div>
                 </div>
-              </div>
-              <Button
-                className="modal__submit"
-                type="submit"
-                disabled={isSubmitting}
-              >
-                Log in
-              </Button>
-            </Form>
+                <div className="modal__input-container">
+                  <div className="modal__input-group">
+                    <FontAwesomeIcon
+                      className="modal__input-icon"
+                      icon={faLock}
+                    />
+                    <Field
+                      className="modal__input"
+                      type="password"
+                      name="password"
+                      placeholder="Password"
+                    />
+                  </div>
+                </div>
+                <Button
+                  className="modal__submit"
+                  type="submit"
+                  disabled={isSubmitting}
+                >
+                  Log in
+                </Button>
+              </Form>
+            </>
           )}
         </Formik>
       </div>
@@ -118,3 +149,12 @@ export default function LoginModal({
     </Modal>
   );
 }
+
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+    errors: state.errors,
+  };
+}
+
+export default connect(mapStateToProps, { loginUser })(withRouter(LoginModal));
