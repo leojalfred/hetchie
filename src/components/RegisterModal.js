@@ -32,28 +32,22 @@ function RegisterModal({
   closeRegisterModal,
   openLoginModal,
   auth,
-  count,
   history,
   errors,
   registerUser,
 }) {
-  useEffect(() => {
-    if (auth.isAuthenticated) history.push('/about');
-  }, [auth, history]);
-
   const [serverErrors, setServerErrors] = useState({});
   const isFirstRun = useRef(true);
-  useEffect(
-    (errors) => {
-      if (isFirstRun.current) {
-        isFirstRun.current = false;
-        return;
-      }
+  useEffect(() => {
+    if (auth.isAuthenticated) history.push('/');
 
-      if (errors) setServerErrors(errors);
-    },
-    [count]
-  );
+    if (isFirstRun.current) {
+      isFirstRun.current = false;
+      return;
+    }
+
+    if (errors) setServerErrors(errors);
+  }, [errors, auth, history]);
 
   const initialValues = {
     first: '',
@@ -108,6 +102,7 @@ function RegisterModal({
 
   function onSubmit(newUser, { setSubmitting }) {
     registerUser(newUser, history);
+    closeRegisterModal();
   }
 
   function switchModals() {

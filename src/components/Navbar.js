@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 import logo from '../images/logo.png';
 import Button from './Button';
 import './Navbar.scss';
+import { logoutUser } from '../actions/authActions';
 
-export default function Navbar({ openLoginModal }) {
+function Navbar({ auth, logoutUser, openLoginModal }) {
+  const [onClick, setOnClick] = useState(() => openLoginModal);
+  const [text, setText] = useState('Login');
+  useEffect(() => {
+    if (!auth.isAuthenticated && text === 'Logout') {
+      setOnClick(() => openLoginModal);
+      setText('Login');
+    } else if (auth.isAuthenticated && text === 'Login') {
+      setOnClick(() => logoutUser);
+      setText('Logout');
+    }
+  }, [auth, text, openLoginModal, logoutUser]);
+
   return (
     <nav className="navbar container">
       <Link className="navbar__link navbar__link--brand" to="/">
@@ -18,12 +32,12 @@ export default function Navbar({ openLoginModal }) {
       >
         About
       </NavLink>
-      <Button
-        className="navbar__link navbar__link--login"
-        onClick={openLoginModal}
-      >
-        Login
+      <Button className="navbar__link navbar__link--login" onClick={onClick}>
+        {text}
       </Button>
     </nav>
   );
 }
+
+const mapStateToProps = ({ auth }) => ({ auth });
+export default connect(mapStateToProps, { logoutUser })(Navbar);

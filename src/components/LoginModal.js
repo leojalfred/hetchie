@@ -20,35 +20,29 @@ function LoginModal({
   closeLoginModal,
   openRegisterModal,
   auth,
-  count,
   history,
   errors,
   loginUser,
 }) {
-  useEffect(() => {
-    if (auth.isAuthenticated) history.push('/about');
-  }, [auth, history]);
-
   const [serverErrors, setServerErrors] = useState({});
   const isFirstRun = useRef(true);
-  useEffect(
-    (errors, history, auth) => {
-      if (isFirstRun.current) {
-        isFirstRun.current = false;
-        return;
-      }
+  useEffect(() => {
+    if (auth.isAuthenticated) history.push('/');
 
-      if (auth.isAuthenticated) history.push('/about');
-      if (errors) setServerErrors(errors);
-    },
-    [count]
-  );
+    if (isFirstRun.current) {
+      isFirstRun.current = false;
+      return;
+    }
+
+    if (errors) setServerErrors(errors);
+  }, [errors, history, auth]);
 
   const initialValues = { email: '', password: '' };
   const LoginSchema = yup.object().shape(login);
 
   function onSubmit(user, { setSubmitting }) {
     loginUser(user);
+    closeLoginModal();
   }
 
   function switchModals() {

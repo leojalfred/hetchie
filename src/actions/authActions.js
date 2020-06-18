@@ -6,7 +6,6 @@ import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from './types';
 export const registerUser = (userData, history) => async (dispatch) => {
   try {
     await axios.post('/users/register', userData);
-    history.push('/about');
   } catch (error) {
     dispatch({
       type: GET_ERRORS,

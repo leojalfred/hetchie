@@ -22,7 +22,7 @@ if (localStorage.jwtToken) {
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
     store.dispatch(logoutUser());
-    window.location.href = './';
+    window.location.href = '/';
   }
 }
 
@@ -58,11 +58,12 @@ export default function App() {
               />
             )}
           />
-          <PrivateRoute
+          <Route
             exact
             path="/about"
-            openLoginModal={openLoginModal}
-            component={About}
+            render={(props) => (
+              <About {...props} openLoginModal={openLoginModal} />
+            )}
           />
         </Switch>
         <LoginModal

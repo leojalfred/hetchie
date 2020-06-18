@@ -30,7 +30,7 @@ function About({ openLoginModal }) {
           </p>
           <p className="about__text">
             hetchie streamlines your bidding process, starting with information
-            fro you, such as your GPA and position preferences, and then giving
+            from you, such as your GPA and position preferences, and then giving
             you a custom-tailored list for your bids. The list provides access
             to other resources that will enable you to further refine your list,
             making sure your bids reflect the firms that you're actually
