@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import './Home.scss';
 import Navbar from '../../components/Navbar';
 import BigButton from '../../components/BigButton';
-import './Home.scss';
+import { logoutUser } from '../../actions/authActions';
 
-function Home({ openLoginModal, openRegisterModal }) {
+function Home({ auth, openLoginModal, openRegisterModal }) {
+  const [shown, setShown] = useState(true);
+  useEffect(() => {
+    if ((auth.isAuthenticated && shown) || (!auth.isAuthenticated && !shown))
+      setShown(!shown);
+  }, [auth]);
+
   return (
     <div className="home">
       <Navbar openLoginModal={openLoginModal} />
@@ -19,12 +27,15 @@ function Home({ openLoginModal, openRegisterModal }) {
           Velit culpa deserunt do velit duis mollit officia reprehenderit quis
           quis do commodo.
         </p>
-        <BigButton className="home__button" onClick={openRegisterModal}>
-          Get Started
-        </BigButton>
+        {shown && (
+          <BigButton className="home__button" onClick={openRegisterModal}>
+            Get Started
+          </BigButton>
+        )}
       </main>
     </div>
   );
 }
 
-export default Home;
+const mapStateToProps = ({ auth }) => ({ auth });
+export default connect(mapStateToProps, { logoutUser })(Home);
