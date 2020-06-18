@@ -1,34 +1,40 @@
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
-import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from './types';
+import {
+  GET_ERRORS,
+  SET_CURRENT_USER,
+  USER_LOADING,
+  SET_ERRORS,
+} from './types';
 
-export const registerUser = (userData, history) => async (dispatch) => {
+async function login(url, userData, dispatch, closeModal) {
   try {
-    await axios.post('/users/register', userData);
-  } catch (error) {
-    dispatch({
-      type: GET_ERRORS,
-      payload: error.response.data,
-    });
-  }
-};
-
-export const loginUser = (userData) => async (dispatch) => {
-  try {
-    const response = await axios.post('/users/login', userData);
+    const response = await axios.post(url, userData);
     const { token } = response.data;
     localStorage.setItem('jwtToken', token);
     setAuthToken(token);
 
     const decoded = jwt_decode(token);
     dispatch(setCurrentUser(decoded));
+
+    dispatch({ type: SET_ERRORS, payload: {} });
+    closeModal();
   } catch (error) {
+    console.log(error);
     dispatch({
       type: GET_ERRORS,
       payload: error.response.data,
     });
   }
+}
+
+export const registerUser = (userData, closeModal) => (dispatch) => {
+  login('/users/register', userData, dispatch, closeModal);
+};
+
+export const loginUser = (userData, closeModal) => (dispatch) => {
+  login('/users/login', userData, dispatch, closeModal);
 };
 
 export const setCurrentUser = (decoded) => {

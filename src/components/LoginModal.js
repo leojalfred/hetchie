@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import * as yup from 'yup';
 import { Formik, Form, Field } from 'formik';
@@ -10,7 +9,12 @@ import {
   faLongArrowAltRight,
   faSignInAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import { filterErrors, filteredErrors, login } from '../scripts/validation';
+import {
+  getErrorKeys,
+  clientErrorKeys,
+  serverErrorKeys,
+  email,
+} from '../scripts/validation';
 import { loginUser } from '../actions/authActions';
 import Modal from './Modal';
 import Button from './BigButton';
@@ -20,29 +24,23 @@ function LoginModal({
   closeLoginModal,
   openRegisterModal,
   auth,
-  history,
   errors,
   loginUser,
 }) {
   const [serverErrors, setServerErrors] = useState({});
-  const isFirstRun = useRef(true);
   useEffect(() => {
-    if (auth.isAuthenticated) history.push('/');
-
-    if (isFirstRun.current) {
-      isFirstRun.current = false;
-      return;
-    }
-
     if (errors) setServerErrors(errors);
-  }, [errors, history, auth]);
+  }, [errors]);
 
   const initialValues = { email: '', password: '' };
-  const LoginSchema = yup.object().shape(login);
+  const LoginSchema = yup.object().shape({
+    ...email,
+    password: yup.string().required('Password is required.'),
+  });
 
   function onSubmit(user, { setSubmitting }) {
-    loginUser(user);
-    closeLoginModal();
+    loginUser(user, closeLoginModal);
+    setSubmitting(false);
   }
 
   function switchModals() {
@@ -81,12 +79,17 @@ function LoginModal({
         >
           {({ errors, touched, isSubmitting }) => (
             <>
-              {filterErrors(errors, touched)}
-              {filteredErrors.length > 0 && (
+              {getErrorKeys(errors, touched, serverErrors)}
+              {(clientErrorKeys.length > 0 || serverErrorKeys.length > 0) && (
                 <div className="modal__input-errors">
-                  {filteredErrors.map((error, i) => (
+                  {clientErrorKeys.map((error, i) => (
                     <p className="modal__input-error" key={i}>
                       {errors[error]}
+                    </p>
+                  ))}
+                  {serverErrorKeys.map((error, i) => (
+                    <p className="modal__input-error" key={i}>
+                      {serverErrors[error]}
                     </p>
                   ))}
                 </div>
@@ -151,4 +154,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { loginUser })(withRouter(LoginModal));
+export default connect(mapStateToProps, { loginUser })(LoginModal);

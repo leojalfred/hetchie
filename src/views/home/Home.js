@@ -10,7 +10,7 @@ function Home({ auth, openLoginModal, openRegisterModal }) {
   useEffect(() => {
     if ((auth.isAuthenticated && shown) || (!auth.isAuthenticated && !shown))
       setShown(!shown);
-  }, [auth]);
+  }, [auth, shown]);
 
   return (
     <div className="home">

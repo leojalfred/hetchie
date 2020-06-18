@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import * as yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,9 +14,10 @@ import {
   faUserPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import {
-  filterErrors,
-  filteredErrors,
-  login,
+  getErrorKeys,
+  clientErrorKeys,
+  serverErrorKeys,
+  email,
   name,
   password,
   year,
@@ -32,22 +32,13 @@ function RegisterModal({
   closeRegisterModal,
   openLoginModal,
   auth,
-  history,
   errors,
   registerUser,
 }) {
   const [serverErrors, setServerErrors] = useState({});
-  const isFirstRun = useRef(true);
   useEffect(() => {
-    if (auth.isAuthenticated) history.push('/');
-
-    if (isFirstRun.current) {
-      isFirstRun.current = false;
-      return;
-    }
-
     if (errors) setServerErrors(errors);
-  }, [errors, auth, history]);
+  }, [errors]);
 
   const initialValues = {
     first: '',
@@ -74,7 +65,7 @@ function RegisterModal({
   }
   yup.addMethod(yup.string, 'equalTo', equalTo);
   const RegisterSchema = yup.object().shape({
-    ...login,
+    ...email,
     first: yup.string().required('First name is required.').matches(name, {
       message: 'First name is invalid.',
       excludeEmptyString: true,
@@ -90,6 +81,13 @@ function RegisterModal({
       .required('Graduation year is required.')
       .integer('Graduation year must be an integer.')
       .min(year, `Graduation year must be at least ${year}.`),
+    password: yup
+      .string()
+      .required('Password is required.')
+      .matches(password.pattern, {
+        message: password.message,
+        excludeEmptyString: true,
+      }),
     confirm: yup
       .string()
       .matches(password.pattern, {
@@ -101,8 +99,7 @@ function RegisterModal({
   });
 
   function onSubmit(newUser, { setSubmitting }) {
-    registerUser(newUser, history);
-    closeRegisterModal();
+    registerUser(newUser, closeRegisterModal);
   }
 
   function switchModals() {
@@ -141,10 +138,10 @@ function RegisterModal({
         >
           {({ errors, touched, isSubmitting }) => (
             <>
-              {filterErrors(errors, touched)}
-              {filteredErrors.length > 0 && (
+              {getErrorKeys(errors, touched, serverErrors)}
+              {clientErrorKeys.length > 0 && (
                 <div className="modal__input-errors">
-                  {filteredErrors.map((error, i) => (
+                  {clientErrorKeys.map((error, i) => (
                     <p className="modal__input-error" key={i}>
                       {errors[error]}
                     </p>
@@ -292,6 +289,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { registerUser })(
-  withRouter(RegisterModal)
-);
+export default connect(mapStateToProps, { registerUser })(RegisterModal);

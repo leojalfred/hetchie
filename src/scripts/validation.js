@@ -9,20 +9,14 @@ export const password = {
 const date = new Date();
 export const year = date.getUTCFullYear();
 
-export const login = {
+export const email = {
   email: yup.string().required('Email is required.').email('Email is invalid.'),
-  password: yup
-    .string()
-    .required('Password is required.')
-    .matches(password.pattern, {
-      message: password.message,
-      excludeEmptyString: true,
-    }),
 };
 
-export let filteredErrors = [];
-export function filterErrors(errors, touched) {
-  filteredErrors = Object.keys(errors).filter(
+export let clientErrorKeys, serverErrorKeys;
+export function getErrorKeys(clientErrors, touched, serverErrors) {
+  clientErrorKeys = Object.keys(clientErrors).filter(
     (error) => touched[error] === true
   );
+  serverErrorKeys = Object.keys(serverErrors);
 }
