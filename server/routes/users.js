@@ -6,6 +6,22 @@ import validateRegister from '../validation/register';
 import validateLogin from '../validation/login';
 import User from '../models/User';
 
+function sign(user, response) {
+  const { id, name } = user;
+  const payload = { id, name };
+  jwt.sign(
+    payload,
+    keys.secretOrKey,
+    { expiresIn: 31556926 }, // 1 year in seconds
+    (error, token) => {
+      response.json({
+        success: true,
+        token: `Bearer ${token}`,
+      });
+    }
+  );
+}
+
 const router = express.Router();
 router.post('/register', async ({ body }, response) => {
   const { errors, isValid } = validateRegister(body);
@@ -31,7 +47,7 @@ router.post('/register', async ({ body }, response) => {
 
       try {
         const savedUser = await newUser.save();
-        response.json(savedUser);
+        sign(savedUser, response);
       } catch (error) {
         console.log(error);
       }
@@ -45,28 +61,11 @@ router.post('/login', async ({ body }, response) => {
 
   const { email, password } = body;
   const user = await User.findOne({ email });
-  if (!user)
-    return response.status(404).json({ emailnotfound: 'Email not found' });
+  if (!user) return response.status(404).json({ email: 'Email not found' });
 
   const isMatch = await bcrypt.compare(password, user.password);
-  if (isMatch) {
-    const { id, name } = user;
-    const payload = { id, name };
-    jwt.sign(
-      payload,
-      keys.secretOrKey,
-      { expiresIn: 31556926 }, // 1 year in seconds
-      (error, token) => {
-        response.json({
-          success: true,
-          token: `Bearer ${token}`,
-        });
-      }
-    );
-  } else
-    return response
-      .status(400)
-      .json({ passwordincorrect: 'Password incorrect' });
+  if (isMatch) sign(user, response);
+  else return response.status(400).json({ password: 'Password incorrect' });
 });
 
 export default router;
