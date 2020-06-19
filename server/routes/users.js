@@ -61,6 +61,23 @@ router.post('/register', async ({ body }, response) => {
   }
 });
 
+router.get('/verify', async (request, response) => {
+  const salt = request.query.a;
+
+  try {
+    const user = await User.findOne({ salt });
+    if (user) {
+      user.verified = true;
+      user.salt = undefined;
+      await user.save();
+    }
+
+    response.send('<p>User verified!</p>');
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 router.post('/login', async ({ body }, response) => {
   const { errors, isValid } = validateLogin(body);
   if (!isValid) return response.status(400).json(errors);
