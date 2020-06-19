@@ -33,6 +33,10 @@ const UserSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  salt: {
+    type: String,
+    require: true,
+  },
 });
 
 const User = mongoose.model('users', UserSchema);

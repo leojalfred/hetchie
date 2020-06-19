@@ -1,26 +1,11 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
+import nodemailer from 'nodemailer';
 import jwt from 'jsonwebtoken';
 import keys from '../config/keys';
 import validateRegister from '../validation/register';
 import validateLogin from '../validation/login';
 import User from '../models/User';
-
-function sign(user, response) {
-  const { id, name } = user;
-  const payload = { id, name };
-  jwt.sign(
-    payload,
-    keys.secretOrKey,
-    { expiresIn: 31556926 }, // 1 year in seconds
-    (error, token) => {
-      response.json({
-        success: true,
-        token: `Bearer ${token}`,
-      });
-    }
-  );
-}
 
 const router = express.Router();
 router.post('/register', async ({ body }, response) => {
@@ -30,29 +15,50 @@ router.post('/register', async ({ body }, response) => {
   const user = await User.findOne({ email: body.email });
   if (user) return response.status(400).json({ email: 'Email already exists' });
 
-  const { first, last, email, school, year, password } = body;
-  const newUser = new User({
-    first,
-    last,
-    email,
-    school,
-    year,
-    password,
-  });
+  try {
+    const salt = await bcrypt.genSalt(10);
 
-  bcrypt.genSalt(10, (error, salt) => {
-    bcrypt.hash(newUser.password, salt, async (error, hash) => {
-      if (error) throw error;
-      newUser.password = hash;
-
-      try {
-        const savedUser = await newUser.save();
-        sign(savedUser, response);
-      } catch (error) {
-        console.log(error);
-      }
+    const { first, last, email, school, year, password } = body;
+    const newUser = new User({
+      first,
+      last,
+      email,
+      school,
+      year,
+      password,
+      salt,
     });
-  });
+
+    const hash = await bcrypt.hash(newUser.password, salt);
+    newUser.password = hash;
+
+    const savedUser = await newUser.save();
+    response.json(savedUser);
+
+    const testAccount = await nodemailer.createTestAccount();
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.ethereal.email',
+      port: 587,
+      secure: false,
+      auth: {
+        user: testAccount.user,
+        pass: testAccount.pass,
+      },
+    });
+
+    const url = `localhost:3001/users/verify?a=${salt}`;
+    const info = await transporter.sendMail({
+      from: '"Leo Alfred" <leo@hetchie.com>',
+      to: 'jon@doe.com',
+      subject: 'Confirm your account',
+      html: `<p>Confirm your account by clicking <a href="${url}">here</a></p>`,
+    });
+
+    const emailURL = nodemailer.getTestMessageUrl(info);
+    console.log(`Preview URL: ${emailURL}`);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 router.post('/login', async ({ body }, response) => {
@@ -61,11 +67,24 @@ router.post('/login', async ({ body }, response) => {
 
   const { email, password } = body;
   const user = await User.findOne({ email });
-  if (!user) return response.status(404).json({ email: 'Email not found' });
+  if (!user) return response.status(404).json({ email: 'Email not found.' });
 
   const isMatch = await bcrypt.compare(password, user.password);
-  if (isMatch) sign(user, response);
-  else return response.status(400).json({ password: 'Password incorrect' });
+  if (isMatch) {
+    const { id, name } = user;
+    const payload = { id, name };
+    jwt.sign(
+      payload,
+      keys.secretOrKey,
+      { expiresIn: 31556926 }, // 1 year in seconds
+      (error, token) => {
+        response.json({
+          success: true,
+          token: `Bearer ${token}`,
+        });
+      }
+    );
+  } else return response.status(400).json({ password: 'Password is invalid.' });
 });
 
 export default router;
