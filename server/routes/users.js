@@ -13,7 +13,8 @@ router.post('/register', async ({ body }, response) => {
   if (!isValid) return response.status(400).json(errors);
 
   const user = await User.findOne({ email: body.email });
-  if (user) return response.status(400).json({ email: 'Email already exists' });
+  if (user)
+    return response.status(400).json({ email: 'Email already exists.' });
 
   try {
     const salt = await bcrypt.genSalt(10);
@@ -85,6 +86,8 @@ router.post('/login', async ({ body }, response) => {
   const { email, password } = body;
   const user = await User.findOne({ email });
   if (!user) return response.status(404).json({ email: 'Email not found.' });
+  if (!user.verified)
+    return response.status(404).json({ verified: 'Email not confirmed.' });
 
   const isMatch = await bcrypt.compare(password, user.password);
   if (isMatch) {
@@ -101,7 +104,7 @@ router.post('/login', async ({ body }, response) => {
         });
       }
     );
-  } else return response.status(400).json({ password: 'Password is invalid.' });
+  } else response.status(400).json({ password: 'Password is invalid.' });
 });
 
 export default router;
