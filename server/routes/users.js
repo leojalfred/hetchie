@@ -12,26 +12,23 @@ router.post('/register', async ({ body }, response) => {
   const { errors, isValid } = validateRegister(body);
   if (!isValid) return response.status(400).json(errors);
 
-  const user = await User.findOne({ email: body.email });
-  if (user)
-    return response.status(400).json({ email: 'Email already exists.' });
-
   try {
-    const salt = await bcrypt.genSalt(10);
-
     const { first, last, email, school, year, password } = body;
+    const user = await User.findOne({ email });
+    if (user)
+      return response.status(400).json({ email: 'Email already exists.' });
+
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
     const newUser = new User({
       first,
       last,
       email,
       school,
       year,
-      password,
+      password: hash,
       salt,
     });
-
-    const hash = await bcrypt.hash(newUser.password, salt);
-    newUser.password = hash;
 
     const savedUser = await newUser.save();
     response.json(savedUser);
@@ -83,28 +80,32 @@ router.post('/login', async ({ body }, response) => {
   const { errors, isValid } = validateLogin(body);
   if (!isValid) return response.status(400).json(errors);
 
-  const { email, password } = body;
-  const user = await User.findOne({ email });
-  if (!user) return response.status(404).json({ email: 'Email not found.' });
-  if (!user.verified)
-    return response.status(404).json({ verified: 'Email not confirmed.' });
+  try {
+    const { email, password } = body;
+    const user = await User.findOne({ email });
+    if (!user) return response.status(404).json({ email: 'Email not found.' });
+    if (!user.verified)
+      return response.status(404).json({ verified: 'Email not confirmed.' });
 
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (isMatch) {
-    const { id, name } = user;
-    const payload = { id, name };
-    jwt.sign(
-      payload,
-      keys.secretOrKey,
-      { expiresIn: 31556926 }, // 1 year in seconds
-      (error, token) => {
-        response.json({
-          success: true,
-          token: `Bearer ${token}`,
-        });
-      }
-    );
-  } else response.status(400).json({ password: 'Password is invalid.' });
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (isMatch) {
+      const { id, name } = user;
+      const payload = { id, name };
+      jwt.sign(
+        payload,
+        keys.secretOrKey,
+        { expiresIn: 31556926 },
+        (error, token) => {
+          response.json({
+            success: true,
+            token: `Bearer ${token}`,
+          });
+        }
+      );
+    } else response.status(400).json({ password: 'Password is invalid.' });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 export default router;
