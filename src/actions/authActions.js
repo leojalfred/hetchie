@@ -21,7 +21,6 @@ async function login(url, userData, dispatch, closeModal) {
     dispatch({ type: SET_ERRORS, payload: {} });
     closeModal();
   } catch (error) {
-    console.log(error);
     dispatch({
       type: GET_ERRORS,
       payload: error.response.data,

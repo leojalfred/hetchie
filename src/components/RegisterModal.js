@@ -139,11 +139,16 @@ function RegisterModal({
           {({ errors, touched, isSubmitting }) => (
             <>
               {getErrorKeys(errors, touched, serverErrors)}
-              {clientErrorKeys.length > 0 && (
+              {(clientErrorKeys.length > 0 || serverErrorKeys.length > 0) && (
                 <div className="modal__input-errors">
                   {clientErrorKeys.map((error, i) => (
                     <p className="modal__input-error" key={i}>
                       {errors[error]}
+                    </p>
+                  ))}
+                  {serverErrorKeys.map((error, i) => (
+                    <p className="modal__input-error" key={i}>
+                      {serverErrors[error]}
                     </p>
                   ))}
                 </div>

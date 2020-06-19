@@ -9,7 +9,6 @@ import Home from './views/home/Home';
 import About from './views/about/About';
 import LoginModal from './components/LoginModal';
 import RegisterModal from './components/RegisterModal';
-import PrivateRoute from './components/PrivateRoute';
 import './App.scss';
 
 if (localStorage.jwtToken) {
