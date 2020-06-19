@@ -8,9 +8,23 @@ import {
   SET_ERRORS,
 } from './types';
 
-async function login(url, userData, dispatch, closeModal) {
+export const registerUser = (userData, closeModal) => async (dispatch) => {
   try {
-    const response = await axios.post(url, userData);
+    await axios.post('/users/register', userData);
+
+    dispatch({ type: SET_ERRORS, payload: {} });
+    closeModal();
+  } catch (error) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: error.response.data,
+    });
+  }
+};
+
+export const loginUser = (userData, closeModal) => async (dispatch) => {
+  try {
+    const response = await axios.post('/users/login', userData);
     const { token } = response.data;
     localStorage.setItem('jwtToken', token);
     setAuthToken(token);
@@ -26,14 +40,6 @@ async function login(url, userData, dispatch, closeModal) {
       payload: error.response.data,
     });
   }
-}
-
-export const registerUser = (userData, closeModal) => (dispatch) => {
-  login('/users/register', userData, dispatch, closeModal);
-};
-
-export const loginUser = (userData, closeModal) => (dispatch) => {
-  login('/users/login', userData, dispatch, closeModal);
 };
 
 export const setCurrentUser = (decoded) => {
