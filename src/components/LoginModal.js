@@ -38,9 +38,8 @@ function LoginModal({
     password: yup.string().required('Password is required.'),
   });
 
-  function onSubmit(user, { setSubmitting }) {
+  async function onSubmit(user) {
     loginUser(user, closeLoginModal);
-    setSubmitting(false);
   }
 
   function switchModals() {

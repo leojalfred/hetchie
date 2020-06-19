@@ -98,8 +98,8 @@ function RegisterModal({
       .required('Confirm password is required.'),
   });
 
-  function onSubmit(newUser, { setSubmitting }) {
-    registerUser(newUser, closeRegisterModal);
+  async function onSubmit(user) {
+    registerUser(user, closeRegisterModal);
   }
 
   function switchModals() {
