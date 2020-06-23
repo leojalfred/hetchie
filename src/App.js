@@ -9,8 +9,9 @@ import Home from './views/home/Home';
 import About from './views/about/About';
 import PrivateRoute from './components/PrivateRoute';
 import Firms from './views/firms/Firms';
-import LoginModal from './components/LoginModal';
 import RegisterModal from './components/RegisterModal';
+import LoginModal from './components/LoginModal';
+import SettingsModal from './components/SettingsModal';
 import './App.scss';
 
 if (localStorage.jwtToken) {
@@ -28,7 +29,7 @@ if (localStorage.jwtToken) {
 }
 
 export default function App() {
-  const [modalRegisterIsOpen, setRegisterIsOpen] = React.useState(false);
+  const [registerIsOpen, setRegisterIsOpen] = React.useState(false);
   function openRegisterModal() {
     return setRegisterIsOpen(true);
   }
@@ -36,12 +37,20 @@ export default function App() {
     return setRegisterIsOpen(false);
   }
 
-  const [modalLoginIsOpen, setLoginIsOpen] = React.useState(false);
+  const [loginIsOpen, setLoginIsOpen] = React.useState(false);
   function openLoginModal() {
     return setLoginIsOpen(true);
   }
   function closeLoginModal() {
     return setLoginIsOpen(false);
+  }
+
+  const [settingsIsOpen, setSettingsIsOpen] = React.useState(false);
+  function openSettingsModal() {
+    return setSettingsIsOpen(true);
+  }
+  function closeSettingsModal() {
+    return setSettingsIsOpen(false);
   }
 
   return (
@@ -70,14 +79,19 @@ export default function App() {
         </Switch>
 
         <RegisterModal
-          isOpen={modalRegisterIsOpen}
+          isOpen={registerIsOpen}
           closeRegisterModal={closeRegisterModal}
           openLoginModal={openLoginModal}
         />
         <LoginModal
-          isOpen={modalLoginIsOpen}
+          isOpen={loginIsOpen}
           closeLoginModal={closeLoginModal}
           openRegisterModal={openRegisterModal}
+        />
+
+        <SettingsModal
+          isOpen={settingsIsOpen}
+          closeModal={closeSettingsModal}
         />
       </Router>
     </Provider>

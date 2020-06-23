@@ -42,6 +42,8 @@ export const loginUser = (userData, closeModal) => async (dispatch) => {
   }
 };
 
+export const updateUser = (userData, closeModal) => async (dispatch) => {};
+
 export const setCurrentUser = (decoded) => {
   return {
     type: SET_CURRENT_USER,
