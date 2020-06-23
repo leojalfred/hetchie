@@ -23,6 +23,7 @@ function LoginModal({
   isOpen,
   closeLoginModal,
   openRegisterModal,
+  auth,
   errors,
   loginUser,
 }) {
@@ -145,7 +146,11 @@ function LoginModal({
   );
 }
 
-function mapStateToProps({ errors }) {
-  return { errors };
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+    errors: state.errors,
+  };
 }
+
 export default connect(mapStateToProps, { loginUser })(LoginModal);

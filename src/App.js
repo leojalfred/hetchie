@@ -28,20 +28,20 @@ if (localStorage.jwtToken) {
 }
 
 export default function App() {
-  const [modalLoginIsOpen, setLoginIsOpen] = React.useState(false);
-  function openLoginModal() {
-    return setLoginIsOpen(true);
-  }
-  function closeLoginModal() {
-    return setLoginIsOpen(false);
-  }
-
   const [modalRegisterIsOpen, setRegisterIsOpen] = React.useState(false);
   function openRegisterModal() {
     return setRegisterIsOpen(true);
   }
   function closeRegisterModal() {
     return setRegisterIsOpen(false);
+  }
+
+  const [modalLoginIsOpen, setLoginIsOpen] = React.useState(false);
+  function openLoginModal() {
+    return setLoginIsOpen(true);
+  }
+  function closeLoginModal() {
+    return setLoginIsOpen(false);
   }
 
   return (
@@ -68,15 +68,16 @@ export default function App() {
           />
           <PrivateRoute exact path="/firms" component={Firms} />
         </Switch>
-        <LoginModal
-          isOpen={modalLoginIsOpen}
-          closeLoginModal={closeLoginModal}
-          openRegisterModal={openRegisterModal}
-        />
+
         <RegisterModal
           isOpen={modalRegisterIsOpen}
           closeRegisterModal={closeRegisterModal}
           openLoginModal={openLoginModal}
+        />
+        <LoginModal
+          isOpen={modalLoginIsOpen}
+          closeLoginModal={closeLoginModal}
+          openRegisterModal={openRegisterModal}
         />
       </Router>
     </Provider>
