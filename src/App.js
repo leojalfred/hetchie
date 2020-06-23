@@ -7,6 +7,8 @@ import { setCurrentUser, logoutUser } from './actions/authActions';
 import store from './store';
 import Home from './views/home/Home';
 import About from './views/about/About';
+import PrivateRoute from './components/PrivateRoute';
+import Firms from './views/firms/Firms';
 import LoginModal from './components/LoginModal';
 import RegisterModal from './components/RegisterModal';
 import './App.scss';
@@ -64,6 +66,7 @@ export default function App() {
               <About {...props} openLoginModal={openLoginModal} />
             )}
           />
+          <PrivateRoute exact path="/firms" component={Firms} />
         </Switch>
         <LoginModal
           isOpen={modalLoginIsOpen}
