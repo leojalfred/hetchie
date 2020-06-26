@@ -17,6 +17,10 @@
     text-decoration: none;
     transition: color $time;
 
+    &:nth-child(n + 3) {
+      margin-left: 1rem;
+    }
+
     &:hover,
     &--active {
       color: $orange;
@@ -33,7 +37,6 @@
 
     &--login {
       color: #fff;
-      margin-left: 1rem;
       transition: $button-transition;
 
       &:hover {
