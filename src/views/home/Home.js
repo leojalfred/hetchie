@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import './Home.scss'
 import Navbar from '../../components/Navbar'
@@ -21,7 +21,7 @@ function Home({ auth, openLoginModal, openRegisterModal }) {
           Velit culpa deserunt do velit duis mollit officia reprehenderit quis
           quis do commodo.
         </p>
-        {!auth.isAuthenticated && (
+        {!auth.loggedIn && (
           <BigButton className="home__button" onClick={openRegisterModal}>
             Get Started
           </BigButton>
