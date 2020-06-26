@@ -1,51 +1,53 @@
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import * as yup from 'yup';
-import { Formik, Form, Field } from 'formik';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faTimesCircle } from '@fortawesome/free-regular-svg-icons';
+import React, { useEffect, useState } from 'react'
+import { connect } from 'react-redux'
+import * as yup from 'yup'
+import { Formik, Form, Field } from 'formik'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEnvelope, faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import {
   faLock,
   faLongArrowAltRight,
   faSignInAlt,
-} from '@fortawesome/free-solid-svg-icons';
+} from '@fortawesome/free-solid-svg-icons'
+import { withRouter } from 'react-router'
 import {
   getErrorKeys,
   clientErrorKeys,
   serverErrorKeys,
   email,
-} from '../scripts/validation';
-import { loginUser } from '../actions/authActions';
-import Modal from './Modal';
-import Button from './BigButton';
+} from '../scripts/validation'
+import { loginUser } from '../actions/authActions'
+import Modal from './Modal'
+import Button from './BigButton'
 
 function LoginModal({
-  isOpen,
-  closeLoginModal,
-  openRegisterModal,
   errors,
   loginUser,
+  history,
+  closeLoginModal,
+  openRegisterModal,
+  isOpen,
 }) {
-  const [serverErrors, setServerErrors] = useState({});
+  const [serverErrors, setServerErrors] = useState({})
   useEffect(() => {
-    if (errors) setServerErrors(errors);
-  }, [errors]);
+    if (errors) setServerErrors(errors)
+  }, [errors])
 
-  const initialValues = { email: '', password: '' };
+  const initialValues = { email: '', password: '' }
   const LoginSchema = yup.object().shape({
     ...email,
     password: yup.string().required('Password is required.'),
-  });
+  })
 
   async function onSubmit(user) {
-    loginUser(user, closeLoginModal);
+    loginUser(user, history, closeLoginModal)
   }
 
   function switchModals() {
-    closeLoginModal();
+    closeLoginModal()
     setTimeout(() => {
-      openRegisterModal();
-    }, 200);
+      openRegisterModal()
+    }, 200)
   }
 
   return (
@@ -142,10 +144,10 @@ function LoginModal({
         />
       </button>
     </Modal>
-  );
+  )
 }
 
 function mapStateToProps({ errors }) {
-  return { errors };
+  return { errors }
 }
-export default connect(mapStateToProps, { loginUser })(LoginModal);
+export default connect(mapStateToProps, { loginUser })(withRouter(LoginModal))
