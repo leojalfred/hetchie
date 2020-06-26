@@ -64,7 +64,7 @@
     "build": "react-scripts build",
     "dev": "concurrently \"yarn start\" \"cd ../server && yarn start\"",
     "start": "react-scripts start",
-    "tunnel": "ngrok http 3000"
+    "tunnel": "ngrok http --host-header=rewrite 3000"
   },
   "version": "1.0.0"
 }
