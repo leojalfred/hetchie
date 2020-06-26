@@ -39,9 +39,7 @@ function LoginModal({
     password: yup.string().required('Password is required.'),
   })
 
-  async function onSubmit(user) {
-    loginUser(user, history, closeLoginModal)
-  }
+  const onSubmit = async (user) => loginUser(user, history, closeLoginModal)
 
   function switchModals() {
     closeLoginModal()
@@ -147,7 +145,5 @@ function LoginModal({
   )
 }
 
-function mapStateToProps({ errors }) {
-  return { errors }
-}
+const mapStateToProps = ({ errors }) => ({ errors })
 export default connect(mapStateToProps, { loginUser })(withRouter(LoginModal))

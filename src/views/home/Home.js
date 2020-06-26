@@ -1,17 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import './Home.scss';
-import Navbar from '../../components/Navbar';
-import BigButton from '../../components/BigButton';
-import { logoutUser } from '../../actions/authActions';
+import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
+import './Home.scss'
+import Navbar from '../../components/Navbar'
+import BigButton from '../../components/BigButton'
+import { logoutUser } from '../../actions/authActions'
 
 function Home({ auth, openLoginModal, openRegisterModal }) {
-  const [shown, setShown] = useState(true);
-  useEffect(() => {
-    if ((auth.isAuthenticated && shown) || (!auth.isAuthenticated && !shown))
-      setShown(!shown);
-  }, [auth, shown]);
-
   return (
     <div className="home">
       <Navbar openLoginModal={openLoginModal} />
@@ -27,15 +21,15 @@ function Home({ auth, openLoginModal, openRegisterModal }) {
           Velit culpa deserunt do velit duis mollit officia reprehenderit quis
           quis do commodo.
         </p>
-        {shown && (
+        {!auth.isAuthenticated && (
           <BigButton className="home__button" onClick={openRegisterModal}>
             Get Started
           </BigButton>
         )}
       </main>
     </div>
-  );
+  )
 }
 
-const mapStateToProps = ({ auth }) => ({ auth });
-export default connect(mapStateToProps, { logoutUser })(Home);
+const mapStateToProps = ({ auth }) => ({ auth })
+export default connect(mapStateToProps, { logoutUser })(Home)
