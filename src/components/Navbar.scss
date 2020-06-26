@@ -6,6 +6,11 @@
   display: flex;
   padding-top: 1rem;
 
+  &--discrete {
+    background-color: black;
+    padding-bottom: 1rem;
+  }
+
   &__link {
     color: #fff;
     font-size: 0.8rem;
@@ -52,6 +57,10 @@
 @include bp($s) {
   .navbar {
     padding-top: 2rem;
+
+    &--discrete {
+      padding-bottom: 2rem;
+    }
 
     &__link {
       font-size: 1rem;

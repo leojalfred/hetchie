@@ -1,5 +1,12 @@
-import React from 'react';
+import React from 'react'
+import './Firms.scss'
+import Navbar from '../../components/Navbar'
 
 export default function Firms() {
-  return <div>dick</div>;
+  return (
+    <>
+      <Navbar className="navbar--discrete" />
+      <main className="firms container"></main>
+    </>
+  )
 }

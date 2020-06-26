@@ -1,56 +1,56 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import jwt_decode from 'jwt-decode';
-import setAuthToken from './utils/setAuthToken';
-import { setCurrentUser, logoutUser } from './actions/authActions';
-import store from './store';
-import Home from './views/home/Home';
-import About from './views/about/About';
-import PrivateRoute from './components/PrivateRoute';
-import Firms from './views/firms/Firms';
-import RegisterModal from './components/RegisterModal';
-import LoginModal from './components/LoginModal';
-import SettingsModal from './components/SettingsModal';
-import './App.scss';
+import React from 'react'
+import { Provider } from 'react-redux'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import jwt_decode from 'jwt-decode'
+import setAuthToken from './utils/setAuthToken'
+import { setCurrentUser, logoutUser } from './actions/authActions'
+import store from './store'
+import Home from './views/home/Home'
+import About from './views/about/About'
+import PrivateRoute from './components/PrivateRoute'
+import Firms from './views/firms/Firms'
+import RegisterModal from './components/RegisterModal'
+import LoginModal from './components/LoginModal'
+import SettingsModal from './components/SettingsModal'
+import './App.scss'
 
 if (localStorage.jwtToken) {
-  const token = localStorage.jwtToken;
-  setAuthToken(token);
+  const token = localStorage.jwtToken
+  setAuthToken(token)
 
-  const decoded = jwt_decode(token);
-  store.dispatch(setCurrentUser(decoded));
+  const decoded = jwt_decode(token)
+  store.dispatch(setCurrentUser(decoded))
 
-  const currentTime = Date.now() / 1000;
+  const currentTime = Date.now() / 1000
   if (decoded.exp < currentTime) {
-    store.dispatch(logoutUser());
-    window.location.href = '/';
+    store.dispatch(logoutUser())
+    window.location.href = '/'
   }
 }
 
 export default function App() {
-  const [registerIsOpen, setRegisterIsOpen] = React.useState(false);
+  const [registerIsOpen, setRegisterIsOpen] = React.useState(false)
   function openRegisterModal() {
-    return setRegisterIsOpen(true);
+    return setRegisterIsOpen(true)
   }
   function closeRegisterModal() {
-    return setRegisterIsOpen(false);
+    return setRegisterIsOpen(false)
   }
 
-  const [loginIsOpen, setLoginIsOpen] = React.useState(false);
+  const [loginIsOpen, setLoginIsOpen] = React.useState(false)
   function openLoginModal() {
-    return setLoginIsOpen(true);
+    return setLoginIsOpen(true)
   }
   function closeLoginModal() {
-    return setLoginIsOpen(false);
+    return setLoginIsOpen(false)
   }
 
-  const [settingsIsOpen, setSettingsIsOpen] = React.useState(false);
+  const [settingsIsOpen, setSettingsIsOpen] = React.useState(false)
   function openSettingsModal() {
-    return setSettingsIsOpen(true);
+    return setSettingsIsOpen(true)
   }
   function closeSettingsModal() {
-    return setSettingsIsOpen(false);
+    return setSettingsIsOpen(false)
   }
 
   return (
@@ -95,5 +95,5 @@ export default function App() {
         />
       </Router>
     </Provider>
-  );
+  )
 }
