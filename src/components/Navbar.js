@@ -9,9 +9,11 @@ import logo from '../images/logo.png'
 import { logoutUser } from '../actions/authActions'
 
 function Navbar({ openLoginModal, auth, logoutUser, className }) {
+  const [to, setTo] = useState('/')
   const [component, setComponent] = useState()
   useEffect(() => {
-    if (!auth.loggedIn)
+    if (!auth.loggedIn) {
+      setTo('/')
       setComponent(
         <Button
           className="navbar__link navbar__link--login"
@@ -20,13 +22,16 @@ function Navbar({ openLoginModal, auth, logoutUser, className }) {
           Login
         </Button>
       )
-    else setComponent(<Settings />)
+    } else {
+      setTo('/firms')
+      setComponent(<Settings />)
+    }
   }, [auth, openLoginModal])
 
   const classes = classNames('navbar', 'container', className)
   return (
     <nav className={classes}>
-      <Link className="navbar__link navbar__link--brand" to="/">
+      <Link className="navbar__link navbar__link--brand" to={to}>
         <img className="navbar__brand-logo" src={logo} alt="Logo" />
         <p className="navbar__brand-text">hetchie</p>
       </Link>
