@@ -1,5 +1,0 @@
-{
-  "arrowParens": "avoid",
-  "parser": "babel",
-  "singleQuote": true
-}
