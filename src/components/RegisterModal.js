@@ -1,14 +1,14 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimesCircle } from '@fortawesome/free-regular-svg-icons';
+import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import {
   faLongArrowAltRight,
   faUserPlus,
-} from '@fortawesome/free-solid-svg-icons';
-import { connect } from 'react-redux';
-import { registerUser } from '../actions/authActions';
-import Modal from './Modal';
-import CredentialsForm from './CredentialsForm';
+} from '@fortawesome/free-solid-svg-icons'
+import { connect } from 'react-redux'
+import { registerUser } from '../actions/authActions'
+import Modal from './Modal'
+import CredentialsForm from './CredentialsForm'
 
 function RegisterModal({
   isOpen,
@@ -18,10 +18,10 @@ function RegisterModal({
   registerUser,
 }) {
   function switchModals() {
-    closeRegisterModal();
+    closeRegisterModal()
     setTimeout(() => {
-      openLoginModal();
-    }, 200);
+      openLoginModal()
+    }, 200)
   }
 
   return (
@@ -51,6 +51,7 @@ function RegisterModal({
         errors={errors}
         handler={registerUser}
         closeModal={closeRegisterModal}
+        submit="Register"
       />
 
       <button className="modal__button" type="button" onClick={switchModals}>
@@ -61,10 +62,10 @@ function RegisterModal({
         />
       </button>
     </Modal>
-  );
+  )
 }
 
 function mapStateToProps({ errors }) {
-  return { errors };
+  return { errors }
 }
-export default connect(mapStateToProps, { registerUser })(RegisterModal);
+export default connect(mapStateToProps, { registerUser })(RegisterModal)

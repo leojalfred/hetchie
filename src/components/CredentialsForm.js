@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import * as yup from 'yup';
-import { Formik, Form, Field } from 'formik';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
+import React, { useEffect, useState } from 'react'
+import * as yup from 'yup'
+import { Formik, Form, Field } from 'formik'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEnvelope } from '@fortawesome/free-regular-svg-icons'
 import {
   faCheckCircle,
   faGraduationCap,
   faLock,
   faSchool,
   faSignature,
-} from '@fortawesome/free-solid-svg-icons';
-import './CredentialsForm.scss';
+} from '@fortawesome/free-solid-svg-icons'
+import './CredentialsForm.scss'
 import {
   email,
   name,
@@ -19,14 +19,19 @@ import {
   getErrorKeys,
   clientErrorKeys,
   serverErrorKeys,
-} from '../scripts/validation';
-import Button from './BigButton';
+} from '../scripts/validation'
+import Button from './BigButton'
 
-export default function CredentialsForm({ errors, handler, closeModal }) {
-  const [serverErrors, setServerErrors] = useState({});
+export default function CredentialsForm({
+  errors,
+  handler,
+  closeModal,
+  submit,
+}) {
+  const [serverErrors, setServerErrors] = useState({})
   useEffect(() => {
-    if (errors) setServerErrors(errors);
-  }, [errors]);
+    if (errors) setServerErrors(errors)
+  }, [errors])
 
   const initialValues = {
     first: '',
@@ -36,7 +41,7 @@ export default function CredentialsForm({ errors, handler, closeModal }) {
     year: '',
     password: '',
     confirm: '',
-  };
+  }
 
   function equalTo(ref, msg) {
     return yup.mixed().test({
@@ -47,11 +52,11 @@ export default function CredentialsForm({ errors, handler, closeModal }) {
         reference: ref.path,
       },
       test: function (value) {
-        return value === this.resolve(ref);
+        return value === this.resolve(ref)
       },
-    });
+    })
   }
-  yup.addMethod(yup.string, 'equalTo', equalTo);
+  yup.addMethod(yup.string, 'equalTo', equalTo)
   const CredentialsSchema = yup.object().shape({
     ...email,
     first: yup.string().required('First name is required.').matches(name, {
@@ -84,10 +89,10 @@ export default function CredentialsForm({ errors, handler, closeModal }) {
       })
       .equalTo(yup.ref('password'), 'Passwords must match.')
       .required('Confirm password is required.'),
-  });
+  })
 
   async function onSubmit(user) {
-    handler(user, closeModal);
+    handler(user, closeModal)
   }
 
   return (
@@ -228,11 +233,11 @@ export default function CredentialsForm({ errors, handler, closeModal }) {
               type="submit"
               disabled={isSubmitting}
             >
-              Register
+              {submit}
             </Button>
           </Form>
         </>
       )}
     </Formik>
-  );
+  )
 }

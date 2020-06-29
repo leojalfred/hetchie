@@ -1,11 +1,11 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimesCircle } from '@fortawesome/free-regular-svg-icons';
-import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import { connect } from 'react-redux';
-import { updateUser } from '../actions/authActions';
-import Modal from './Modal';
-import CredentialsForm from './CredentialsForm';
+import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
+import { faUserCog } from '@fortawesome/free-solid-svg-icons'
+import { connect } from 'react-redux'
+import { updateUser } from '../actions/authActions'
+import Modal from './Modal'
+import CredentialsForm from './CredentialsForm'
 
 function SettingsModal({ isOpen, closeModal, errors, updateUser }) {
   return (
@@ -13,14 +13,14 @@ function SettingsModal({ isOpen, closeModal, errors, updateUser }) {
       contentLabel="Settings Modal"
       isOpen={isOpen}
       onRequestClose={closeModal}
-      icon={faUserPlus}
+      icon={faUserCog}
     >
       <div className="modal__content">
         <div className="modal__topline">
           <div className="modal__text">
-            <h2 className="modal__heading">Get started</h2>
+            <h2 className="modal__heading">Update account</h2>
             <p className="modal__description">
-              Create an account to start optimizing your bids
+              Edit this form to update your account information
             </p>
           </div>
           <FontAwesomeIcon
@@ -35,12 +35,13 @@ function SettingsModal({ isOpen, closeModal, errors, updateUser }) {
         errors={errors}
         handler={updateUser}
         closeModal={closeModal}
+        submit="Update account"
       />
     </Modal>
-  );
+  )
 }
 
 function mapStateToProps({ errors }) {
-  return { errors };
+  return { errors }
 }
-export default connect(mapStateToProps, { updateUser })(SettingsModal);
+export default connect(mapStateToProps, { updateUser })(SettingsModal)
