@@ -1,24 +1,40 @@
 import React, { useState } from 'react'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCog } from '@fortawesome/free-solid-svg-icons'
+import {
+  faUserCog,
+  faBriefcase,
+  faCog,
+} from '@fortawesome/free-solid-svg-icons'
 import './Settings.scss'
 
 export default function Settings() {
   const [dropdown, setDropdown] = useState()
-  const onClick = () => {
-    if (dropdown === null) setDropdown(<div>Cock</div>)
-    else setDropdown(null)
+  function onClick() {
+    if (dropdown === undefined)
+      setDropdown(
+        <div className="settings__dropdown">
+          <button className="settings__link">
+            <FontAwesomeIcon className="settings__icon" icon={faUserCog} />
+            Account settings
+          </button>
+          <button className="settings__link">
+            <FontAwesomeIcon className="settings__icon" icon={faBriefcase} />
+            Firm preferences
+          </button>
+        </div>
+      )
+    else setDropdown(undefined)
   }
 
-  const active = dropdown !== null
-  const classes = classNames('settings navbar__link', {
-    'settings--active': active,
+  const active = dropdown !== undefined
+  const classes = classNames('settings__button', {
+    'settings__button--active': active,
   })
   return (
-    <>
+    <div className="settings navbar__link">
       <FontAwesomeIcon className={classes} icon={faCog} onClick={onClick} />
       {dropdown}
-    </>
+    </div>
   )
 }
