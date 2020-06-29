@@ -20,7 +20,7 @@ function useClose(ref, setComponent) {
   }, [ref, setComponent])
 }
 
-export default function Settings() {
+export default function Settings({ openSettingsModal }) {
   const dropdownRef = useRef(null)
   const [dropdown, setDropdown] = useState()
   useClose(dropdownRef, setDropdown)
@@ -29,7 +29,7 @@ export default function Settings() {
     if (dropdown === undefined) {
       setDropdown(
         <div className="settings__dropdown" ref={dropdownRef}>
-          <button className="settings__link">
+          <button className="settings__link" onClick={openSettingsModal}>
             <FontAwesomeIcon className="settings__icon" icon={faUserCog} />
             Account settings
           </button>

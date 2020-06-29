@@ -30,28 +30,16 @@ if (localStorage.jwtToken) {
 
 export default function App() {
   const [registerIsOpen, setRegisterIsOpen] = React.useState(false)
-  function openRegisterModal() {
-    return setRegisterIsOpen(true)
-  }
-  function closeRegisterModal() {
-    return setRegisterIsOpen(false)
-  }
+  const openRegisterModal = () => setRegisterIsOpen(true)
+  const closeRegisterModal = () => setRegisterIsOpen(false)
 
   const [loginIsOpen, setLoginIsOpen] = React.useState(false)
-  function openLoginModal() {
-    return setLoginIsOpen(true)
-  }
-  function closeLoginModal() {
-    return setLoginIsOpen(false)
-  }
+  const openLoginModal = () => setLoginIsOpen(true)
+  const closeLoginModal = () => setLoginIsOpen(false)
 
   const [settingsIsOpen, setSettingsIsOpen] = React.useState(false)
-  function openSettingsModal() {
-    return setSettingsIsOpen(true)
-  }
-  function closeSettingsModal() {
-    return setSettingsIsOpen(false)
-  }
+  const openSettingsModal = () => setSettingsIsOpen(true)
+  const closeSettingsModal = () => setSettingsIsOpen(false)
 
   return (
     <Provider store={store}>
@@ -60,7 +48,7 @@ export default function App() {
           <Route
             exact
             path="/"
-            render={(props) => (
+            render={props => (
               <Home
                 {...props}
                 openLoginModal={openLoginModal}
@@ -71,11 +59,16 @@ export default function App() {
           <Route
             exact
             path="/about"
-            render={(props) => (
+            render={props => (
               <About {...props} openLoginModal={openLoginModal} />
             )}
           />
-          <PrivateRoute exact path="/firms" component={Firms} />
+          <PrivateRoute
+            exact
+            path="/firms"
+            component={Firms}
+            openSettingsModal={openSettingsModal}
+          />
         </Switch>
 
         <RegisterModal
