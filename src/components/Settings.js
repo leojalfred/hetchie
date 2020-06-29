@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -8,12 +8,27 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import './Settings.scss'
 
+function useClose(ref, setComponent) {
+  useEffect(() => {
+    const handleClose = event => {
+      if (ref.current && !ref.current.contains(event.target))
+        setComponent(undefined)
+    }
+
+    document.addEventListener('mousedown', handleClose)
+    return () => document.removeEventListener('mousedown', handleClose)
+  }, [ref, setComponent])
+}
+
 export default function Settings() {
+  const dropdownRef = useRef(null)
   const [dropdown, setDropdown] = useState()
+  useClose(dropdownRef, setDropdown)
+
   function onClick() {
-    if (dropdown === undefined)
+    if (dropdown === undefined) {
       setDropdown(
-        <div className="settings__dropdown">
+        <div className="settings__dropdown" ref={dropdownRef}>
           <button className="settings__link">
             <FontAwesomeIcon className="settings__icon" icon={faUserCog} />
             Account settings
@@ -24,7 +39,7 @@ export default function Settings() {
           </button>
         </div>
       )
-    else setDropdown(undefined)
+    } else setDropdown(undefined)
   }
 
   const active = dropdown !== undefined
