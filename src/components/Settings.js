@@ -30,11 +30,19 @@ export default function Settings({ openSettingsModal }) {
   const [dropdown, setDropdown] = useState()
   useClose(dropdownRef, setDropdown)
 
+  const onLinkClick = openModal => () => {
+    setDropdown(undefined)
+    openModal()
+  }
+
   function onClick() {
     if (dropdown === undefined) {
       setDropdown(
         <div className="settings__dropdown" ref={dropdownRef}>
-          <button className="settings__link" onClick={openSettingsModal}>
+          <button
+            className="settings__link"
+            onClick={onLinkClick(openSettingsModal)}
+          >
             <FontAwesomeIcon className="settings__icon" icon={faUserCog} />
             Account settings
           </button>
