@@ -1,7 +1,7 @@
 import React from 'react'
-import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
+import { connect } from 'react-redux'
 import setAuthToken from './utils/setAuthToken'
 import { setCurrentUser, logoutUser } from './actions/authActions'
 import store from './store'
@@ -28,11 +28,10 @@ if (localStorage.jwtToken) {
   }
 }
 
-export default function App() {
+function App({ auth }) {
   const [registerIsOpen, setRegisterIsOpen] = React.useState(false)
   const openRegisterModal = () => setRegisterIsOpen(true)
   const closeRegisterModal = () => setRegisterIsOpen(false)
-
   const [loginIsOpen, setLoginIsOpen] = React.useState(false)
   const openLoginModal = () => setLoginIsOpen(true)
   const closeLoginModal = () => setLoginIsOpen(false)
@@ -41,36 +40,10 @@ export default function App() {
   const openSettingsModal = () => setSettingsIsOpen(true)
   const closeSettingsModal = () => setSettingsIsOpen(false)
 
-  return (
-    <Provider store={store}>
-      <Router>
-        <Switch>
-          <Route
-            exact
-            path="/"
-            render={props => (
-              <Home
-                {...props}
-                openLoginModal={openLoginModal}
-                openRegisterModal={openRegisterModal}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/about"
-            render={props => (
-              <About {...props} openLoginModal={openLoginModal} />
-            )}
-          />
-          <PrivateRoute
-            exact
-            path="/firms"
-            component={Firms}
-            openSettingsModal={openSettingsModal}
-          />
-        </Switch>
-
+  let modals
+  if (!auth.loggedIn) {
+    modals = (
+      <>
         <RegisterModal
           isOpen={registerIsOpen}
           closeRegisterModal={closeRegisterModal}
@@ -81,12 +54,45 @@ export default function App() {
           closeLoginModal={closeLoginModal}
           openRegisterModal={openRegisterModal}
         />
+      </>
+    )
+  } else {
+    modals = (
+      <SettingsModal isOpen={settingsIsOpen} closeModal={closeSettingsModal} />
+    )
+  }
 
-        <SettingsModal
-          isOpen={settingsIsOpen}
-          closeModal={closeSettingsModal}
+  return (
+    <Router>
+      <Switch>
+        <Route
+          exact
+          path="/"
+          render={props => (
+            <Home
+              {...props}
+              openLoginModal={openLoginModal}
+              openRegisterModal={openRegisterModal}
+            />
+          )}
         />
-      </Router>
-    </Provider>
+        <Route
+          exact
+          path="/about"
+          render={props => <About {...props} openLoginModal={openLoginModal} />}
+        />
+        <PrivateRoute
+          exact
+          path="/firms"
+          component={Firms}
+          openSettingsModal={openSettingsModal}
+        />
+      </Switch>
+
+      {modals}
+    </Router>
   )
 }
+
+const mapStateToProps = ({ auth }) => ({ auth })
+export default connect(mapStateToProps)(App)

@@ -24,6 +24,7 @@ import Button from './BigButton'
 
 export default function CredentialsForm({
   errors,
+  initialValues,
   handler,
   closeModal,
   submit,
@@ -32,16 +33,6 @@ export default function CredentialsForm({
   useEffect(() => {
     if (errors) setServerErrors(errors)
   }, [errors])
-
-  const initialValues = {
-    first: '',
-    last: '',
-    email: '',
-    school: '',
-    year: '',
-    password: '',
-    confirm: '',
-  }
 
   function equalTo(ref, msg) {
     return yup.mixed().test({

@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import { faUserCog } from '@fortawesome/free-solid-svg-icons'
@@ -7,7 +8,20 @@ import { updateUser } from '../actions/authActions'
 import Modal from './Modal'
 import CredentialsForm from './CredentialsForm'
 
-function SettingsModal({ isOpen, closeModal, errors, updateUser }) {
+function SettingsModal({ auth, isOpen, closeModal, errors, updateUser }) {
+  const [user, setUser] = useState()
+  useEffect(() => {
+    async function getUsers() {
+      try {
+        const info = await axios.get(`/users?id=${auth.user.id}`)
+        setUser(info.data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getUsers()
+  }, [auth])
+
   return (
     <Modal
       contentLabel="Settings Modal"
@@ -33,6 +47,7 @@ function SettingsModal({ isOpen, closeModal, errors, updateUser }) {
 
       <CredentialsForm
         errors={errors}
+        initialValues={user}
         handler={updateUser}
         closeModal={closeModal}
         submit="Update"
@@ -41,7 +56,5 @@ function SettingsModal({ isOpen, closeModal, errors, updateUser }) {
   )
 }
 
-function mapStateToProps({ errors }) {
-  return { errors }
-}
+const mapStateToProps = ({ auth, errors }) => ({ auth, errors })
 export default connect(mapStateToProps, { updateUser })(SettingsModal)

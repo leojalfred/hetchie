@@ -17,6 +17,16 @@ function RegisterModal({
   errors,
   registerUser,
 }) {
+  const initialValues = {
+    first: '',
+    last: '',
+    email: '',
+    school: '',
+    year: '',
+    password: '',
+    confirm: '',
+  }
+
   function switchModals() {
     closeRegisterModal()
     setTimeout(() => {
@@ -49,6 +59,7 @@ function RegisterModal({
 
       <CredentialsForm
         errors={errors}
+        initialValues={initialValues}
         handler={registerUser}
         closeModal={closeRegisterModal}
         submit="Register"
