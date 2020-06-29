@@ -11,7 +11,12 @@ import './Settings.scss'
 function useClose(ref, setComponent) {
   useEffect(() => {
     const handleClose = event => {
-      if (ref.current && !ref.current.contains(event.target))
+      const body = document.querySelector('body')
+      if (
+        !body.classList.contains('body--modal-open') &&
+        ref.current &&
+        !ref.current.contains(event.target)
+      )
         setComponent(undefined)
     }
 

@@ -35,7 +35,7 @@ function SettingsModal({ isOpen, closeModal, errors, updateUser }) {
         errors={errors}
         handler={updateUser}
         closeModal={closeModal}
-        submit="Update account"
+        submit="Update"
       />
     </Modal>
   )

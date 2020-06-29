@@ -1,7 +1,7 @@
-import React from 'react';
-import ReactModal from 'react-modal';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import './Modal.scss';
+import React from 'react'
+import ReactModal from 'react-modal'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import './Modal.scss'
 
 export default function Modal({
   contentLabel,
@@ -10,7 +10,7 @@ export default function Modal({
   icon,
   children,
 }) {
-  ReactModal.setAppElement('#root');
+  ReactModal.setAppElement('#root')
 
   return (
     <ReactModal
@@ -25,7 +25,7 @@ export default function Modal({
         beforeClose: 'modal__overlay--before-close',
       }}
       portalClassName=""
-      bodyOpenClassName={null}
+      bodyOpenClassName="body--modal-open"
       contentLabel={contentLabel}
       isOpen={isOpen}
       onRequestClose={onRequestClose}
@@ -39,5 +39,5 @@ export default function Modal({
         <div className="modal__wrapper">{children}</div>
       </div>
     </ReactModal>
-  );
+  )
 }
