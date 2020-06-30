@@ -112,7 +112,31 @@ router.get('/', async (request, response) => {
   const { id } = request.query
 
   try {
-    const user = await User.findById(id, '-date -password -verified -__v -_id')
+    const user = await User.findById(id, '-date -password -verified -__v')
+    response.json(user)
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+router.put('/', async ({ body }, response) => {
+  const { errors, isValid } = validateRegister(body)
+  if (!isValid) return response.status(400).json(errors)
+
+  try {
+    const { first, last, email, school, year, password, _id } = body
+    const salt = await bcrypt.genSalt(10)
+    const hash = await bcrypt.hash(password, salt)
+    const update = {
+      first,
+      last,
+      email,
+      school,
+      year,
+      password: hash,
+    }
+
+    const user = await User.findOneAndUpdate({ _id }, update)
     response.json(user)
   } catch (error) {
     console.log(error)
