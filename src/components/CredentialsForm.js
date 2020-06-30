@@ -27,6 +27,7 @@ export default function CredentialsForm({
   initialValues,
   handler,
   closeModal,
+  setUser,
   submit,
 }) {
   const [serverErrors, setServerErrors] = useState({})
@@ -86,7 +87,7 @@ export default function CredentialsForm({
     if (typeof initialValues._id !== 'undefined')
       user = { ...user, _id: initialValues._id }
 
-    handler(user, closeModal)
+    handler(user, closeModal, setUser)
   }
 
   return (

@@ -38,9 +38,11 @@ export const loginUser = (user, history, closeModal) => async dispatch => {
   }
 }
 
-export const updateUser = (user, closeModal) => async dispatch => {
+export const updateUser = (user, closeModal, setUser) => async dispatch => {
   try {
-    await axios.put('/users', user)
+    const response = await axios.put('/users', user)
+    const updatedUser = { ...response.data, password: '', confirm: '' }
+    setUser(updatedUser)
 
     dispatch({ type: GET_ERRORS, payload: {} })
     closeModal()

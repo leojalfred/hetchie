@@ -11,7 +11,7 @@ import CredentialsForm from './CredentialsForm'
 function SettingsModal({ auth, isOpen, closeModal, errors, updateUser }) {
   const [user, setUser] = useState()
   useEffect(() => {
-    async function getUsers() {
+    async function getUser() {
       try {
         const info = await axios.get(`/users?id=${auth.user.id}`)
         const credentials = { ...info.data, password: '', confirm: '' }
@@ -20,7 +20,7 @@ function SettingsModal({ auth, isOpen, closeModal, errors, updateUser }) {
         console.log(error)
       }
     }
-    getUsers()
+    getUser()
   }, [auth])
 
   return (
@@ -51,6 +51,7 @@ function SettingsModal({ auth, isOpen, closeModal, errors, updateUser }) {
         initialValues={user}
         handler={updateUser}
         closeModal={closeModal}
+        setUser={setUser}
         submit="Update"
       />
     </Modal>
