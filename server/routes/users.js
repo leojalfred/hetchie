@@ -89,8 +89,8 @@ router.post('/login', async ({ body }, response) => {
 
     const isMatch = await bcrypt.compare(password, user.password)
     if (isMatch) {
-      const { id, name } = user
-      const payload = { id, name }
+      const { id, first, last, email, school, year, date } = user
+      const payload = { id, first, last, email, school, year, date }
       jwt.sign(
         payload,
         keys.secretOrKey,
@@ -108,23 +108,12 @@ router.post('/login', async ({ body }, response) => {
   }
 })
 
-router.get('/', async (request, response) => {
-  const { id } = request.query
-
-  try {
-    const user = await User.findById(id, '-date -password -verified -__v')
-    response.json(user)
-  } catch (error) {
-    console.log(error)
-  }
-})
-
 router.put('/', async ({ body }, response) => {
   const { errors, isValid } = validateRegister(body)
   if (!isValid) return response.status(400).json(errors)
 
   try {
-    const { first, last, email, school, year, password, _id } = body
+    const { first, last, email, school, year, password, id } = body
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(password, salt)
     const update = {
@@ -136,7 +125,10 @@ router.put('/', async ({ body }, response) => {
       password: hash,
     }
 
-    const user = await User.findOneAndUpdate({ _id }, update, { new: true })
+    const user = await User.findByIdAndUpdate(id, update, { new: true }).select(
+      '-verified -password -__v'
+    )
+    console.log(user)
     response.json(user)
   } catch (error) {
     console.log(error)
