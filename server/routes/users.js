@@ -136,7 +136,7 @@ router.put('/', async ({ body }, response) => {
       password: hash,
     }
 
-    const user = await User.findOneAndUpdate({ _id }, update)
+    const user = await User.findOneAndUpdate({ _id }, update, { new: true })
     response.json(user)
   } catch (error) {
     console.log(error)

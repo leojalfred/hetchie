@@ -10,6 +10,8 @@ const app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
+mongoose.set('useFindAndModify', false)
+
 try {
   ;(async () => {
     await mongoose.connect(keys.db, {

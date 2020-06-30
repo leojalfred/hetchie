@@ -12,6 +12,7 @@
     "no-console": "off",
     "no-param-reassign": "off",
     "no-shadow": "off",
-    "no-unused-vars": "warn"
+    "no-unused-vars": "warn",
+    "dot-notation": "off"
   }
 }
