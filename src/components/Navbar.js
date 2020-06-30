@@ -7,7 +7,13 @@ import Button from './Button'
 import Settings from './Settings'
 import logo from '../images/logo.png'
 
-function Navbar({ auth, openLoginModal, openSettingsModal, className }) {
+function Navbar({
+  auth,
+  openLoginModal,
+  openSettingsModal,
+  openPreferencesModal,
+  className,
+}) {
   const [to, setTo] = useState('/')
   const [component, setComponent] = useState()
   useEffect(() => {
@@ -23,9 +29,14 @@ function Navbar({ auth, openLoginModal, openSettingsModal, className }) {
       )
     } else {
       setTo('/firms')
-      setComponent(<Settings openSettingsModal={openSettingsModal} />)
+      setComponent(
+        <Settings
+          openSettingsModal={openSettingsModal}
+          openPreferencesModal={openPreferencesModal}
+        />
+      )
     }
-  }, [auth, openLoginModal, openSettingsModal])
+  }, [auth, openLoginModal, openSettingsModal, openPreferencesModal])
 
   const classes = classNames('navbar', 'container', className)
   return (

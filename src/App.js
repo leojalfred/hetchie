@@ -12,6 +12,7 @@ import Firms from './views/firms/Firms'
 import RegisterModal from './components/RegisterModal'
 import LoginModal from './components/LoginModal'
 import SettingsModal from './components/SettingsModal'
+import PreferencesModal from './components/PreferencesModal'
 import './App.scss'
 
 if (localStorage.jwtToken) {
@@ -32,6 +33,7 @@ function App({ auth }) {
   const [registerIsOpen, setRegisterIsOpen] = React.useState(false)
   const openRegisterModal = () => setRegisterIsOpen(true)
   const closeRegisterModal = () => setRegisterIsOpen(false)
+
   const [loginIsOpen, setLoginIsOpen] = React.useState(false)
   const openLoginModal = () => setLoginIsOpen(true)
   const closeLoginModal = () => setLoginIsOpen(false)
@@ -39,6 +41,10 @@ function App({ auth }) {
   const [settingsIsOpen, setSettingsIsOpen] = React.useState(false)
   const openSettingsModal = () => setSettingsIsOpen(true)
   const closeSettingsModal = () => setSettingsIsOpen(false)
+
+  const [preferencesIsOpen, setPreferencesIsOpen] = React.useState(false)
+  const openPreferencesModal = () => setPreferencesIsOpen(true)
+  const closePreferencesModal = () => setPreferencesIsOpen(false)
 
   let modals
   if (!auth.loggedIn) {
@@ -58,7 +64,16 @@ function App({ auth }) {
     )
   } else {
     modals = (
-      <SettingsModal isOpen={settingsIsOpen} closeModal={closeSettingsModal} />
+      <>
+        <SettingsModal
+          isOpen={settingsIsOpen}
+          closeModal={closeSettingsModal}
+        />
+        <PreferencesModal
+          isOpen={preferencesIsOpen}
+          closeModal={closePreferencesModal}
+        />
+      </>
     )
   }
 
@@ -86,6 +101,7 @@ function App({ auth }) {
           path="/firms"
           component={Firms}
           openSettingsModal={openSettingsModal}
+          openPreferencesModal={openPreferencesModal}
         />
       </Switch>
 

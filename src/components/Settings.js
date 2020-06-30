@@ -28,7 +28,12 @@ function useClose(ref, setComponent) {
   }, [ref, setComponent])
 }
 
-function Settings({ auth, openSettingsModal, logoutUser }) {
+function Settings({
+  auth,
+  openSettingsModal,
+  openPreferencesModal,
+  logoutUser,
+}) {
   const dropdownRef = useRef(null)
   const [dropdown, setDropdown] = useState()
   useClose(dropdownRef, setDropdown)
@@ -49,7 +54,10 @@ function Settings({ auth, openSettingsModal, logoutUser }) {
             <FontAwesomeIcon className="settings__icon" icon={faUserCog} />
             Account settings
           </button>
-          <button className="settings__link">
+          <button
+            className="settings__link"
+            onClick={onLinkClick(openPreferencesModal)}
+          >
             <FontAwesomeIcon className="settings__icon" icon={faBriefcase} />
             Firm preferences
           </button>
