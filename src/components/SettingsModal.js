@@ -14,7 +14,8 @@ function SettingsModal({ auth, isOpen, closeModal, errors, updateUser }) {
     async function getUsers() {
       try {
         const info = await axios.get(`/users?id=${auth.user.id}`)
-        setUser(info.data)
+        const credentials = { ...info.data, password: '', confirm: '' }
+        setUser(credentials)
       } catch (error) {
         console.log(error)
       }

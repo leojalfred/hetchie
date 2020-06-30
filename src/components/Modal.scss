@@ -41,7 +41,6 @@
 
   &__content {
     color: $blue;
-    flex-grow: 1;
     margin: 2rem;
   }
 
@@ -184,10 +183,6 @@
     &__icon {
       color: #fff;
       font-size: 2rem;
-    }
-
-    &__wrapper {
-      height: auto;
     }
 
     &__main {

@@ -83,6 +83,9 @@ export default function CredentialsForm({
   })
 
   async function onSubmit(user) {
+    if (typeof initialValues._id !== 'undefined')
+      user = { ...user, _id: initialValues._id }
+
     handler(user, closeModal)
   }
 

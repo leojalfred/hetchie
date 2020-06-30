@@ -3,9 +3,9 @@ import setAuthToken from '../utils/setAuthToken'
 import jwt_decode from 'jwt-decode'
 import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from './types'
 
-export const registerUser = (userData, closeModal) => async dispatch => {
+export const registerUser = (user, closeModal) => async dispatch => {
   try {
-    await axios.post('/users/register', userData)
+    await axios.post('/users/register', user)
 
     dispatch({ type: GET_ERRORS, payload: {} })
     closeModal()
@@ -17,9 +17,9 @@ export const registerUser = (userData, closeModal) => async dispatch => {
   }
 }
 
-export const loginUser = (userData, history, closeModal) => async dispatch => {
+export const loginUser = (user, history, closeModal) => async dispatch => {
   try {
-    const response = await axios.post('/users/login', userData)
+    const response = await axios.post('/users/login', user)
     const { token } = response.data
     localStorage.setItem('jwtToken', token)
     setAuthToken(token)
@@ -38,7 +38,19 @@ export const loginUser = (userData, history, closeModal) => async dispatch => {
   }
 }
 
-export const updateUser = (userData, closeModal) => async dispatch => {}
+export const updateUser = (user, closeModal) => async dispatch => {
+  try {
+    await axios.put('/users', user)
+
+    dispatch({ type: GET_ERRORS, payload: {} })
+    closeModal()
+  } catch (error) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: error.response.data,
+    })
+  }
+}
 
 export const setCurrentUser = decoded => {
   return {
