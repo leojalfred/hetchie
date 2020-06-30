@@ -3,19 +3,21 @@ import jwt_decode from 'jwt-decode'
 import { GET_ERRORS, SET_CURRENT_USER } from './types'
 import setAuthToken from '../utils/setAuthToken'
 
-export const putUser = (user, closeModal, setUser) => async dispatch => {
+export const putUser = (
+  user,
+  closeModal,
+  register = false
+) => async dispatch => {
   try {
-    if (setUser === undefined) await axios.post('/users/register', user)
+    if (register) await axios.post('/users/register', user)
     else {
       const response = await axios.put('/users', user)
-      const updatedUser = { ...response.data, password: '', confirm: '' }
-      setUser(updatedUser)
+      dispatch(setCurrentUser(response.data))
     }
 
     dispatch({ type: GET_ERRORS, payload: {} })
     closeModal()
   } catch (error) {
-    console.log(error)
     dispatch({
       type: GET_ERRORS,
       payload: error.response.data,

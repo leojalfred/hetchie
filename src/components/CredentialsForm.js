@@ -29,7 +29,7 @@ function CredentialsForm({
   initialValues,
   putUser,
   closeModal,
-  setUser,
+  register,
   submit,
 }) {
   const [serverErrors, setServerErrors] = useState({})
@@ -89,7 +89,7 @@ function CredentialsForm({
     if (typeof initialValues._id !== 'undefined')
       user = { ...user, _id: initialValues._id }
 
-    putUser(user, closeModal, setUser)
+    putUser(user, closeModal, register)
   }
 
   return (

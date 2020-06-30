@@ -57,6 +57,7 @@ export default function RegisterModal({
         <CredentialsForm
           initialValues={initialValues}
           closeModal={closeRegisterModal}
+          register={true}
           submit="Register"
         />
       </div>

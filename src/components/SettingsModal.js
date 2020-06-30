@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import { faUserCog } from '@fortawesome/free-solid-svg-icons'
@@ -10,16 +9,8 @@ import CredentialsForm from './CredentialsForm'
 function SettingsModal({ auth, isOpen, closeModal }) {
   const [user, setUser] = useState()
   useEffect(() => {
-    async function getUser() {
-      try {
-        const info = await axios.get(`/users?id=${auth.user.id}`)
-        const credentials = { ...info.data, password: '', confirm: '' }
-        setUser(credentials)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    getUser()
+    const credentials = { ...auth.user, password: '', confirm: '' }
+    setUser(credentials)
   }, [auth])
 
   return (
@@ -48,7 +39,6 @@ function SettingsModal({ auth, isOpen, closeModal }) {
         <CredentialsForm
           initialValues={user}
           closeModal={closeModal}
-          setUser={setUser}
           submit="Update"
         />
       </div>
