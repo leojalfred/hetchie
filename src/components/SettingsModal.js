@@ -37,20 +37,21 @@ function SettingsModal({ auth, isOpen, closeModal }) {
               Edit this form to update your account information
             </p>
           </div>
+
           <FontAwesomeIcon
             className="modal__close"
             icon={faTimesCircle}
             onClick={closeModal}
           />
         </div>
-      </div>
 
-      <CredentialsForm
-        initialValues={user}
-        closeModal={closeModal}
-        setUser={setUser}
-        submit="Update"
-      />
+        <CredentialsForm
+          initialValues={user}
+          closeModal={closeModal}
+          setUser={setUser}
+          submit="Update"
+        />
+      </div>
     </Modal>
   )
 }

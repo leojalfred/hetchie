@@ -46,19 +46,20 @@ export default function RegisterModal({
               Create an account to start optimizing your bids
             </p>
           </div>
+
           <FontAwesomeIcon
             className="modal__close"
             icon={faTimesCircle}
             onClick={closeRegisterModal}
           />
         </div>
-      </div>
 
-      <CredentialsForm
-        initialValues={initialValues}
-        closeModal={closeRegisterModal}
-        submit="Register"
-      />
+        <CredentialsForm
+          initialValues={initialValues}
+          closeModal={closeRegisterModal}
+          submit="Register"
+        />
+      </div>
 
       <button className="modal__button" type="button" onClick={switchModals}>
         Log in
