@@ -6,15 +6,8 @@ import './Navbar.scss'
 import Button from './Button'
 import Settings from './Settings'
 import logo from '../images/logo.png'
-import { logoutUser } from '../actions/authActions'
 
-function Navbar({
-  auth,
-  openLoginModal,
-  openSettingsModal,
-  className,
-  logoutUser,
-}) {
+function Navbar({ auth, openLoginModal, openSettingsModal, className }) {
   const [to, setTo] = useState('/')
   const [component, setComponent] = useState()
   useEffect(() => {
@@ -54,4 +47,4 @@ function Navbar({
 }
 
 const mapStateToProps = ({ auth }) => ({ auth })
-export default connect(mapStateToProps, { logoutUser })(Navbar)
+export default connect(mapStateToProps)(Navbar)

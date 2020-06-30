@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import './Home.scss'
 import Navbar from '../../components/Navbar'
 import BigButton from '../../components/BigButton'
-import { logoutUser } from '../../actions/authActions'
 
 function Home({ auth, openLoginModal, openRegisterModal }) {
   return (
@@ -32,4 +31,4 @@ function Home({ auth, openLoginModal, openRegisterModal }) {
 }
 
 const mapStateToProps = ({ auth }) => ({ auth })
-export default connect(mapStateToProps, { logoutUser })(Home)
+export default connect(mapStateToProps)(Home)

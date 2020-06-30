@@ -4,9 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faUserCog,
   faBriefcase,
+  faSignOutAlt,
   faCog,
 } from '@fortawesome/free-solid-svg-icons'
+import { connect } from 'react-redux'
 import './Settings.scss'
+import { logoutUser } from '../actions/authActions'
 
 function useClose(ref, setComponent) {
   useEffect(() => {
@@ -25,7 +28,7 @@ function useClose(ref, setComponent) {
   }, [ref, setComponent])
 }
 
-export default function Settings({ openSettingsModal }) {
+function Settings({ auth, openSettingsModal, logoutUser }) {
   const dropdownRef = useRef(null)
   const [dropdown, setDropdown] = useState()
   useClose(dropdownRef, setDropdown)
@@ -50,6 +53,10 @@ export default function Settings({ openSettingsModal }) {
             <FontAwesomeIcon className="settings__icon" icon={faBriefcase} />
             Firm preferences
           </button>
+          <button className="settings__link" onClick={logoutUser}>
+            <FontAwesomeIcon className="settings__icon" icon={faSignOutAlt} />
+            Log out
+          </button>
         </div>
       )
     } else setDropdown(undefined)
@@ -66,3 +73,6 @@ export default function Settings({ openSettingsModal }) {
     </div>
   )
 }
+
+const mapStateToProps = ({ auth }) => ({ auth })
+export default connect(mapStateToProps, { logoutUser })(Settings)
