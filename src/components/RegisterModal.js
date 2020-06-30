@@ -5,17 +5,14 @@ import {
   faLongArrowAltRight,
   faUserPlus,
 } from '@fortawesome/free-solid-svg-icons'
-import { connect } from 'react-redux'
-import { registerUser } from '../actions/authActions'
 import Modal from './Modal'
 import CredentialsForm from './CredentialsForm'
 
-function RegisterModal({
+export default function RegisterModal({
   isOpen,
   closeRegisterModal,
   openLoginModal,
-  errors,
-  registerUser,
+  putUser,
 }) {
   const initialValues = {
     first: '',
@@ -58,9 +55,7 @@ function RegisterModal({
       </div>
 
       <CredentialsForm
-        errors={errors}
         initialValues={initialValues}
-        handler={registerUser}
         closeModal={closeRegisterModal}
         submit="Register"
       />
@@ -75,8 +70,3 @@ function RegisterModal({
     </Modal>
   )
 }
-
-function mapStateToProps({ errors }) {
-  return { errors }
-}
-export default connect(mapStateToProps, { registerUser })(RegisterModal)

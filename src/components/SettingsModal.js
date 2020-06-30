@@ -4,11 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import { faUserCog } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
-import { updateUser } from '../actions/authActions'
 import Modal from './Modal'
 import CredentialsForm from './CredentialsForm'
 
-function SettingsModal({ auth, isOpen, closeModal, errors, updateUser }) {
+function SettingsModal({ auth, isOpen, closeModal }) {
   const [user, setUser] = useState()
   useEffect(() => {
     async function getUser() {
@@ -47,9 +46,7 @@ function SettingsModal({ auth, isOpen, closeModal, errors, updateUser }) {
       </div>
 
       <CredentialsForm
-        errors={errors}
         initialValues={user}
-        handler={updateUser}
         closeModal={closeModal}
         setUser={setUser}
         submit="Update"
@@ -58,5 +55,5 @@ function SettingsModal({ auth, isOpen, closeModal, errors, updateUser }) {
   )
 }
 
-const mapStateToProps = ({ auth, errors }) => ({ auth, errors })
-export default connect(mapStateToProps, { updateUser })(SettingsModal)
+const mapStateToProps = ({ auth }) => ({ auth })
+export default connect(mapStateToProps)(SettingsModal)

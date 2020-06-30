@@ -1,15 +1,21 @@
 import axios from 'axios'
-import setAuthToken from '../utils/setAuthToken'
 import jwt_decode from 'jwt-decode'
 import { GET_ERRORS, SET_CURRENT_USER } from './types'
+import setAuthToken from '../utils/setAuthToken'
 
-export const registerUser = (user, closeModal) => async dispatch => {
+export const putUser = (user, closeModal, setUser) => async dispatch => {
   try {
-    await axios.post('/users/register', user)
+    if (setUser === undefined) await axios.post('/users/register', user)
+    else {
+      const response = await axios.put('/users', user)
+      const updatedUser = { ...response.data, password: '', confirm: '' }
+      setUser(updatedUser)
+    }
 
     dispatch({ type: GET_ERRORS, payload: {} })
     closeModal()
   } catch (error) {
+    console.log(error)
     dispatch({
       type: GET_ERRORS,
       payload: error.response.data,
@@ -29,22 +35,6 @@ export const loginUser = (user, history, closeModal) => async dispatch => {
     dispatch({ type: GET_ERRORS, payload: {} })
 
     history.push('/firms')
-    closeModal()
-  } catch (error) {
-    dispatch({
-      type: GET_ERRORS,
-      payload: error.response.data,
-    })
-  }
-}
-
-export const updateUser = (user, closeModal, setUser) => async dispatch => {
-  try {
-    const response = await axios.put('/users', user)
-    const updatedUser = { ...response.data, password: '', confirm: '' }
-    setUser(updatedUser)
-
-    dispatch({ type: GET_ERRORS, payload: {} })
     closeModal()
   } catch (error) {
     dispatch({

@@ -10,6 +10,7 @@ import {
   faSchool,
   faSignature,
 } from '@fortawesome/free-solid-svg-icons'
+import { connect } from 'react-redux'
 import './CredentialsForm.scss'
 import {
   email,
@@ -21,11 +22,12 @@ import {
   serverErrorKeys,
 } from '../scripts/validation'
 import Button from './BigButton'
+import { putUser } from '../actions/authActions'
 
-export default function CredentialsForm({
+function CredentialsForm({
   errors,
   initialValues,
-  handler,
+  putUser,
   closeModal,
   setUser,
   submit,
@@ -87,7 +89,7 @@ export default function CredentialsForm({
     if (typeof initialValues._id !== 'undefined')
       user = { ...user, _id: initialValues._id }
 
-    handler(user, closeModal, setUser)
+    putUser(user, closeModal, setUser)
   }
 
   return (
@@ -236,3 +238,6 @@ export default function CredentialsForm({
     </Formik>
   )
 }
+
+const mapStateToProps = ({ errors }) => ({ errors })
+export default connect(mapStateToProps, { putUser })(CredentialsForm)
