@@ -128,7 +128,6 @@ router.put('/', async ({ body }, response) => {
     const user = await User.findByIdAndUpdate(id, update, { new: true }).select(
       '-verified -password -__v'
     )
-    console.log(user)
     response.json(user)
   } catch (error) {
     console.log(error)
