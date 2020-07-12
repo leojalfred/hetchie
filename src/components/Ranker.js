@@ -34,16 +34,10 @@ export default function Ranker() {
             {data.map(({ id, value }, i) => (
               <Draggable draggableId={id} key={id} index={i}>
                 {({ innerRef, draggableProps, dragHandleProps }) => (
-                  <div
-                    className="rankable"
-                    ref={innerRef}
-                    {...draggableProps}
-                    {...dragHandleProps}
-                  >
-                    <FontAwesomeIcon
-                      className="rankable__handle"
-                      icon={faGripVertical}
-                    />
+                  <div className="rankable" ref={innerRef} {...draggableProps}>
+                    <div {...dragHandleProps}>
+                      <FontAwesomeIcon icon={faGripVertical} />
+                    </div>
                     <div className="rankable__rank">{i + 1}</div>
                     <input
                       className="rankable__input"
