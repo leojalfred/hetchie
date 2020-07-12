@@ -30,7 +30,8 @@ export default function Ranker({ type, data, setData }) {
   }
 
   function onDelete(event) {
-    const { name } = event.target.previousSibling
+    console.log(event.currentTarget.previousSibling)
+    const { name } = event.currentTarget.previousSibling
     const index = name.slice(name.length - 1)
     const working = [...data]
     working.splice(index, 1)
