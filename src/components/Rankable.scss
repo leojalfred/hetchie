@@ -8,8 +8,10 @@
   display: flex;
   margin-bottom: 1rem;
   padding: 1rem;
+  transition: box-shadow $time, opacity $time;
 
-  &:focus {
+  &:focus,
+  &__handle:focus {
     outline: 0;
   }
 
@@ -32,11 +34,18 @@
 
   &__delete {
     cursor: pointer;
-    margin-left: auto;
     transition: color 150ms;
 
     &:hover {
       color: red;
+    }
+  }
+
+  &--new {
+    box-shadow: none;
+
+    > .rankable__input {
+      margin-right: 0;
     }
   }
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import Rankable from './Rankable'
 
@@ -19,50 +19,118 @@ export default function Ranker({ type, data, setData }) {
   }
 
   function onChange(event) {
-    const name = event.target.name
+    const { name, value } = event.currentTarget
     const index = name.slice(name.length - 1)
     const working = [...data]
-    working[index].value = event.target.value
+    working[index] = { ...working[index], value }
     setData(working)
   }
 
+  const [added, setAdded] = useState(false)
+  const [removed, setRemoved] = useState(false)
   function onDelete(event) {
-    const { name } = event.currentTarget.previousSibling
-    const index = name.slice(name.length - 1)
-    const working = [...data]
-    working.splice(index, 1)
-    setData(working)
+    const {
+      parentElement: rankable,
+      previousSibling: input,
+    } = event.currentTarget
+    rankable.classList.add('invisible')
+
+    setTimeout(() => {
+      const { name } = input
+      const index = name.slice(name.length - 1)
+      const working = [...data]
+      working.splice(index, 1)
+      setData(working)
+      setAdded(false)
+      setRemoved(true)
+    }, 200)
   }
+
+  function onChangeNew(event) {
+    const working = [...data]
+    const id = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER).toString()
+    const { value } = event.currentTarget
+    working.push({ id, value })
+    setData(working)
+    setAdded(true)
+    setRemoved(false)
+
+    event.currentTarget.value = ''
+  }
+
+  useEffect(() => {
+    const input = document.querySelector(
+      `.rankable--${type}:not(.rankable--new):last-child > .rankable__input`
+    )
+
+    if (input) {
+      if (added) {
+        const { parentElement: rankable } = input
+        rankable.classList.add('invisible')
+
+        setTimeout(() => {
+          rankable.classList.remove('invisible')
+          input.focus()
+        }, 0)
+      }
+    }
+
+    if (data.length === 4 && removed) {
+      const rankable = document.querySelector(
+        `.rankable--${type}.rankable--new`
+      )
+      rankable.classList.add('invisible')
+      setTimeout(() => rankable.classList.remove('invisible'), 0)
+    }
+  }, [data.length, type, added, removed])
 
   const inputPlaceholder = type[0].toUpperCase() + type.slice(1)
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="1">
-        {({ innerRef, droppableProps, placeholder }) => (
-          <div ref={innerRef} {...droppableProps}>
-            {data.map(({ id, value }, i) => (
-              <Draggable draggableId={id} key={id} index={i}>
-                {({ innerRef, draggableProps, dragHandleProps }) => (
-                  <Rankable
-                    innerRef={innerRef}
-                    draggableProps={draggableProps}
-                    dragHandleProps={dragHandleProps}
-                    type={type}
-                    index={i}
-                    placeholder={inputPlaceholder}
-                    value={value}
-                    onChange={onChange}
-                    onDelete={onDelete}
-                  />
-                )}
-              </Draggable>
-            ))}
+    <>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="current">
+          {({ innerRef, droppableProps, placeholder }) => (
+            <div
+              className={`droppable--${type}`}
+              ref={innerRef}
+              {...droppableProps}
+            >
+              {data.map(({ id, value }, i) => (
+                <Draggable draggableId={id} key={id} index={i}>
+                  {({ innerRef, draggableProps, dragHandleProps }) => (
+                    <Rankable
+                      innerRef={innerRef}
+                      draggableProps={draggableProps}
+                      dragHandleProps={dragHandleProps}
+                      type={type}
+                      index={i}
+                      placeholder={inputPlaceholder}
+                      value={value}
+                      onChange={onChange}
+                      onDelete={onDelete}
+                    />
+                  )}
+                </Draggable>
+              ))}
 
-            {placeholder}
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
+              {placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
+
+      {data.length < 5 && (
+        <div className={`rankable rankable--${type} rankable--new`}>
+          <input
+            className="modal__input rankable__input"
+            type="text"
+            name={`${type}-new`}
+            placeholder={inputPlaceholder}
+            onChange={onChangeNew}
+          />
+        </div>
+      )}
+    </>
   )
 }

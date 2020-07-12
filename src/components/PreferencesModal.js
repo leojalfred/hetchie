@@ -12,12 +12,12 @@ function PreferencesModal({ auth, isOpen, closeModal }) {
   useEffect(() => setUser(auth.user), [auth])
 
   const [locations, setLocations] = useState([
-      { id: '1', value: 'Minneapolis' },
-      { id: '2', value: 'Asheville' },
+      { id: '0', value: 'Minneapolis' },
+      { id: '1', value: 'Asheville' },
     ]),
     [practices, setPractices] = useState([
-      { id: '1', value: 'Tax' },
-      { id: '2', value: 'Real Estate' },
+      { id: '0', value: 'Tax' },
+      { id: '1', value: 'Real Estate' },
     ])
 
   const onSubmit = async user => console.log('meme')

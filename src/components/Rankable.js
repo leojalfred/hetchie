@@ -7,6 +7,7 @@ import './Rankable.scss'
 export default function Rankable({
   innerRef,
   draggableProps,
+  isNew = false,
   dragHandleProps,
   type,
   index,
@@ -16,9 +17,13 @@ export default function Rankable({
   onDelete,
 }) {
   return (
-    <div className="rankable" ref={innerRef} {...draggableProps}>
+    <div
+      className={`rankable rankable--${type}`}
+      ref={innerRef}
+      {...draggableProps}
+    >
       <div {...dragHandleProps}>
-        <FontAwesomeIcon icon={faGripVertical} />
+        <FontAwesomeIcon className="rankable__handle" icon={faGripVertical} />
       </div>
       <div className="rankable__rank">{index + 1}</div>
       <input
