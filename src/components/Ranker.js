@@ -108,15 +108,12 @@ export default function Ranker({ type, data, setData }) {
       </DragDropContext>
 
       {data.length < 5 && (
-        <div className={`rankable rankable--${type} rankable--new`}>
-          <input
-            className="modal__input rankable__input"
-            type="text"
-            name={`${type}-new`}
-            placeholder={inputPlaceholder}
-            onChange={onChangeNew}
-          />
-        </div>
+        <Rankable
+          isNew={true}
+          type={type}
+          placeholder={inputPlaceholder}
+          onChange={onChangeNew}
+        />
       )}
     </>
   )

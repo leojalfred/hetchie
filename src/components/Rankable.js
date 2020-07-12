@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
@@ -16,16 +17,23 @@ export default function Rankable({
   onChange,
   onDelete,
 }) {
+  const classes = classNames(`rankable rankable--${type}`, {
+    'rankable--new': isNew,
+  })
+
   return (
-    <div
-      className={`rankable rankable--${type}`}
-      ref={innerRef}
-      {...draggableProps}
-    >
-      <div {...dragHandleProps}>
-        <FontAwesomeIcon className="rankable__handle" icon={faGripVertical} />
-      </div>
-      <div className="rankable__rank">{index + 1}</div>
+    <div className={classes} ref={innerRef} {...draggableProps}>
+      {!isNew && (
+        <>
+          <div {...dragHandleProps}>
+            <FontAwesomeIcon
+              className="rankable__handle"
+              icon={faGripVertical}
+            />
+          </div>
+          <div className="rankable__rank">{index + 1}</div>
+        </>
+      )}
       <input
         className="modal__input rankable__input"
         type="text"
@@ -34,11 +42,13 @@ export default function Rankable({
         value={value}
         onChange={onChange}
       />
-      <FontAwesomeIcon
-        className="rankable__delete"
-        icon={faTrashAlt}
-        onClick={onDelete}
-      />
+      {!isNew && (
+        <FontAwesomeIcon
+          className="rankable__delete"
+          icon={faTrashAlt}
+          onClick={onDelete}
+        />
+      )}
     </div>
   )
 }
