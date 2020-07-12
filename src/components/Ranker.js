@@ -3,9 +3,10 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
+import { Field } from 'formik'
 import './Ranker.scss'
 
-export default function Ranker() {
+export default function Ranker({ type }) {
   const [data, setData] = useState([
     { id: '1', value: 'Minneapolis' },
     { id: '2', value: 'Asheville' },
@@ -39,9 +40,10 @@ export default function Ranker() {
                       <FontAwesomeIcon icon={faGripVertical} />
                     </div>
                     <div className="rankable__rank">{i + 1}</div>
-                    <input
-                      className="rankable__input"
+                    <Field
+                      className="modal__input rankable__input"
                       type="text"
+                      name={`${type}-${i}`}
                       placeholder={value}
                     />
                     <FontAwesomeIcon
