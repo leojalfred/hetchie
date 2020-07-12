@@ -2,19 +2,23 @@
 @import '../styles/variables';
 
 .preferences {
-  @include bp($m) {
-    display: flex;
-  }
-
-  &__ranker {
-    flex: 1;
-
-    &:first-child {
-      margin-right: 2rem;
-    }
+  &__ranker:first-child {
+    margin-bottom: 2rem;
   }
 
   &__submit {
     margin-top: 4rem;
+  }
+
+  @include bp($l) {
+    display: flex;
+
+    &__ranker {
+      flex: 1;
+
+      &:first-child {
+        margin: 0 2rem 0 0;
+      }
+    }
   }
 }

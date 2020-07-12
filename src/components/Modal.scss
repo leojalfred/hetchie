@@ -29,6 +29,7 @@
 
   &__main {
     background-color: #fff;
+    overflow-y: auto;
     height: 100%;
   }
 
@@ -118,6 +119,7 @@
     color: $blue;
     flex: 1;
     padding: 0.5rem;
+    width: 100%;
   }
 
   &__submit {
@@ -157,6 +159,7 @@
     border-radius: 7rem;
     display: flex;
     height: auto;
+    max-height: 90vh;
     min-width: 90%;
     overflow: hidden;
 
