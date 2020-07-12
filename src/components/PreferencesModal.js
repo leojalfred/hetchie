@@ -5,6 +5,7 @@ import { faListOl } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
 import Modal from './Modal'
 import Ranker from './Ranker'
+import Button from './BigButton'
 import './PreferencesModal.scss'
 
 function PreferencesModal({ auth, isOpen, closeModal }) {
@@ -20,7 +21,11 @@ function PreferencesModal({ auth, isOpen, closeModal }) {
       { id: '1', value: 'Real Estate' },
     ])
 
-  const onSubmit = async user => console.log('meme')
+  const [submitting, setSubmitting] = useState(false)
+  function onSubmit(event) {
+    event.preventDefault()
+    setSubmitting(true)
+  }
 
   return (
     <Modal
@@ -57,6 +62,14 @@ function PreferencesModal({ auth, isOpen, closeModal }) {
               <Ranker type="practice" data={practices} setData={setPractices} />
             </div>
           </div>
+
+          <Button
+            className="modal__submit preferences__submit"
+            type="submit"
+            disabled={submitting}
+          >
+            Update
+          </Button>
         </form>
       </div>
     </Modal>
