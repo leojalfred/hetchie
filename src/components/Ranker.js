@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState } from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
@@ -44,7 +44,7 @@ export default function Ranker() {
                       className="rankable__handle"
                       icon={faGripVertical}
                     />
-                    <span className="rankable__rank">{i + 1}</span>
+                    <div className="rankable__rank">{i + 1}</div>
                     <input
                       className="rankable__input"
                       type="text"
