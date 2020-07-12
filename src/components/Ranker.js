@@ -1,9 +1,6 @@
 import React from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
-import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
-import './Ranker.scss'
+import Rankable from './Rankable'
 
 export default function Ranker({ type, data, setData }) {
   function onDragEnd({ destination, reason, source }) {
@@ -30,7 +27,6 @@ export default function Ranker({ type, data, setData }) {
   }
 
   function onDelete(event) {
-    console.log(event.currentTarget.previousSibling)
     const { name } = event.currentTarget.previousSibling
     const index = name.slice(name.length - 1)
     const working = [...data]
@@ -48,25 +44,17 @@ export default function Ranker({ type, data, setData }) {
             {data.map(({ id, value }, i) => (
               <Draggable draggableId={id} key={id} index={i}>
                 {({ innerRef, draggableProps, dragHandleProps }) => (
-                  <div className="rankable" ref={innerRef} {...draggableProps}>
-                    <div {...dragHandleProps}>
-                      <FontAwesomeIcon icon={faGripVertical} />
-                    </div>
-                    <div className="rankable__rank">{i + 1}</div>
-                    <input
-                      className="modal__input rankable__input"
-                      type="text"
-                      name={`${type}-${i}`}
-                      placeholder={inputPlaceholder}
-                      value={value}
-                      onChange={onChange}
-                    />
-                    <FontAwesomeIcon
-                      className="rankable__delete"
-                      icon={faTrashAlt}
-                      onClick={onDelete}
-                    />
-                  </div>
+                  <Rankable
+                    innerRef={innerRef}
+                    draggableProps={draggableProps}
+                    dragHandleProps={dragHandleProps}
+                    type={type}
+                    index={i}
+                    placeholder={inputPlaceholder}
+                    value={value}
+                    onChange={onChange}
+                    onDelete={onDelete}
+                  />
                 )}
               </Draggable>
             ))}
