@@ -1,17 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
-import { Field } from 'formik'
 import './Ranker.scss'
 
-export default function Ranker({ type }) {
-  const [data, setData] = useState([
-    { id: '1', value: 'Minneapolis' },
-    { id: '2', value: 'Asheville' },
-  ])
-
+export default function Ranker({ type, data, setData }) {
   const onDragEnd = ({ destination, reason, source }) => {
     if (
       !destination ||
@@ -21,11 +15,12 @@ export default function Ranker({ type }) {
     )
       return
 
-    const working = [...data]
-    const removed = working.splice(source.index, 1)
-    working.splice(destination.index, 0, removed[0])
-    setData(working)
+    const removed = data.splice(source.index, 1)
+    data.splice(destination.index, 0, removed[0])
+    setData(data)
   }
+
+  const inputPlaceholder = type[0].toUpperCase() + type.slice(1)
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -40,11 +35,11 @@ export default function Ranker({ type }) {
                       <FontAwesomeIcon icon={faGripVertical} />
                     </div>
                     <div className="rankable__rank">{i + 1}</div>
-                    <Field
+                    <input
                       className="modal__input rankable__input"
                       type="text"
                       name={`${type}-${i}`}
-                      placeholder={value}
+                      placeholder={inputPlaceholder}
                     />
                     <FontAwesomeIcon
                       className="rankable__delete"

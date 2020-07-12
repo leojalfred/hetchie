@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import { faListOl } from '@fortawesome/free-solid-svg-icons'
-import { Formik, Form } from 'formik'
 import { connect } from 'react-redux'
 import Modal from './Modal'
 import Ranker from './Ranker'
@@ -12,18 +11,14 @@ function PreferencesModal({ auth, isOpen, closeModal }) {
   const [user, setUser] = useState()
   useEffect(() => setUser(auth.user), [auth])
 
-  const initialValues = {
-    'location-0': '',
-    'location-1': '',
-    'location-2': '',
-    'location-3': '',
-    'location-4': '',
-    'practice-0': '',
-    'practice-1': '',
-    'practice-2': '',
-    'practice-3': '',
-    'practice-4': '',
-  }
+  const [locations, setLocations] = useState([
+      { id: '1', value: 'Minneapolis' },
+      { id: '2', value: 'Asheville' },
+    ]),
+    [practices, setPractices] = useState([
+      { id: '1', value: 'Tax' },
+      { id: '2', value: 'Real Estate' },
+    ])
 
   const onSubmit = async user => console.log('meme')
 
@@ -51,22 +46,18 @@ function PreferencesModal({ auth, isOpen, closeModal }) {
           />
         </div>
 
-        <Formik initialValues={initialValues} onSubmit={onSubmit}>
-          {({ isSubmitting }) => (
-            <Form>
-              <div className="preferences">
-                <div className="preferences__ranker">
-                  <h3 className="preferences__title">Location Preferences</h3>
-                  <Ranker type="location" />
-                </div>
-                <div className="preferences__ranker">
-                  <h3 className="preferences__title">Practice Preferences</h3>
-                  <Ranker type="practice" />
-                </div>
-              </div>
-            </Form>
-          )}
-        </Formik>
+        <form onSubmit={onSubmit}>
+          <div className="preferences">
+            <div className="preferences__ranker">
+              <h3 className="preferences__title">Location Preferences</h3>
+              <Ranker type="location" data={locations} setData={setLocations} />
+            </div>
+            <div className="preferences__ranker">
+              <h3 className="preferences__title">Practice Preferences</h3>
+              <Ranker type="practice" data={practices} setData={setPractices} />
+            </div>
+          </div>
+        </form>
       </div>
     </Modal>
   )
