@@ -6,7 +6,7 @@ import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import './Ranker.scss'
 
 export default function Ranker({ type, data, setData }) {
-  const onDragEnd = ({ destination, reason, source }) => {
+  function onDragEnd({ destination, reason, source }) {
     if (
       !destination ||
       reason === 'CANCEL' ||
@@ -15,16 +15,25 @@ export default function Ranker({ type, data, setData }) {
     )
       return
 
-    const working = [...data],
-      removed = working.splice(source.index, 1)
+    const working = [...data]
+    const removed = working.splice(source.index, 1)
     working.splice(destination.index, 0, removed[0])
     setData(working)
   }
-  const onChange = event => {
-    const name = event.target.name,
-      index = name.slice(name.length - 1),
-      working = [...data]
+
+  function onChange(event) {
+    const name = event.target.name
+    const index = name.slice(name.length - 1)
+    const working = [...data]
     working[index].value = event.target.value
+    setData(working)
+  }
+
+  function onDelete(event) {
+    const { name } = event.target.previousSibling
+    const index = name.slice(name.length - 1)
+    const working = [...data]
+    working.splice(index, 1)
     setData(working)
   }
 
@@ -54,6 +63,7 @@ export default function Ranker({ type, data, setData }) {
                     <FontAwesomeIcon
                       className="rankable__delete"
                       icon={faTrashAlt}
+                      onClick={onDelete}
                     />
                   </div>
                 )}
