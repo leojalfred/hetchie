@@ -27,7 +27,6 @@ export default function Ranker({ type, data, setData }) {
   }
 
   const [added, setAdded] = useState(false)
-  const [removed, setRemoved] = useState(false)
   function onDelete(event) {
     const {
       parentElement: rankable,
@@ -42,7 +41,6 @@ export default function Ranker({ type, data, setData }) {
       working.splice(index, 1)
       setData(working)
       setAdded(false)
-      setRemoved(true)
     }, 200)
   }
 
@@ -53,29 +51,25 @@ export default function Ranker({ type, data, setData }) {
     working.push({ id, value })
     setData(working)
     setAdded(true)
-    setRemoved(false)
 
     event.currentTarget.value = ''
   }
 
   useEffect(() => {
-    const inputQuery = `.rankable--${type}:not(.rankable--new):last-child > .rankable__input`
-    const input = document.querySelector(inputQuery)
+    if (added) {
+      const inputQuery = `.rankable--${type}:not(.rankable--new):last-child > .rankable__input`
+      const input = document.querySelector(inputQuery)
 
-    if (input && added) {
-      const { parentElement: rankable } = input
-      rankable.classList.add('invisible')
+      if (input) {
+        const { parentElement: rankable } = input
+        rankable.classList.add('invisible')
 
-      input.focus()
+        input.focus()
 
-      setTimeout(() => rankable.classList.remove('invisible'), 0)
-    } else if (data.length === 4 && removed) {
-      const rankableQuery = `.rankable--${type}.rankable--new`
-      const rankable = document.querySelector(rankableQuery)
-      rankable.classList.add('invisible')
-      setTimeout(() => rankable.classList.remove('invisible'), 0)
+        setTimeout(() => rankable.classList.remove('invisible'), 0)
+      }
     }
-  }, [data.length, type, added, removed])
+  }, [data.length, type, added])
 
   const inputPlaceholder = type[0].toUpperCase() + type.slice(1)
 
