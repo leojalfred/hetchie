@@ -68,10 +68,9 @@ export default function Ranker({ type, data, setData }) {
         const { parentElement: rankable } = input
         rankable.classList.add('invisible')
 
-        setTimeout(() => {
-          rankable.classList.remove('invisible')
-          input.focus()
-        }, 0)
+        input.focus()
+
+        setTimeout(() => rankable.classList.remove('invisible'), 0)
       }
     }
 
