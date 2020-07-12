@@ -15,9 +15,17 @@ export default function Ranker({ type, data, setData }) {
     )
       return
 
-    const removed = data.splice(source.index, 1)
-    data.splice(destination.index, 0, removed[0])
-    setData(data)
+    const working = [...data],
+      removed = working.splice(source.index, 1)
+    working.splice(destination.index, 0, removed[0])
+    setData(working)
+  }
+  const onChange = event => {
+    const name = event.target.name,
+      index = name.slice(name.length - 1),
+      working = [...data]
+    working[index].value = event.target.value
+    setData(working)
   }
 
   const inputPlaceholder = type[0].toUpperCase() + type.slice(1)
@@ -40,6 +48,8 @@ export default function Ranker({ type, data, setData }) {
                       type="text"
                       name={`${type}-${i}`}
                       placeholder={inputPlaceholder}
+                      value={value}
+                      onChange={onChange}
                     />
                     <FontAwesomeIcon
                       className="rankable__delete"
