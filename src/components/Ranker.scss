@@ -1,2 +1,14 @@
-.ranker {
+@import '../styles/variables';
+
+.rankable {
+  align-items: center;
+  background-color: #fff;
+  border-radius: $radius;
+  box-shadow: 0 0.125rem 0.3rem 0.075rem rgba(0, 0, 0, 0.25);
+  display: flex;
+  margin-bottom: 1rem;
+  padding: 1rem;
+
+  &__handle {
+  }
 }

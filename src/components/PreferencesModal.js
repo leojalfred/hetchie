@@ -5,6 +5,7 @@ import { faListOl } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
 import Modal from './Modal'
 import Ranker from './Ranker'
+import './PreferencesModal.scss'
 
 function PreferencesModal({ auth, isOpen, closeModal }) {
   const [user, setUser] = useState()
@@ -34,7 +35,16 @@ function PreferencesModal({ auth, isOpen, closeModal }) {
           />
         </div>
 
-        <Ranker />
+        <div className="preferences">
+          <div className="preferences__ranker">
+            <h3 className="preferences__title">Location Preferences</h3>
+            <Ranker />
+          </div>
+          <div className="preferences__ranker">
+            <h3 className="preferences__title">Practice Preferences</h3>
+            <Ranker />
+          </div>
+        </div>
       </div>
     </Modal>
   )

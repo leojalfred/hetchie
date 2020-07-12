@@ -1,0 +1,16 @@
+@import '../styles/mixins';
+@import '../styles/variables';
+
+.preferences {
+  @include bp($m) {
+    display: flex;
+  }
+
+  &__ranker {
+    flex: 1;
+
+    &:first-child {
+      margin-right: 2rem;
+    }
+  }
+}

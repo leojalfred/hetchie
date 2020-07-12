@@ -3,6 +3,9 @@ $time: 0.2s;
 $button-transition: background-color $time, box-shadow $time, color $time,
   transform $time;
 
+// Borders
+$radius: 0.2rem;
+
 // Breakpoints
 $s: 576px;
 $m: 768px;
