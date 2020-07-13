@@ -83,8 +83,8 @@ export default function Ranker({ type, data, setData }) {
               ref={innerRef}
               {...droppableProps}
             >
-              {data.map(({ id, value }, i) => (
-                <Draggable draggableId={id} key={id} index={i}>
+              {data.map(({ _id, name }, i) => (
+                <Draggable draggableId={_id} key={_id} index={i}>
                   {({ innerRef, draggableProps, dragHandleProps }) => (
                     <Rankable
                       innerRef={innerRef}
@@ -93,7 +93,7 @@ export default function Ranker({ type, data, setData }) {
                       type={type}
                       index={i}
                       placeholder={inputPlaceholder}
-                      value={value}
+                      value={name}
                       onChange={onChange}
                       onDelete={onDelete}
                     />

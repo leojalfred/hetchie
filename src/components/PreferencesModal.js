@@ -13,12 +13,12 @@ function PreferencesModal({ auth, isOpen, closeModal }) {
   useEffect(() => setUser(auth.user), [auth])
 
   const [locations, setLocations] = useState([
-      { id: '0', value: 'Minneapolis' },
-      { id: '1', value: 'Asheville' },
+      { _id: '0', name: 'Minneapolis' },
+      { _id: '1', name: 'Asheville' },
     ]),
     [practices, setPractices] = useState([
-      { id: '0', value: 'Tax' },
-      { id: '1', value: 'Real Estate' },
+      { _id: '0', name: 'Tax' },
+      { _id: '1', name: 'Real Estate' },
     ])
 
   const [submitting, setSubmitting] = useState(false)
