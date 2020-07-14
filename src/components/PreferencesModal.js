@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import { faListOl } from '@fortawesome/free-solid-svg-icons'
@@ -10,11 +11,34 @@ import Button from './BigButton'
 import './PreferencesModal.scss'
 
 function PreferencesModal({ user, putUserPreferences, isOpen, closeModal }) {
+  const [locations, setLocations] = useState()
+  const [practices, setPractices] = useState()
+  useEffect(() => {
+    async function getData() {
+      const locationsResponse = await axios.get('/locations')
+      const locationsData = locationsResponse.data
+      const locationOptions = locationsData.map(({ _id, name }) => ({
+        value: _id,
+        label: name,
+      }))
+      setLocations(locationOptions)
+
+      const practicesResponse = await axios.get('/practices')
+      const practicesData = practicesResponse.data
+      const practiceOptions = practicesData.map(({ _id, name }) => ({
+        value: _id,
+        label: name,
+      }))
+      setPractices(practiceOptions)
+    }
+    getData()
+  }, [])
+
   const [userData, setUserData] = useState(user.data)
   useEffect(() => setUserData(user.data), [user])
 
-  const [locations, setLocations] = useState(userData.locations)
-  const [practices, setPractices] = useState(userData.practices)
+  const [userLocations, setUserLocations] = useState(userData.locations)
+  const [userPractices, setUserPractices] = useState(userData.practices)
 
   const [submitting, setSubmitting] = useState(false)
   function onSubmit(event) {
@@ -74,11 +98,21 @@ function PreferencesModal({ user, putUserPreferences, isOpen, closeModal }) {
           <div className="preferences">
             <div className="preferences__ranker">
               <h3 className="preferences__title">Location Preferences</h3>
-              <Ranker type="location" data={locations} setData={setLocations} />
+              <Ranker
+                type="location"
+                userData={userLocations}
+                setUserData={setUserLocations}
+                options={locations}
+              />
             </div>
             <div className="preferences__ranker">
               <h3 className="preferences__title">Practice Preferences</h3>
-              <Ranker type="practice" data={practices} setData={setPractices} />
+              <Ranker
+                type="practice"
+                userData={userPractices}
+                setUserData={setUserPractices}
+                options={practices}
+              />
             </div>
           </div>
 

@@ -2,16 +2,18 @@ import React from 'react'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
+import Select from 'react-select'
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import './Rankable.scss'
 
 export default function Rankable({
+  type,
+  isNew = false,
   innerRef,
   draggableProps,
-  isNew = false,
   dragHandleProps,
-  type,
   index,
+  options,
   placeholder,
   value,
   onChange,
@@ -34,10 +36,11 @@ export default function Rankable({
           <div className="rankable__rank">{index + 1}</div>
         </>
       )}
-      <input
-        className="modal__input rankable__input"
-        type="text"
+      <Select
+        className="rankable__select"
         name={`${type}-${index}`}
+        options={options}
+        isSearchable={true}
         placeholder={placeholder}
         value={value}
         onChange={onChange}

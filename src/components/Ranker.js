@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import Rankable from './Rankable'
 
-export default function Ranker({ type, data, setData }) {
+export default function Ranker({ type, userData, setUserData, options }) {
   function onDragEnd({ destination, reason, source }) {
     if (
       !destination ||
@@ -12,18 +12,18 @@ export default function Ranker({ type, data, setData }) {
     )
       return
 
-    const working = [...data]
+    const working = [...userData]
     const removed = working.splice(source.index, 1)
     working.splice(destination.index, 0, removed[0])
-    setData(working)
+    setUserData(working)
   }
 
   function onChange(event) {
     const { name, value } = event.currentTarget
     const index = name.slice(name.length - 1)
-    const working = [...data]
+    const working = [...userData]
     working[index] = { ...working[index], name: value }
-    setData(working)
+    setUserData(working)
   }
 
   const [added, setAdded] = useState(false)
@@ -37,42 +37,35 @@ export default function Ranker({ type, data, setData }) {
     setTimeout(() => {
       const { name } = input
       const index = name.slice(name.length - 1)
-      const working = [...data]
+      const working = [...userData]
       working.splice(index, 1)
-      setData(working)
+      setUserData(working)
       setAdded(false)
     }, 200)
   }
 
-  function onChangeNew(event) {
-    const working = [...data]
+  function onNewInputChange({ value, label }) {
+    const working = [...userData]
+    working.push({ value, label })
 
-    const _id = [...Array(24)]
-      .map(() => Math.floor(Math.random() * 16).toString(16))
-      .join('')
-    const name = event.currentTarget.value
-    working.push({ _id, name })
-    setData(working)
+    setUserData(working)
     setAdded(true)
-
-    event.currentTarget.value = ''
   }
 
+  const [newValue, setNewValue] = useState()
   useEffect(() => {
     if (added) {
-      const inputQuery = `.rankable--${type}:not(.rankable--new):last-child > .rankable__input`
-      const input = document.querySelector(inputQuery)
+      const rankableQuery = `.rankable--${type}:not(.rankable--new):last-child`
+      const rankable = document.querySelector(rankableQuery)
+      rankable.classList.add('invisible')
 
-      if (input) {
-        const { parentElement: rankable } = input
-        rankable.classList.add('invisible')
+      const input = rankable.querySelector('input')
+      input.focus()
 
-        input.focus()
-
-        setTimeout(() => rankable.classList.remove('invisible'), 0)
-      }
+      setNewValue(null)
+      setTimeout(() => rankable.classList.remove('invisible'), 0)
     }
-  }, [data.length, type, added])
+  }, [userData.length, type, added])
 
   const inputPlaceholder = type[0].toUpperCase() + type.slice(1)
 
@@ -86,8 +79,8 @@ export default function Ranker({ type, data, setData }) {
               ref={innerRef}
               {...droppableProps}
             >
-              {data.map(({ _id, name }, i) => (
-                <Draggable draggableId={_id} key={_id} index={i}>
+              {userData.map(({ value, label }, i) => (
+                <Draggable draggableId={value} key={value} index={i}>
                   {({ innerRef, draggableProps, dragHandleProps }) => (
                     <Rankable
                       innerRef={innerRef}
@@ -95,8 +88,9 @@ export default function Ranker({ type, data, setData }) {
                       dragHandleProps={dragHandleProps}
                       type={type}
                       index={i}
+                      options={options}
                       placeholder={inputPlaceholder}
-                      value={name}
+                      value={label}
                       onChange={onChange}
                       onDelete={onDelete}
                     />
@@ -110,12 +104,15 @@ export default function Ranker({ type, data, setData }) {
         </Droppable>
       </DragDropContext>
 
-      {data.length < 5 && (
+      {userData.length < 5 && (
         <Rankable
           isNew={true}
           type={type}
+          index="5"
+          options={options}
           placeholder={inputPlaceholder}
-          onChange={onChangeNew}
+          value={newValue}
+          onChange={onNewInputChange}
         />
       )}
     </>

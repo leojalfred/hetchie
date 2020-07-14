@@ -28,6 +28,22 @@
     width: 1.4rem;
   }
 
+  &__select {
+    flex: 1;
+
+    &__value {
+      display: flex;
+    }
+
+    &__input {
+      border: 0;
+      border-bottom: 2px solid $yellow-orange;
+      color: $blue;
+      padding: 0.5rem;
+      width: 100%;
+    }
+  }
+
   &__input {
     min-width: 4rem;
     margin-right: 1rem;
