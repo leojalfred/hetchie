@@ -1,6 +1,6 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Schema } from 'mongoose'
 
-const UserSchema = new Schema({
+const userSchema = new Schema({
   first: {
     type: String,
     required: true,
@@ -33,11 +33,10 @@ const UserSchema = new Schema({
     type: Boolean,
     default: false,
   },
-  salt: {
-    type: String,
-    require: true,
-  },
-});
+  salt: String,
+  locations: [{ type: Schema.Types.ObjectId, ref: 'locations' }],
+  practices: [{ type: Schema.Types.ObjectId, ref: 'practices' }],
+})
 
-const User = mongoose.model('users', UserSchema);
-export default User;
+const User = mongoose.model('users', userSchema)
+export default User

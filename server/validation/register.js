@@ -1,5 +1,6 @@
 import validator from 'validator'
 import isEmpty from 'is-empty'
+import { namePattern } from './shared'
 
 export default function validateRegister({
   first,
@@ -11,7 +12,6 @@ export default function validateRegister({
   confirm,
 }) {
   const errors = {}
-  const namePattern = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+$/u
   const passwordPattern = /.*(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[ !"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]).*/
   const date = new Date()
   const yearOptions = {

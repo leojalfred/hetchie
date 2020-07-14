@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken'
 import keys from '../config/keys'
 import validateRegister from '../validation/register'
 import validateLogin from '../validation/login'
+import validatePreferences from '../validation/preferences'
 import User from '../models/User'
 
 const router = express.Router()
@@ -89,8 +90,29 @@ router.post('/login', async ({ body }, response) => {
 
     const isMatch = await bcrypt.compare(password, user.password)
     if (isMatch) {
-      const { id, first, last, email, school, year, date } = user
-      const payload = { id, first, last, email, school, year, date }
+      const {
+        id,
+        first,
+        last,
+        email,
+        school,
+        year,
+        date,
+        locations,
+        practices,
+      } = user
+      const payload = {
+        id,
+        first,
+        last,
+        email,
+        school,
+        year,
+        date,
+        locations,
+        practices,
+      }
+
       jwt.sign(
         payload,
         keys.secretOrKey,
@@ -108,6 +130,7 @@ router.post('/login', async ({ body }, response) => {
   }
 })
 
+const query = '-verified -password -__v'
 router.put('/', async ({ body }, response) => {
   const { errors, isValid } = validateRegister(body)
   if (!isValid) return response.status(400).json(errors)
@@ -126,8 +149,26 @@ router.put('/', async ({ body }, response) => {
     }
 
     const user = await User.findByIdAndUpdate(id, update, { new: true }).select(
-      '-verified -password -__v'
+      query
     )
+    response.json(user)
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+router.put('/preferences', async ({ body }, response) => {
+  const { errors, valid } = validatePreferences(body)
+  console.log(errors)
+  if (!valid) return response.status(400).json(errors)
+
+  try {
+    const { _id, locations, practices } = body
+    const update = { locations, practices }
+    const user = await User.findByIdAndUpdate(_id, update, {
+      new: true,
+    }).select(query)
+
     response.json(user)
   } catch (error) {
     console.log(error)
