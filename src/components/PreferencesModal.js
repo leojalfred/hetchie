@@ -10,37 +10,11 @@ import Button from './BigButton'
 import './PreferencesModal.scss'
 
 function PreferencesModal({ user, putUserPreferences, isOpen, closeModal }) {
-  const [userData, setUserData] = useState()
+  const [userData, setUserData] = useState(user.data)
   useEffect(() => setUserData(user.data), [user])
 
-  const [locations, setLocations] = useState([
-    {
-      _id: [...Array(24)]
-        .map(() => Math.floor(Math.random() * 16).toString(16))
-        .join(''),
-      name: 'Minneapolis',
-    },
-    {
-      _id: [...Array(24)]
-        .map(() => Math.floor(Math.random() * 16).toString(16))
-        .join(''),
-      name: 'Asheville',
-    },
-  ])
-  const [practices, setPractices] = useState([
-    {
-      _id: [...Array(24)]
-        .map(() => Math.floor(Math.random() * 16).toString(16))
-        .join(''),
-      name: 'Tax',
-    },
-    {
-      _id: [...Array(24)]
-        .map(() => Math.floor(Math.random() * 16).toString(16))
-        .join(''),
-      name: 'Real Estate',
-    },
-  ])
+  const [locations, setLocations] = useState(userData.locations)
+  const [practices, setPractices] = useState(userData.practices)
 
   const [submitting, setSubmitting] = useState(false)
   function onSubmit(event) {
