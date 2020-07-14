@@ -159,7 +159,6 @@ router.put('/', async ({ body }, response) => {
 
 router.put('/preferences', async ({ body }, response) => {
   const { errors, valid } = validatePreferences(body)
-  console.log(errors)
   if (!valid) return response.status(400).json(errors)
 
   try {
