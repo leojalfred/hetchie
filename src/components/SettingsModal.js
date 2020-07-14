@@ -6,12 +6,12 @@ import { connect } from 'react-redux'
 import Modal from './Modal'
 import CredentialsForm from './CredentialsForm'
 
-function SettingsModal({ auth, isOpen, closeModal }) {
-  const [user, setUser] = useState()
+function SettingsModal({ user, isOpen, closeModal }) {
+  const [userData, setUserData] = useState()
   useEffect(() => {
-    const credentials = { ...auth.user, password: '', confirm: '' }
-    setUser(credentials)
-  }, [auth])
+    const credentials = { ...user.data, password: '', confirm: '' }
+    setUserData(credentials)
+  }, [user])
 
   return (
     <Modal
@@ -37,7 +37,7 @@ function SettingsModal({ auth, isOpen, closeModal }) {
         </div>
 
         <CredentialsForm
-          initialValues={user}
+          initialValues={userData}
           closeModal={closeModal}
           submit="Update"
         />
@@ -46,5 +46,5 @@ function SettingsModal({ auth, isOpen, closeModal }) {
   )
 }
 
-const mapStateToProps = ({ auth }) => ({ auth })
+const mapStateToProps = ({ user }) => ({ user })
 export default connect(mapStateToProps)(SettingsModal)

@@ -1,3 +1,5 @@
+@import './variables';
+
 @mixin bp($width, $height: null) {
   @if ($width and $height) {
     @media (min-height: $height) and (min-width: $width) {
@@ -29,5 +31,19 @@
 
   &::placeholder {
     @content;
+  }
+}
+
+@mixin scrollbar() {
+  scrollbar-color: $yellow-orange;
+  scrollbar-width: 0.4rem;
+
+  &::-webkit-scrollbar {
+    width: 0.4rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $yellow-orange;
+    border-radius: $radius;
   }
 }

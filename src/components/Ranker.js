@@ -22,7 +22,7 @@ export default function Ranker({ type, data, setData }) {
     const { name, value } = event.currentTarget
     const index = name.slice(name.length - 1)
     const working = [...data]
-    working[index] = { ...working[index], value }
+    working[index] = { ...working[index], name: value }
     setData(working)
   }
 
@@ -46,9 +46,12 @@ export default function Ranker({ type, data, setData }) {
 
   function onChangeNew(event) {
     const working = [...data]
-    const id = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER).toString()
-    const { value } = event.currentTarget
-    working.push({ id, value })
+
+    const _id = [...Array(24)]
+      .map(() => Math.floor(Math.random() * 16).toString(16))
+      .join('')
+    const name = event.currentTarget.value
+    working.push({ _id, name })
     setData(working)
     setAdded(true)
 

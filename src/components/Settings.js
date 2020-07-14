@@ -9,7 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
 import './Settings.scss'
-import { logoutUser } from '../actions/authActions'
+import { logoutUser } from '../actions/userActions'
 
 function useClose(ref, setComponent) {
   useEffect(() => {
@@ -29,7 +29,7 @@ function useClose(ref, setComponent) {
 }
 
 function Settings({
-  auth,
+  user,
   openSettingsModal,
   openPreferencesModal,
   logoutUser,
@@ -82,5 +82,5 @@ function Settings({
   )
 }
 
-const mapStateToProps = ({ auth }) => ({ auth })
+const mapStateToProps = ({ user }) => ({ user })
 export default connect(mapStateToProps, { logoutUser })(Settings)

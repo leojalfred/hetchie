@@ -8,7 +8,7 @@ import Settings from './Settings'
 import logo from '../images/logo.png'
 
 function Navbar({
-  auth,
+  user,
   openLoginModal,
   openSettingsModal,
   openPreferencesModal,
@@ -17,7 +17,7 @@ function Navbar({
   const [to, setTo] = useState('/')
   const [component, setComponent] = useState()
   useEffect(() => {
-    if (!auth.loggedIn) {
+    if (!user.loggedIn) {
       setTo('/')
       setComponent(
         <Button
@@ -36,7 +36,7 @@ function Navbar({
         />
       )
     }
-  }, [auth, openLoginModal, openSettingsModal, openPreferencesModal])
+  }, [user, openLoginModal, openSettingsModal, openPreferencesModal])
 
   const classes = classNames('navbar', 'container', className)
   return (
@@ -57,5 +57,5 @@ function Navbar({
   )
 }
 
-const mapStateToProps = ({ auth }) => ({ auth })
+const mapStateToProps = ({ user }) => ({ user })
 export default connect(mapStateToProps)(Navbar)

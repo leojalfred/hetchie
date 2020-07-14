@@ -3,6 +3,11 @@ import jwt_decode from 'jwt-decode'
 import { GET_ERRORS, SET_CURRENT_USER } from './types'
 import setAuthToken from '../utils/setAuthToken'
 
+export const setCurrentUser = decoded => ({
+  type: SET_CURRENT_USER,
+  payload: decoded,
+})
+
 export const putUser = (
   user,
   closeModal,
@@ -46,16 +51,23 @@ export const loginUser = (user, history, closeModal) => async dispatch => {
   }
 }
 
-export const setCurrentUser = decoded => {
-  return {
-    type: SET_CURRENT_USER,
-    payload: decoded,
-  }
-}
-
 export const logoutUser = () => dispatch => {
   localStorage.removeItem('jwtToken')
   setAuthToken(false)
 
   dispatch(setCurrentUser({}))
+}
+
+export const putUserPreferences = body => async dispatch => {
+  try {
+    const { data } = await axios.put('/users/preferences', body)
+
+    dispatch(setCurrentUser(data))
+    dispatch({ type: GET_ERRORS, payload: {} })
+  } catch ({ response }) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: response.data,
+    })
+  }
 }

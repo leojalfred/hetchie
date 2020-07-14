@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
 import { connect } from 'react-redux'
 import setAuthToken from './utils/setAuthToken'
-import { setCurrentUser, logoutUser } from './actions/authActions'
+import { setCurrentUser, logoutUser } from './actions/userActions'
 import store from './store'
 import Home from './views/home/Home'
 import About from './views/about/About'
@@ -29,7 +29,7 @@ if (localStorage.jwtToken) {
   }
 }
 
-function App({ auth }) {
+function App({ user }) {
   const [registerIsOpen, setRegisterIsOpen] = React.useState(false)
   const openRegisterModal = () => setRegisterIsOpen(true)
   const closeRegisterModal = () => setRegisterIsOpen(false)
@@ -47,7 +47,7 @@ function App({ auth }) {
   const closePreferencesModal = () => setPreferencesIsOpen(false)
 
   let modals
-  if (!auth.loggedIn) {
+  if (!user.loggedIn) {
     modals = (
       <>
         <RegisterModal
@@ -110,5 +110,5 @@ function App({ auth }) {
   )
 }
 
-const mapStateToProps = ({ auth }) => ({ auth })
+const mapStateToProps = ({ user }) => ({ user })
 export default connect(mapStateToProps)(App)

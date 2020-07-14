@@ -22,7 +22,7 @@ import {
   serverErrorKeys,
 } from '../scripts/validation'
 import Button from './BigButton'
-import { putUser } from '../actions/authActions'
+import { putUser } from '../actions/userActions'
 
 function CredentialsForm({
   errors,

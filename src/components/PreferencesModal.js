@@ -3,28 +3,73 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import { faListOl } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
+import { putUserPreferences } from '../actions/userActions'
 import Modal from './Modal'
 import Ranker from './Ranker'
 import Button from './BigButton'
 import './PreferencesModal.scss'
 
-function PreferencesModal({ auth, isOpen, closeModal }) {
-  const [user, setUser] = useState()
-  useEffect(() => setUser(auth.user), [auth])
+function PreferencesModal({ user, putUserPreferences, isOpen, closeModal }) {
+  const [userData, setUserData] = useState()
+  useEffect(() => setUserData(user.data), [user])
 
   const [locations, setLocations] = useState([
-      { _id: '0', name: 'Minneapolis' },
-      { _id: '1', name: 'Asheville' },
-    ]),
-    [practices, setPractices] = useState([
-      { _id: '0', name: 'Tax' },
-      { _id: '1', name: 'Real Estate' },
-    ])
+    {
+      _id: [...Array(24)]
+        .map(() => Math.floor(Math.random() * 16).toString(16))
+        .join(''),
+      name: 'Minneapolis',
+    },
+    {
+      _id: [...Array(24)]
+        .map(() => Math.floor(Math.random() * 16).toString(16))
+        .join(''),
+      name: 'Asheville',
+    },
+  ])
+  const [practices, setPractices] = useState([
+    {
+      _id: [...Array(24)]
+        .map(() => Math.floor(Math.random() * 16).toString(16))
+        .join(''),
+      name: 'Tax',
+    },
+    {
+      _id: [...Array(24)]
+        .map(() => Math.floor(Math.random() * 16).toString(16))
+        .join(''),
+      name: 'Real Estate',
+    },
+  ])
 
   const [submitting, setSubmitting] = useState(false)
   function onSubmit(event) {
     event.preventDefault()
     setSubmitting(true)
+
+    const _id = userData.id
+
+    let locationRankables = document.querySelectorAll(
+      '.rankable--location:not(.rankable--new)'
+    )
+    locationRankables = [...locationRankables]
+    const locationIDs = locationRankables.map(
+      rankable => rankable.dataset.rbdDraggableId
+    )
+
+    let practiceRankables = document.querySelectorAll(
+      '.rankable--practice:not(.rankable--new)'
+    )
+    practiceRankables = [...practiceRankables]
+    const practiceIDs = practiceRankables.map(
+      rankable => rankable.dataset.rbdDraggableId
+    )
+
+    const body = { _id, locations: locationIDs, practices: practiceIDs }
+    putUserPreferences(body)
+
+    setSubmitting(false)
+    closeModal()
   }
 
   return (
@@ -76,5 +121,7 @@ function PreferencesModal({ auth, isOpen, closeModal }) {
   )
 }
 
-const mapStateToProps = ({ auth }) => ({ auth })
-export default connect(mapStateToProps)(PreferencesModal)
+const mapStateToProps = ({ user }) => ({ user })
+export default connect(mapStateToProps, { putUserPreferences })(
+  PreferencesModal
+)

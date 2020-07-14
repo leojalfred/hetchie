@@ -4,7 +4,7 @@ import './Home.scss'
 import Navbar from '../../components/Navbar'
 import BigButton from '../../components/BigButton'
 
-function Home({ auth, openLoginModal, openRegisterModal }) {
+function Home({ user, openLoginModal, openRegisterModal }) {
   return (
     <div className="home">
       <Navbar openLoginModal={openLoginModal} />
@@ -20,7 +20,7 @@ function Home({ auth, openLoginModal, openRegisterModal }) {
           Velit culpa deserunt do velit duis mollit officia reprehenderit quis
           quis do commodo.
         </p>
-        {!auth.loggedIn && (
+        {!user.loggedIn && (
           <BigButton className="home__button" onClick={openRegisterModal}>
             Get Started
           </BigButton>
@@ -30,5 +30,5 @@ function Home({ auth, openLoginModal, openRegisterModal }) {
   )
 }
 
-const mapStateToProps = ({ auth }) => ({ auth })
+const mapStateToProps = ({ user }) => ({ user })
 export default connect(mapStateToProps)(Home)

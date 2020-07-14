@@ -29,8 +29,9 @@
 
   &__main {
     background-color: #fff;
-    overflow-y: auto;
     height: 100%;
+    overflow-y: auto;
+    @include scrollbar();
   }
 
   &__wrapper {
@@ -38,7 +39,6 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
-    overflow: auto;
   }
 
   &__content {
@@ -156,10 +156,10 @@
   }
 
   @include bp($s) {
-    border-radius: 7rem;
+    border-radius: 2rem;
     display: flex;
     height: auto;
-    max-height: 90vh;
+    max-height: 98vh;
     min-width: 90%;
     overflow: hidden;
 
@@ -210,6 +210,10 @@
     &__button {
       margin: 5rem auto 0 auto;
     }
+  }
+
+  @include bp($m) {
+    max-height: 90vh;
   }
 
   @include bp($xl) {

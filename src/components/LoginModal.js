@@ -16,7 +16,7 @@ import {
   serverErrorKeys,
   email,
 } from '../scripts/validation'
-import { loginUser } from '../actions/authActions'
+import { loginUser } from '../actions/userActions'
 import Modal from './Modal'
 import Button from './BigButton'
 
@@ -39,7 +39,7 @@ function LoginModal({
     password: yup.string().required('Password is required.'),
   })
 
-  const onSubmit = async (user) => loginUser(user, history, closeLoginModal)
+  const onSubmit = async user => loginUser(user, history, closeLoginModal)
 
   function switchModals() {
     closeLoginModal()
