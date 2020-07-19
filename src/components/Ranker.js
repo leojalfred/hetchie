@@ -50,15 +50,19 @@ export default function Ranker({ type, userData, setUserData, options }) {
     if (added) {
       const rankableQuery = `.rankable--${type}:not(.rankable--new):last-child`
       const rankable = document.querySelector(rankableQuery)
-      rankable.classList.add('invisible')
+      rankable.classList.add('static')
+      rankable.style.opacity = 0
 
       const input = rankable.querySelector('input')
       input.focus()
 
       setNewValue(null)
-      setTimeout(() => rankable.classList.remove('invisible'), 0)
+      setTimeout(() => {
+        rankable.classList.remove('static')
+        rankable.style.opacity = 1
+      }, 0)
     }
-  }, [type, added])
+  }, [userData, added, type])
 
   const inputPlaceholder = type[0].toUpperCase() + type.slice(1)
 

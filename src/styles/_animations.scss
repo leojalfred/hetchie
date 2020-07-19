@@ -5,3 +5,7 @@
 .invisible {
   opacity: 0 !important;
 }
+
+.static {
+  transition: none !important;
+}
