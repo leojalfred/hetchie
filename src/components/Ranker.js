@@ -18,11 +18,9 @@ export default function Ranker({ type, userData, setUserData, options }) {
     setUserData(working)
   }
 
-  function onChange(event) {
-    const { name, value } = event.currentTarget
-    const index = name.slice(name.length - 1)
+  function onChange(i, value, label) {
     const working = [...userData]
-    working[index] = { ...working[index], name: value }
+    working[i] = { value, label }
     setUserData(working)
   }
 
@@ -91,7 +89,7 @@ export default function Ranker({ type, userData, setUserData, options }) {
                       options={options}
                       placeholder={inputPlaceholder}
                       value={label}
-                      onChange={onChange}
+                      onChange={({ value, label }) => onChange(i, value, label)}
                       onDelete={onDelete}
                     />
                   )}

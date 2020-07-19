@@ -42,7 +42,7 @@ export default function Rankable({
         options={options}
         isSearchable={true}
         placeholder={placeholder}
-        value={value}
+        defaultInputValue={value}
         onChange={onChange}
       />
       {!isNew && (
