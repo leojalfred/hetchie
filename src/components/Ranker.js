@@ -25,18 +25,13 @@ export default function Ranker({ type, userData, setUserData, options }) {
   }
 
   const [added, setAdded] = useState(false)
-  function onDelete(event) {
-    const {
-      parentElement: rankable,
-      previousSibling: input,
-    } = event.currentTarget
+  function onDelete(selector, i) {
+    const rankable = document.querySelector(selector)
     rankable.classList.add('invisible')
 
     setTimeout(() => {
-      const { name } = input
-      const index = name.slice(name.length - 1)
       const working = [...userData]
-      working.splice(index, 1)
+      working.splice(i, 1)
       setUserData(working)
       setAdded(false)
     }, 200)
@@ -63,7 +58,7 @@ export default function Ranker({ type, userData, setUserData, options }) {
       setNewValue(null)
       setTimeout(() => rankable.classList.remove('invisible'), 0)
     }
-  }, [userData.length, type, added])
+  }, [type, added])
 
   const inputPlaceholder = type[0].toUpperCase() + type.slice(1)
 
@@ -90,7 +85,7 @@ export default function Ranker({ type, userData, setUserData, options }) {
                       placeholder={inputPlaceholder}
                       value={{ value, label }}
                       onChange={({ value, label }) => onChange(i, value, label)}
-                      onDelete={onDelete}
+                      onDelete={() => onDelete(`#${type}-${i}`, i)}
                     />
                   )}
                 </Draggable>

@@ -24,7 +24,12 @@ export default function Rankable({
   })
 
   return (
-    <div className={classes} ref={innerRef} {...draggableProps}>
+    <div
+      id={`${type}-${index}`}
+      className={classes}
+      ref={innerRef}
+      {...draggableProps}
+    >
       {!isNew && (
         <>
           <div {...dragHandleProps}>
