@@ -78,7 +78,7 @@ export default function Ranker({ type, userData, setUserData, options }) {
               {...droppableProps}
             >
               {userData.map(({ value, label }, i) => (
-                <Draggable draggableId={value} key={value} index={i}>
+                <Draggable draggableId={value} key={`${type}-${i}`} index={i}>
                   {({ innerRef, draggableProps, dragHandleProps }) => (
                     <Rankable
                       innerRef={innerRef}
@@ -88,7 +88,7 @@ export default function Ranker({ type, userData, setUserData, options }) {
                       index={i}
                       options={options}
                       placeholder={inputPlaceholder}
-                      value={label}
+                      value={{ value, label }}
                       onChange={({ value, label }) => onChange(i, value, label)}
                       onDelete={onDelete}
                     />
