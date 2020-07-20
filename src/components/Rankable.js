@@ -22,6 +22,10 @@ export default function Rankable({
   const classes = classNames(`rankable rankable--${type}`, {
     'rankable--new': isNew,
   })
+  const components = {
+    DropdownIndicator: () => null,
+    IndicatorSeparator: () => null,
+  }
 
   return (
     <div
@@ -43,7 +47,9 @@ export default function Rankable({
       )}
       <Select
         className="rankable__select"
+        classNamePrefix="rankable__select"
         name={`${type}-${index}`}
+        components={components}
         options={options}
         isSearchable={true}
         placeholder={placeholder}
