@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
-import { faListOl } from '@fortawesome/free-solid-svg-icons'
+import { faListOl, faUserGraduate } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
 import { putUserPreferences } from '../actions/userActions'
 import Modal from './Modal'
@@ -90,6 +90,20 @@ function PreferencesModal({ user, putUserPreferences, isOpen, closeModal }) {
         </div>
 
         <form onSubmit={onSubmit}>
+          <h3 className="preferences__title">GPA</h3>
+          <div className="modal__input-group">
+            <FontAwesomeIcon
+              className="modal__input-icon"
+              icon={faUserGraduate}
+            />
+            <input
+              className="modal__input"
+              type="gpa"
+              name="number"
+              placeholder="4.0"
+            />
+          </div>
+
           <div className="preferences">
             <div className="preferences__ranker">
               <h3 className="preferences__title">Location Preferences</h3>
