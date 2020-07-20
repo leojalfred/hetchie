@@ -67,8 +67,10 @@ export default function Ranker({ type, userData, setUserData, options }) {
         }, 0)
       } else {
         const rankable = document.querySelector(`.rankable--${type}.static`)
-        rankable.style.opacity = 1
-        setTimeout(() => rankable.classList.remove('static'), 0)
+        if (rankable) {
+          rankable.style.opacity = 1
+          setTimeout(() => rankable.classList.remove('static'), 0)
+        }
       }
     } else mounted.current = true
   }, [userData.length, added, type])
