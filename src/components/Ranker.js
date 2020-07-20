@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import Rankable from './Rankable'
 
@@ -27,9 +27,11 @@ export default function Ranker({ type, userData, setUserData, options }) {
   const [added, setAdded] = useState(false)
   function onDelete(selector, i) {
     const rankable = document.querySelector(selector)
-    rankable.classList.add('invisible')
+    rankable.style.opacity = 0
 
     setTimeout(() => {
+      rankable.classList.add('static')
+
       const working = [...userData]
       working.splice(i, 1)
       setAdded(false)
@@ -45,23 +47,30 @@ export default function Ranker({ type, userData, setUserData, options }) {
     setUserData(working)
   }
 
+  const mounted = useRef(false)
   const [newValue, setNewValue] = useState()
   useEffect(() => {
-    if (added) {
-      const rankableQuery = `.rankable--${type}:not(.rankable--new):last-child`
-      const rankable = document.querySelector(rankableQuery)
-      rankable.classList.add('static')
-      rankable.style.opacity = 0
+    if (mounted.current) {
+      if (added) {
+        const rankableQuery = `.rankable--${type}:not(.rankable--new):last-child`
+        const rankable = document.querySelector(rankableQuery)
+        rankable.classList.add('static')
+        rankable.style.opacity = 0
 
-      const input = rankable.querySelector('input')
-      input.focus()
+        const input = rankable.querySelector('input')
+        input.focus()
 
-      setNewValue(null)
-      setTimeout(() => {
-        rankable.classList.remove('static')
+        setNewValue(null)
+        setTimeout(() => {
+          rankable.classList.remove('static')
+          rankable.style.opacity = 1
+        }, 0)
+      } else {
+        const rankable = document.querySelector(`.rankable--${type}.static`)
         rankable.style.opacity = 1
-      }, 0)
-    }
+        setTimeout(() => rankable.classList.remove('static'), 0)
+      }
+    } else mounted.current = true
   }, [userData.length, added, type])
 
   const inputPlaceholder = type[0].toUpperCase() + type.slice(1)

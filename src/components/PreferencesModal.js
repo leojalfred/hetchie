@@ -34,18 +34,28 @@ function PreferencesModal({ user, putUserPreferences, isOpen, closeModal }) {
     getData()
   }, [])
 
-  const [userData, setUserData] = useState(user.data)
-  useEffect(() => setUserData(user.data), [user])
+  const [userLocations, setUserLocations] = useState()
+  const [userPractices, setUserPractices] = useState()
+  useEffect(() => {
+    const formattedLocations = user.data.locations.map(({ _id, name }) => ({
+      value: _id,
+      label: name,
+    }))
+    setUserLocations(formattedLocations)
 
-  const [userLocations, setUserLocations] = useState(userData.locations)
-  const [userPractices, setUserPractices] = useState(userData.practices)
+    const formattedPractices = user.data.practices.map(({ _id, name }) => ({
+      value: _id,
+      label: name,
+    }))
+    setUserPractices(formattedPractices)
+  }, [user.data])
 
   const [submitting, setSubmitting] = useState(false)
   function onSubmit(event) {
     event.preventDefault()
     setSubmitting(true)
 
-    const _id = userData.id
+    const _id = user.data.id
     const locationIDs = userLocations.map(location => location.value)
     const practiceIDs = userPractices.map(practice => practice.value)
     const body = { _id, locations: locationIDs, practices: practiceIDs }
