@@ -46,23 +46,8 @@ function PreferencesModal({ user, putUserPreferences, isOpen, closeModal }) {
     setSubmitting(true)
 
     const _id = userData.id
-
-    let locationRankables = document.querySelectorAll(
-      '.rankable--location:not(.rankable--new)'
-    )
-    locationRankables = [...locationRankables]
-    const locationIDs = locationRankables.map(
-      rankable => rankable.dataset.rbdDraggableId
-    )
-
-    let practiceRankables = document.querySelectorAll(
-      '.rankable--practice:not(.rankable--new)'
-    )
-    practiceRankables = [...practiceRankables]
-    const practiceIDs = practiceRankables.map(
-      rankable => rankable.dataset.rbdDraggableId
-    )
-
+    const locationIDs = userLocations.map(location => location.value)
+    const practiceIDs = userPractices.map(practice => practice.value)
     const body = { _id, locations: locationIDs, practices: practiceIDs }
     putUserPreferences(body)
 

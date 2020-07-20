@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
@@ -29,10 +29,6 @@ export default function Rankable({
   }
   const isOptionDisabled = option =>
     data.some(element => element.value === option.value)
-
-  useEffect(() => {
-    if (isNew) console.log(data)
-  }, [isNew, data])
 
   return (
     <div
