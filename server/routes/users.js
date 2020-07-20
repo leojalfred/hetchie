@@ -84,6 +84,9 @@ router.post('/login', async ({ body }, response) => {
   try {
     const { email, password } = body
     const user = await User.findOne({ email })
+      .populate('locations')
+      .populate('practices')
+      .exec()
     if (!user) return response.status(404).json({ email: 'Email not found.' })
     if (!user.verified)
       return response.status(404).json({ verified: 'Email not confirmed.' })
@@ -91,7 +94,7 @@ router.post('/login', async ({ body }, response) => {
     const isMatch = await bcrypt.compare(password, user.password)
     if (isMatch) {
       const {
-        id,
+        _id,
         first,
         last,
         email,
@@ -102,7 +105,7 @@ router.post('/login', async ({ body }, response) => {
         practices,
       } = user
       const payload = {
-        id,
+        _id,
         first,
         last,
         email,
@@ -148,9 +151,11 @@ router.put('/', async ({ body }, response) => {
       password: hash,
     }
 
-    const user = await User.findByIdAndUpdate(id, update, { new: true }).select(
-      query
-    )
+    const user = await User.findByIdAndUpdate(id, update, { new: true })
+      .select(query)
+      .populate('locations')
+      .populate('practices')
+      .exec()
     response.json(user)
   } catch (error) {
     console.log(error)
@@ -166,7 +171,11 @@ router.put('/preferences', async ({ body }, response) => {
     const update = { locations, practices }
     const user = await User.findByIdAndUpdate(_id, update, {
       new: true,
-    }).select(query)
+    })
+      .select(query)
+      .populate('locations')
+      .populate('practices')
+      .exec()
 
     response.json(user)
   } catch (error) {

@@ -4,6 +4,8 @@ import mongoose from 'mongoose'
 import passport from 'passport'
 import keys from './config/keys'
 import users from './routes/users'
+import locations from './routes/locations'
+import practices from './routes/practices'
 import passportConfig from './config/passport'
 
 const app = express()
@@ -27,6 +29,8 @@ app.use(passport.initialize())
 passportConfig(passport)
 
 app.use('/users', users)
+app.use('/locations', locations)
+app.use('/practices', practices)
 
 const port = 3001
 app.listen(port, () => console.log(`Server up and running on port ${port}!`))
