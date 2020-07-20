@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
@@ -14,6 +14,7 @@ export default function Rankable({
   dragHandleProps,
   index,
   options,
+  data,
   placeholder,
   value,
   onChange,
@@ -26,6 +27,12 @@ export default function Rankable({
     DropdownIndicator: () => null,
     IndicatorSeparator: () => null,
   }
+  const isOptionDisabled = option =>
+    data.some(element => element.value === option.value)
+
+  useEffect(() => {
+    if (isNew) console.log(data)
+  }, [isNew, data])
 
   return (
     <div
@@ -51,6 +58,7 @@ export default function Rankable({
         name={`${type}-${index}`}
         components={components}
         options={options}
+        isOptionDisabled={isOptionDisabled}
         isSearchable={true}
         placeholder={placeholder}
         value={value}

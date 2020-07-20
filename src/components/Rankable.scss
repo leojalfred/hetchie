@@ -32,8 +32,7 @@
     border: 0;
     border-bottom: 2px solid $yellow-orange;
     color: $blue;
-    flex: 1;
-    min-width: 4rem;
+    flex: 1 0 4rem;
     margin-right: 1rem;
 
     .rankable--new & {
@@ -68,6 +67,11 @@
       &:active {
         background-color: $yellow-orange;
         color: #fff;
+      }
+
+      &--is-disabled {
+        display: none;
+        color: pink !important;
       }
     }
   }

@@ -41,8 +41,8 @@ export default function Ranker({ type, userData, setUserData, options }) {
     const working = [...userData]
     working.push({ value, label })
 
-    setUserData(working)
     setAdded(true)
+    setUserData(working)
   }
 
   const [newValue, setNewValue] = useState()
@@ -90,6 +90,7 @@ export default function Ranker({ type, userData, setUserData, options }) {
                       type={type}
                       index={i}
                       options={options}
+                      data={userData}
                       placeholder={inputPlaceholder}
                       value={{ value, label }}
                       onChange={({ value, label }) => onChange(i, value, label)}
@@ -111,6 +112,7 @@ export default function Ranker({ type, userData, setUserData, options }) {
           type={type}
           index="5"
           options={options}
+          data={userData}
           placeholder={inputPlaceholder}
           value={newValue}
           onChange={onNewInputChange}
