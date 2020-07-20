@@ -32,8 +32,8 @@ export default function Ranker({ type, userData, setUserData, options }) {
     setTimeout(() => {
       const working = [...userData]
       working.splice(i, 1)
-      setUserData(working)
       setAdded(false)
+      setUserData(working)
     }, 200)
   }
 

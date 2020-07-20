@@ -50,6 +50,26 @@
     & &__value-container {
       padding: 0;
     }
+
+    & &__menu {
+      border-radius: $radius;
+      box-shadow: 0 0.15rem 0.5rem 0.075rem rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+
+    & &__menu-list {
+      padding: 0;
+    }
+
+    & &__option {
+      padding: 0.5rem;
+
+      &--is-focused,
+      &:active {
+        background-color: $yellow-orange;
+        color: #fff;
+      }
+    }
   }
 
   &__delete {
