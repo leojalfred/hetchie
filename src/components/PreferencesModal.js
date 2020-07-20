@@ -55,7 +55,7 @@ function PreferencesModal({ user, putUserPreferences, isOpen, closeModal }) {
     event.preventDefault()
     setSubmitting(true)
 
-    const _id = user.data.id
+    const { _id } = user.data
     const locationIDs = userLocations.map(location => location.value)
     const practiceIDs = userPractices.map(practice => practice.value)
     const body = { _id, locations: locationIDs, practices: practiceIDs }
