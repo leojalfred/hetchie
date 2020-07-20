@@ -62,7 +62,7 @@ export default function Ranker({ type, userData, setUserData, options }) {
         rankable.style.opacity = 1
       }, 0)
     }
-  }, [userData, added, type])
+  }, [userData.length, added, type])
 
   const inputPlaceholder = type[0].toUpperCase() + type.slice(1)
 
@@ -77,7 +77,11 @@ export default function Ranker({ type, userData, setUserData, options }) {
               {...droppableProps}
             >
               {userData.map(({ value, label }, i) => (
-                <Draggable draggableId={value} key={`${type}-${i}`} index={i}>
+                <Draggable
+                  draggableId={`${type}-${i}`}
+                  key={`${type}-${i}`}
+                  index={i}
+                >
                   {({ innerRef, draggableProps, dragHandleProps }) => (
                     <Rankable
                       innerRef={innerRef}
