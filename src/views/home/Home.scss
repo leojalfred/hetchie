@@ -38,7 +38,7 @@
 
 @include bp(null, $m) {
   .home__main {
-    margin-top: 4rem;
+    padding-top: 4rem;
   }
 }
 
@@ -47,7 +47,8 @@
     background-position: center;
 
     &__main {
-      margin: 2rem 0 0 0;
+      margin: 0;
+      padding-top: 2rem;
       text-align: left;
     }
 
@@ -63,13 +64,13 @@
 
 @include bp($l) {
   .home__main {
-    margin-top: 4rem;
+    padding-top: 4rem;
   }
 }
 
 @include bp($xl) {
   .home__main {
-    margin-top: 8rem;
+    padding-top: 8rem;
     max-width: 40rem;
   }
 }

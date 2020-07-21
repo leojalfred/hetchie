@@ -13,6 +13,7 @@ import RegisterModal from './components/RegisterModal'
 import LoginModal from './components/LoginModal'
 import SettingsModal from './components/SettingsModal'
 import PreferencesModal from './components/PreferencesModal'
+import Navbar from './components/Navbar'
 import './App.scss'
 
 if (localStorage.jwtToken) {
@@ -86,30 +87,22 @@ function App({ user }) {
 
   return (
     <Router>
+      <Navbar
+        openLoginModal={openLoginModal}
+        openSettingsModal={openSettingsModal}
+        openPreferencesModal={openPreferencesModal}
+      />
+
       <Switch>
         <Route
           exact
           path="/"
           render={props => (
-            <Home
-              {...props}
-              openLoginModal={openLoginModal}
-              openRegisterModal={openRegisterModal}
-            />
+            <Home {...props} openRegisterModal={openRegisterModal} />
           )}
         />
-        <Route
-          exact
-          path="/about"
-          render={props => <About {...props} openLoginModal={openLoginModal} />}
-        />
-        <PrivateRoute
-          exact
-          path="/firms"
-          component={Firms}
-          openSettingsModal={openSettingsModal}
-          openPreferencesModal={openPreferencesModal}
-        />
+        <Route exact path="/about" component={About} />
+        <PrivateRoute exact path="/firms" component={Firms} />
       </Switch>
 
       {modals}

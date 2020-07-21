@@ -1,7 +1,7 @@
 // Animations
 $time: 0.2s;
-$button-transition: background-color $time, box-shadow $time, color $time,
-  transform $time;
+$button-transition: background-color $time, border-color $time, box-shadow $time,
+  color $time, transform $time;
 
 // Borders
 $radius: 0.2rem;

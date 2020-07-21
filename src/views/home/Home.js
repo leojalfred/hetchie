@@ -1,14 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import './Home.scss'
-import Navbar from '../../components/Navbar'
 import BigButton from '../../components/BigButton'
 
-function Home({ user, openLoginModal, openRegisterModal }) {
+function Home({ user, openRegisterModal }) {
   return (
-    <div className="home">
-      <Navbar openLoginModal={openLoginModal} />
-      <main className="home__main container">
+    <main className="home">
+      <div className="home__main container">
         <h1 className="home__heading">hetchie</h1>
         <p className="home__text">
           Proident ex dolore aliqua enim magna reprehenderit elit proident do.
@@ -25,8 +23,8 @@ function Home({ user, openLoginModal, openRegisterModal }) {
             Get Started
           </BigButton>
         )}
-      </main>
-    </div>
+      </div>
+    </main>
   )
 }
 
