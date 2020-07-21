@@ -19,9 +19,9 @@ function PreferencesModal({
   isOpen,
   closeModal,
 }) {
-  const [serverError, setServerError] = useState('')
+  const [error, setError] = useState('')
   useEffect(() => {
-    if (errors) setServerError(errors)
+    if (errors) setError(errors)
   }, [errors])
 
   const [locations, setLocations] = useState()
@@ -70,7 +70,6 @@ function PreferencesModal({
   })
 
   const [submitting, setSubmitting] = useState(false)
-  const [clientError, setClientError] = useState('')
   function onSubmit(event) {
     event.preventDefault()
     setSubmitting(true)
@@ -89,7 +88,7 @@ function PreferencesModal({
 
       closeModal()
     } catch (error) {
-      setClientError(error.message)
+      setError(error.message)
     } finally {
       setSubmitting(false)
     }
@@ -119,14 +118,9 @@ function PreferencesModal({
           />
         </div>
 
-        {(!isEmpty(clientError) || !isEmpty(serverError)) && (
+        {!isEmpty(error) && (
           <div className="modal__input-errors">
-            {!isEmpty(clientError) && (
-              <p className="modal__input-error">{clientError}</p>
-            )}
-            {!isEmpty(serverError) && (
-              <p className="modal__input-error">{serverError}</p>
-            )}
+            <p className="modal__input-error">{error}</p>
           </div>
         )}
 
