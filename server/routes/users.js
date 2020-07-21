@@ -101,6 +101,7 @@ router.post('/login', async ({ body }, response) => {
         school,
         year,
         date,
+        gpa,
         locations,
         practices,
       } = user
@@ -112,6 +113,7 @@ router.post('/login', async ({ body }, response) => {
         school,
         year,
         date,
+        gpa,
         locations,
         practices,
       }
