@@ -84,6 +84,7 @@ router.post('/login', async ({ body }, response) => {
   try {
     const { email, password } = body
     const user = await User.findOne({ email })
+      .select('-__v')
       .populate('locations')
       .populate('practices')
       .exec()
@@ -93,31 +94,7 @@ router.post('/login', async ({ body }, response) => {
 
     const isMatch = await bcrypt.compare(password, user.password)
     if (isMatch) {
-      const {
-        _id,
-        first,
-        last,
-        email,
-        school,
-        year,
-        date,
-        gpa,
-        locations,
-        practices,
-      } = user
-      const payload = {
-        _id,
-        first,
-        last,
-        email,
-        school,
-        year,
-        date,
-        gpa,
-        locations,
-        practices,
-      }
-
+      const payload = user.toObject()
       jwt.sign(
         payload,
         keys.secretOrKey,
