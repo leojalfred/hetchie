@@ -17,7 +17,7 @@
 
   &__rank {
     align-items: center;
-    background-color: $yellow-orange;
+    background-color: $brand-1;
     border-radius: 50%;
     color: #fff;
     font-size: 0.8rem;
@@ -30,8 +30,8 @@
 
   &__select {
     border: 0;
-    border-bottom: 2px solid $yellow-orange;
-    color: $blue;
+    border-bottom: 2px solid $brand-1;
+    color: $brand-2;
     flex: 1 0 4rem;
     margin-right: 1rem;
 
@@ -65,7 +65,7 @@
 
       &--is-focused,
       &:active {
-        background-color: $yellow-orange;
+        background-color: $brand-1;
         color: #fff;
       }
 

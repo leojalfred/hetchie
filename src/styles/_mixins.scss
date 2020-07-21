@@ -35,7 +35,7 @@
 }
 
 @mixin scrollbar() {
-  scrollbar-color: $yellow-orange;
+  scrollbar-color: $brand-1;
   scrollbar-width: 0.4rem;
 
   &::-webkit-scrollbar {
@@ -43,7 +43,7 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: $yellow-orange;
+    background-color: $brand-1;
     border-radius: $radius;
   }
 }

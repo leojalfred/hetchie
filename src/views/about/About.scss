@@ -47,12 +47,12 @@
   }
 
   &__button {
-    color: $blue;
-    border-color: $blue;
+    color: $brand-2;
+    border-color: $brand-2;
     padding: 1rem;
 
     &:hover {
-      background-color: $blue;
+      background-color: $brand-2;
       color: #fff;
     }
   }
