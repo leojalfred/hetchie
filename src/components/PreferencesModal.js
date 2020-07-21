@@ -66,9 +66,7 @@ function PreferencesModal({
     setUserPractices(formattedPractices)
   }, [user.data])
 
-  function onChange(event) {
-    setGPA(event.currentTarget.value)
-  }
+  const onChange = ({ currentTarget }) => setGPA(currentTarget.value)
 
   const gpaPattern = /(([0-3]{1}\.\d{0,2})|([0-4]{1}))|[4]\.[0]{0,2}/
   const schema = string().required('GPA is required.').matches(gpaPattern, {
@@ -88,8 +86,8 @@ function PreferencesModal({
       schema.validateSync(gpa)
 
       const { _id } = user.data
-      const locationIDs = userLocations.map(location => location.value)
-      const practiceIDs = userPractices.map(practice => practice.value)
+      const locationIDs = userLocations.map(({ value }) => value)
+      const practiceIDs = userPractices.map(({ value }) => value)
       const body = { _id, gpa, locations: locationIDs, practices: practiceIDs }
       putUserPreferences(body)
 
