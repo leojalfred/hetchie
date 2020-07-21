@@ -10,7 +10,7 @@
 
   &__main {
     color: #fff;
-    margin: 2rem auto 0 auto;
+    margin: 0 auto;
     max-width: 30rem;
     text-align: center;
   }
@@ -36,19 +36,12 @@
   }
 }
 
-@include bp(null, $m) {
-  .home__main {
-    padding-top: 4rem;
-  }
-}
-
 @include bp($m) {
   .home {
     background-position: center;
 
     &__main {
       margin: 0;
-      padding-top: 2rem;
       text-align: left;
     }
 
@@ -62,15 +55,8 @@
   }
 }
 
-@include bp($l) {
-  .home__main {
-    padding-top: 4rem;
-  }
-}
-
 @include bp($xl) {
   .home__main {
-    padding-top: 8rem;
     max-width: 40rem;
   }
 }

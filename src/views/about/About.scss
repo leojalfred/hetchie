@@ -2,7 +2,6 @@
 @import '../../styles/variables';
 
 .about {
-  margin: 2rem 0;
   text-align: center;
 
   &__section-topline {
@@ -60,7 +59,6 @@
 @include bp($m) {
   .about {
     display: flex;
-    margin: 4rem 0;
     text-align: left;
 
     &__section {
@@ -85,8 +83,6 @@
 
 @include bp($l) {
   .about {
-    margin: 8rem 0;
-
     &__icon,
     &__section-heading {
       font-size: 2.4rem;
