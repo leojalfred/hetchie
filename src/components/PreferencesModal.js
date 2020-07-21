@@ -47,9 +47,12 @@ function PreferencesModal({
     getData()
   }, [])
 
+  const [gpa, setGPA] = useState('')
   const [userLocations, setUserLocations] = useState()
   const [userPractices, setUserPractices] = useState()
   useEffect(() => {
+    if (!isEmpty(user.data.gpa)) setGPA(user.data.gpa)
+
     const formattedLocations = user.data.locations.map(({ _id, name }) => ({
       value: _id,
       label: name,
@@ -63,6 +66,10 @@ function PreferencesModal({
     setUserPractices(formattedPractices)
   }, [user.data])
 
+  function onChange(event) {
+    setGPA(event.currentTarget.value)
+  }
+
   const gpaPattern = /(([0-3]{1}\.\d{0,2})|([0-4]{1}))|[4]\.[0]{0,2}/
   const schema = string().required('GPA is required.').matches(gpaPattern, {
     message: 'GPA is invalid.',
@@ -74,7 +81,7 @@ function PreferencesModal({
     event.preventDefault()
     setSubmitting(true)
 
-    const gpaInput = document.querySelector(".modal__input[name='gpa']")
+    const gpaInput = document.querySelector('#gpa')
     const gpa = gpaInput.value
 
     try {
@@ -132,6 +139,7 @@ function PreferencesModal({
               icon={faUserGraduate}
             />
             <input
+              id="gpa"
               className="modal__input"
               type="number"
               step="0.01"
@@ -139,6 +147,8 @@ function PreferencesModal({
               placeholder="4.00"
               min="1"
               max="4"
+              value={gpa}
+              onChange={onChange}
             />
           </div>
 
