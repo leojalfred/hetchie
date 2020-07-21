@@ -141,7 +141,7 @@ router.put('/', async ({ body }, response) => {
   if (!isValid) return response.status(400).json(errors)
 
   try {
-    const { first, last, email, school, year, password, id } = body
+    const { first, last, email, school, year, password, _id } = body
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(password, salt)
     const update = {
@@ -153,7 +153,7 @@ router.put('/', async ({ body }, response) => {
       password: hash,
     }
 
-    const user = await User.findByIdAndUpdate(id, update, { new: true })
+    const user = await User.findByIdAndUpdate(_id, update, { new: true })
       .select(query)
       .populate('locations')
       .populate('practices')
