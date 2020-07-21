@@ -34,6 +34,7 @@ const userSchema = new Schema({
     default: false,
   },
   salt: String,
+  gpa: Number,
   locations: [{ type: Schema.Types.ObjectId, ref: 'locations' }],
   practices: [{ type: Schema.Types.ObjectId, ref: 'practices' }],
 })

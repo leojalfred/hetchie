@@ -167,8 +167,8 @@ router.put('/preferences', async ({ body }, response) => {
   if (!valid) return response.status(400).json(errors)
 
   try {
-    const { _id, locations, practices } = body
-    const update = { locations, practices }
+    const { _id, gpa, locations, practices } = body
+    const update = { gpa, locations, practices }
     const user = await User.findByIdAndUpdate(_id, update, {
       new: true,
     })
