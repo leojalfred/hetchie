@@ -94,9 +94,8 @@ router.post('/login', async ({ body }, response) => {
 
     const isMatch = await bcrypt.compare(password, user.password)
     if (isMatch) {
-      const payload = user.toObject()
       jwt.sign(
-        payload,
+        user.toObject(),
         keys.secretOrKey,
         { expiresIn: 31556926 },
         (error, token) => {
