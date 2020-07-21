@@ -1,16 +1,29 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { string } from 'yup'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import { faListOl, faUserGraduate } from '@fortawesome/free-solid-svg-icons'
-import { connect } from 'react-redux'
+import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
+import isEmpty from 'is-empty'
 import { putUserPreferences } from '../actions/userActions'
+import { connect } from 'react-redux'
 import Modal from './Modal'
 import Ranker from './Ranker'
 import Button from './BigButton'
 import './PreferencesModal.scss'
 
-function PreferencesModal({ user, putUserPreferences, isOpen, closeModal }) {
+function PreferencesModal({
+  user,
+  errors,
+  putUserPreferences,
+  isOpen,
+  closeModal,
+}) {
+  const [serverError, setServerError] = useState('')
+  useEffect(() => {
+    if (errors) setServerError(errors)
+  }, [errors])
+
   const [locations, setLocations] = useState()
   const [practices, setPractices] = useState()
   useEffect(() => {
@@ -50,19 +63,36 @@ function PreferencesModal({ user, putUserPreferences, isOpen, closeModal }) {
     setUserPractices(formattedPractices)
   }, [user.data])
 
+  const gpaPattern = /(([0-3]{1}\.\d{0,2})|([0-4]{1}))|[4]\.[0]{0,2}/
+  const schema = string().required('GPA is required.').matches(gpaPattern, {
+    message: 'GPA is invalid.',
+    excludeEmptyString: true,
+  })
+
   const [submitting, setSubmitting] = useState(false)
+  const [clientError, setClientError] = useState('')
   function onSubmit(event) {
     event.preventDefault()
     setSubmitting(true)
 
-    const { _id } = user.data
-    const locationIDs = userLocations.map(location => location.value)
-    const practiceIDs = userPractices.map(practice => practice.value)
-    const body = { _id, locations: locationIDs, practices: practiceIDs }
-    putUserPreferences(body)
+    const gpaInput = document.querySelector(".modal__input[name='gpa']")
+    const gpa = gpaInput.value
 
-    setSubmitting(false)
-    closeModal()
+    try {
+      schema.validateSync(gpa)
+
+      const { _id } = user.data
+      const locationIDs = userLocations.map(location => location.value)
+      const practiceIDs = userPractices.map(practice => practice.value)
+      const body = { _id, gpa, locations: locationIDs, practices: practiceIDs }
+      putUserPreferences(body)
+
+      closeModal()
+    } catch (error) {
+      setClientError(error.message)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -89,6 +119,17 @@ function PreferencesModal({ user, putUserPreferences, isOpen, closeModal }) {
           />
         </div>
 
+        {(!isEmpty(clientError) || !isEmpty(serverError)) && (
+          <div className="modal__input-errors">
+            {!isEmpty(clientError) && (
+              <p className="modal__input-error">{clientError}</p>
+            )}
+            {!isEmpty(serverError) && (
+              <p className="modal__input-error">{serverError}</p>
+            )}
+          </div>
+        )}
+
         <form onSubmit={onSubmit}>
           <h3 className="preferences__title">GPA</h3>
           <div className="modal__input-group">
@@ -98,9 +139,12 @@ function PreferencesModal({ user, putUserPreferences, isOpen, closeModal }) {
             />
             <input
               className="modal__input"
-              type="gpa"
-              name="number"
-              placeholder="4.0"
+              type="number"
+              step="0.01"
+              name="gpa"
+              placeholder="4.00"
+              min="1"
+              max="4"
             />
           </div>
 
@@ -138,7 +182,7 @@ function PreferencesModal({ user, putUserPreferences, isOpen, closeModal }) {
   )
 }
 
-const mapStateToProps = ({ user }) => ({ user })
+const mapStateToProps = ({ user, errors }) => ({ user, errors })
 export default connect(mapStateToProps, { putUserPreferences })(
   PreferencesModal
 )
