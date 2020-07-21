@@ -36,7 +36,7 @@ function Navbar({
         />
       )
     }
-  }, [user, openLoginModal, openSettingsModal, openPreferencesModal])
+  }, [user.loggedIn, openLoginModal, openSettingsModal, openPreferencesModal])
 
   const classes = classNames('navbar', 'container', className)
   return (

@@ -7,7 +7,7 @@ import './About.scss'
 
 function About() {
   return (
-    <main className="about__main container">
+    <main className="about container">
       <section className="about__section">
         <div className="about__section-topline">
           <FontAwesomeIcon className="about__icon" icon={faGavel} />
