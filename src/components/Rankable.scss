@@ -28,53 +28,6 @@
     width: 1.4rem;
   }
 
-  &__select {
-    border: 0;
-    border-bottom: 2px solid $brand-1;
-    color: $brand-2;
-    flex: 1 0 4rem;
-    margin-right: 1rem;
-
-    .rankable--new & {
-      margin-right: 0;
-    }
-
-    & &__control {
-      border: 0;
-      box-shadow: none;
-      min-height: 0;
-      padding: 0.125rem;
-    }
-
-    & &__value-container {
-      padding: 0;
-    }
-
-    & &__menu {
-      border-radius: $radius;
-      box-shadow: 0 0.15rem 0.5rem 0.075rem rgba(0, 0, 0, 0.2);
-      overflow: hidden;
-    }
-
-    & &__menu-list {
-      padding: 0;
-    }
-
-    & &__option {
-      padding: 0.5rem;
-
-      &--is-focused,
-      &:active {
-        background-color: $brand-1;
-        color: #fff;
-      }
-
-      &--is-disabled {
-        display: none !important;
-      }
-    }
-  }
-
   &__delete {
     cursor: pointer;
     transition: color 150ms;

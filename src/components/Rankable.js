@@ -2,8 +2,8 @@ import React from 'react'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
-import Select from 'react-select'
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
+import Select from './Select'
 import './Rankable.scss'
 
 export default function Rankable({
@@ -23,10 +23,6 @@ export default function Rankable({
   const classes = classNames(`rankable rankable--${type}`, {
     'rankable--new': isNew,
   })
-  const components = {
-    DropdownIndicator: () => null,
-    IndicatorSeparator: () => null,
-  }
   const isOptionDisabled = option =>
     data.some(element => element.value === option.value)
 
@@ -49,13 +45,9 @@ export default function Rankable({
         </>
       )}
       <Select
-        className="rankable__select"
-        classNamePrefix="rankable__select"
         name={`${type}-${index}`}
-        components={components}
         options={options}
         isOptionDisabled={isOptionDisabled}
-        isSearchable={true}
         placeholder={placeholder}
         value={value}
         onChange={onChange}

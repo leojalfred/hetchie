@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import isEmpty from 'is-empty'
-import Select from 'react-select'
 import { connect } from 'react-redux'
 import { putLists } from '../../actions/user'
+import Select from '../../components/Select'
 import './Firms.scss'
 
 function Firms({ user, errors }) {
@@ -20,11 +20,6 @@ function Firms({ user, errors }) {
     setLists(formattedLists)
   }, [user.data.lists])
 
-  const components = {
-    DropdownIndicator: () => null,
-    IndicatorSeparator: () => null,
-  }
-
   const [activeList, setActiveList] = useState(-1)
   const onChange = value => setActiveList(value)
 
@@ -32,11 +27,7 @@ function Firms({ user, errors }) {
     <main className="firms container">
       <h1 className="firms__heading">Firms List</h1>
       <Select
-        className="firms__select"
-        classNamePrefix="firms__select"
-        components={components}
         options={lists}
-        isSearchable={true}
         placeholder="Firms list"
         value={lists[0]}
         onChange={onChange}
