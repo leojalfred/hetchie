@@ -16,7 +16,7 @@ import {
   serverErrorKeys,
   email,
 } from '../scripts/validation'
-import { loginUser } from '../actions/userActions'
+import { loginUser } from '../actions/user'
 import Modal from './Modal'
 import Button from './BigButton'
 

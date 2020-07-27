@@ -9,7 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
 import './Settings.scss'
-import { logoutUser } from '../actions/userActions'
+import { logoutUser } from '../actions/user'
 
 function useClose(ref, setComponent) {
   useEffect(() => {

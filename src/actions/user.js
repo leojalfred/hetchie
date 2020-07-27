@@ -1,13 +1,14 @@
 import axios from 'axios'
 import jwt_decode from 'jwt-decode'
 import { GET_ERRORS, SET_CURRENT_USER } from './types'
-import setAuthToken from '../utils/setAuthToken'
+import setToken from '../utils/authorization'
 
 export const setCurrentUser = decoded => ({
   type: SET_CURRENT_USER,
   payload: decoded,
 })
 
+const setErrors = (dispatch, payload) => dispatch({ type: GET_ERRORS, payload })
 export const putUser = (
   user,
   closeModal,
@@ -20,54 +21,55 @@ export const putUser = (
       dispatch(setCurrentUser(response.data))
     }
 
-    dispatch({ type: GET_ERRORS, payload: {} })
+    setErrors(dispatch, {})
     closeModal()
-  } catch (error) {
-    dispatch({
-      type: GET_ERRORS,
-      payload: error.response.data,
-    })
+  } catch ({ response }) {
+    setErrors(dispatch, response.data)
   }
 }
 
+function setState(dispatch, data) {
+  dispatch(setCurrentUser(data))
+  setErrors(dispatch, {})
+}
 export const loginUser = (user, history, closeModal) => async dispatch => {
   try {
     const response = await axios.post('/users/login', user)
     const { token } = response.data
     localStorage.setItem('jwtToken', token)
-    setAuthToken(token)
+    setToken(token)
 
     const decoded = jwt_decode(token)
-    dispatch(setCurrentUser(decoded))
-    dispatch({ type: GET_ERRORS, payload: {} })
+    setState(dispatch, decoded)
 
     history.push('/firms')
     closeModal()
-  } catch (error) {
-    dispatch({
-      type: GET_ERRORS,
-      payload: error.response.data,
-    })
+  } catch ({ response }) {
+    setErrors(dispatch, response.data)
   }
 }
 
 export const logoutUser = () => dispatch => {
   localStorage.removeItem('jwtToken')
-  setAuthToken(false)
+  setToken(false)
 
   dispatch(setCurrentUser({}))
 }
 
-export const putUserPreferences = body => async dispatch => {
+export const putPreferences = body => async dispatch => {
   try {
     const { data } = await axios.put('/users/preferences', body)
-
-    dispatch(setCurrentUser(data))
-    dispatch({ type: GET_ERRORS, payload: {} })
+    setState(dispatch, data)
   } catch ({ response }) {
-    dispatch({
-      type: GET_ERRORS,
-      payload: response.data,
-    })
+    setErrors(dispatch, response.data)
+  }
+}
+
+export const putLists = body => async dispatch => {
+  try {
+    const { data } = await axios.put('/users/lists', body)
+    setState(dispatch, data)
+  } catch ({ response }) {
+    setErrors(dispatch, response.data)
   }
 }

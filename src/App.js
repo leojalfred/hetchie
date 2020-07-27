@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
 import { connect } from 'react-redux'
-import setAuthToken from './utils/setAuthToken'
-import { setCurrentUser, logoutUser } from './actions/userActions'
+import setToken from './utils/authorization'
+import { setCurrentUser, logoutUser } from './actions/user'
 import store from './store'
 import Home from './views/home/Home'
 import About from './views/about/About'
@@ -18,7 +18,7 @@ import './App.scss'
 
 if (localStorage.jwtToken) {
   const token = localStorage.jwtToken
-  setAuthToken(token)
+  setToken(token)
 
   const decoded = jwt_decode(token)
   store.dispatch(setCurrentUser(decoded))

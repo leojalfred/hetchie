@@ -1,103 +1,103 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { string } from 'yup';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faListOl, faUserGraduate } from '@fortawesome/free-solid-svg-icons';
-import { faTimesCircle } from '@fortawesome/free-regular-svg-icons';
-import isEmpty from 'is-empty';
-import { putUserPreferences } from '../actions/userActions';
-import { connect } from 'react-redux';
-import Modal from './Modal';
-import Ranker from './Ranker';
-import Button from './BigButton';
-import './PreferencesModal.scss';
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import { string } from 'yup'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faListOl, faUserGraduate } from '@fortawesome/free-solid-svg-icons'
+import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
+import isEmpty from 'is-empty'
+import { putPreferences } from '../actions/user'
+import { connect } from 'react-redux'
+import Modal from './Modal'
+import Ranker from './Ranker'
+import Button from './BigButton'
+import './PreferencesModal.scss'
 
 function PreferencesModal({
   user,
   errors,
-  putUserPreferences,
+  putPreferences,
   isOpen,
   closeModal,
 }) {
-  const [error, setError] = useState('');
+  const [error, setError] = useState('')
   useEffect(() => {
-    if (errors) setError(errors);
-  }, [errors]);
+    if (errors) setError(errors)
+  }, [errors])
 
-  const [locations, setLocations] = useState();
-  const [practices, setPractices] = useState();
+  const [locations, setLocations] = useState()
+  const [practices, setPractices] = useState()
   useEffect(() => {
     async function getData() {
-      const locationsResponse = await axios.get('/locations');
-      const locationsData = locationsResponse.data;
+      const locationsResponse = await axios.get('/locations')
+      const locationsData = locationsResponse.data
       const locationOptions = locationsData.map(({ _id, name }) => ({
         value: _id,
         label: name,
-      }));
-      setLocations(locationOptions);
+      }))
+      setLocations(locationOptions)
 
-      const practicesResponse = await axios.get('/practices');
-      const practicesData = practicesResponse.data;
+      const practicesResponse = await axios.get('/practices')
+      const practicesData = practicesResponse.data
       const practiceOptions = practicesData.map(({ _id, name }) => ({
         value: _id,
         label: name,
-      }));
-      setPractices(practiceOptions);
+      }))
+      setPractices(practiceOptions)
     }
-    getData();
-  }, []);
+    getData()
+  }, [])
 
-  const [gpa, setGPA] = useState('');
-  const [userLocations, setUserLocations] = useState();
-  const [userPractices, setUserPractices] = useState();
+  const [gpa, setGPA] = useState('')
+  const [userLocations, setUserLocations] = useState()
+  const [userPractices, setUserPractices] = useState()
   useEffect(() => {
-    if (!isEmpty(user.data.gpa)) setGPA(user.data.gpa);
+    if (!isEmpty(user.data.gpa)) setGPA(user.data.gpa)
     if (!isEmpty(user.data.locations)) {
       const formattedLocations = user.data.locations.map(({ _id, name }) => ({
         value: _id,
         label: name,
-      }));
-      setUserLocations(formattedLocations);
+      }))
+      setUserLocations(formattedLocations)
     }
     if (!isEmpty(user.data.practices)) {
       const formattedPractices = user.data.practices.map(({ _id, name }) => ({
         value: _id,
         label: name,
-      }));
-      setUserPractices(formattedPractices);
+      }))
+      setUserPractices(formattedPractices)
     }
-  }, [user.data]);
+  }, [user.data])
 
-  const onChange = ({ currentTarget }) => setGPA(currentTarget.value);
+  const onChange = ({ currentTarget }) => setGPA(currentTarget.value)
 
-  const gpaPattern = /(([0-3]{1}\.\d{0,2})|([0-4]{1}))|[4]\.[0]{0,2}/;
+  const gpaPattern = /(([0-3]{1}\.\d{0,2})|([0-4]{1}))|[4]\.[0]{0,2}/
   const schema = string().required('GPA is required.').matches(gpaPattern, {
     message: 'GPA is invalid.',
     excludeEmptyString: true,
-  });
+  })
 
-  const [submitting, setSubmitting] = useState(false);
+  const [submitting, setSubmitting] = useState(false)
   function onSubmit(event) {
-    event.preventDefault();
-    setSubmitting(true);
+    event.preventDefault()
+    setSubmitting(true)
 
-    const gpaInput = document.querySelector('#gpa');
-    const gpa = gpaInput.value;
+    const gpaInput = document.querySelector('#gpa')
+    const gpa = gpaInput.value
 
     try {
-      schema.validateSync(gpa);
+      schema.validateSync(gpa)
 
-      const { _id } = user.data;
-      const locationIDs = userLocations.map(({ value }) => value);
-      const practiceIDs = userPractices.map(({ value }) => value);
-      const body = { _id, gpa, locations: locationIDs, practices: practiceIDs };
-      putUserPreferences(body);
+      const { _id } = user.data
+      const locationIDs = userLocations.map(({ value }) => value)
+      const practiceIDs = userPractices.map(({ value }) => value)
+      const body = { _id, gpa, locations: locationIDs, practices: practiceIDs }
+      putPreferences(body)
 
-      closeModal();
+      closeModal()
     } catch (error) {
-      setError(error.message);
+      setError(error.message)
     } finally {
-      setSubmitting(false);
+      setSubmitting(false)
     }
   }
 
@@ -183,10 +183,8 @@ function PreferencesModal({
         </form>
       </div>
     </Modal>
-  );
+  )
 }
 
-const mapStateToProps = ({ user, errors }) => ({ user, errors });
-export default connect(mapStateToProps, { putUserPreferences })(
-  PreferencesModal
-);
+const mapStateToProps = ({ user, errors }) => ({ user, errors })
+export default connect(mapStateToProps, { putPreferences })(PreferencesModal)
