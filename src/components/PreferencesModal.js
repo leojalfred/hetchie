@@ -34,7 +34,14 @@ function PreferencesModal({
         value: _id,
         label: name,
       }))
-      setLocations(locationOptions)
+
+      function sort(a, b) {
+        if (a.label < b.label) return -1
+        if (a.label > b.label) return 1
+        return 0
+      }
+      const sortedLocations = locationOptions.sort(sort)
+      setLocations(sortedLocations)
 
       const practicesResponse = await axios.get('/practices')
       const practicesData = practicesResponse.data
@@ -42,7 +49,8 @@ function PreferencesModal({
         value: _id,
         label: name,
       }))
-      setPractices(practiceOptions)
+      const sortedPractices = practiceOptions.sort(sort)
+      setPractices(sortedPractices)
     }
     getData()
   }, [])
