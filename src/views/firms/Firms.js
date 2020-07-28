@@ -3,6 +3,7 @@ import isEmpty from 'is-empty'
 import { connect } from 'react-redux'
 import { putLists } from '../../actions/user'
 import Select from '../../components/Select'
+import FirmsTable from '../../components/FirmsTable'
 import './Firms.scss'
 
 function Firms({ user, errors }) {
@@ -26,12 +27,19 @@ function Firms({ user, errors }) {
   return (
     <main className="firms container">
       <h1 className="firms__heading">Firms List</h1>
-      <Select
-        options={lists}
-        placeholder="Firms list"
-        value={lists[0]}
-        onChange={onChange}
-      />
+      <div className="firms__topline">
+        <div className="firms__selectors">
+          <Select
+            className="firms__select"
+            options={lists}
+            placeholder="Firms list"
+            value={lists[0]}
+            onChange={onChange}
+          />
+        </div>
+        <div className="firms__actions"></div>
+      </div>
+      <FirmsTable />
     </main>
   )
 }

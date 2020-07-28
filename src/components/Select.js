@@ -1,8 +1,10 @@
 import React from 'react'
+import classNames from 'classnames'
 import Select from 'react-select'
 import './Select.scss'
 
 export default function HetchieSelect({
+  className,
   name,
   options,
   isOptionDisabled,
@@ -10,6 +12,7 @@ export default function HetchieSelect({
   value,
   onChange,
 }) {
+  const classes = classNames('select', className)
   const components = {
     DropdownIndicator: () => null,
     IndicatorSeparator: () => null,
@@ -17,7 +20,7 @@ export default function HetchieSelect({
 
   return (
     <Select
-      className="select"
+      className={classes}
       classNamePrefix="select"
       name={name}
       components={components}
