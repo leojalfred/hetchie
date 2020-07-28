@@ -26,6 +26,7 @@
   & &__menu {
     border-radius: $radius;
     box-shadow: 0 0.15rem 0.5rem 0.075rem rgba(0, 0, 0, 0.2);
+    min-width: 12rem;
     overflow: hidden;
   }
 

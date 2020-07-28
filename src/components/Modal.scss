@@ -159,8 +159,8 @@
     border-radius: 2rem;
     display: flex;
     height: auto;
-    max-height: 98vh;
-    min-width: 90%;
+    max-height: 95vh;
+    width: 95%;
     overflow: hidden;
 
     &__overlay {
@@ -213,10 +213,10 @@
   }
 
   @include bp($m) {
-    max-height: 90vh;
+    max-height: 95vh;
   }
 
   @include bp($xl) {
-    min-width: 70%;
+    width: 80%;
   }
 }
