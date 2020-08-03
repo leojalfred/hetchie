@@ -1,9 +1,66 @@
+@import '../../styles/variables';
+
 .firms {
   &__heading {
-    margin: 0;
+    margin: 0 0 1rem 0;
+  }
+
+  &__topline {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__selectors {
+    display: flex;
+    flex: 1;
   }
 
   &__select {
-    max-width: 16rem;
+    flex-basis: 8rem;
+    margin-right: 10rem;
+  }
+
+  &__action {
+    background-color: #fff;
+
+    &:not(:last-child) {
+      margin-right: 1rem;
+    }
+
+    &--save {
+      color: $blue;
+
+      &:hover {
+        background-color: $blue;
+        color: #fff;
+      }
+    }
+
+    &--add {
+      color: $green;
+
+      &:hover {
+        background-color: $green;
+        color: #fff;
+      }
+    }
+
+    &--edit {
+      color: $brand-1;
+
+      &:hover {
+        background-color: $brand-1;
+        color: #fff;
+      }
+    }
+
+    &--delete {
+      color: $red;
+
+      &:hover {
+        background-color: $red;
+        color: #fff;
+      }
+    }
   }
 }

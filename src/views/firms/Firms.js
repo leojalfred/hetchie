@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import isEmpty from 'is-empty'
+import { faSave, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
+import { faPlusCircle, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
 import { putLists } from '../../actions/user'
 import Select from '../../components/Select'
+import IconButton from '../../components/IconButton'
 import FirmsTable from '../../components/FirmsTable'
 import './Firms.scss'
 
@@ -37,7 +40,24 @@ function Firms({ user, errors }) {
             onChange={onChange}
           />
         </div>
-        <div className="firms__actions"></div>
+        <div className="firms__actions">
+          <IconButton
+            className="firms__action--save firms__action"
+            icon={faSave}
+          />
+          <IconButton
+            className="firms__action--add firms__action"
+            icon={faPlusCircle}
+          />
+          <IconButton
+            className="firms__action--edit firms__action"
+            icon={faPencilAlt}
+          />
+          <IconButton
+            className="firms__action--delete firms__action"
+            icon={faTrashAlt}
+          />
+        </div>
       </div>
       <FirmsTable />
     </main>
