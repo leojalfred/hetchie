@@ -7,7 +7,7 @@ export default function IconButton({ className, icon }) {
   const classes = classNames(className, 'icon-button')
 
   return (
-    <button class={classes}>
+    <button className={classes}>
       <FontAwesomeIcon className="icon-button__icon" icon={icon} />
     </button>
   )

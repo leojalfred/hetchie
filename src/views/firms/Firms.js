@@ -24,8 +24,11 @@ function Firms({ user, errors }) {
     setLists(formattedLists)
   }, [user.data.lists])
 
-  const [activeList, setActiveList] = useState(-1)
-  const onChange = value => setActiveList(value)
+  const [activeList, setActiveList] = useState(lists[0])
+  function onChange(selectedList) {
+    const activeList = lists.find(({ value }) => value === selectedList.value)
+    setActiveList(activeList)
+  }
 
   return (
     <main className="firms container">
