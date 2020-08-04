@@ -1,4 +1,5 @@
 @import '../../styles/variables';
+@import '../../styles/mixins';
 
 .firms {
   &__heading {
@@ -14,36 +15,18 @@
     align-items: flex-end;
     display: flex;
     flex: 1;
-    margin-right: 10rem;
+    margin-right: 2rem;
   }
 
   &__select {
     display: flex;
     flex-basis: 8rem;
+    margin: 0;
     max-width: 32rem;
   }
 
   &__recent {
-    background-color: $brand-2;
-    border-radius: 2rem;
-    box-shadow: $shadow-m;
-    color: #fff;
-    padding: 0.25rem 0.75rem;
-    transition: background-color $time, box-shadow $time, transform $time;
-
-    &:not(:last-child) {
-      margin-right: 0.5rem;
-    }
-
-    &:hover {
-      background-color: $brand-1;
-      box-shadow: $shadow-l;
-    }
-
-    &:active {
-      box-shadow: $shadow;
-      transform: translateY(0.1rem);
-    }
+    display: none;
   }
 
   &__actions {
@@ -92,6 +75,49 @@
       &:hover {
         background-color: $red;
         color: #fff;
+      }
+    }
+  }
+
+  @include bp($s) {
+    &__select {
+      margin-right: 1rem;
+
+      &--marginless {
+        margin: 0;
+      }
+    }
+
+    &__recent {
+      background-color: $brand-2;
+      border-radius: 2rem;
+      box-shadow: $shadow-m;
+      color: #fff;
+      padding: 0.25rem 0.75rem;
+      transition: background-color $time, box-shadow $time, transform $time;
+
+      &:first-of-type {
+        display: inline-block;
+      }
+
+      &:hover {
+        background-color: $brand-1;
+        box-shadow: $shadow-l;
+      }
+
+      &:active {
+        box-shadow: $shadow;
+        transform: translateY(0.1rem);
+      }
+    }
+  }
+
+  @include bp($m) {
+    &__recent {
+      display: inline-block;
+
+      &:not(:last-child) {
+        margin-right: 0.5rem;
       }
     }
   }
