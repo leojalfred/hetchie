@@ -7,22 +7,11 @@ input {
 
 button {
   border: 0;
-  border-radius: 2rem;
-  box-shadow: $shadow-m;
   cursor: pointer;
   padding: 0;
   -webkit-tap-highlight-color: transparent;
 
   &:disabled {
     cursor: default;
-  }
-
-  &:hover {
-    box-shadow: $shadow-l;
-  }
-
-  &:active {
-    box-shadow: $shadow;
-    transform: translateY(0.1rem);
   }
 }

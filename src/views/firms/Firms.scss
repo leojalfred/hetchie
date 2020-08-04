@@ -25,6 +25,8 @@
 
   &__recent {
     background-color: $brand-2;
+    border-radius: 2rem;
+    box-shadow: $shadow-m;
     color: #fff;
     padding: 0.25rem 0.75rem;
     transition: background-color $time, box-shadow $time, transform $time;
@@ -35,6 +37,12 @@
 
     &:hover {
       background-color: $brand-1;
+      box-shadow: $shadow-l;
+    }
+
+    &:active {
+      box-shadow: $shadow;
+      transform: translateY(0.1rem);
     }
   }
 
