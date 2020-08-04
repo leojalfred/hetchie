@@ -1,23 +1,12 @@
 @import '../styles/variables';
 
 .icon-button {
-  border: 0;
   border-radius: 50%;
-  box-shadow: $shadow-m;
   height: 2rem;
   line-height: 0;
   transition: background-color $time, box-shadow $time, color $time,
     transform $time;
   width: 2rem;
-
-  &:hover {
-    box-shadow: $shadow-l;
-  }
-
-  &:active {
-    box-shadow: $shadow;
-    transform: translateY(0.05rem);
-  }
 
   &__icon {
     font-size: 1rem;

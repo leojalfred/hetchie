@@ -3,20 +3,9 @@
 .button {
   background-color: transparent;
   border: 0.1rem solid #fff;
-  border-radius: 2rem;
-  box-shadow: $shadow-m;
   display: block;
   padding: 0.5rem 1rem;
   text-decoration: none;
   transition: $button-transition;
   width: fit-content;
-
-  &:hover {
-    box-shadow: $shadow-l;
-  }
-
-  &:active {
-    box-shadow: $shadow;
-    transform: translateY(0.05rem);
-  }
 }

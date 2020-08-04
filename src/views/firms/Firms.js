@@ -39,6 +39,9 @@ function Firms({ user, errors }) {
             value={lists[0]}
             onChange={onChange}
           />
+          <button className="firms__recent">West Coast</button>
+          <button className="firms__recent">East Coast</button>
+          <button className="firms__recent">Reaches</button>
         </div>
         <div className="firms__actions">
           <IconButton

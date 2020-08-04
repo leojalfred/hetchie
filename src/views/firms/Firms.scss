@@ -2,7 +2,7 @@
 
 .firms {
   &__heading {
-    margin: 0 0 1rem 0;
+    margin: 0;
   }
 
   &__topline {
@@ -11,20 +11,44 @@
   }
 
   &__selectors {
+    align-items: flex-end;
     display: flex;
     flex: 1;
+    margin-right: 10rem;
   }
 
   &__select {
+    display: flex;
     flex-basis: 8rem;
-    margin-right: 10rem;
+    max-width: 32rem;
+  }
+
+  &__recent {
+    background-color: $brand-2;
+    color: #fff;
+    padding: 0.25rem 0.75rem;
+    transition: background-color $time, box-shadow $time, transform $time;
+
+    &:not(:last-child) {
+      margin-right: 0.5rem;
+    }
+
+    &:hover {
+      background-color: $brand-1;
+    }
+  }
+
+  &__actions {
+    background-color: $brand-2;
+    border-radius: 2rem;
+    padding: 0.5rem 0.625rem;
   }
 
   &__action {
     background-color: #fff;
 
     &:not(:last-child) {
-      margin-right: 1rem;
+      margin-right: 0.5rem;
     }
 
     &--save {
