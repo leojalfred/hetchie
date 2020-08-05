@@ -47,12 +47,8 @@ export default function FirmsTable({ listData }) {
                   key={`firm-${i}`}
                   index={i}
                 >
-                  {(
-                    { innerRef, draggableProps, dragHandleProps },
-                    { isDragging }
-                  ) => (
+                  {({ innerRef, draggableProps, dragHandleProps }) => (
                     <FirmRow
-                      isDragging={isDragging}
                       innerRef={innerRef}
                       draggableProps={draggableProps}
                       dragHandleProps={dragHandleProps}

@@ -5,18 +5,17 @@ import Rank from './Rank'
 import './FirmRow.scss'
 
 export default function FirmRow({
-  isDragging,
   innerRef,
   draggableProps,
   dragHandleProps,
   index,
   firm,
 }) {
-  const classes = classNames('firm-row', { 'firm-row--dragging': isDragging })
+  console.log(firm)
 
   return (
     <tr
-      className={classes}
+      className="firm-row"
       ref={innerRef}
       {...draggableProps}
       {...dragHandleProps}
@@ -24,7 +23,7 @@ export default function FirmRow({
       <td>
         <Rank>{index + 1}</Rank>
       </td>
-      <td>b</td>
+      <td>{firm.name}</td>
       <td>c</td>
       <td>d</td>
       <td>e</td>
