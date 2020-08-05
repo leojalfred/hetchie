@@ -28,15 +28,15 @@ export default function FirmsTable({ listData }) {
       <table className="firms-table">
         <thead>
           <tr>
-            <th>Rank</th>
-            <th>Firm</th>
-            <th>Location</th>
-            <th>Practice</th>
-            <th>GPA</th>
-            <th>Salary</th>
-            <th>Rankings</th>
-            <th>Qualifications</th>
-            <th>Date</th>
+            <th className="firms-table__heading">Rank</th>
+            <th className="firms-table__heading">Firm</th>
+            <th className="firms-table__heading">Location</th>
+            <th className="firms-table__heading">Practice</th>
+            <th className="firms-table__heading">GPA</th>
+            <th className="firms-table__heading">Salary</th>
+            <th className="firms-table__heading">Rankings</th>
+            <th className="firms-table__heading">Qualifications</th>
+            <th className="firms-table__heading">Date</th>
           </tr>
         </thead>
         <Droppable droppableId="firms">
