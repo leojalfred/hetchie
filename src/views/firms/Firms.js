@@ -87,7 +87,7 @@ function Firms({ user, errors }) {
         </div>
       </div>
 
-      {!isEmpty(list) && <FirmsTable listData={list} />}
+      <FirmsTable listData={list} />
     </main>
   )
 }

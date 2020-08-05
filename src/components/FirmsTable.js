@@ -41,7 +41,7 @@ export default function FirmsTable({ listData }) {
         <Droppable droppableId="firms">
           {({ innerRef, droppableProps, placeholder }) => (
             <tbody ref={innerRef} {...droppableProps}>
-              {list.map((row, i) => (
+              {list.map((firm, i) => (
                 <Draggable
                   draggableId={`firm-${i}`}
                   key={`firm-${i}`}
@@ -52,10 +52,12 @@ export default function FirmsTable({ listData }) {
                     { isDragging }
                   ) => (
                     <FirmRow
-                      innerRef={innerRef}
                       isDragging={isDragging}
+                      innerRef={innerRef}
                       draggableProps={draggableProps}
                       dragHandleProps={dragHandleProps}
+                      index={i}
+                      firm={firm}
                     />
                   )}
                 </Draggable>

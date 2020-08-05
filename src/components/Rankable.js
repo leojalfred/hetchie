@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
+import Rank from './Rank'
 import Select from './Select'
 import './Rankable.scss'
 
@@ -41,7 +42,7 @@ export default function Rankable({
               icon={faGripVertical}
             />
           </div>
-          <div className="rankable__rank">{index + 1}</div>
+          <Rank>{index + 1}</Rank>
         </>
       )}
       <Select
