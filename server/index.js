@@ -7,6 +7,7 @@ import users from './routes/users'
 import locations from './routes/locations'
 import practices from './routes/practices'
 import firms from './routes/firms'
+import rankings from './routes/rankings'
 import qualifications from './routes/qualifications'
 import passportConfig from './config/passport'
 
@@ -34,6 +35,7 @@ app.use('/users', users)
 app.use('/locations', locations)
 app.use('/practices', practices)
 app.use('/firms', firms)
+app.use('/rankings', rankings)
 app.use('/qualifications', qualifications)
 
 const port = 3001

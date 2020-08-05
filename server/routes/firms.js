@@ -7,7 +7,7 @@ router.get('/', async (request, response) => {
     const firms = await Firm.find()
       .populate('locations')
       .populate('practices')
-      .populate('rankings')
+      .populate('rankings.ranking')
       .populate('qualifications')
       .exec()
     response.json(firms)
