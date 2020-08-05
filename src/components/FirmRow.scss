@@ -1,2 +1,18 @@
+@import '../styles/variables';
+
 .firm-row {
+  &__tag {
+    &--location {
+      background-color: $light-red;
+    }
+
+    &--practice {
+      background-color: $light-cyan;
+    }
+  }
+
+  td {
+    width: 10rem;
+    word-wrap: break-word;
+  }
 }

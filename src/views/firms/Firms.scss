@@ -93,7 +93,7 @@
       border-radius: 2rem;
       box-shadow: $shadow-m;
       color: #fff;
-      padding: 0.25rem 0.75rem;
+      padding: $slim;
       transition: background-color $time, box-shadow $time, transform $time;
 
       &:first-of-type {

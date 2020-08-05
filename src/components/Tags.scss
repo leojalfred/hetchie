@@ -1,0 +1,14 @@
+@import '../styles/variables';
+
+.tags {
+  margin: -0.25rem -0.25rem 0 0;
+
+  &__tag {
+    border-radius: 2rem;
+    display: inline-block;
+    font-size: 0.8rem;
+    margin: 0.25rem 0.25rem 0 0;
+    padding: $slim;
+    white-space: pre;
+  }
+}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import FirmRow from './FirmRow'
+import './FirmsTable.scss'
 
 export default function FirmsTable({ listData }) {
   function reorder(list, start, end) {
@@ -24,7 +25,7 @@ export default function FirmsTable({ listData }) {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <table>
+      <table class="firms-table">
         <thead>
           <tr>
             <th>Rank</th>
