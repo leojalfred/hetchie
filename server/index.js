@@ -7,6 +7,7 @@ import users from './routes/users'
 import locations from './routes/locations'
 import practices from './routes/practices'
 import firms from './routes/firms'
+import qualifications from './routes/qualifications'
 import passportConfig from './config/passport'
 
 const app = express()
@@ -33,6 +34,7 @@ app.use('/users', users)
 app.use('/locations', locations)
 app.use('/practices', practices)
 app.use('/firms', firms)
+app.use('/qualifications', qualifications)
 
 const port = 3001
 app.listen(port, () => console.log(`Server up and running on port ${port}!`))
