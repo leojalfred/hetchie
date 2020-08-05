@@ -11,8 +11,36 @@
     }
   }
 
-  td {
-    width: 10rem;
-    word-wrap: break-word;
+  &__cell {
+    vertical-align: top;
+
+    &--rank {
+      // width: 2rem;
+    }
+
+    &--name {
+      // width: 8rem;
+    }
+
+    &--locations {
+    }
+
+    &--practices {
+    }
+
+    &--gpa {
+    }
+
+    &--salary {
+    }
+
+    &--rankings {
+    }
+
+    &--qualifications {
+    }
+
+    &--date {
+    }
   }
 }

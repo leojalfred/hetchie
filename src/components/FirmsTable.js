@@ -25,7 +25,7 @@ export default function FirmsTable({ listData }) {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <table class="firms-table">
+      <table className="firms-table">
         <thead>
           <tr>
             <th>Rank</th>

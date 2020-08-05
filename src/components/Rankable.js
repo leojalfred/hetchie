@@ -42,7 +42,7 @@ export default function Rankable({
               icon={faGripVertical}
             />
           </div>
-          <Rank>{index + 1}</Rank>
+          <Rank className="rankable__rank">{index + 1}</Rank>
         </>
       )}
       <Select

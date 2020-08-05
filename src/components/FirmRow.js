@@ -21,23 +21,23 @@ export default function FirmRow({
       {...draggableProps}
       {...dragHandleProps}
     >
-      <td>
+      <td className="firm-row__cell firm-row__cell--rank">
         <Rank>{index + 1}</Rank>
       </td>
-      <td>
+      <td className="firm-row__cell firm-row__cell--name">
         <strong>{firm.name}</strong>
       </td>
-      <td>
+      <td className="firm-row__cell firm-row__cell--locations">
         <Tags className="firm-row__tag--location" data={firm.locations} />
       </td>
-      <td>
+      <td className="firm-row__cell firm-row__cell--practices">
         <Tags className="firm-row__tag--practice" data={firm.practices} />
       </td>
-      <td>e</td>
-      <td>f</td>
-      <td>g</td>
-      <td>h</td>
-      <td>i</td>
+      <td className="firm-row__cell firm-row__cell--gpa">e</td>
+      <td className="firm-row__cell firm-row__cell--salary">f</td>
+      <td className="firm-row__cell firm-row__cell--rankings">g</td>
+      <td className="firm-row__cell firm-row__cell--qualifications">h</td>
+      <td className="firm-row__cell firm-row__cell--date">i</td>
     </tr>
   )
 }

@@ -1,5 +1,8 @@
 import React from 'react'
+import classNames from 'classnames'
 import './Rank.scss'
 
-const Rank = ({ children }) => <span className="rank">{children}</span>
-export default Rank
+export default function Rank({ className, children }) {
+  const classes = classNames(className, 'rank')
+  return <span className={classes}>{children}</span>
+}

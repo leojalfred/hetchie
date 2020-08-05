@@ -15,6 +15,10 @@
     outline: 0;
   }
 
+  &__rank {
+    margin: 0 1rem;
+  }
+
   &__delete {
     cursor: pointer;
     transition: color 150ms;
