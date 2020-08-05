@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import FirmRow from './FirmRow'
 
-export default function FirmsTable({ data }) {
+export default function FirmsTable({ listData }) {
   function reorder(list, start, end) {
     const result = Array.from(list)
     const [removed] = result.splice(start, 1)
@@ -10,7 +11,10 @@ export default function FirmsTable({ data }) {
     return result
   }
 
-  const [list, setList] = useState(data)
+  // return
+  const [list, setList] = useState(listData)
+  useEffect(() => setList(listData), [listData])
+
   function onDragEnd({ destination, source }) {
     if (!destination || destination.index === source.index) return
 
@@ -34,18 +38,34 @@ export default function FirmsTable({ data }) {
             <th>Date</th>
           </tr>
         </thead>
+        <Droppable droppableId="firms">
+          {({ innerRef, droppableProps, placeholder }) => (
+            <tbody ref={innerRef} {...droppableProps}>
+              {list.map((row, i) => (
+                <Draggable
+                  draggableId={`firm-${i}`}
+                  key={`firm-${i}`}
+                  index={i}
+                >
+                  {(
+                    { innerRef, draggableProps, dragHandleProps },
+                    { isDragging }
+                  ) => (
+                    <FirmRow
+                      innerRef={innerRef}
+                      isDragging={isDragging}
+                      draggableProps={draggableProps}
+                      dragHandleProps={dragHandleProps}
+                    />
+                  )}
+                </Draggable>
+              ))}
+
+              {placeholder}
+            </tbody>
+          )}
+        </Droppable>
       </table>
-      <Droppable droppableId="firms">
-        {({ innerRef, droppableProps, placeholder }) => (
-          <tbody ref={innerRef} {...droppableProps}>
-            {list.map(({ row, i }) => (
-              <Draggable draggableId={i} key={i} index={i}>
-                {(provided, snapshot) => <tr></tr>}
-              </Draggable>
-            ))}
-          </tbody>
-        )}
-      </Droppable>
     </DragDropContext>
   )
 }

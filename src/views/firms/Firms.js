@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import isEmpty from 'is-empty'
 import { faSave, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import { faPlusCircle, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
+import rank from '../../utils/firms'
 import { putLists } from '../../actions/user'
 import Select from '../../components/Select'
 import IconButton from '../../components/IconButton'
@@ -10,8 +12,24 @@ import FirmsTable from '../../components/FirmsTable'
 import './Firms.scss'
 
 function Firms({ user, errors }) {
+  const [error, setError] = useState('')
+  useEffect(() => {
+    if (errors) setError(errors)
+  }, [errors])
+
+  const [firms, setFirms] = useState()
+  useEffect(() => {
+    async function getFirms() {
+      const { data } = await axios.get('/firms')
+      const ranked = rank(data)
+      setFirms(ranked)
+      setList(ranked)
+    }
+    getFirms()
+  }, [])
+
   const [listOptions, setListOptions] = useState([])
-  const [lists, setLists] = useState(new Map())
+  const [lists, setLists] = useState()
   useEffect(() => {
     let formattedListOptions = [{ value: -1, label: 'Search results' }]
     if (!isEmpty(user.data.lists)) {
@@ -23,7 +41,6 @@ function Firms({ user, errors }) {
       formattedListOptions = formattedListOptions.concat(mappedListOptions)
 
       setLists(new Map(entries))
-      console.log(new Map(entries))
     }
     setListOptions(formattedListOptions)
   }, [user.data.lists])
@@ -69,7 +86,8 @@ function Firms({ user, errors }) {
           />
         </div>
       </div>
-      <FirmsTable data={list} />
+
+      {!isEmpty(list) && <FirmsTable listData={list} />}
     </main>
   )
 }
