@@ -10,24 +10,28 @@ import FirmsTable from '../../components/FirmsTable'
 import './Firms.scss'
 
 function Firms({ user, errors }) {
-  const [lists, setLists] = useState([])
+  const [listOptions, setListOptions] = useState([])
+  const [lists, setLists] = useState(new Map())
   useEffect(() => {
-    let formattedLists = [{ value: -1, label: 'Search results' }]
+    let formattedListOptions = [{ value: -1, label: 'Search results' }]
     if (!isEmpty(user.data.lists)) {
-      const mappedLists = user.data.lists.map(({ _id, name }) => ({
-        value: _id,
-        label: name,
-      }))
-      formattedLists = formattedLists.concat(mappedLists)
-    }
+      const entries = Object.entries(user.data.lists)
+      const mappedListOptions = []
+      for (const [id, value] of entries) {
+        mappedListOptions.push({ value: id, label: value.name })
+      }
+      formattedListOptions = formattedListOptions.concat(mappedListOptions)
 
-    setLists(formattedLists)
+      setLists(new Map(entries))
+      console.log(new Map(entries))
+    }
+    setListOptions(formattedListOptions)
   }, [user.data.lists])
 
-  const [activeList, setActiveList] = useState(lists[0])
-  function onChange(selectedList) {
-    const activeList = lists.find(({ value }) => value === selectedList.value)
-    setActiveList(activeList)
+  const [list, setList] = useState([])
+  function onChange({ value }) {
+    const list = lists.get(value).firms
+    setList(list)
   }
 
   return (
@@ -37,9 +41,9 @@ function Firms({ user, errors }) {
         <div className="firms__selectors">
           <Select
             className="firms__select"
-            options={lists}
+            options={listOptions}
             placeholder="Firms list"
-            value={lists[0]}
+            value={listOptions[0]}
             onChange={onChange}
           />
           <button className="firms__recent">West Coast</button>
@@ -65,7 +69,7 @@ function Firms({ user, errors }) {
           />
         </div>
       </div>
-      <FirmsTable />
+      <FirmsTable data={list} />
     </main>
   )
 }

@@ -9,10 +9,6 @@
     transform $time;
   width: 2rem;
 
-  &:hover {
-    box-shadow: $shadow-l;
-  }
-
   &:active {
     box-shadow: $shadow;
     transform: translateY(0.1rem);
