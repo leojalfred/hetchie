@@ -8,7 +8,7 @@ import rank from '../../utils/firms'
 import { putLists } from '../../actions/user'
 import Select from '../../components/Select'
 import IconButton from '../../components/IconButton'
-import FirmsTable from '../../components/Table'
+import Table from '../../components/Table'
 import './Firms.scss'
 
 function Firms({ user, errors }) {
@@ -87,7 +87,7 @@ function Firms({ user, errors }) {
         </div>
       </div>
 
-      <FirmsTable listData={list} />
+      <Table listData={list} />
     </main>
   )
 }

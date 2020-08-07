@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import FirmRow from './Row'
+import Row from './Row'
 import './Table.scss'
 
-export default function FirmsTable({ listData }) {
+export default function Table({ listData }) {
   function reorder(list, start, end) {
     const result = Array.from(list)
     const [removed] = result.splice(start, 1)
@@ -50,7 +50,7 @@ export default function FirmsTable({ listData }) {
                     index={i}
                   >
                     {({ innerRef, draggableProps, dragHandleProps }) => (
-                      <FirmRow
+                      <Row
                         innerRef={innerRef}
                         draggableProps={draggableProps}
                         dragHandleProps={dragHandleProps}

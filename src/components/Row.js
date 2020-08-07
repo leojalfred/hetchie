@@ -5,7 +5,7 @@ import Rank from './Rank'
 import Tags from './Tags'
 import './Row.scss'
 
-export default function FirmRow({
+export default function Row({
   innerRef,
   draggableProps,
   dragHandleProps,
