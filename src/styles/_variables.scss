@@ -15,7 +15,9 @@ $xl: 1200px;
 // Colors
 $blue: #74c0fc;
 $dark-cyan: #0b7285;
-$gray: #343a40;
+$light-gray: #f8f9fa;
+$gray: #f1f3f5;
+$dark-gray: #343a40;
 $green: #40c057;
 $dark-green: #2f9e44;
 $orange: #ffa94d;
@@ -25,7 +27,7 @@ $red: #ff6b6b;
 $light-yellow: #ffec99;
 
 $brand-1: $orange;
-$brand-2: $gray;
+$brand-2: $dark-gray;
 
 // Paddings
 $slim: 0.25rem 0.75rem;

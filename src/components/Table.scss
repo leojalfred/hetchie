@@ -1,6 +1,9 @@
 @import '../styles/mixins';
 
 .table {
+  border-radius: $radius;
+  border-spacing: 0;
+  overflow: hidden;
   table-layout: fixed;
 
   &__wrapper {
@@ -10,6 +13,17 @@
   }
 
   &__heading {
+    background-color: $dark-gray;
+    color: #fff;
+    padding: 1rem 0.25rem;
     text-align: left;
+
+    &:first-child {
+      padding-left: 0.5rem;
+    }
+
+    &:last-child {
+      padding-right: 0.5rem;
+    }
   }
 }

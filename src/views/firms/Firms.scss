@@ -5,6 +5,7 @@
   display: flex;
   flex-direction: column;
   max-height: calc(100vh - 9rem);
+  max-width: 75.375rem;
 
   &__heading {
     margin: 0;
@@ -13,6 +14,7 @@
   &__topline {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 1rem;
   }
 
   &__selectors {
@@ -125,5 +127,9 @@
         margin-right: 0.5rem;
       }
     }
+  }
+
+  @include bp($l) {
+    max-height: calc(100vh - 15rem);
   }
 }
