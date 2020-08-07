@@ -8,7 +8,7 @@ import rank from '../../utils/firms'
 import { putLists } from '../../actions/user'
 import Select from '../../components/Select'
 import IconButton from '../../components/IconButton'
-import FirmsTable from '../../components/FirmsTable'
+import FirmsTable from '../../components/Table'
 import './Firms.scss'
 
 function Firms({ user, errors }) {
@@ -52,7 +52,7 @@ function Firms({ user, errors }) {
   }
 
   return (
-    <main className="firms container">
+    <main className="firms container container--fixed">
       <h1 className="firms__heading">Firms List</h1>
       <div className="firms__topline">
         <div className="firms__selectors">

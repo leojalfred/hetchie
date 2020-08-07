@@ -14,12 +14,18 @@ $xl: 1200px;
 
 // Colors
 $blue: #74c0fc;
-$brand-1: #ffa94d;
-$brand-2: #343a40;
-$light-cyan: #99e9f2;
-$green: #51cf66;
+$dark-cyan: #0b7285;
+$gray: #343a40;
+$green: #40c057;
+$dark-green: #2f9e44;
+$orange: #ffa94d;
+$dark-orange: #f76707;
 $light-red: #ffc9c9;
 $red: #ff6b6b;
+$light-yellow: #ffec99;
+
+$brand-1: $orange;
+$brand-2: $gray;
 
 // Paddings
 $slim: 0.25rem 0.75rem;

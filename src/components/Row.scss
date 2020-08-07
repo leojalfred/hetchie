@@ -1,0 +1,87 @@
+@import '../styles/variables';
+
+.row {
+  &__cell {
+    vertical-align: top;
+
+    &--rank {
+      // width: 2rem;
+    }
+
+    &--name {
+      // width: 8rem;
+    }
+
+    &--locations {
+    }
+
+    &--practices {
+    }
+
+    &--gpa {
+    }
+
+    &--salary {
+    }
+
+    &--rankings {
+    }
+
+    &--qualifications {
+    }
+
+    &--date {
+    }
+  }
+
+  &__tags {
+    &--location {
+      background-color: $light-red;
+    }
+
+    &--practice {
+      background-color: $light-yellow;
+    }
+
+    &--qualification {
+      background-color: #d0bfff;
+    }
+  }
+
+  &__badge-line {
+    align-items: center;
+    display: flex;
+    font-size: 0.9rem;
+    margin: 0;
+    white-space: nowrap;
+
+    &:not(:last-child) {
+      margin-bottom: 0.25rem;
+    }
+  }
+
+  &__badge {
+    margin-right: 0.25rem;
+
+    &--required {
+      background-color: $red;
+    }
+
+    &--preferred {
+      background-color: $dark-cyan;
+    }
+
+    &--small {
+      background-color: $green;
+    }
+
+    &--large {
+      background-color: $dark-green;
+    }
+  }
+
+  &__link {
+    color: #000;
+    text-decoration: none;
+  }
+}

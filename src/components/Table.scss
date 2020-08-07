@@ -1,0 +1,15 @@
+@import '../styles/mixins';
+
+.table {
+  table-layout: fixed;
+
+  &__wrapper {
+    overflow: auto;
+
+    @include scrollbar();
+  }
+
+  &__heading {
+    text-align: left;
+  }
+}

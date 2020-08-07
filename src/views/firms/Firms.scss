@@ -2,6 +2,10 @@
 @import '../../styles/mixins';
 
 .firms {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 9rem);
+
   &__heading {
     margin: 0;
   }
@@ -80,6 +84,8 @@
   }
 
   @include bp($s) {
+    max-height: calc(100vh - 11rem);
+
     &__select {
       margin-right: 1rem;
 
