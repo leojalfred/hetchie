@@ -1,6 +1,14 @@
 @import '../styles/variables';
+@import '../styles/mixins';
 
 .row {
+  max-width: calc(100vw - 2.375rem);
+  overflow: hidden;
+
+  &:focus {
+    outline: none;
+  }
+
   &:nth-child(odd) {
     background-color: $light-gray;
   }
@@ -23,42 +31,42 @@
     }
 
     &--rank {
-      width: 2.1rem;
+      min-width: 2.1rem;
     }
 
     &--name {
-      width: 7rem;
+      min-width: 7rem;
       font-size: 1rem;
       padding-top: 0.65rem;
     }
 
     &--locations {
-      width: 12.5rem;
+      min-width: 12.5rem;
     }
 
     &--practices {
-      width: 12rem;
+      min-width: 12rem;
     }
 
     &--gpa {
-      width: 3.2rem;
+      min-width: 3.2rem;
     }
 
     &--salary {
-      width: 5.3rem;
+      min-width: 5.3rem;
     }
 
     &--rankings {
-      width: 13.5rem;
+      min-width: 13.5rem;
     }
 
     &--qualifications {
-      width: 10.4rem;
+      min-width: 10.4rem;
     }
 
     &--date {
       white-space: nowrap;
-      width: 3.8rem;
+      min-width: 3.8rem;
     }
   }
 
@@ -106,10 +114,30 @@
     &--large {
       background-color: $dark-green;
     }
+
+    &--rank {
+      background-color: $violet;
+    }
   }
 
   &__link {
     color: #000;
     text-decoration: none;
+  }
+
+  @include bp($s) {
+    max-width: calc(100vw - 4.375rem);
+  }
+
+  @include bp($m) {
+    max-width: calc(100vw - 6.375rem);
+  }
+
+  @include bp($l) {
+    max-width: calc(100vw - 8.375rem);
+  }
+
+  @include bp($xl) {
+    max-width: calc(100vw - 10.375rem);
   }
 }

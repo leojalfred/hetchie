@@ -54,7 +54,7 @@ export default function FirmRow({
   const rankings = firm.rankings.map(({ ranking, position }) => (
     <p className="row__badge-line">
       <a className="row__link" href={ranking.link}>
-        <Rank className="row__badge">{position}</Rank>
+        <Rank className="row__badge row__badge--rank">{position}</Rank>
         {ranking.name}
       </a>
     </p>
