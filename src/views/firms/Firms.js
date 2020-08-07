@@ -18,11 +18,13 @@ function Firms({ user, errors }) {
   }, [errors])
 
   const [firms, setFirms] = useState()
+  const [list, setList] = useState([])
   useEffect(() => {
     async function getFirms() {
       const { data } = await axios.get('/firms')
+      setFirms(data)
+
       const ranked = rank(data)
-      setFirms(ranked)
       setList(ranked)
     }
     getFirms()
@@ -38,14 +40,13 @@ function Firms({ user, errors }) {
       for (const [id, value] of entries) {
         mappedListOptions.push({ value: id, label: value.name })
       }
-      formattedListOptions = formattedListOptions.concat(mappedListOptions)
+      formattedListOptions = [...formattedListOptions, mappedListOptions]
 
       setLists(new Map(entries))
     }
     setListOptions(formattedListOptions)
   }, [user.data.lists])
 
-  const [list, setList] = useState([])
   function onChange({ value }) {
     const list = lists.get(value).firms
     setList(list)
@@ -87,7 +88,7 @@ function Firms({ user, errors }) {
         </div>
       </div>
 
-      <Table listData={list} />
+      {!isEmpty(firms) && <Table firms={firms} listData={list} />}
     </main>
   )
 }

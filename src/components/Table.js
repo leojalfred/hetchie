@@ -4,7 +4,7 @@ import { multiReorder } from '../utils/dnd'
 import Row from './Row'
 import './Table.scss'
 
-export default function Table({ listData }) {
+export default function Table({ listData, firms }) {
   const [list, setList] = useState(listData)
   useEffect(() => setList(listData), [listData])
 
@@ -65,7 +65,7 @@ export default function Table({ listData }) {
                         draggableProps={draggableProps}
                         dragHandleProps={dragHandleProps}
                         index={i}
-                        firm={firm}
+                        firm={firms[firm]}
                       />
                     )}
                   </Draggable>

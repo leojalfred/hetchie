@@ -1,3 +1,4 @@
 export default function rank(firms) {
-  return firms
+  const firmIDs = Object.keys(firms)
+  return firmIDs
 }

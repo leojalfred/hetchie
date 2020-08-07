@@ -1,4 +1,9 @@
 function reorderMulti(list, selectedIDs, source, destination) {
+  const dragged = list[source.index]['_id']
+  const offset = selectedIDs.reduce((previous, current) => {
+    if (current === dragged) return previous
+  }, 0)
+
   return list
 }
 
