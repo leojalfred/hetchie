@@ -12,20 +12,18 @@ export default function Row({
   index,
   firm,
 }) {
-  console.log(firm)
-
   const gpa = []
   if (!isEmpty(firm.gpa)) {
     if (!isEmpty(firm.gpa.required))
       gpa.push(
-        <p className="row__badge-line">
+        <p className="row__badge-line" key="required">
           <Rank className="row__badge row__badge--required">R</Rank>
           {firm.gpa.required}
         </p>
       )
     if (!isEmpty(firm.gpa.band))
       gpa.push(
-        <p className="row__badge-line">
+        <p className="row__badge-line" key="preferred">
           <Rank className="row__badge row__badge--preferred">P</Rank>
           {firm.gpa.band}
         </p>
@@ -36,22 +34,22 @@ export default function Row({
   if (!isEmpty(firm.salary)) {
     if (!isEmpty(firm.salary.small))
       salary.push(
-        <p className="row__badge-line">
+        <p className="row__badge-line" key="small">
           <Rank className="row__badge row__badge--small">S</Rank>$
           {firm.salary.small}
         </p>
       )
     if (!isEmpty(firm.salary.large))
       salary.push(
-        <p className="row__badge-line">
+        <p className="row__badge-line" key="large">
           <Rank className="row__badge row__badge--large">L</Rank>$
           {firm.salary.large}
         </p>
       )
   }
 
-  const rankings = firm.rankings.map(({ ranking, position }) => (
-    <p className="row__badge-line">
+  const rankings = firm.rankings.map(({ ranking, position }, i) => (
+    <p className="row__badge-line" key={i}>
       <a
         className="row__link"
         href={ranking.link}

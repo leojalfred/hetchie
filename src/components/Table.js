@@ -1,25 +1,35 @@
 import React, { useState, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { multiReorder } from '../utils/dnd'
 import Row from './Row'
 import './Table.scss'
 
 export default function Table({ listData }) {
-  function reorder(list, start, end) {
-    const result = Array.from(list)
-    const [removed] = result.splice(start, 1)
-    result.splice(end, 0, removed)
-
-    return result
-  }
-
-  // return
   const [list, setList] = useState(listData)
   useEffect(() => setList(listData), [listData])
 
-  function onDragEnd({ destination, source }) {
-    if (!destination || destination.index === source.index) return
+  const [selectedIDs, setSelectedIDs] = useState([])
+  const [draggingID, setDraggingID] = useState()
 
-    const ordered = reorder(list, source.index, destination.index)
+  const unselect = () => setSelectedIDs([])
+  function onDragStart({ draggableId }) {
+    const selected = selectedIDs.find(id => id === draggableId)
+    if (!selected) unselect()
+
+    setDraggingID(draggableId)
+  }
+
+  function onDragEnd({ destination, reason, source }) {
+    if (
+      !destination ||
+      reason === 'CANCEL' ||
+      destination.index === source.index
+    ) {
+      setDraggingID(null)
+      return
+    }
+
+    const ordered = multiReorder(list, selectedIDs, source, destination)
     setList(ordered)
   }
 

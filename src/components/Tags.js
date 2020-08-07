@@ -7,7 +7,7 @@ export default function Tags({ className, data }) {
   if (!isEmpty(data)) {
     const classes = classNames(className, 'tags__tag')
     const tags = data.map(({ _id, name }) => (
-      <span class={classes} key={_id}>
+      <span className={classes} key={_id}>
         {name}
       </span>
     ))
