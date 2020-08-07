@@ -1,10 +1,6 @@
 @import '../styles/variables';
-@import '../styles/mixins';
 
 .row {
-  max-width: calc(100vw - 2.375rem);
-  overflow: hidden;
-
   &:focus {
     outline: none;
   }
@@ -123,21 +119,5 @@
   &__link {
     color: #000;
     text-decoration: none;
-  }
-
-  @include bp($s) {
-    max-width: calc(100vw - 4.375rem);
-  }
-
-  @include bp($m) {
-    max-width: calc(100vw - 6.375rem);
-  }
-
-  @include bp($l) {
-    max-width: calc(100vw - 8.375rem);
-  }
-
-  @include bp($xl) {
-    max-width: calc(100vw - 10.375rem);
   }
 }
