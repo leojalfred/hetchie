@@ -10,7 +10,13 @@ router.get('/', async (request, response) => {
       .populate('rankings.ranking')
       .populate('qualifications')
       .exec()
-    response.json(firms)
+
+    const firmsMap = firms.reduce((map, firm) => {
+      const { _id, ...data } = firm
+      map[`${_id}`] = data['_doc']
+      return map
+    }, {})
+    response.json(firmsMap)
   } catch (error) {
     console.log(error)
   }
