@@ -12,6 +12,7 @@
   }
 
   &__topline {
+    align-items: flex-end;
     display: flex;
     justify-content: space-between;
     margin-bottom: 1rem;
@@ -38,14 +39,14 @@
   &__actions {
     background-color: $brand-2;
     border-radius: 2rem;
-    padding: 0.5rem 0.625rem;
+    padding: 0.25rem;
   }
 
   &__action {
-    background-color: #fff;
+    background-color: transparent;
 
     &:not(:last-child) {
-      margin-right: 0.5rem;
+      margin-right: 0.25rem;
     }
 
     &--save {

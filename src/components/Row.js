@@ -1,5 +1,4 @@
 import React from 'react'
-import classNames from 'classnames'
 import isEmpty from 'is-empty'
 import moment from 'moment'
 import Rank from './Rank'
@@ -53,7 +52,12 @@ export default function FirmRow({
 
   const rankings = firm.rankings.map(({ ranking, position }) => (
     <p className="row__badge-line">
-      <a className="row__link" href={ranking.link} target="_blank">
+      <a
+        className="row__link"
+        href={ranking.link}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <Rank className="row__badge row__badge--rank">{position}</Rank>
         {ranking.name}
       </a>
@@ -71,7 +75,16 @@ export default function FirmRow({
       <td className="row__cell row__cell--rank">
         <Rank>{index + 1}</Rank>
       </td>
-      <td className="row__cell row__cell--name">{firm.name}</td>
+      <td className="row__cell row__cell--name">
+        <a
+          className="row__link"
+          href={firm.links.firm}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {firm.name}
+        </a>
+      </td>
       <td className="row__cell row__cell--locations">
         <Tags className="row__tags--location" data={firm.locations} />
       </td>
