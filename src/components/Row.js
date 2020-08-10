@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import isEmpty from 'is-empty'
 import moment from 'moment'
-import Rank from './Rank'
+import Badge from './Badge'
 import Tags from './Tags'
 import './Row.scss'
 
@@ -17,13 +17,14 @@ export default function Row({
   snapshot,
   selectionCount,
 }) {
+  const classes = classNames('row', { 'row--selected': selected })
+
   function usedGroup({ ctrlKey, metaKey }) {
     const windows = navigator.platform.indexOf('Win') >= 0
     return windows ? ctrlKey : metaKey
   }
 
   const usedMulti = ({ shiftKey }) => shiftKey
-
   function execute(event) {
     if (usedGroup(event)) toggleSelectionInGroup(firm['_id'])
     else if (usedMulti(event)) multiSelect(firm['_id'])
@@ -49,35 +50,36 @@ export default function Row({
     execute(event)
   }
 
-  const primary = 0
+  const isLink = ({ target }) => target.tagName === 'A'
   function onClick(event) {
-    if (event.defaultPrevented || event.button !== primary) return
+    const primary = 0
+    if (event.defaultPrevented || event.button !== primary || isLink(event))
+      return
 
     event.preventDefault()
     execute(event)
   }
 
   function onTouchEnd(event) {
-    if (event.defaultPrevented) return
+    if (event.defaultPrevented || isLink(event)) return
 
     event.preventDefault()
     toggleSelectionInGroup(firm['_id'])
   }
 
-  const classes = classNames('row', { 'row--selected': selected })
   const gpa = []
   if (!isEmpty(firm.gpa)) {
     if (!isEmpty(firm.gpa.required))
       gpa.push(
         <p className="row__badge-line" key="required">
-          <Rank className="row__badge row__badge--required">R</Rank>
+          <Badge className="row__badge row__badge--required">R</Badge>
           {firm.gpa.required}
         </p>
       )
     if (!isEmpty(firm.gpa.band))
       gpa.push(
         <p className="row__badge-line" key="preferred">
-          <Rank className="row__badge row__badge--preferred">P</Rank>
+          <Badge className="row__badge row__badge--preferred">P</Badge>
           {firm.gpa.band}
         </p>
       )
@@ -88,14 +90,14 @@ export default function Row({
     if (!isEmpty(firm.salary.small))
       salary.push(
         <p className="row__badge-line" key="small">
-          <Rank className="row__badge row__badge--small">S</Rank>$
+          <Badge className="row__badge row__badge--small">S</Badge>$
           {firm.salary.small}
         </p>
       )
     if (!isEmpty(firm.salary.large))
       salary.push(
         <p className="row__badge-line" key="large">
-          <Rank className="row__badge row__badge--large">L</Rank>$
+          <Badge className="row__badge row__badge--large">L</Badge>$
           {firm.salary.large}
         </p>
       )
@@ -109,7 +111,7 @@ export default function Row({
         target="_blank"
         rel="noopener noreferrer"
       >
-        <Rank className="row__badge row__badge--rank">{position}</Rank>
+        <Badge className="row__badge row__badge--rank">{position}</Badge>
         {ranking.name}
       </a>
     </p>
@@ -134,7 +136,7 @@ export default function Row({
       onKeyDown={event => onKeyDown(event, provided, snapshot)}
     >
       <td className="row__cell row__cell--rank">
-        <Rank>{index + 1}</Rank>
+        <Badge>{index + 1}</Badge>
       </td>
       <td className="row__cell row__cell--name">
         <a
@@ -162,7 +164,7 @@ export default function Row({
 
       {showCount && (
         <td className="row__count-cell">
-          <Rank className="row__count">{selectionCount}</Rank>
+          <Badge className="row__count">{selectionCount}</Badge>
         </td>
       )}
     </tr>
