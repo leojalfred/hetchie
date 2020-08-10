@@ -7,17 +7,22 @@ import Tags from './Tags'
 import './Row.scss'
 
 export default function Row({
+  snapshot,
+  selected,
+  ghosting,
   firm,
   toggleSelection,
   toggleSelectionInGroup,
   multiSelect,
-  selected,
   provided,
   index,
-  snapshot,
   selectionCount,
 }) {
-  const classes = classNames('row', { 'row--selected': selected })
+  const classes = classNames('row', {
+    'row--dragging': snapshot.isDragging,
+    'row--selected': selected,
+    'row--ghosting': ghosting,
+  })
 
   function usedGroup({ ctrlKey, metaKey }) {
     const windows = navigator.platform.indexOf('Win') >= 0

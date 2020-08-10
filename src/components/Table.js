@@ -31,14 +31,20 @@ export default function Table({ listData, firms }) {
   const [list, setList] = useState(listData)
   useEffect(() => setList(listData), [listData])
 
-  const [selectedIDs, setSelectedIDs] = useState([])
   const unselect = () => setSelectedIDs([])
+
+  const [selectedIDs, setSelectedIDs] = useState([])
+  const [draggingID, setDraggingID] = useState()
   function onDragStart({ draggableId }) {
     const selected = selectedIDs.find(id => id === draggableId)
     if (!selected) unselect()
+
+    setDraggingID(draggableId)
   }
 
   function onDragEnd({ destination, reason, source }) {
+    setDraggingID(null)
+
     if (
       !destination ||
       reason === 'CANCEL' ||
@@ -109,16 +115,20 @@ export default function Table({ listData, firms }) {
                   <Draggable draggableId={firm} key={firm} index={i}>
                     {(provided, snapshot) => {
                       const selected = getSelectedMap(selectedIDs)[firm]
+                      const ghosting =
+                        selected && draggingID && draggingID !== firm
+
                       return (
                         <Row
+                          snapshot={snapshot}
+                          selected={selected}
+                          ghosting={ghosting}
                           firm={firms[firm]}
                           toggleSelection={toggleSelection}
                           toggleSelectionInGroup={toggleSelectionInGroup}
                           multiSelect={multiSelectTo}
-                          selected={selected}
                           provided={provided}
                           index={i}
-                          snapshot={snapshot}
                           selectionCount={selectedIDs.length}
                         />
                       )

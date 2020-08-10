@@ -13,8 +13,13 @@
     background-color: $gray;
   }
 
+  &.row--dragging,
   &.row--selected {
     background-color: $light-orange;
+  }
+
+  &.row--ghosting {
+    background-color: $lightest-orange;
   }
 
   &__cell {
