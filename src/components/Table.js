@@ -6,9 +6,6 @@ import Row from './Row'
 import './Table.scss'
 
 export default function Table({ listData, firms }) {
-  const [list, setList] = useState(listData)
-  useEffect(() => setList(listData), [listData])
-
   useEffect(() => {
     function onUnselect({ defaultPrevented }) {
       if (defaultPrevented) return
@@ -31,6 +28,9 @@ export default function Table({ listData, firms }) {
     }
   }, [])
 
+  const [list, setList] = useState(listData)
+  useEffect(() => setList(listData), [listData])
+
   const [selectedIDs, setSelectedIDs] = useState([])
   const unselect = () => setSelectedIDs([])
   function onDragStart({ draggableId }) {
@@ -49,6 +49,13 @@ export default function Table({ listData, firms }) {
     const ordered = multiReorder(list, selectedIDs, source, destination)
     setList(ordered)
   }
+
+  const getSelectedMap = memoizeOne(ids =>
+    ids.reduce((previous, current) => {
+      previous[current] = true
+      return previous
+    }, {})
+  )
 
   function toggleSelection(id) {
     const selected = selectedIDs.includes(id)
@@ -77,13 +84,6 @@ export default function Table({ listData, firms }) {
 
     setSelectedIDs(selected)
   }
-
-  const getSelectedMap = memoizeOne(ids =>
-    ids.reduce((previous, current) => {
-      previous[current] = true
-      return previous
-    }, {})
-  )
 
   return (
     <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
