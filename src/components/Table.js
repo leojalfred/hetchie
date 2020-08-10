@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
+import memoizeOne from 'memoize-one'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import { multiReorder } from '../utils/dnd'
+import { multiReorder, multiSelect } from '../utils/dnd'
 import Row from './Row'
 import './Table.scss'
 
@@ -33,8 +34,65 @@ export default function Table({ listData, firms }) {
     setList(ordered)
   }
 
+  useEffect(() => {
+    function onUnselect({ defaultPrevented }) {
+      if (defaultPrevented) return
+      unselect()
+    }
+
+    function onEscape({ defaultPrevented, key }) {
+      if (defaultPrevented) return
+      if (key === 'Escape') unselect()
+    }
+
+    window.addEventListener('click', onUnselect)
+    window.addEventListener('keydown', onEscape)
+    window.addEventListener('touchend', onUnselect)
+
+    return () => {
+      window.removeEventListener('click', onUnselect)
+      window.removeEventListener('keydown', onEscape)
+      window.removeEventListener('touchend', onUnselect)
+    }
+  }, [])
+
+  function toggleSelection(id) {
+    const selected = selectedIDs.includes(id)
+
+    let newID = []
+    if (!selected) newID.push(id)
+
+    setSelectedIDs(newID)
+  }
+
+  function toggleSelectionInGroup(id) {
+    const index = selectedIDs.indexOf(id)
+    if (index === -1) {
+      setSelectedIDs([...selectedIDs, id])
+      return
+    }
+
+    const shallow = [...selectedIDs]
+    shallow.splice(index, 1)
+    setSelectedIDs(shallow)
+  }
+
+  function multiSelectTo(id) {
+    const selected = multiSelect(list, selectedIDs, id)
+    if (selected === null) return
+
+    setSelectedIDs(selected)
+  }
+
+  const getSelectedMap = memoizeOne(ids =>
+    ids.reduce((previous, current) => {
+      previous[current] = true
+      return previous
+    }, {})
+  )
+
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
+    <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
       <div className="table__wrapper">
         <table className="table">
           <thead>
@@ -54,20 +112,29 @@ export default function Table({ listData, firms }) {
             {({ innerRef, droppableProps, placeholder }) => (
               <tbody ref={innerRef} {...droppableProps}>
                 {list.map((firm, i) => (
-                  <Draggable
-                    draggableId={`firm-${i}`}
-                    key={`firm-${i}`}
-                    index={i}
-                  >
-                    {({ innerRef, draggableProps, dragHandleProps }) => (
-                      <Row
-                        innerRef={innerRef}
-                        draggableProps={draggableProps}
-                        dragHandleProps={dragHandleProps}
-                        index={i}
-                        firm={firms[firm]}
-                      />
-                    )}
+                  <Draggable draggableId={firm} key={firm} index={i}>
+                    {(provided, snapshot) => {
+                      const selected = Boolean(
+                        getSelectedMap(selectedIDs)[firm]
+                      )
+                      const ghosting =
+                        selected && Boolean(draggingID) && draggingID !== firm
+
+                      return (
+                        <Row
+                          firm={firms[firm]}
+                          toggleSelection={toggleSelection}
+                          toggleSelectionInGroup={toggleSelectionInGroup}
+                          multiSelect={multiSelectTo}
+                          selected={selected}
+                          ghosting={ghosting}
+                          provided={provided}
+                          index={i}
+                          snapshot={snapshot}
+                          selectionCount={selectedIDs.length}
+                        />
+                      )
+                    }}
                   </Draggable>
                 ))}
 

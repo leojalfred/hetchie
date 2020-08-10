@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 import isEmpty from 'is-empty'
 import moment from 'moment'
 import Rank from './Rank'
@@ -6,12 +7,70 @@ import Tags from './Tags'
 import './Row.scss'
 
 export default function Row({
-  innerRef,
-  draggableProps,
-  dragHandleProps,
-  index,
   firm,
+  toggleSelection,
+  toggleSelectionInGroup,
+  multiSelect,
+  selected,
+  ghosting,
+  provided,
+  index,
+  snapshot,
+  selectionCount,
 }) {
+  function usedGroup({ ctrlKey, metaKey }) {
+    const windows = navigator.platform.indexOf('Win') >= 0
+    return windows ? ctrlKey : metaKey
+  }
+
+  const usedMulti = ({ shiftKey }) => shiftKey
+
+  function execute(event) {
+    if (usedGroup(event)) toggleSelectionInGroup(firm['_id'])
+    else if (usedMulti(event)) multiSelect(firm['_id'])
+    else toggleSelection(firm['_id'])
+  }
+
+  const keyCodes = {
+    enter: 13,
+    escape: 27,
+    arrowDown: 40,
+    arrowUp: 38,
+    tab: 9,
+  }
+  function onKeyDown(event, provided, { isDragging }) {
+    if (
+      event.defaultPrevented ||
+      isDragging ||
+      event.keyCode !== keyCodes.enter
+    )
+      return
+
+    event.preventDefault()
+    execute(event)
+  }
+
+  const primary = 0
+  function onClick(event) {
+    if (event.defaultPrevented || event.button !== primary) return
+
+    event.preventDefault()
+    execute(event)
+  }
+
+  function onTouchEnd(event) {
+    if (event.defaultPrevented) return
+
+    event.preventDefault()
+    toggleSelectionInGroup(firm['_id'])
+  }
+
+  const classes = classNames('row', {
+    'row--dragging': snapshot.isDragging,
+    'row--selected': selected,
+    'row--ghosting': ghosting,
+  })
+
   const gpa = []
   if (!isEmpty(firm.gpa)) {
     if (!isEmpty(firm.gpa.required))
@@ -68,8 +127,18 @@ export default function Row({
     dateElement.push(date)
   }
 
+  const showCount = snapshot.isDragging && selectionCount > 1
+
   return (
-    <tr className="row" ref={innerRef} {...draggableProps} {...dragHandleProps}>
+    <tr
+      className={classes}
+      ref={provided.innerRef}
+      {...provided.draggableProps}
+      {...provided.dragHandleProps}
+      onClick={onClick}
+      onTouchEnd={onTouchEnd}
+      onKeyDown={event => onKeyDown(event, provided, snapshot)}
+    >
       <td className="row__cell row__cell--rank">
         <Rank>{index + 1}</Rank>
       </td>

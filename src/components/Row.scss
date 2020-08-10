@@ -1,6 +1,23 @@
 @import '../styles/variables';
 
 .row {
+  position: relative;
+
+  &--dragging {
+    background-color: peru !important;
+    color: tomato !important;
+  }
+
+  &--selected {
+    background-color: #ffe8cc !important;
+    color: pink !important;
+  }
+
+  &--ghosting {
+    background-color: chartreuse !important;
+    color: yellow !important;
+  }
+
   &:focus {
     outline: none;
   }
@@ -119,5 +136,18 @@
   &__link {
     color: #000;
     text-decoration: none;
+  }
+
+  &__count {
+    background-color: saddlebrown;
+    border-radius: 50%;
+    color: olivedrab;
+    font-size: 0.8rem;
+    height: 1.4rem;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    width: 1.4rem;
   }
 }
