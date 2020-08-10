@@ -12,7 +12,6 @@ export default function Row({
   toggleSelectionInGroup,
   multiSelect,
   selected,
-  ghosting,
   provided,
   index,
   snapshot,
@@ -65,12 +64,7 @@ export default function Row({
     toggleSelectionInGroup(firm['_id'])
   }
 
-  const classes = classNames('row', {
-    'row--dragging': snapshot.isDragging,
-    'row--selected': selected,
-    'row--ghosting': ghosting,
-  })
-
+  const classes = classNames('row', { 'row--selected': selected })
   const gpa = []
   if (!isEmpty(firm.gpa)) {
     if (!isEmpty(firm.gpa.required))
@@ -165,6 +159,12 @@ export default function Row({
         <Tags className="row__tags--qualification" data={firm.qualifications} />
       </td>
       <td className="row__cell row__cell--date">{dateElement}</td>
+
+      {showCount && (
+        <td className="row__count-cell">
+          <Rank className="row__count">{selectionCount}</Rank>
+        </td>
+      )}
     </tr>
   )
 }

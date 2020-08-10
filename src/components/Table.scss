@@ -5,6 +5,7 @@
   border-spacing: 0;
   overflow: hidden;
   table-layout: fixed;
+  user-select: none;
 
   &__wrapper {
     overflow: auto;

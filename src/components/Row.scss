@@ -1,23 +1,6 @@
 @import '../styles/variables';
 
 .row {
-  position: relative;
-
-  &--dragging {
-    background-color: peru !important;
-    color: tomato !important;
-  }
-
-  &--selected {
-    background-color: #ffe8cc !important;
-    color: pink !important;
-  }
-
-  &--ghosting {
-    background-color: chartreuse !important;
-    color: yellow !important;
-  }
-
   &:focus {
     outline: none;
   }
@@ -28,6 +11,10 @@
 
   &:nth-child(even) {
     background-color: $gray;
+  }
+
+  &.row--selected {
+    background-color: $light-orange;
   }
 
   &__cell {
@@ -138,16 +125,13 @@
     text-decoration: none;
   }
 
-  &__count {
-    background-color: saddlebrown;
-    border-radius: 50%;
-    color: olivedrab;
-    font-size: 0.8rem;
-    height: 1.4rem;
+  &__count-cell {
     position: absolute;
-    right: 0;
-    text-align: center;
-    top: 0;
-    width: 1.4rem;
+    right: -0.6rem;
+    top: -0.7rem;
+  }
+
+  &__count {
+    background-color: $dark-gray;
   }
 }

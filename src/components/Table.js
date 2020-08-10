@@ -9,31 +9,6 @@ export default function Table({ listData, firms }) {
   const [list, setList] = useState(listData)
   useEffect(() => setList(listData), [listData])
 
-  const [selectedIDs, setSelectedIDs] = useState([])
-  const [draggingID, setDraggingID] = useState()
-
-  const unselect = () => setSelectedIDs([])
-  function onDragStart({ draggableId }) {
-    const selected = selectedIDs.find(id => id === draggableId)
-    if (!selected) unselect()
-
-    setDraggingID(draggableId)
-  }
-
-  function onDragEnd({ destination, reason, source }) {
-    if (
-      !destination ||
-      reason === 'CANCEL' ||
-      destination.index === source.index
-    ) {
-      setDraggingID(null)
-      return
-    }
-
-    const ordered = multiReorder(list, selectedIDs, source, destination)
-    setList(ordered)
-  }
-
   useEffect(() => {
     function onUnselect({ defaultPrevented }) {
       if (defaultPrevented) return
@@ -55,6 +30,25 @@ export default function Table({ listData, firms }) {
       window.removeEventListener('touchend', onUnselect)
     }
   }, [])
+
+  const [selectedIDs, setSelectedIDs] = useState([])
+  const unselect = () => setSelectedIDs([])
+  function onDragStart({ draggableId }) {
+    const selected = selectedIDs.find(id => id === draggableId)
+    if (!selected) unselect()
+  }
+
+  function onDragEnd({ destination, reason, source }) {
+    if (
+      !destination ||
+      reason === 'CANCEL' ||
+      destination.index === source.index
+    )
+      return
+
+    const ordered = multiReorder(list, selectedIDs, source, destination)
+    setList(ordered)
+  }
 
   function toggleSelection(id) {
     const selected = selectedIDs.includes(id)
@@ -114,12 +108,7 @@ export default function Table({ listData, firms }) {
                 {list.map((firm, i) => (
                   <Draggable draggableId={firm} key={firm} index={i}>
                     {(provided, snapshot) => {
-                      const selected = Boolean(
-                        getSelectedMap(selectedIDs)[firm]
-                      )
-                      const ghosting =
-                        selected && Boolean(draggingID) && draggingID !== firm
-
+                      const selected = getSelectedMap(selectedIDs)[firm]
                       return (
                         <Row
                           firm={firms[firm]}
@@ -127,7 +116,6 @@ export default function Table({ listData, firms }) {
                           toggleSelectionInGroup={toggleSelectionInGroup}
                           multiSelect={multiSelectTo}
                           selected={selected}
-                          ghosting={ghosting}
                           provided={provided}
                           index={i}
                           snapshot={snapshot}
