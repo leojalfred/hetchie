@@ -79,7 +79,7 @@ function Firms({ user, errors }) {
           <button className="firms__recent">East Coast</button>
           <button className="firms__recent">Reaches</button>
         </div>
-        {!isEmpty(selectedIDs) && (
+        {(custom || !isEmpty(selectedIDs)) && (
           <div className="firms__actions">
             {custom && (
               <IconButton
@@ -87,18 +87,24 @@ function Firms({ user, errors }) {
                 icon={faSave}
               />
             )}
-            <IconButton
-              className="firms__action--add firms__action"
-              icon={faPlusCircle}
-            />
-            <IconButton
-              className="firms__action--edit firms__action"
-              icon={faPencilAlt}
-            />
-            <IconButton
-              className="firms__action--delete firms__action"
-              icon={faTrashAlt}
-            />
+            {!isEmpty(selectedIDs) && (
+              <IconButton
+                className="firms__action--add firms__action"
+                icon={faPlusCircle}
+              />
+            )}
+            {custom && (
+              <>
+                <IconButton
+                  className="firms__action--edit firms__action"
+                  icon={faPencilAlt}
+                />
+                <IconButton
+                  className="firms__action--delete firms__action"
+                  icon={faTrashAlt}
+                />
+              </>
+            )}
           </div>
         )}
       </div>
