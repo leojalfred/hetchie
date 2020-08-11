@@ -4,7 +4,7 @@ import rootReducer from './reducers'
 
 const initialState = {}
 let composed = compose(applyMiddleware(thunk))
-if (window.__REDUX_DEVTOOLS_EXTENSION__ !== undefined)
+if (window.__REDUX_DEVTOOLS_EXTENSION__)
   composed = compose(
     applyMiddleware(thunk),
     window.__REDUX_DEVTOOLS_EXTENSION__()

@@ -52,6 +52,8 @@ function Firms({ user, errors }) {
     setList(list)
   }
 
+  const [selectedIDs, setSelectedIDs] = useState([])
+
   return (
     <main className="firms container container--fixed">
       <h1 className="firms__heading">Firms List</h1>
@@ -88,7 +90,12 @@ function Firms({ user, errors }) {
         </div>
       </div>
 
-      {!isEmpty(firms) && <Table firms={firms} listData={list} />}
+      <Table
+        firms={firms}
+        listData={list}
+        selectedIDs={selectedIDs}
+        setSelectedIDs={setSelectedIDs}
+      />
     </main>
   )
 }

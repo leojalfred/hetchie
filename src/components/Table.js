@@ -1,11 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import memoizeOne from 'memoize-one'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { multiReorder, multiSelect } from '../utils/dnd'
 import Row from './Row'
 import './Table.scss'
 
-export default function Table({ listData, firms }) {
+export default function Table({
+  listData,
+  firms,
+  selectedIDs,
+  setSelectedIDs,
+}) {
+  const unselect = useCallback(() => setSelectedIDs([]), [setSelectedIDs])
   useEffect(() => {
     function onUnselect({ defaultPrevented }) {
       if (defaultPrevented) return
@@ -26,14 +32,11 @@ export default function Table({ listData, firms }) {
       window.removeEventListener('keydown', onEscape)
       window.removeEventListener('touchend', onUnselect)
     }
-  }, [])
+  }, [unselect])
 
   const [list, setList] = useState(listData)
   useEffect(() => setList(listData), [listData])
 
-  const unselect = () => setSelectedIDs([])
-
-  const [selectedIDs, setSelectedIDs] = useState([])
   const [draggingID, setDraggingID] = useState()
   function onDragStart({ draggableId }) {
     const selected = selectedIDs.find(id => id === draggableId)
