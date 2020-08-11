@@ -8,6 +8,7 @@ import rank from '../../utils/firms'
 import { putLists } from '../../actions/user'
 import Select from '../../components/Select'
 import IconButton from '../../components/IconButton'
+import Errors from '../../components/Errors'
 import Table from '../../components/Table'
 import './Firms.scss'
 
@@ -30,7 +31,9 @@ function Firms({ user, errors }) {
     getFirms()
   }, [])
 
-  const [listOptions, setListOptions] = useState([])
+  const [listOptions, setListOptions] = useState([
+    { value: -1, label: 'Search results' },
+  ])
   const [lists, setLists] = useState()
   useEffect(() => {
     let formattedListOptions = [{ value: -1, label: 'Search results' }]
@@ -54,6 +57,12 @@ function Firms({ user, errors }) {
 
   const [selectedIDs, setSelectedIDs] = useState([])
 
+  const [custom, setCustom] = useState(false)
+  useEffect(() => {
+    const isCustom = listOptions[0].value !== -1
+    setCustom(isCustom)
+  }, [listOptions])
+
   return (
     <main className="firms container container--fixed">
       <h1 className="firms__heading">Firms List</h1>
@@ -70,25 +79,31 @@ function Firms({ user, errors }) {
           <button className="firms__recent">East Coast</button>
           <button className="firms__recent">Reaches</button>
         </div>
-        <div className="firms__actions">
-          <IconButton
-            className="firms__action--save firms__action"
-            icon={faSave}
-          />
-          <IconButton
-            className="firms__action--add firms__action"
-            icon={faPlusCircle}
-          />
-          <IconButton
-            className="firms__action--edit firms__action"
-            icon={faPencilAlt}
-          />
-          <IconButton
-            className="firms__action--delete firms__action"
-            icon={faTrashAlt}
-          />
-        </div>
+        {!isEmpty(selectedIDs) && (
+          <div className="firms__actions">
+            {custom && (
+              <IconButton
+                className="firms__action--save firms__action"
+                icon={faSave}
+              />
+            )}
+            <IconButton
+              className="firms__action--add firms__action"
+              icon={faPlusCircle}
+            />
+            <IconButton
+              className="firms__action--edit firms__action"
+              icon={faPencilAlt}
+            />
+            <IconButton
+              className="firms__action--delete firms__action"
+              icon={faTrashAlt}
+            />
+          </div>
+        )}
       </div>
+
+      {!isEmpty(error) && <Errors errors={error} />}
 
       <Table
         firms={firms}

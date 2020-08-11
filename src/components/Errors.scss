@@ -1,0 +1,17 @@
+@import '../styles/variables';
+
+.errors {
+  background-color: $red;
+  border-radius: $radius;
+  color: #fff;
+  margin-bottom: 2rem;
+  padding: 1rem;
+
+  &__error {
+    margin: 0 0 1rem 0;
+
+    &:last-child {
+      margin: 0;
+    }
+  }
+}

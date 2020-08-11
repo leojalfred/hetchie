@@ -3,7 +3,7 @@ import thunk from 'redux-thunk'
 import rootReducer from './reducers'
 
 const initialState = {}
-let composed = compose(applyMiddleware(thunk))
+let composed = applyMiddleware(thunk)
 if (window.__REDUX_DEVTOOLS_EXTENSION__)
   composed = compose(
     applyMiddleware(thunk),
