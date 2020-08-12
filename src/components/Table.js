@@ -10,6 +10,7 @@ export default function Table({
   firms,
   selectedIDs,
   setSelectedIDs,
+  onSearch,
 }) {
   const unselect = useCallback(() => setSelectedIDs([]), [setSelectedIDs])
   useEffect(() => {
@@ -115,7 +116,12 @@ export default function Table({
             {({ innerRef, droppableProps, placeholder }) => (
               <tbody ref={innerRef} {...droppableProps}>
                 {list.map((firm, i) => (
-                  <Draggable draggableId={firm} key={firm} index={i}>
+                  <Draggable
+                    draggableId={firm}
+                    key={firm}
+                    index={i}
+                    isDragDisabled={onSearch}
+                  >
                     {(provided, snapshot) => {
                       const selected = getSelectedMap(selectedIDs)[firm]
                       const ghosting =

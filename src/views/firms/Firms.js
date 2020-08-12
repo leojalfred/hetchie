@@ -57,10 +57,10 @@ function Firms({ user, errors }) {
 
   const [selectedIDs, setSelectedIDs] = useState([])
 
-  const [custom, setCustom] = useState(false)
+  const [onSearch, setOnSearch] = useState(true)
   useEffect(() => {
-    const isCustom = listOptions[0].value !== -1
-    setCustom(isCustom)
+    const isOnSearch = listOptions[0].value === -1
+    setOnSearch(isOnSearch)
   }, [listOptions])
 
   return (
@@ -79,9 +79,9 @@ function Firms({ user, errors }) {
           <button className="firms__recent">East Coast</button>
           <button className="firms__recent">Reaches</button>
         </div>
-        {(custom || !isEmpty(selectedIDs)) && (
+        {(!onSearch || !isEmpty(selectedIDs)) && (
           <div className="firms__actions">
-            {custom && (
+            {!onSearch && (
               <IconButton
                 className="firms__action--save firms__action"
                 icon={faSave}
@@ -93,7 +93,7 @@ function Firms({ user, errors }) {
                 icon={faPlusCircle}
               />
             )}
-            {custom && (
+            {!onSearch && (
               <>
                 <IconButton
                   className="firms__action--edit firms__action"
@@ -116,6 +116,7 @@ function Firms({ user, errors }) {
         listData={list}
         selectedIDs={selectedIDs}
         setSelectedIDs={setSelectedIDs}
+        onSearch={onSearch}
       />
     </main>
   )
