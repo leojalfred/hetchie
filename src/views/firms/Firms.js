@@ -25,11 +25,11 @@ function Firms({ user, errors }) {
       const { data } = await axios.get('/firms')
       setFirms(data)
 
-      const ranked = rank(data)
+      const ranked = rank(user, data)
       setList(ranked)
     }
     getFirms()
-  }, [])
+  }, [user])
 
   const [listOptions, setListOptions] = useState([
     { value: -1, label: 'Search results' },
