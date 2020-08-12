@@ -68,7 +68,6 @@
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "build": "react-scripts build",
     "dev": "concurrently \"yarn start\" \"cd ../server && yarn start\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install npm && run build",
     "start": "react-scripts start",
     "tunnel": "ngrok http --host-header=rewrite 3000"
   },
