@@ -10,7 +10,7 @@
 
     &:hover,
     &--active {
-      color: $orange;
+      color: $brand-1;
       transform: rotate(90deg);
     }
   }
@@ -18,7 +18,7 @@
   &__dropdown {
     background-color: #fff;
     border-radius: 0.5rem;
-    box-shadow: $shadow-m;
+    box-shadow: $shadow-l;
     padding: 1rem;
     position: absolute;
     right: 0;
@@ -29,6 +29,7 @@
     align-items: center;
     background: none;
     border: 0;
+    color: $brand-2;
     display: flex;
     font-size: 1rem;
     text-align: left;
@@ -37,7 +38,7 @@
 
     &:hover,
     &--active {
-      color: $orange;
+      color: $brand-1;
     }
 
     &:not(:first-child) {

@@ -2,30 +2,7 @@
 @import '../../styles/variables';
 
 .about {
-  &__jumbotron {
-    background-attachment: fixed;
-    background-image: url(../../images/background.jpg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-
-  &__container {
-    color: #fff;
-    padding-bottom: 2rem;
-    padding-top: 2rem;
-    text-align: center;
-  }
-
-  &__heading {
-    font-size: 2rem;
-    margin: 0;
-  }
-
-  &__main {
-    margin: 2rem 0;
-    text-align: center;
-  }
+  text-align: center;
 
   &__section-topline {
     align-items: center;
@@ -47,12 +24,12 @@
   }
 
   &__button {
-    color: $blue;
-    border-color: $blue;
+    color: $brand-2;
+    border-color: $brand-2;
     padding: 1rem;
 
     &:hover {
-      background-color: $blue;
+      background-color: $brand-2;
       color: #fff;
     }
   }
@@ -64,16 +41,6 @@
 
 @include bp($s) {
   .about {
-    &__container {
-      padding-bottom: 3rem;
-      padding-top: 3rem;
-      text-align: left;
-    }
-
-    &__heading {
-      font-size: 3rem;
-    }
-
     &__icon,
     &__section-heading {
       font-size: 2rem;
@@ -91,16 +58,8 @@
 
 @include bp($m) {
   .about {
-    &__container {
-      padding-bottom: 4rem;
-      padding-top: 4rem;
-    }
-
-    &__main {
-      display: flex;
-      margin: 4rem 0;
-      text-align: left;
-    }
+    display: flex;
+    text-align: left;
 
     &__section {
       flex: 1.5;
@@ -124,15 +83,6 @@
 
 @include bp($l) {
   .about {
-    &__container {
-      padding-bottom: 8rem;
-      padding-top: 8rem;
-    }
-
-    &__main {
-      margin: 8rem 0;
-    }
-
     &__icon,
     &__section-heading {
       font-size: 2.4rem;

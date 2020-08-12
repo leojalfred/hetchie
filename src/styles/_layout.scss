@@ -12,29 +12,34 @@ body {
 }
 
 .container {
-  padding: 0 1rem;
+  padding: 2rem 1rem;
+
+  &--fixed {
+    margin: 0 auto;
+    // max-width: 65rem;
+  }
 }
 
 @include bp($s) {
   .container {
-    padding: 0 2rem;
+    padding: 2rem;
   }
 }
 
 @include bp($m) {
   .container {
-    padding: 0 3rem;
+    padding: 2rem 3rem;
   }
 }
 
 @include bp($l) {
   .container {
-    padding: 0 4rem;
+    padding: 4rem;
   }
 }
 
 @include bp($xl) {
   .container {
-    padding: 0 5rem;
+    padding: 4rem 5rem;
   }
 }

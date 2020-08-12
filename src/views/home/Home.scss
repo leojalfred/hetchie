@@ -10,7 +10,7 @@
 
   &__main {
     color: #fff;
-    margin: 2rem auto 0 auto;
+    margin: 0 auto;
     max-width: 30rem;
     text-align: center;
   }
@@ -30,15 +30,9 @@
     margin: 0 auto;
 
     &:hover {
-      color: $orange;
+      color: $brand-1;
       background-color: #fff;
     }
-  }
-}
-
-@include bp(null, $m) {
-  .home__main {
-    margin-top: 4rem;
   }
 }
 
@@ -47,7 +41,7 @@
     background-position: center;
 
     &__main {
-      margin: 2rem 0 0 0;
+      margin: 0;
       text-align: left;
     }
 
@@ -61,15 +55,8 @@
   }
 }
 
-@include bp($l) {
-  .home__main {
-    margin-top: 4rem;
-  }
-}
-
 @include bp($xl) {
   .home__main {
-    margin-top: 8rem;
     max-width: 40rem;
   }
 }

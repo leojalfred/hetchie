@@ -35,15 +35,15 @@
 }
 
 @mixin scrollbar() {
-  scrollbar-color: $yellow-orange;
+  scrollbar-color: $brand-1;
   scrollbar-width: 0.4rem;
 
   &::-webkit-scrollbar {
+    height: 0.4rem;
     width: 0.4rem;
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: $yellow-orange;
-    border-radius: $radius;
+    background-color: $brand-1;
   }
 }

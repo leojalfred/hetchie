@@ -1,0 +1,20 @@
+@import '../styles/variables';
+
+.icon-button {
+  border-radius: 50%;
+  box-shadow: $shadow-m;
+  height: 1.9rem;
+  line-height: 0;
+  transition: background-color $time, box-shadow $time, color $time,
+    transform $time;
+  width: 1.9rem;
+
+  &:active {
+    box-shadow: $shadow;
+    transform: translateY(0.1rem);
+  }
+
+  &__icon {
+    font-size: 1rem;
+  }
+}

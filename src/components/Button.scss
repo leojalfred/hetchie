@@ -11,12 +11,8 @@
   transition: $button-transition;
   width: fit-content;
 
-  &:hover {
-    box-shadow: $shadow-l;
-  }
-
   &:active {
     box-shadow: $shadow;
-    transform: translateY(0.05rem);
+    transform: translateY(0.1rem);
   }
 }

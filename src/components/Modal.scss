@@ -42,7 +42,7 @@
   }
 
   &__content {
-    color: $blue;
+    color: $brand-2;
     margin: 2rem;
   }
 
@@ -66,7 +66,7 @@
   }
 
   &__heading {
-    color: $yellow-orange;
+    color: $brand-1;
     margin: 0;
   }
 
@@ -115,39 +115,39 @@
 
   &__input {
     border: 0;
-    border-bottom: 2px solid $yellow-orange;
-    color: $blue;
+    border-bottom: 2px solid $brand-1;
+    color: $brand-2;
     flex: 1;
     padding: 0.5rem;
     width: 100%;
   }
 
   &__submit {
-    border-color: $yellow-orange;
-    color: $yellow-orange;
+    border-color: $brand-1;
+    color: $brand-1;
     margin: 5rem 0 0 auto;
 
     &:hover {
-      background-color: $yellow-orange;
+      background-color: $brand-1;
       color: #fff;
     }
 
     &:disabled {
       background-color: transparent;
-      color: $yellow-orange;
+      color: $brand-1;
     }
   }
 
   &__button {
     background-color: transparent;
     border: 0;
-    color: $blue;
+    color: $brand-2;
     font-weight: bold;
     margin: 3rem auto 2rem auto;
     transition: color 0.15s;
 
     &:hover {
-      color: $yellow-orange;
+      color: $brand-1;
     }
   }
 
@@ -159,8 +159,8 @@
     border-radius: 2rem;
     display: flex;
     height: auto;
-    max-height: 98vh;
-    min-width: 90%;
+    max-height: 95vh;
+    width: 95%;
     overflow: hidden;
 
     &__overlay {
@@ -213,10 +213,10 @@
   }
 
   @include bp($m) {
-    max-height: 90vh;
+    max-height: 95vh;
   }
 
   @include bp($xl) {
-    min-width: 70%;
+    width: 80%;
   }
 }

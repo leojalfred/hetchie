@@ -1,2 +1,137 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
 .firms {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 9rem);
+  max-width: 75.375rem;
+
+  &__heading {
+    margin: 0;
+  }
+
+  &__topline {
+    align-items: flex-end;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    min-height: 2.4rem;
+  }
+
+  &__selectors {
+    align-items: flex-end;
+    display: flex;
+    flex: 1;
+    margin-right: 2rem;
+  }
+
+  &__select {
+    display: flex;
+    flex-basis: 8rem;
+    margin: 0;
+    max-width: 32rem;
+  }
+
+  &__recent {
+    display: none;
+  }
+
+  &__actions {
+    background-color: $brand-2;
+    border-radius: 2rem;
+    padding: 0.25rem;
+  }
+
+  &__action {
+    background-color: transparent;
+
+    &:not(:last-child) {
+      margin-right: 0.25rem;
+    }
+
+    &--save {
+      color: $blue;
+
+      &:hover {
+        background-color: $blue;
+        color: #fff;
+      }
+    }
+
+    &--add {
+      color: $green;
+
+      &:hover {
+        background-color: $green;
+        color: #fff;
+      }
+    }
+
+    &--edit {
+      color: $brand-1;
+
+      &:hover {
+        background-color: $brand-1;
+        color: #fff;
+      }
+    }
+
+    &--delete {
+      color: $red;
+
+      &:hover {
+        background-color: $red;
+        color: #fff;
+      }
+    }
+  }
+
+  @include bp($s) {
+    max-height: calc(100vh - 11rem);
+
+    &__select {
+      margin-right: 1rem;
+
+      &--marginless {
+        margin: 0;
+      }
+    }
+
+    &__recent {
+      background-color: $brand-2;
+      border-radius: 2rem;
+      box-shadow: $shadow-m;
+      color: #fff;
+      padding: $slim;
+      transition: background-color $time, box-shadow $time, transform $time;
+
+      &:first-of-type {
+        display: inline-block;
+      }
+
+      &:hover {
+        background-color: $brand-1;
+      }
+
+      &:active {
+        box-shadow: $shadow;
+        transform: translateY(0.1rem);
+      }
+    }
+  }
+
+  @include bp($m) {
+    &__recent {
+      display: inline-block;
+
+      &:not(:last-child) {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+
+  @include bp($l) {
+    max-height: calc(100vh - 15rem);
+  }
 }

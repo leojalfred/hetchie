@@ -1,0 +1,142 @@
+@import '../styles/variables';
+
+.row {
+  &:focus {
+    outline: none;
+  }
+
+  &:nth-child(odd) {
+    background-color: $light-gray;
+  }
+
+  &:nth-child(even) {
+    background-color: $gray;
+  }
+
+  &.row--dragging,
+  &.row--selected {
+    background-color: $light-orange;
+  }
+
+  &.row--ghosting {
+    background-color: $lightest-orange;
+  }
+
+  &__cell {
+    font-size: 0.8rem;
+    padding: 0.5rem 0.25rem;
+    vertical-align: top;
+
+    &:first-child {
+      padding-left: 0.5rem;
+    }
+
+    &:last-child {
+      padding-right: 0.5rem;
+    }
+
+    &--rank {
+      min-width: 2.1rem;
+    }
+
+    &--name {
+      min-width: 7rem;
+      font-size: 1rem;
+      padding-top: 0.65rem;
+    }
+
+    &--locations {
+      min-width: 12.5rem;
+    }
+
+    &--practices {
+      min-width: 12rem;
+    }
+
+    &--gpa {
+      min-width: 3.2rem;
+    }
+
+    &--salary {
+      min-width: 5.3rem;
+    }
+
+    &--rankings {
+      min-width: 13.5rem;
+    }
+
+    &--qualifications {
+      min-width: 10.4rem;
+    }
+
+    &--date {
+      white-space: nowrap;
+      min-width: 3.8rem;
+    }
+  }
+
+  &__tags {
+    &--location {
+      background-color: $light-red;
+    }
+
+    &--practice {
+      background-color: $light-yellow;
+    }
+
+    &--qualification {
+      background-color: #d0bfff;
+    }
+  }
+
+  &__badge-line {
+    align-items: center;
+    display: flex;
+    // font-size: 0.9rem;
+    margin: 0;
+    white-space: nowrap;
+
+    &:not(:last-child) {
+      margin-bottom: 0.25rem;
+    }
+  }
+
+  &__badge {
+    margin-right: 0.25rem;
+
+    &--required {
+      background-color: $red;
+    }
+
+    &--preferred {
+      background-color: $dark-cyan;
+    }
+
+    &--small {
+      background-color: $green;
+    }
+
+    &--large {
+      background-color: $dark-green;
+    }
+
+    &--rank {
+      background-color: $violet;
+    }
+  }
+
+  &__link {
+    color: #000;
+    text-decoration: none;
+  }
+
+  &__count-cell {
+    position: absolute;
+    right: -0.6rem;
+    top: -0.7rem;
+  }
+
+  &__count {
+    background-color: $dark-gray;
+  }
+}

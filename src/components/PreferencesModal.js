@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faListOl, faUserGraduate } from '@fortawesome/free-solid-svg-icons'
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import isEmpty from 'is-empty'
-import { putUserPreferences } from '../actions/userActions'
+import { putPreferences } from '../actions/user'
 import { connect } from 'react-redux'
 import Modal from './Modal'
 import Ranker from './Ranker'
@@ -15,7 +15,7 @@ import './PreferencesModal.scss'
 function PreferencesModal({
   user,
   errors,
-  putUserPreferences,
+  putPreferences,
   isOpen,
   closeModal,
 }) {
@@ -28,21 +28,33 @@ function PreferencesModal({
   const [practices, setPractices] = useState()
   useEffect(() => {
     async function getData() {
-      const locationsResponse = await axios.get('/locations')
+      const locationsResponse = await axios.get(
+        'http://localhost:3001/locations'
+      )
       const locationsData = locationsResponse.data
       const locationOptions = locationsData.map(({ _id, name }) => ({
         value: _id,
         label: name,
       }))
-      setLocations(locationOptions)
 
-      const practicesResponse = await axios.get('/practices')
+      function sort(a, b) {
+        if (a.label < b.label) return -1
+        if (a.label > b.label) return 1
+        return 0
+      }
+      const sortedLocations = locationOptions.sort(sort)
+      setLocations(sortedLocations)
+
+      const practicesResponse = await axios.get(
+        'http://localhost:3001/practices'
+      )
       const practicesData = practicesResponse.data
       const practiceOptions = practicesData.map(({ _id, name }) => ({
         value: _id,
         label: name,
       }))
-      setPractices(practiceOptions)
+      const sortedPractices = practiceOptions.sort(sort)
+      setPractices(sortedPractices)
     }
     getData()
   }, [])
@@ -52,18 +64,20 @@ function PreferencesModal({
   const [userPractices, setUserPractices] = useState()
   useEffect(() => {
     if (!isEmpty(user.data.gpa)) setGPA(user.data.gpa)
-
-    const formattedLocations = user.data.locations.map(({ _id, name }) => ({
-      value: _id,
-      label: name,
-    }))
-    setUserLocations(formattedLocations)
-
-    const formattedPractices = user.data.practices.map(({ _id, name }) => ({
-      value: _id,
-      label: name,
-    }))
-    setUserPractices(formattedPractices)
+    if (!isEmpty(user.data.locations)) {
+      const formattedLocations = user.data.locations.map(({ _id, name }) => ({
+        value: _id,
+        label: name,
+      }))
+      setUserLocations(formattedLocations)
+    }
+    if (!isEmpty(user.data.practices)) {
+      const formattedPractices = user.data.practices.map(({ _id, name }) => ({
+        value: _id,
+        label: name,
+      }))
+      setUserPractices(formattedPractices)
+    }
   }, [user.data])
 
   const onChange = ({ currentTarget }) => setGPA(currentTarget.value)
@@ -89,7 +103,7 @@ function PreferencesModal({
       const locationIDs = userLocations.map(({ value }) => value)
       const practiceIDs = userPractices.map(({ value }) => value)
       const body = { _id, gpa, locations: locationIDs, practices: practiceIDs }
-      putUserPreferences(body)
+      putPreferences(body)
 
       closeModal()
     } catch (error) {
@@ -185,6 +199,4 @@ function PreferencesModal({
 }
 
 const mapStateToProps = ({ user, errors }) => ({ user, errors })
-export default connect(mapStateToProps, { putUserPreferences })(
-  PreferencesModal
-)
+export default connect(mapStateToProps, { putPreferences })(PreferencesModal)
