@@ -94,7 +94,6 @@
   "scripts": {
     "build": "rimraf build && react-scripts build && babel server -d build/server",
     "client": "react-scripts start",
-    "heroku-postbuild": "yarn && yarn build",
     "server": "nodemon --exec babel-node server/index.js",
     "start": "NODE_ENV=production node build/server/index.js",
     "tunnel": "ngrok http --host-header=rewrite 3000"
