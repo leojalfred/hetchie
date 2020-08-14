@@ -45,7 +45,7 @@ router.post('/register', async ({ body }, response) => {
       },
     })
 
-    const url = `localhost:3001/users/verify?a=${salt}`
+    const url = `hetchie.com/api/users/verify?a=${salt}`
     const info = await transporter.sendMail({
       from: '"Leo Alfred" <leo@hetchie.com>',
       to: 'jon@doe.com',

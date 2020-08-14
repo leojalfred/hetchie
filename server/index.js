@@ -42,12 +42,12 @@ try {
 app.use(passport.initialize())
 passportConfig(passport)
 
-app.use('/users', users)
-app.use('/locations', locations)
-app.use('/practices', practices)
-app.use('/firms', firms)
-app.use('/rankings', rankings)
-app.use('/qualifications', qualifications)
+app.use('/api/users', users)
+app.use('/api/locations', locations)
+app.use('/api/practices', practices)
+app.use('/api/firms', firms)
+app.use('/api/rankings', rankings)
+app.use('/api/qualifications', qualifications)
 
 if (production)
   app.get('*', (request, response) => {

@@ -28,9 +28,7 @@ function PreferencesModal({
   const [practices, setPractices] = useState()
   useEffect(() => {
     async function getData() {
-      const locationsResponse = await axios.get(
-        'http://localhost:3001/locations'
-      )
+      const locationsResponse = await axios.get('/api/locations')
       const locationsData = locationsResponse.data
       const locationOptions = locationsData.map(({ _id, name }) => ({
         value: _id,
@@ -45,9 +43,7 @@ function PreferencesModal({
       const sortedLocations = locationOptions.sort(sort)
       setLocations(sortedLocations)
 
-      const practicesResponse = await axios.get(
-        'http://localhost:3001/practices'
-      )
+      const practicesResponse = await axios.get('/api/practices')
       const practicesData = practicesResponse.data
       const practiceOptions = practicesData.map(({ _id, name }) => ({
         value: _id,

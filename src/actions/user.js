@@ -15,9 +15,9 @@ export const putUser = (
   register = false
 ) => async dispatch => {
   try {
-    if (register) await axios.post('http://localhost:3001/users/register', user)
+    if (register) await axios.post('/api/users/register', user)
     else {
-      const response = await axios.put('http://localhost:3001/users', user)
+      const response = await axios.put('/api/users', user)
       dispatch(setCurrentUser(response.data))
     }
 
@@ -34,7 +34,7 @@ function setState(dispatch, data) {
 }
 export const loginUser = (user, history, closeModal) => async dispatch => {
   try {
-    const response = await axios.post('http://localhost:3001/users/login', user)
+    const response = await axios.post('/api/users/login', user)
     const { token } = response.data
     localStorage.setItem('jwtToken', token)
     setToken(token)
@@ -58,10 +58,7 @@ export const logoutUser = () => dispatch => {
 
 export const putPreferences = body => async dispatch => {
   try {
-    const { data } = await axios.put(
-      'http://localhost:3001/users/preferences',
-      body
-    )
+    const { data } = await axios.put('/api/users/preferences', body)
     setState(dispatch, data)
   } catch ({ response }) {
     setErrors(dispatch, response.data)
@@ -70,7 +67,7 @@ export const putPreferences = body => async dispatch => {
 
 export const putLists = body => async dispatch => {
   try {
-    const { data } = await axios.put('http://localhost:3001/users/lists', body)
+    const { data } = await axios.put('/api/users/lists', body)
     setState(dispatch, data)
   } catch ({ response }) {
     setErrors(dispatch, response.data)

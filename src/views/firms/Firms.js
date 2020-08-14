@@ -22,7 +22,7 @@ function Firms({ user, errors }) {
   const [list, setList] = useState([])
   useEffect(() => {
     async function getFirms() {
-      const { data } = await axios.get('http://localhost:3001/firms')
+      const { data } = await axios.get('/api/firms')
       setFirms(data)
 
       const ranked = rank(user, data)
