@@ -2,8 +2,5 @@
   "headers": {
     "/**": {}
   },
-  "root": "build/",
-  "routes": {
-    "/**": "index.html"
-  }
+  "root": "build/"
 }
