@@ -92,8 +92,9 @@
   "private": true,
   "proxy": "http://localhost:3001",
   "scripts": {
-    "build": "rimraf build && react-scripts build && babel server -d build/server",
+    "build": "rimraf build && react-scripts build && babel server -d build/server && xcopy /s /y build ..\\compiled",
     "client": "react-scripts start",
+    "deploy": "yarn build && cd ..\\compiled && git push heroku master",
     "server": "nodemon --exec babel-node server/index.js",
     "start": "NODE_ENV=production node build/server/index.js",
     "tunnel": "ngrok http --host-header=rewrite 3000"
