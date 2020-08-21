@@ -36,14 +36,14 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+        fontSrc: ['fonts.gstatic.com'],
         scriptSrc: [
           "'self'",
           "'unsafe-inline'",
           'ajax.cloudflare.com',
           'static.cloudflareinsights.com',
-          'https://fonts.googleapis.com',
         ],
+        styleSrc: ["'self'", 'fonts.googleapis.com'],
       },
     },
   })
