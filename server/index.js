@@ -33,29 +33,22 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'"],
-      fontSrc: ['fonts.gstatic.com'],
-      scriptSrc: [
-        "'self'",
-        "'unsafe-inline'",
-        'ajax.cloudflare.com',
-        'static.cloudflareinsights.com',
-      ],
-      styleSrc: ["'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        fontSrc: ['fonts.gstatic.com'],
+        scriptSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          'ajax.cloudflare.com',
+          'static.cloudflareinsights.com',
+        ],
+        styleSrc: ["'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
+      },
     },
   })
 )
-app.use(helmet.dnsPrefetchControl())
-app.use(helmet.expectCt())
-app.use(helmet.frameguard())
-app.use(helmet.hidePoweredBy())
-app.use(helmet.hsts())
-app.use(helmet.ieNoOpen())
-app.use(helmet.noSniff())
-app.use(helmet.permittedCrossDomainPolicies())
-app.use(helmet.referrerPolicy())
 
 app.use(passport.initialize())
 passportConfig(passport)
