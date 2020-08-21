@@ -5,6 +5,7 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import passport from 'passport'
+import helmet from 'helmet'
 import keys from './config/keys'
 import users from './routes/users'
 import locations from './routes/locations'
@@ -14,20 +15,7 @@ import rankings from './routes/rankings'
 import qualifications from './routes/qualifications'
 import passportConfig from './config/passport'
 
-const app = express()
-
-const production = process.env.NODE_ENV === 'production'
-if (production) {
-  const filepath = path.join(__dirname, '../')
-  app.use(express.static(filepath))
-}
-
-app.use(cors())
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
-
 mongoose.set('useFindAndModify', false)
-
 try {
   ;(async () => {
     await mongoose.connect(keys.db, {
@@ -39,14 +27,20 @@ try {
   console.log(error)
 }
 
+const app = express()
+app.use(cors())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+app.use(helmet())
+
 app.use(passport.initialize())
 passportConfig(passport)
 
-app.use((request, response, next) => {
-  response.setHeader('Content-Security-Policy', "frame-ancestors 'none'")
-  response.setHeader('X-Frame-Options', 'DENY')
-  next()
-})
+const production = process.env.NODE_ENV === 'production'
+if (production) {
+  const filepath = path.join(__dirname, '../')
+  app.use(express.static(filepath))
+}
 
 app.use('/api/users', users)
 app.use('/api/locations', locations)
