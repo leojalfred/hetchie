@@ -43,7 +43,7 @@ app.use(
           'ajax.cloudflare.com',
           'static.cloudflareinsights.com',
         ],
-        styleSrc: ["'self'", 'fonts.googleapis.com'],
+        styleSrc: ["'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
       },
     },
   })
