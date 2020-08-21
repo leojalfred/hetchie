@@ -20,7 +20,7 @@ import {
   getErrorKeys,
   clientErrorKeys,
   serverErrorKeys,
-} from '../scripts/validation'
+} from '../utils/validation'
 import Button from './BigButton'
 import { putUser } from '../actions/user'
 

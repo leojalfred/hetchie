@@ -92,10 +92,11 @@
   "private": true,
   "proxy": "http://localhost:3001",
   "scripts": {
-    "build": "cmd --% /c del /q build && react-scripts build && babel server -d build/server --presets minify",
-    "client": "react-scripts start",
-    "deploy": "yarn build && yarn move && cd ../compiled && git add . && git commit -m \"Deploy\" && git push heroku master",
-    "move": "cmd --% /c del /q ..\\compiled && (robocopy /s build ../compiled) ^& exit 0",
+    "build": "cmd --% /c del /q build && react-app-rewired build && babel server -d build/server --presets minify",
+    "client": "react-app-rewired start",
+    "deploy": "yarn build && yarn move && cd ../production && git add . && git commit -m \"Deploy\" && git push heroku master",
+    "move": "cmd --% /c del /q ..\\production && (robocopy /s build ../production) ^& exit 0",
+    "production": "yarn build && yarn move && cd ../production && yarn start",
     "server": "nodemon --exec babel-node server/index.js",
     "start": "NODE_ENV=production node build/server/index.js",
     "tunnel": "ngrok http --host-header=rewrite 3000"
