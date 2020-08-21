@@ -31,7 +31,20 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-app.use(helmet())
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        scriptSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          'ajax.cloudflare.com',
+          'static.cloudflareinsights.com',
+        ],
+      },
+    },
+  })
+)
 
 app.use(passport.initialize())
 passportConfig(passport)
