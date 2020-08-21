@@ -42,6 +42,12 @@ try {
 app.use(passport.initialize())
 passportConfig(passport)
 
+app.use((request, response, next) => {
+  response.setHeader('Content-Security-Policy', "frame-ancestors 'none'")
+  response.setHeader('X-Frame-Options', 'DENY')
+  next()
+})
+
 app.use('/api/users', users)
 app.use('/api/locations', locations)
 app.use('/api/practices', practices)

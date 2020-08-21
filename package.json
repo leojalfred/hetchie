@@ -22,7 +22,6 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "classnames": "^2.2.6",
-    "concurrently": "^5.3.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "formik": "^2.1.4",
@@ -49,11 +48,10 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "regenerator-runtime": "^0.13.7",
-    "rimraf": "^3.0.2",
     "validator": "^13.1.1",
     "yup": "^0.29.3"
   },
-  "description": "The client side for hetchie, a web app designed to streamline your on campus interview process",
+  "description": "The development repository for hetchie, a web app designed to streamline your on campus interview process",
   "devDependencies": {
     "@babel/core": "^7.11.1",
     "@babel/node": "^7.10.5",
@@ -61,6 +59,7 @@
     "@typescript-eslint/eslint-plugin": "2.x",
     "@typescript-eslint/parser": "2.x",
     "babel-eslint": "10.x",
+    "babel-preset-minify": "^0.5.1",
     "eslint": "6.x",
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-react-app": "5.2.1",
@@ -92,9 +91,10 @@
   "private": true,
   "proxy": "http://localhost:3001",
   "scripts": {
-    "build": "rimraf build && react-scripts build && babel server -d build/server && xcopy /s /y build ..\\compiled",
+    "build": "cmd --% /c del /q build && react-scripts build && babel server -d build/server --presets minify",
     "client": "react-scripts start",
-    "deploy": "yarn build && cd ..\\compiled && git push heroku master",
+    "deploy": "yarn build && yarn move && cd ../compiled && git add . && git commit -m \"Deploy\" && git push heroku master",
+    "move": "cmd --% /c del /q ..\\compiled && (robocopy /s build ../compiled) ^& exit 0",
     "server": "nodemon --exec babel-node server/index.js",
     "start": "NODE_ENV=production node build/server/index.js",
     "tunnel": "ngrok http --host-header=rewrite 3000"
