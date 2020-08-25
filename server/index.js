@@ -6,7 +6,6 @@ import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import passport from 'passport'
 import helmet from 'helmet'
-import keys from './config/keys'
 import users from './routes/users'
 import locations from './routes/locations'
 import practices from './routes/practices'
@@ -18,10 +17,13 @@ import passportConfig from './config/passport'
 mongoose.set('useFindAndModify', false)
 try {
   ;(async () => {
-    await mongoose.connect(keys.db, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
+    await mongoose.connect(
+      'mongodb+srv://admin:FFPk4ASWQH1xwKH3@hetchie-l0pca.mongodb.net/test',
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      }
+    )
   })()
 } catch (error) {
   console.log(error)

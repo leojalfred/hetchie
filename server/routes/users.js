@@ -1,8 +1,9 @@
 import express from 'express'
 import bcrypt from 'bcryptjs'
 import nodemailer from 'nodemailer'
+import mongoose from 'mongoose'
+import { RateLimiterMongo } from 'rate-limiter-flexible'
 import jwt from 'jsonwebtoken'
-import keys from '../config/keys'
 import validateRegister from '../validation/register'
 import validateLogin from '../validation/login'
 import validatePreferences from '../validation/preferences'
@@ -77,37 +78,106 @@ router.get('/verify', async (request, response) => {
   }
 })
 
-router.post('/login', async ({ body }, response) => {
-  const { errors, isValid } = validateLogin(body)
-  if (!isValid) return response.status(400).json(errors)
+router.post('/login', async ({ ip, body }, response) => {
+  const maxDailyFailedIP = 100
+  const maxConsecutiveFailed = 10
+  const day = 86400
+  const dailyLimiter = new RateLimiterMongo({
+    storeClient: mongoose.connection,
+    keyPrefix: 'limiterDaily',
+    points: maxDailyFailedIP,
+    duration: day,
+    blockDuration: day,
+  })
+  const consecutiveLimiter = new RateLimiterMongo({
+    storeClient: mongoose.connection,
+    keyPrefix: 'limiterConsecutive',
+    points: maxConsecutiveFailed,
+    duration: 90 * day,
+    blockDuration: day / 24,
+  })
 
-  try {
-    const { email, password } = body
-    const user = await User.findOne({ email })
-      .select('-__v')
-      .populate('locations')
-      .populate('practices')
-      .exec()
-    if (!user) return response.status(404).json({ email: 'Email not found.' })
-    if (!user.verified)
-      return response.status(404).json({ verified: 'Email not confirmed.' })
+  const { email } = body
+  const key = email + ip
+  const [dailyResponse, consecutiveResponse] = await Promise.all([
+    dailyLimiter.get(ip),
+    consecutiveLimiter.get(key),
+  ])
 
-    const isMatch = await bcrypt.compare(password, user.password)
-    if (isMatch) {
-      jwt.sign(
-        user.toObject(),
-        keys.secretOrKey,
-        { expiresIn: 31556926 },
-        (error, token) => {
-          response.json({
-            success: true,
-            token: `Bearer ${token}`,
-          })
+  let retry = 0
+  const round = before => Math.round(before / 1000) || 1
+  if (
+    dailyResponse !== null &&
+    dailyResponse.consumedPoints >= maxDailyFailedIP
+  )
+    retry = round(dailyResponse.msBeforeNext)
+  else if (
+    consecutiveResponse !== null &&
+    consecutiveResponse.consumedPoints >= maxConsecutiveFailed
+  )
+    retry = round(consecutiveResponse.msBeforeNext)
+
+  const retryAfter = () => {
+    response.set('Retry-After', String(retry))
+    response
+      .status(429)
+      .json({ limiter: 'Too many bad requests, please try again later.' })
+  }
+
+  if (retry > 0) retryAfter()
+  else {
+    const { errors, isValid } = validateLogin(body)
+    if (!isValid) return response.status(400).json(errors)
+
+    try {
+      const user = await User.findOne({ email })
+        .select('-__v')
+        .populate('locations')
+        .populate('practices')
+        .exec()
+      if (!user) response.status(404).json({ email: 'Email not found.' })
+      else if (!user.verified)
+        response.status(412).json({ verified: 'Email not confirmed.' })
+
+      const isMatch =
+        user && (await bcrypt.compare(body.password, user.password))
+      if (isMatch) {
+        if (
+          consecutiveResponse !== null &&
+          consecutiveResponse.consumedPoints > 0
+        )
+          await consecutiveLimiter.delete(key)
+
+        jwt.sign(
+          user.toObject(),
+          'secret',
+          { expiresIn: 31556926 },
+          (error, token) => {
+            response.json({
+              success: true,
+              token: `Bearer ${token}`,
+            })
+          }
+        )
+      } else {
+        try {
+          const promises = [dailyLimiter.consume(ip)]
+          if (user) {
+            promises.push(consecutiveLimiter.consume(key))
+            response
+              .status(404)
+              .json({ email: 'Email or password is incorrect.' })
+          }
+
+          await Promise.all(promises)
+        } catch (error) {
+          if (error instanceof Error) throw error
+          else retryAfter()
         }
-      )
-    } else response.status(400).json({ password: 'Password is invalid.' })
-  } catch (error) {
-    console.log(error)
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 })
 
