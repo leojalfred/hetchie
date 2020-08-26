@@ -10,8 +10,6 @@ import users from './routes/users'
 import locations from './routes/locations'
 import practices from './routes/practices'
 import firms from './routes/firms'
-import rankings from './routes/rankings'
-import qualifications from './routes/qualifications'
 import passportConfig from './config/passport'
 
 mongoose.set('useFindAndModify', false)
@@ -65,8 +63,6 @@ app.use('/api/users', users)
 app.use('/api/locations', locations)
 app.use('/api/practices', practices)
 app.use('/api/firms', firms)
-app.use('/api/rankings', rankings)
-app.use('/api/qualifications', qualifications)
 
 if (production)
   app.get('*', (request, response) => {
