@@ -10,7 +10,7 @@ import users from './routes/users'
 import locations from './routes/locations'
 import practices from './routes/practices'
 import firms from './routes/firms'
-import passportConfig from './config/passport'
+import config from './config/passport'
 
 mongoose.set('useFindAndModify', false)
 try {
@@ -51,24 +51,23 @@ app.use(
 )
 
 app.use(passport.initialize())
-passportConfig(passport)
-
-const production = process.env.NODE_ENV === 'production'
-if (production) {
-  const filepath = path.join(__dirname, '../')
-  app.use(express.static(filepath))
-}
+config(passport)
 
 app.use('/api/users', users)
 app.use('/api/locations', locations)
 app.use('/api/practices', practices)
 app.use('/api/firms', firms)
 
-if (production)
+const production = process.env.NODE_ENV === 'production'
+if (production) {
+  const filepath = path.join(__dirname, '../')
+  app.use(express.static(filepath))
+
   app.get('*', (request, response) => {
     const file = path.join(__dirname, '../index.html')
     response.sendFile(file)
   })
+}
 
 const port = process.env.PORT || 3001
 app.listen(port, () => console.log(`Server up and running on port ${port}!`))
