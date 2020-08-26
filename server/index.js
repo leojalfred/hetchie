@@ -1,4 +1,3 @@
-import 'regenerator-runtime/runtime.js'
 import express from 'express'
 import path from 'path'
 import cors from 'cors'
@@ -6,11 +5,12 @@ import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import passport from 'passport'
 import helmet from 'helmet'
-import users from './routes/users'
+import users from './routes/users/'
 import locations from './routes/locations'
 import practices from './routes/practices'
 import firms from './routes/firms'
 import config from './config/passport'
+import 'regenerator-runtime/runtime.js'
 
 mongoose.set('useFindAndModify', false)
 try {
