@@ -1,7 +1,9 @@
 import bcrypt from 'bcryptjs'
+import path from 'path'
 import nodemailer from 'nodemailer'
 import validate from '../../validation/register'
 import User from '../../models/User'
+import key from '../../key.json'
 
 export default async ({ body }, response) => {
   const { errors, isValid } = validate(body)
@@ -28,27 +30,73 @@ export default async ({ body }, response) => {
     const savedUser = await newUser.save()
     response.json(savedUser)
 
-    const testAccount = await nodemailer.createTestAccount()
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.ethereal.email',
-      port: 587,
-      secure: false,
-      auth: {
-        user: testAccount.user,
-        pass: testAccount.pass,
-      },
-    })
+    let transporter
+    let url = `localhost:3001/api/users/verify?a=${salt}`
+    let logo = 'public/logo.png'
+    const production = process.env.NODE_ENV === 'production'
+    if (production) {
+      transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+          privateKey: key.private_key,
+          serviceClient: key.client_id,
+          type: 'OAuth2',
+          user: 'contact@hetchie.com',
+        },
+      })
 
-    const url = `/api/users/verify?a=${salt}`
+      url = 'hetchie.com' + url
+      logo = path.join(process.env.PUBLIC_URL, '/logo.png')
+    } else {
+      const test = await nodemailer.createTestAccount()
+      transporter = nodemailer.createTransport({
+        host: 'smtp.ethereal.email',
+        port: 587,
+        secure: false,
+        auth: {
+          user: test.user,
+          pass: test.pass,
+        },
+      })
+    }
+
     const info = await transporter.sendMail({
-      from: '"Leo Alfred" <leo@hetchie.com>',
-      to: 'jon@doe.com',
+      from: '"hetchie" <contact@hetchie.com>',
+      to: email,
       subject: 'Confirm your account',
-      html: `<p>Confirm your account by clicking <a href="${url}">here</a></p>`,
+      html: `<div style="align-items: center; background-color: #f1f3f5; display: flex; min-height: 100%; justify-content: center;">
+        <div style="color: #343a40; padding: 2rem; width: 40rem;">
+          <header style="background-color: #ffa94d; border-radius: .2rem .2rem 0 0; padding: 1.4rem;">
+            <h2 style="color: #f8f9fa; font-size: 1.4rem; margin: 0; text-align: center;">Thanks for Signing Up!</h2>
+          </header>
+          <main style="background-color: #fff; border-radius: 0 0 .2rem .2rem; padding: 3rem 1.5rem;">
+            <img src="cid:logo@hetchie.com" style="display: block; margin: 0 auto 3rem auto; width: 4rem;" />
+            <div style="margin: 0 auto; max-width: 24rem;">
+              <h3 style="font-size: 1.2rem; margin-bottom: 1rem;">Hey ${first},</h3>
+              <p style="margin-bottom: .5rem;">Welcome to hetchie! Thanks for registering with us.</p>
+              <p style="margin: 0;">Before you begin, we just need you to verify your email.
+              Please click the button below to verify your email and get started.</p>
+            </div>
+            <a href="${url}" style="background-color: #ffa94d; border-radius: 2rem; color: #f8f9fa; display: block; font-size: .9rem; font-weight: bold; margin: 3rem auto 0 auto; padding: 0.5rem 1rem; text-align: center; text-decoration: none; width: 8rem;">Verify Email</a>
+          </main>
+          <p style="margin: 1rem 0 0 0; text-align: center;">
+            <small>Alternatively, click this link: <a href="${url}" style="color: #343a40; text-decoration: none;">${url}</a></small>
+          </p>
+        </div>
+      </div>`,
+      attachments: [
+        {
+          filename: 'logo.png',
+          path: logo,
+          cid: 'logo@hetchie.com',
+        },
+      ],
     })
 
-    const emailURL = nodemailer.getTestMessageUrl(info)
-    console.log(`Preview URL: ${emailURL}`)
+    if (!production)
+      console.log(`Preview URL: ${nodemailer.getTestMessageUrl(info)}`)
   } catch (error) {
     console.log(error)
   }

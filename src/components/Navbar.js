@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import classNames from 'classnames'
 import { Link, NavLink } from 'react-router-dom'
+import path from 'path'
 import { connect } from 'react-redux'
-import './Navbar.scss'
 import Button from './Button'
 import Settings from './Settings'
-import logo from '../images/logo.png'
+import './Navbar.scss'
 
 function Navbar({
   user,
@@ -42,7 +42,11 @@ function Navbar({
   return (
     <nav className={classes}>
       <Link className="navbar__link navbar__link--brand" to={to}>
-        <img className="navbar__brand-logo" src={logo} alt="Logo" />
+        <img
+          className="navbar__brand-logo"
+          src={path.join(process.env.PUBLIC_URL, '/logo.png')}
+          alt="Logo"
+        />
         <p className="navbar__brand-text">hetchie</p>
       </Link>
       <NavLink
