@@ -3,7 +3,7 @@ import path from 'path'
 import nodemailer from 'nodemailer'
 import validate from '../../validation/register'
 import User from '../../models/User'
-import key from '../../key.json'
+import key from '../../config/key.json'
 
 export default async ({ body }, response) => {
   const { errors, isValid } = validate(body)
@@ -47,7 +47,7 @@ export default async ({ body }, response) => {
         },
       })
 
-      url = 'hetchie.com' + url
+      url = 'www.hetchie.com' + url
     } else {
       const test = await nodemailer.createTestAccount()
       transporter = nodemailer.createTransport({
