@@ -56,8 +56,8 @@ function PreferencesModal({
   }, [])
 
   const [gpa, setGPA] = useState('')
-  const [userLocations, setUserLocations] = useState()
-  const [userPractices, setUserPractices] = useState()
+  const [userLocations, setUserLocations] = useState([])
+  const [userPractices, setUserPractices] = useState([])
   useEffect(() => {
     if (!isEmpty(user.data.gpa)) setGPA(user.data.gpa)
     if (!isEmpty(user.data.locations)) {

@@ -15,8 +15,11 @@ export default async ({ body }, response) => {
     if (user)
       return response.status(400).json({ email: 'Email already exists.' })
 
-    const salt = await bcrypt.genSalt(10)
-    const hash = await bcrypt.hash(password, salt)
+    const [hashSalt, verificationSalt] = await Promise.all([
+      bcrypt.genSalt(10),
+      bcrypt.genSalt(10),
+    ])
+    const hash = await bcrypt.hash(password, hashSalt)
     const newUser = new User({
       first,
       last,
@@ -24,14 +27,14 @@ export default async ({ body }, response) => {
       school,
       year,
       password: hash,
-      salt,
+      salt: verificationSalt,
     })
 
     const savedUser = await newUser.save()
     response.json(savedUser)
 
     let transporter
-    let url = `/api/users/verify?a=${salt}`
+    let url = `/api/users/verify?a=${verificationSalt}`
     let logo = 'logo.png'
     const production = process.env.NODE_ENV === 'production'
     if (production) {

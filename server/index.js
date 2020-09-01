@@ -12,15 +12,16 @@ import practices from './routes/practices'
 import firms from './routes/firms'
 import config from './config/passport'
 
-mongoose.set('useFindAndModify', false)
-
-const production = process.env.NODE_ENV === 'production'
 try {
   ;(async () => {
-    const db = production ? 'production' : 'development'
+    const db = process.env.PLATFORM === 'heroku' ? 'production' : 'development'
     await mongoose.connect(
       `mongodb+srv://admin:FFPk4ASWQH1xwKH3@hetchie-l0pca.mongodb.net/${db}`,
-      { useNewUrlParser: true, useUnifiedTopology: true }
+      {
+        useNewUrlParser: true,
+        useFindAndModify: false,
+        useUnifiedTopology: true,
+      }
     )
   })()
 } catch (error) {
@@ -57,7 +58,7 @@ app.use('/api/locations', locations)
 app.use('/api/practices', practices)
 app.use('/api/firms', firms)
 
-if (production) {
+if (process.env.NODE_ENV === 'production') {
   const filepath = path.join(__dirname, '../')
   app.use(express.static(filepath))
 

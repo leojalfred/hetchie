@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs'
 import validate from '../../validation/register'
 import User from '../../models/User'
 
