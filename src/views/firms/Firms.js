@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import isEmpty from 'is-empty'
+import empty from '../../utils/empty'
 import { faSave, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import { faPlusCircle, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
@@ -37,7 +37,7 @@ function Firms({ user, errors }) {
   const [lists, setLists] = useState()
   useEffect(() => {
     let formattedListOptions = [{ value: -1, label: 'Search results' }]
-    if (!isEmpty(user.data.lists)) {
+    if (!empty(user.data.lists)) {
       const entries = Object.entries(user.data.lists)
       const mappedListOptions = []
       for (const [id, value] of entries) {
@@ -79,7 +79,7 @@ function Firms({ user, errors }) {
           <button className="firms__recent">East Coast</button>
           <button className="firms__recent">Reaches</button>
         </div>
-        {(!onSearch || !isEmpty(selectedIDs)) && (
+        {(!onSearch || !empty(selectedIDs)) && (
           <div className="firms__actions">
             {!onSearch && (
               <IconButton
@@ -87,7 +87,7 @@ function Firms({ user, errors }) {
                 icon={faSave}
               />
             )}
-            {!isEmpty(selectedIDs) && (
+            {!empty(selectedIDs) && (
               <IconButton
                 className="firms__action--add firms__action"
                 icon={faPlusCircle}
@@ -109,7 +109,7 @@ function Firms({ user, errors }) {
         )}
       </div>
 
-      {!isEmpty(error) && <Errors errors={error} />}
+      {!empty(error) && <Errors errors={error} />}
 
       <Table
         firms={firms}

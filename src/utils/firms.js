@@ -1,10 +1,10 @@
-import isEmpty from 'lodash-es/isEmpty'
+import empty from './empty'
 
 const roundDown = x => Math.floor(x * 10) / 10
 function getFirmGPA(firm) {
-  if (isEmpty(firm)) return 0
+  if (empty(firm)) return 0
 
-  if (isEmpty(firm.band)) return roundDown(firm.required)
+  if (empty(firm.band)) return roundDown(firm.required)
   return Math.min(roundDown(firm.required), roundDown(firm.band))
 }
 
@@ -42,7 +42,7 @@ export default function rank({ data: user }, firms) {
   ids.forEach(id => {
     const firm = firms[id]
 
-    const has = (user, firm) => !(isEmpty(user) || isEmpty(firm))
+    const has = (user, firm) => !empty(user) && !empty(firm)
     const gpa = scoreGPA(user.gpa, firm.gpa)
     const location = has(user.locations, firm.locations)
       ? scoreOther(user.locations, firm.locations)

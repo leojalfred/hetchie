@@ -1,10 +1,10 @@
 import React from 'react'
-import isEmpty from 'is-empty'
 import classNames from 'classnames'
+import empty from '../utils/empty'
 import './Tags.scss'
 
 export default function Tags({ className, data }) {
-  if (!isEmpty(data)) {
+  if (!empty(data)) {
     const classes = classNames(className, 'tags__tag')
     const tags = data.map(({ _id, name }) => (
       <span className={classes} key={_id}>

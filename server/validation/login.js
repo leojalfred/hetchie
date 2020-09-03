@@ -1,21 +1,20 @@
-import validator from 'validator';
-import isEmpty from 'is-empty';
+import validator from 'validator'
 
 export default function validateLogin({ email, password }) {
-  const errors = {};
+  const errors = {}
 
-  email = !isEmpty(email) ? email : '';
-  password = !isEmpty(password) ? password : '';
+  email = email || ''
+  password = password || ''
 
-  if (validator.isEmpty(email)) errors.email = 'Email is required.';
-  else if (!validator.isEmail(email)) errors.email = 'Email is invalid.';
+  if (validator.isEmpty(email)) errors.email = 'Email is required.'
+  else if (!validator.isEmail(email)) errors.email = 'Email is invalid.'
 
-  if (validator.isEmpty(password)) errors.password = 'Password is required.';
+  if (validator.isEmpty(password)) errors.password = 'Password is required.'
 
-  let isValid = true;
+  let isValid = true
   Object.values(errors).forEach(value => {
-    if (!isEmpty(value)) isValid = false;
-  });
+    if (value) isValid = false
+  })
 
-  return { errors, isValid };
+  return { errors, isValid }
 }

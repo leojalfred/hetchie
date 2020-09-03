@@ -4,9 +4,9 @@ import { string } from 'yup'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faListOl, faUserGraduate } from '@fortawesome/free-solid-svg-icons'
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
-import isEmpty from 'is-empty'
-import { putPreferences } from '../actions/user'
 import { connect } from 'react-redux'
+import empty from '../utils/empty'
+import { putPreferences } from '../actions/user'
 import Modal from './Modal'
 import Ranker from './Ranker'
 import Button from './BigButton'
@@ -59,15 +59,15 @@ function PreferencesModal({
   const [userLocations, setUserLocations] = useState([])
   const [userPractices, setUserPractices] = useState([])
   useEffect(() => {
-    if (!isEmpty(user.data.gpa)) setGPA(user.data.gpa)
-    if (!isEmpty(user.data.locations)) {
+    if (user.data.gpa) setGPA(user.data.gpa)
+    if (!empty(user.data.locations)) {
       const formattedLocations = user.data.locations.map(({ _id, name }) => ({
         value: _id,
         label: name,
       }))
       setUserLocations(formattedLocations)
     }
-    if (!isEmpty(user.data.practices)) {
+    if (!empty(user.data.practices)) {
       const formattedPractices = user.data.practices.map(({ _id, name }) => ({
         value: _id,
         label: name,
@@ -133,7 +133,7 @@ function PreferencesModal({
           />
         </div>
 
-        {!isEmpty(error) && (
+        {!empty(error) && (
           <div className="modal__input-errors">
             <p className="modal__input-error">{error}</p>
           </div>

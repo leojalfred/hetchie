@@ -1,7 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
-import isEmpty from 'is-empty'
 import moment from 'moment'
+import empty from '../utils/empty'
 import Badge from './Badge'
 import Tags from './Tags'
 import './Row.scss'
@@ -73,15 +73,15 @@ export default function Row({
   }
 
   const gpa = []
-  if (!isEmpty(firm.gpa)) {
-    if (!isEmpty(firm.gpa.required))
+  if (!empty(firm.gpa)) {
+    if (firm.gpa.required)
       gpa.push(
         <p className="row__badge-line" key="required">
           <Badge className="row__badge row__badge--required">R</Badge>
           {firm.gpa.required}
         </p>
       )
-    if (!isEmpty(firm.gpa.band))
+    if (firm.gpa.band)
       gpa.push(
         <p className="row__badge-line" key="preferred">
           <Badge className="row__badge row__badge--preferred">P</Badge>
@@ -91,15 +91,15 @@ export default function Row({
   }
 
   const salary = []
-  if (!isEmpty(firm.salary)) {
-    if (!isEmpty(firm.salary.small))
+  if (!empty(firm.salary)) {
+    if (firm.salary.small)
       salary.push(
         <p className="row__badge-line" key="small">
           <Badge className="row__badge row__badge--small">S</Badge>$
           {firm.salary.small}
         </p>
       )
-    if (!isEmpty(firm.salary.large))
+    if (firm.salary.large)
       salary.push(
         <p className="row__badge-line" key="large">
           <Badge className="row__badge row__badge--large">L</Badge>$
@@ -123,7 +123,7 @@ export default function Row({
   ))
 
   const dateElement = []
-  if (!isEmpty(firm.date)) {
+  if (firm.date) {
     const date = moment(firm.date).format('MMMM Do')
     dateElement.push(date)
   }

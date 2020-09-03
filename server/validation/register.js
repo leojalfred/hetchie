@@ -1,5 +1,4 @@
 import validator from 'validator'
-import isEmpty from 'is-empty'
 import { namePattern } from './shared'
 
 export default function validateRegister({
@@ -19,13 +18,13 @@ export default function validateRegister({
     min: date.getUTCFullYear(),
   }
 
-  first = !isEmpty(first) ? first : ''
-  last = !isEmpty(last) ? last : ''
-  email = !isEmpty(email) ? email : ''
-  school = !isEmpty(school) ? school : ''
-  year = !isEmpty(year) ? year : ''
-  password = !isEmpty(password) ? password : ''
-  confirm = !isEmpty(confirm) ? confirm : ''
+  first = first || ''
+  last = last || ''
+  email = email || ''
+  school = school || ''
+  year = year || ''
+  password = password || ''
+  confirm = confirm || ''
 
   if (validator.isEmpty(first)) errors.first = 'First name is required.'
   else if (!validator.matches(first, namePattern))
@@ -56,7 +55,7 @@ export default function validateRegister({
 
   let isValid = true
   Object.values(errors).forEach(value => {
-    if (!isEmpty(value)) isValid = false
+    if (value) isValid = false
   })
 
   return { errors, isValid }
