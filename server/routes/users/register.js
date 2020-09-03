@@ -34,7 +34,7 @@ export default async ({ body }, response) => {
     response.json(savedUser)
 
     let transporter
-    let url = `/api/users/verify?a=${verificationSalt}`
+    let url = `/api/users/verify?a=${email}&b=${verificationSalt}`
     let logo = 'logo.png'
     const production = process.env.NODE_ENV === 'production'
     if (production) {
@@ -77,7 +77,7 @@ export default async ({ body }, response) => {
             <h2 style="color: #f8f9fa; font-size: 1.4rem; margin: 0; text-align: center;">Thanks for Signing Up!</h2>
           </div>
           <div style="background-color: #fff; border-radius: 0 0 .2rem .2rem; padding: 3rem 1.5rem;">
-            <img src="cid:logo@hetchie.com" style="display: block; margin: 0 auto 3rem auto; width: 4rem;" />
+            <img src="cid:logo@hetchie.com" style="display: block; margin: 0 auto 3rem auto; width: 4rem;">
             <div style="margin: 0 auto; max-width: 24rem;">
               <h3 style="font-size: 1.2rem; margin-bottom: 1rem;">Hey ${first},</h3>
               <p style="margin-bottom: .5rem;">Welcome to hetchie! Thanks for registering with us.</p>

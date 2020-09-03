@@ -74,7 +74,7 @@
     "prettier": "^2.0.5",
     "sass": "1.3.0",
     "snyk": "^1.381.1",
-    "typescript": "^3.9.7"
+    "typescript": "^4.0.2"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -94,14 +94,12 @@
   "private": true,
   "proxy": "http://localhost:3001",
   "scripts": {
-    "base": "(robocopy ../base ../production /s) & exit 0",
     "build": "if exist build rmdir /q /s build && react-scripts build && babel server -d build/server",
     "clean": "if exist ..\\production\\node_modules rmdir /q /s ..\\production\\node_modules",
     "client": "react-scripts start",
     "deploy": "yarn prepare && cd ../production && git add . && git commit -m \"Deploy\" && git push heroku master",
-    "keys": "(robocopy ../keys ../production/server/config /s) & exit 0",
-    "move": "(robocopy build ../production /s /purge) & exit 0",
-    "prepare": "yarn build && yarn clean && yarn move && yarn base && yarn keys",
+    "move": "(robocopy build ../production /s /purge /xf .gitignore package.json key.json /xd .git) & exit 0",
+    "prepare": "yarn build && yarn clean && yarn move",
     "production": "yarn prepare && cd ../production && yarn && yarn start",
     "server": "nodemon --exec babel-node server/index.js",
     "tunnel": "ngrok http --host-header=rewrite 3000"
