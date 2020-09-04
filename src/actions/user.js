@@ -1,14 +1,14 @@
 import axios from 'axios'
 import jwt_decode from 'jwt-decode'
-import { GET_ERRORS, SET_CURRENT_USER } from './types'
+import { SET_ERROR, SET_USER } from './types'
 import setToken from '../utils/authorization'
 
-export const setCurrentUser = decoded => ({
-  type: SET_CURRENT_USER,
+export const setUser = decoded => ({
+  type: SET_USER,
   payload: decoded,
 })
 
-const setErrors = (dispatch, payload) => dispatch({ type: GET_ERRORS, payload })
+const setErrors = (dispatch, payload) => dispatch({ type: SET_ERROR, payload })
 export const putUser = (
   user,
   closeModal,
@@ -18,7 +18,7 @@ export const putUser = (
     if (register) await axios.post('/api/users/register', user)
     else {
       const response = await axios.put('/api/users', user)
-      dispatch(setCurrentUser(response.data))
+      dispatch(setUser(response.data))
     }
 
     setErrors(dispatch, {})
@@ -29,10 +29,10 @@ export const putUser = (
 }
 
 function setState(dispatch, data) {
-  dispatch(setCurrentUser(data))
+  dispatch(setUser(data))
   setErrors(dispatch, {})
 }
-export const loginUser = (user, history, closeModal) => async dispatch => {
+export const login = (user, history, closeModal) => async dispatch => {
   try {
     const response = await axios.post('/api/users/login', user)
     const { token } = response.data
@@ -49,11 +49,11 @@ export const loginUser = (user, history, closeModal) => async dispatch => {
   }
 }
 
-export const logoutUser = () => dispatch => {
+export const logout = () => dispatch => {
   localStorage.removeItem('jwtToken')
   setToken(false)
 
-  dispatch(setCurrentUser({}))
+  dispatch(setUser({}))
 }
 
 export const putPreferences = body => async dispatch => {

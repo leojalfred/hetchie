@@ -11,77 +11,76 @@ import {
   faSignature,
 } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
-import './CredentialsForm.scss'
-import {
-  email,
-  name,
-  password,
-  year,
-  getErrorKeys,
-  clientErrorKeys,
-  serverErrorKeys,
-} from '../utils/validation'
-import Button from './BigButton'
+import empty from '../utils/empty'
+import { email, getError, combinedError } from '../utils/validation'
 import { putUser } from '../actions/user'
+import Error from './Error'
+import Button from './BigButton'
+import './CredentialsForm.scss'
 
 function CredentialsForm({
-  errors,
+  error,
   initialValues,
   putUser,
   closeModal,
   register,
   submit,
 }) {
-  const [serverErrors, setServerErrors] = useState({})
+  const [serverError, setServerError] = useState('')
   useEffect(() => {
-    if (errors) setServerErrors(errors)
-  }, [errors])
+    if (!empty(error)) setServerError(error)
+    else setServerError('')
+  }, [error])
 
-  function equalTo(ref, msg) {
-    return yup.mixed().test({
+  const name = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+$/u
+  const password = /.*(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[ !"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]).*/
+  const date = new Date()
+  const year = date.getUTCFullYear()
+
+  const nameSchema = label =>
+    yup
+      .string()
+      .required(`${label} name is required.`)
+      .matches(name, {
+        message: label + ' name is invalid.',
+        excludeEmptyString: true,
+      })
+  const passwordSchema = label =>
+    yup
+      .string()
+      .required(label + ' is required.')
+      .matches(password, {
+        message:
+          label +
+          ' must contain at least one digit, upper- and lowercase letter, and symbol.',
+        excludeEmptyString: true,
+      })
+
+  yup.addMethod(yup.string, 'equalTo', function (ref, msg) {
+    yup.mixed().test({
       name: 'equalTo',
       exclusive: false, // eslint-disable-next-line
       message: msg || '${path} must be the same as ${reference}',
-      params: {
-        reference: ref.path,
-      },
-      test: function (value) {
-        return value === this.resolve(ref)
-      },
+      params: { reference: ref.path },
+      test: value => value === this.resolve(ref),
     })
-  }
-  yup.addMethod(yup.string, 'equalTo', equalTo)
-  const CredentialsSchema = yup.object().shape({
-    ...email,
-    first: yup.string().required('First name is required.').matches(name, {
-      message: 'First name is invalid.',
-      excludeEmptyString: true,
-    }),
-    last: yup.string().required('Last name is required.').matches(name, {
-      message: 'Last name is invalid.',
-      excludeEmptyString: true,
-    }),
+  })
+
+  const schema = yup.object().shape({
+    email,
+    first: nameSchema('First'),
+    last: nameSchema('Last'),
     school: yup.string().required('School is required.'),
     year: yup
       .number()
       .required('Graduation year is required.')
       .integer('Graduation year must be an integer.')
       .min(year, `Graduation year must be at least ${year}.`),
-    password: yup
-      .string()
-      .required('Password is required.')
-      .matches(password.pattern, {
-        message: password.message,
-        excludeEmptyString: true,
-      }),
-    confirm: yup
-      .string()
-      .matches(password.pattern, {
-        message: password.message,
-        excludeEmptyString: true,
-      })
-      .equalTo(yup.ref('password'), 'Passwords must match.')
-      .required('Confirm password is required.'),
+    password: passwordSchema('Password'),
+    confirm: passwordSchema('Confirm password').equalTo(
+      yup.ref('password'),
+      'Passwords must match.'
+    ),
   })
 
   async function onSubmit(user) {
@@ -94,26 +93,14 @@ function CredentialsForm({
   return (
     <Formik
       initialValues={initialValues}
-      validationSchema={CredentialsSchema}
+      validationSchema={schema}
       onSubmit={onSubmit}
     >
       {({ errors, touched, isSubmitting }) => (
         <>
-          {getErrorKeys(errors, touched, serverErrors)}
-          {(clientErrorKeys.length > 0 || serverErrorKeys.length > 0) && (
-            <div className="modal__input-errors">
-              {clientErrorKeys.map((error, i) => (
-                <p className="modal__input-error" key={i}>
-                  {errors[error]}
-                </p>
-              ))}
-              {serverErrorKeys.map((error, i) => (
-                <p className="modal__input-error" key={i}>
-                  {serverErrors[error]}
-                </p>
-              ))}
-            </div>
-          )}
+          {getError(serverError, errors, touched)}
+          {combinedError && <Error message={combinedError} />}
+
           <Form className="modal__form">
             <div className="modal__input-line">
               <div className="modal__input-container modal__input-container--credentials">
@@ -238,5 +225,5 @@ function CredentialsForm({
   )
 }
 
-const mapStateToProps = ({ errors }) => ({ errors })
+const mapStateToProps = ({ error }) => ({ error })
 export default connect(mapStateToProps, { putUser })(CredentialsForm)

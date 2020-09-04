@@ -2,8 +2,8 @@ import validate from '../../validation/preferences'
 import User from '../../models/User'
 
 export default async ({ body }, response) => {
-  const { errors, valid } = validate(body)
-  if (!valid) return response.status(400).json(errors)
+  const { message, valid } = validate(body)
+  if (!valid) return response.status(400).send(message)
 
   try {
     const { _id, gpa, locations, practices } = body

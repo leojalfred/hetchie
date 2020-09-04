@@ -1,62 +1,66 @@
-import validator from 'validator'
-import { namePattern } from './shared'
+import * as yup from 'yup'
+import { email } from './shared'
 
-export default function validateRegister({
-  first,
-  last,
-  email,
-  school,
-  year,
-  password,
-  confirm,
-}) {
-  const errors = {}
-  const passwordPattern = /.*(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[ !"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]).*/
+export default function validateRegister(data) {
+  const name = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+$/u
+  const password = /.*(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[ !"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]).*/
   const date = new Date()
-  const yearOptions = {
-    allow_leading_zeroes: false,
-    min: date.getUTCFullYear(),
-  }
+  const year = date.getUTCFullYear()
 
-  first = first || ''
-  last = last || ''
-  email = email || ''
-  school = school || ''
-  year = year || ''
-  password = password || ''
-  confirm = confirm || ''
+  const nameSchema = label =>
+    yup
+      .string()
+      .required(`${label} name is required.`)
+      .matches(name, {
+        message: label + ' name is invalid.',
+        excludeEmptyString: true,
+      })
+  const passwordSchema = label =>
+    yup
+      .string()
+      .required(label + ' is required.')
+      .matches(password, {
+        message:
+          label +
+          ' must contain at least one digit, upper- and lowercase letter, and symbol.',
+        excludeEmptyString: true,
+      })
 
-  if (validator.isEmpty(first)) errors.first = 'First name is required.'
-  else if (!validator.matches(first, namePattern))
-    errors.first = 'First name is invalid.'
-  if (validator.isEmpty(last)) errors.last = 'Last name is required.'
-  else if (!validator.matches(last, namePattern))
-    errors.last = 'Last name is invalid.'
-
-  if (validator.isEmpty(email)) errors.email = 'Email is required.'
-  else if (!validator.isEmail(email)) errors.email = 'Email is invalid.'
-
-  if (validator.isEmpty(school)) errors.school = 'School is required.'
-
-  if (Number.isInteger(year)) year = year.toString()
-  if (validator.isEmpty(year)) errors.year = 'Graduation year is required.'
-  else if (!validator.isInt(year, yearOptions))
-    errors.year = 'Graduation year is invalid.'
-
-  if (validator.isEmpty(password)) errors.password = 'Password is required.'
-  else if (!validator.matches(password, passwordPattern))
-    errors.password = 'Password is invalid.'
-  if (validator.isEmpty(confirm))
-    errors.confirm = 'Confirm password is required.'
-  else if (!validator.matches(confirm, passwordPattern))
-    errors.confirm = 'Confirm password is invalid.'
-  else if (!validator.equals(password, confirm))
-    errors.confirm = 'Passwords must match.'
-
-  let isValid = true
-  Object.values(errors).forEach(value => {
-    if (value) isValid = false
+  yup.addMethod(yup.string, 'equalTo', function (ref, msg) {
+    yup.mixed().test({
+      name: 'equalTo',
+      exclusive: false, // eslint-disable-next-line
+      message: msg || '${path} must be the same as ${reference}',
+      params: { reference: ref.path },
+      test: value => value === this.resolve(ref),
+    })
   })
 
-  return { errors, isValid }
+  const schema = yup.object().shape({
+    email,
+    first: nameSchema('First'),
+    last: nameSchema('Last'),
+    school: yup.string().required('School is required.'),
+    year: yup
+      .number()
+      .required('Graduation year is required.')
+      .integer('Graduation year must be an integer.')
+      .min(year, `Graduation year must be at least ${year}.`),
+    password: passwordSchema('Password'),
+    confirm: passwordSchema('Confirm password').equalTo(
+      yup.ref('password'),
+      'Passwords must match.'
+    ),
+  })
+
+  let message = ''
+  let valid = false
+  try {
+    schema.validateSync(data)
+    valid = true
+  } catch (error) {
+    message = error.message
+  }
+
+  return { message, valid }
 }

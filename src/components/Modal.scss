@@ -83,22 +83,6 @@
     }
   }
 
-  &__input-errors {
-    background-color: $red;
-    border-radius: $radius;
-    color: #fff;
-    margin-bottom: 2rem;
-    padding: 1rem;
-  }
-
-  &__input-error {
-    margin: 0 0 1rem 0;
-
-    &:last-child {
-      margin: 0;
-    }
-  }
-
   &__input-group {
     display: flex;
     align-items: center;

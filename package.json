@@ -46,7 +46,6 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "regenerator-runtime": "^0.13.7",
-    "validator": "^13.1.1",
     "yup": "^0.29.3"
   },
   "description": "The development repository for hetchie, a web app designed to streamline your on campus interview process",

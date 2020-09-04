@@ -1,14 +1,15 @@
-import * as yup from 'yup'
+import { string, array } from 'yup'
 
-export const namePattern = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+$/u
+export const emailSchema = string()
+  .required('Email is required.')
+  .email('Email is invalid.')
 
 const hexPattern = /^[\da-f]+$/
 export const idSchema = schema =>
-  yup
-    .string()
+  string()
     .required(`${schema} ID is required.`)
     .matches(hexPattern, {
       message: `${schema} ID is invalid.`,
       excludeEmptyString: true,
     })
-export const idArraySchema = schema => yup.array().of(idSchema(schema))
+export const idArraySchema = schema => array().of(idSchema(schema))

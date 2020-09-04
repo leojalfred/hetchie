@@ -9,7 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
 import './Settings.scss'
-import { logoutUser } from '../actions/user'
+import { logout } from '../actions/user'
 
 function useClose(ref, setComponent) {
   useEffect(() => {
@@ -28,12 +28,7 @@ function useClose(ref, setComponent) {
   }, [ref, setComponent])
 }
 
-function Settings({
-  user,
-  openSettingsModal,
-  openPreferencesModal,
-  logoutUser,
-}) {
+function Settings({ user, openSettingsModal, openPreferencesModal, logout }) {
   const dropdownRef = useRef(null)
   const [dropdown, setDropdown] = useState()
   useClose(dropdownRef, setDropdown)
@@ -61,7 +56,7 @@ function Settings({
             <FontAwesomeIcon className="settings__icon" icon={faBriefcase} />
             Firm preferences
           </button>
-          <button className="settings__link" onClick={logoutUser}>
+          <button className="settings__link" onClick={logout}>
             <FontAwesomeIcon className="settings__icon" icon={faSignOutAlt} />
             Log out
           </button>
@@ -83,4 +78,4 @@ function Settings({
 }
 
 const mapStateToProps = ({ user }) => ({ user })
-export default connect(mapStateToProps, { logoutUser })(Settings)
+export default connect(mapStateToProps, { logout })(Settings)

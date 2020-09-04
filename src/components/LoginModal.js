@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { connect } from 'react-redux'
-import * as yup from 'yup'
+import { object, string } from 'yup'
 import { Formik, Form, Field } from 'formik'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faTimesCircle } from '@fortawesome/free-regular-svg-icons'
@@ -9,37 +8,36 @@ import {
   faLongArrowAltRight,
   faSignInAlt,
 } from '@fortawesome/free-solid-svg-icons'
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import {
-  getErrorKeys,
-  clientErrorKeys,
-  serverErrorKeys,
-  email,
-} from '../utils/validation'
-import { loginUser } from '../actions/user'
+import empty from '../utils/empty'
+import { email, getError, combinedError } from '../utils/validation'
+import { login } from '../actions/user'
 import Modal from './Modal'
+import Error from './Error'
 import Button from './BigButton'
 
 function LoginModal({
-  errors,
-  loginUser,
+  error,
+  login,
   history,
   closeLoginModal,
   openRegisterModal,
   isOpen,
 }) {
-  const [serverErrors, setServerErrors] = useState({})
+  const [serverError, setServerError] = useState('')
   useEffect(() => {
-    if (errors) setServerErrors(errors)
-  }, [errors])
+    if (!empty(error)) setServerError(error)
+    else setServerError('')
+  }, [error])
 
   const initialValues = { email: '', password: '' }
-  const LoginSchema = yup.object().shape({
-    ...email,
-    password: yup.string().required('Password is required.'),
+  const schema = object().shape({
+    email,
+    password: string().required('Password is required.'),
   })
 
-  const onSubmit = async user => loginUser(user, history, closeLoginModal)
+  const onSubmit = async user => login(user, history, closeLoginModal)
 
   function switchModals() {
     closeLoginModal()
@@ -72,26 +70,14 @@ function LoginModal({
 
         <Formik
           initialValues={initialValues}
-          validationSchema={LoginSchema}
+          validationSchema={schema}
           onSubmit={onSubmit}
         >
           {({ errors, touched, isSubmitting }) => (
             <>
-              {getErrorKeys(errors, touched, serverErrors)}
-              {(clientErrorKeys.length > 0 || serverErrorKeys.length > 0) && (
-                <div className="modal__input-errors">
-                  {clientErrorKeys.map((error, i) => (
-                    <p className="modal__input-error" key={i}>
-                      {errors[error]}
-                    </p>
-                  ))}
-                  {serverErrorKeys.map((error, i) => (
-                    <p className="modal__input-error" key={i}>
-                      {serverErrors[error]}
-                    </p>
-                  ))}
-                </div>
-              )}
+              {getError(serverError, errors, touched)}
+              {combinedError && <Error message={combinedError} />}
+
               <Form className="modal__form">
                 <div className="modal__input-container">
                   <div className="modal__input-group">
@@ -145,5 +131,5 @@ function LoginModal({
   )
 }
 
-const mapStateToProps = ({ errors }) => ({ errors })
-export default connect(mapStateToProps, { loginUser })(withRouter(LoginModal))
+const mapStateToProps = ({ error }) => ({ error })
+export default connect(mapStateToProps, { login })(withRouter(LoginModal))

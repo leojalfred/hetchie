@@ -14,7 +14,7 @@ import config from './config/passport'
 
 try {
   ;(async () => {
-    const db = process.env.PLATFORM === 'heroku' ? 'production' : 'development'
+    const db = process.env.DEPLOYED ? 'production' : 'development'
     await mongoose.connect(
       `mongodb+srv://admin:FFPk4ASWQH1xwKH3@hetchie-l0pca.mongodb.net/${db}`,
       {

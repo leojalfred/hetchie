@@ -8,21 +8,17 @@ import { connect } from 'react-redux'
 import empty from '../utils/empty'
 import { putPreferences } from '../actions/user'
 import Modal from './Modal'
+import Error from './Error'
 import Ranker from './Ranker'
 import Button from './BigButton'
 import './PreferencesModal.scss'
 
-function PreferencesModal({
-  user,
-  errors,
-  putPreferences,
-  isOpen,
-  closeModal,
-}) {
-  const [error, setError] = useState('')
+function PreferencesModal({ user, error, putPreferences, isOpen, closeModal }) {
+  const [message, setMessage] = useState('')
   useEffect(() => {
-    if (errors) setError(errors)
-  }, [errors])
+    if (!empty(error)) setMessage(error)
+    else setMessage('')
+  }, [error])
 
   const [locations, setLocations] = useState()
   const [practices, setPractices] = useState()
@@ -103,7 +99,7 @@ function PreferencesModal({
 
       closeModal()
     } catch (error) {
-      setError(error.message)
+      setMessage(error.message)
     } finally {
       setSubmitting(false)
     }
@@ -133,11 +129,7 @@ function PreferencesModal({
           />
         </div>
 
-        {!empty(error) && (
-          <div className="modal__input-errors">
-            <p className="modal__input-error">{error}</p>
-          </div>
-        )}
+        {message && <Error message={message} />}
 
         <form onSubmit={onSubmit}>
           <h3 className="preferences__title">GPA</h3>
@@ -194,5 +186,5 @@ function PreferencesModal({
   )
 }
 
-const mapStateToProps = ({ user, errors }) => ({ user, errors })
+const mapStateToProps = ({ user, error }) => ({ user, error })
 export default connect(mapStateToProps, { putPreferences })(PreferencesModal)

@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import empty from '../../utils/empty'
 import { faSave, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import { faPlusCircle, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
+import empty from '../../utils/empty'
 import rank from '../../utils/firms'
 import { putLists } from '../../actions/user'
 import Select from '../../components/Select'
 import IconButton from '../../components/IconButton'
-import Errors from '../../components/Errors'
+import Error from '../../components/Error'
 import Table from '../../components/Table'
 import './Firms.scss'
 
-function Firms({ user, errors }) {
-  const [error, setError] = useState('')
+function Firms({ user, error }) {
+  const [message, setMessage] = useState('')
   useEffect(() => {
-    if (errors) setError(errors)
-  }, [errors])
+    if (!empty(error)) setMessage(error)
+    else setMessage('')
+  }, [error])
 
   const [firms, setFirms] = useState()
   const [list, setList] = useState([])
@@ -109,7 +110,7 @@ function Firms({ user, errors }) {
         )}
       </div>
 
-      {!empty(error) && <Errors errors={error} />}
+      {message && <Error message={message} />}
 
       <Table
         firms={firms}
@@ -122,5 +123,5 @@ function Firms({ user, errors }) {
   )
 }
 
-const mapStateToProps = ({ user, errors }) => ({ user, errors })
+const mapStateToProps = ({ user, error }) => ({ user, error })
 export default connect(mapStateToProps, { putLists })(Firms)

@@ -6,14 +6,13 @@ import User from '../../models/User'
 import key from '../../config/key.json'
 
 export default async ({ body }, response) => {
-  const { errors, isValid } = validate(body)
-  if (!isValid) return response.status(400).json(errors)
+  const { message, valid } = validate(body)
+  if (!valid) return response.status(400).send(message)
 
   try {
     const { first, last, email, school, year, password } = body
     const user = await User.findOne({ email })
-    if (user)
-      return response.status(400).json({ email: 'Email already exists.' })
+    if (user) return response.status(400).send('Email already exists.')
 
     const [hashSalt, verificationSalt] = await Promise.all([
       bcrypt.genSalt(10),

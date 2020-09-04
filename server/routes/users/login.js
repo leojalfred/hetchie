@@ -53,8 +53,8 @@ export default async ({ ip, body }, response) => {
 
   if (retry > 0) retryAfter()
   else {
-    const { errors, isValid } = validate(body)
-    if (!isValid) return response.status(400).json(errors)
+    const { message, valid } = validate(body)
+    if (!valid) return response.status(400).send(message)
 
     try {
       const user = await User.findOne({ email })
@@ -62,9 +62,8 @@ export default async ({ ip, body }, response) => {
         .populate('locations')
         .populate('practices')
         .exec()
-      if (!user) response.status(404).json({ email: 'Email not found.' })
-      else if (!user.verified)
-        response.status(412).json({ verified: 'Email not confirmed.' })
+      if (!user) response.status(404).send('Email not found.')
+      else if (!user.verified) response.status(412).send('Email not confirmed.')
 
       const isMatch =
         user && (await bcrypt.compare(body.password, user.password))
@@ -91,9 +90,7 @@ export default async ({ ip, body }, response) => {
           const promises = [dailyLimiter.consume(ip)]
           if (user) {
             promises.push(consecutiveLimiter.consume(key))
-            response
-              .status(404)
-              .json({ email: 'Email or password is incorrect.' })
+            response.status(404).send('Email or password is incorrect.')
           }
 
           await Promise.all(promises)

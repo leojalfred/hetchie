@@ -1,20 +1,20 @@
-import validator from 'validator'
+import { object, string } from 'yup'
+import { email } from './shared'
 
-export default function validateLogin({ email, password }) {
-  const errors = {}
-
-  email = email || ''
-  password = password || ''
-
-  if (validator.isEmpty(email)) errors.email = 'Email is required.'
-  else if (!validator.isEmail(email)) errors.email = 'Email is invalid.'
-
-  if (validator.isEmpty(password)) errors.password = 'Password is required.'
-
-  let isValid = true
-  Object.values(errors).forEach(value => {
-    if (value) isValid = false
+export default function validateLogin(data) {
+  const schema = object().shape({
+    email,
+    password: string().required('Password is required.'),
   })
 
-  return { errors, isValid }
+  let message = ''
+  let valid = false
+  try {
+    schema.validateSync(data)
+    valid = true
+  } catch (error) {
+    message = error.message
+  }
+
+  return { message, valid }
 }

@@ -12,7 +12,6 @@ export default function RegisterModal({
   isOpen,
   closeRegisterModal,
   openLoginModal,
-  putUser,
 }) {
   const initialValues = {
     first: '',

@@ -1,11 +1,11 @@
-import * as yup from 'yup'
+import { object, string } from 'yup'
 import { idSchema, idArraySchema } from './shared'
 
 export default function validatePreferences(data) {
   const gpaPattern = /(([0-3]{1}\.\d{0,2})|([0-4]{1}))|[4]\.[0]{0,2}/
-  const schema = yup.object().shape({
+  const schema = object().shape({
     _id: idSchema('User'),
-    gpa: yup.string().required('GPA is required.').matches(gpaPattern, {
+    gpa: string().required('GPA is required.').matches(gpaPattern, {
       message: 'GPA is invalid.',
       excludeEmptyString: true,
     }),
@@ -13,14 +13,14 @@ export default function validatePreferences(data) {
     practices: idArraySchema('Practices'),
   })
 
-  let errors = []
+  let message = ''
   let valid = false
   try {
     schema.validateSync(data)
     valid = true
   } catch (error) {
-    errors = error.message
+    message = error.message
   }
 
-  return { errors, valid }
+  return { message, valid }
 }
