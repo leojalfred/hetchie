@@ -4,8 +4,9 @@ import path from 'path'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
-import passport from 'passport'
+import sanitize from 'express-mongo-sanitize'
 import helmet from 'helmet'
+import passport from 'passport'
 import users from './routes/users/'
 import locations from './routes/locations'
 import practices from './routes/practices'
@@ -32,6 +33,7 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use(sanitize())
 
 const options = {
   contentSecurityPolicy: {
