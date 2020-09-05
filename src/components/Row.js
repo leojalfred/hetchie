@@ -1,7 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
-import moment from 'moment'
 import empty from '../utils/empty'
+import formatDate from '../utils/formatDate'
 import Badge from './Badge'
 import Tags from './Tags'
 import './Row.scss'
@@ -124,7 +124,7 @@ export default function Row({
 
   const dateElement = []
   if (firm.date) {
-    const date = moment(firm.date).format('MMMM Do')
+    const date = formatDate(firm.date)
     dateElement.push(date)
   }
 
