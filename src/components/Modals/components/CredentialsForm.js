@@ -14,7 +14,7 @@ import empty from 'utils/empty'
 import schema from 'validation/credentials'
 import { getError, combinedError } from 'validation/shared'
 import { putUser } from 'actions/user'
-import Error from 'components/Error/Error'
+import Error from 'components/Error'
 import Button from 'components/Buttons/BigButton'
 import './CredentialsForm.scss'
 
