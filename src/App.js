@@ -35,7 +35,9 @@ function App({ user }) {
   const openRegisterModal = () => setRegisterIsOpen(true)
   const closeRegisterModal = () => setRegisterIsOpen(false)
 
-  const [loginIsOpen, setLoginIsOpen] = useState(false)
+  const params = new URLSearchParams(window.location.search)
+  const verified = params.get('verified') === 'true'
+  const [loginIsOpen, setLoginIsOpen] = useState(verified)
   const openLoginModal = () => setLoginIsOpen(true)
   const closeLoginModal = () => setLoginIsOpen(false)
 
@@ -49,34 +51,35 @@ function App({ user }) {
 
   const [modals, setModals] = useState()
   useEffect(() => {
-    if (!user.loggedIn)
-      setModals(
-        <>
-          <RegisterModal
-            isOpen={registerIsOpen}
-            closeRegisterModal={closeRegisterModal}
-            openLoginModal={openLoginModal}
-          />
-          <LoginModal
-            isOpen={loginIsOpen}
-            closeLoginModal={closeLoginModal}
-            openRegisterModal={openRegisterModal}
-          />
-        </>
-      )
-    else
-      setModals(
-        <>
-          <SettingsModal
-            isOpen={settingsIsOpen}
-            closeModal={closeSettingsModal}
-          />
-          <PreferencesModal
-            isOpen={preferencesIsOpen}
-            closeModal={closePreferencesModal}
-          />
-        </>
-      )
+    const unathorizedModals = (
+      <>
+        <RegisterModal
+          isOpen={registerIsOpen}
+          closeRegisterModal={closeRegisterModal}
+          openLoginModal={openLoginModal}
+        />
+        <LoginModal
+          isOpen={loginIsOpen}
+          closeLoginModal={closeLoginModal}
+          openRegisterModal={openRegisterModal}
+        />
+      </>
+    )
+    const authorizedModals = (
+      <>
+        <SettingsModal
+          isOpen={settingsIsOpen}
+          closeModal={closeSettingsModal}
+        />
+        <PreferencesModal
+          isOpen={preferencesIsOpen}
+          closeModal={closePreferencesModal}
+        />
+      </>
+    )
+
+    if (!user.loggedIn) setModals(unathorizedModals)
+    else setModals(authorizedModals)
   }, [
     user.loggedIn,
     registerIsOpen,
