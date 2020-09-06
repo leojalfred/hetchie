@@ -1,8 +1,8 @@
 import React from 'react'
 import classNames from 'classnames'
-import empty from '../utils/empty'
-import formatDate from '../utils/formatDate'
-import Badge from './Badge'
+import empty from 'utils/empty'
+import formatDate from 'utils/formatDate'
+import Badge from 'components/Badge/Badge'
 import Tags from './Tags'
 import './Row.scss'
 

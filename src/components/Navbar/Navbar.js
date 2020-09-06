@@ -3,8 +3,8 @@ import classNames from 'classnames'
 import { Link, NavLink } from 'react-router-dom'
 import path from 'path'
 import { connect } from 'react-redux'
-import Button from './Button'
-import Settings from './Settings'
+import Button from 'components/Buttons/Button'
+import Settings from './components/Settings'
 import './Navbar.scss'
 
 function Navbar({

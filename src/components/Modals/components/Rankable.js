@@ -3,8 +3,8 @@ import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
-import Badge from './Badge'
-import Select from './Select'
+import Badge from 'components/Badge/Badge'
+import Select from 'components/Select/Select'
 import './Rankable.scss'
 
 export default function Rankable({

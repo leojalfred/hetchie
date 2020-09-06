@@ -5,8 +5,8 @@ import {
   faLongArrowAltRight,
   faUserPlus,
 } from '@fortawesome/free-solid-svg-icons'
-import Modal from './Modal'
-import CredentialsForm from './CredentialsForm'
+import Modal from './components/Modal'
+import CredentialsForm from './components/CredentialsForm'
 
 export default function RegisterModal({
   isOpen,

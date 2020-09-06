@@ -1,5 +1,5 @@
-@import '../styles/mixins';
-@import '../styles/variables';
+@import '../../../styles/mixins';
+@import '../../../styles/variables';
 
 .modal {
   height: 100%;
@@ -156,7 +156,7 @@
 
     &__image {
       background-attachment: fixed;
-      background-image: url(../images/bg-alt.jpg);
+      background-image: url(../../../images/bg-alt.jpg);
       background-repeat: no-repeat;
       background-size: cover;
       display: block;

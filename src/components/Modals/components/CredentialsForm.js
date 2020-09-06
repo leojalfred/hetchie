@@ -11,11 +11,11 @@ import {
   faSignature,
 } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
-import empty from '../utils/empty'
-import { email, getError, combinedError } from '../utils/validation'
-import { putUser } from '../actions/user'
-import Error from './Error'
-import Button from './BigButton'
+import empty from 'utils/empty'
+import { email, getError, combinedError } from 'utils/validation'
+import { putUser } from 'actions/user'
+import Error from 'components/Error/Error'
+import Button from 'components/Buttons/BigButton'
 import './CredentialsForm.scss'
 
 function CredentialsForm({

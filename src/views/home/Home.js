@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import './Home.scss'
-import BigButton from '../../components/BigButton'
+import Button from 'components/Buttons/BigButton'
 
 function Home({ user, openRegisterModal }) {
   return (
@@ -19,9 +19,9 @@ function Home({ user, openRegisterModal }) {
           quis do commodo.
         </p>
         {!user.loggedIn && (
-          <BigButton className="home__button" onClick={openRegisterModal}>
+          <Button className="home__button" onClick={openRegisterModal}>
             Get Started
-          </BigButton>
+          </Button>
         )}
       </div>
     </main>

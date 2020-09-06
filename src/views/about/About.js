@@ -2,7 +2,7 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGavel } from '@fortawesome/free-solid-svg-icons'
 import { faEnvelopeOpen } from '@fortawesome/free-regular-svg-icons'
-import BigButtonLink from '../../components/BigButton'
+import Button from '../../components/Buttons/BigButton'
 import './About.scss'
 
 function About() {
@@ -29,9 +29,7 @@ function About() {
           interested in.
         </p>
         <p className="about__text">Don't waste your bids. Optimize them.</p>
-        <BigButtonLink className="about__button">
-          Request Consultation
-        </BigButtonLink>
+        <Button className="about__button">Request Consultation</Button>
       </section>
       <section className="about__contact">
         <div className="about__section-topline">

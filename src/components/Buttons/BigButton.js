@@ -1,6 +1,6 @@
-import React from 'react';
-import Button from './Button';
-import './BigButton.scss';
+import React from 'react'
+import Button from './Button'
+import './BigButton.scss'
 
 function BigButtonLink({
   className = '',
@@ -9,13 +9,13 @@ function BigButtonLink({
   children,
   ...props
 }) {
-  className = `button--big ${className}`.trim();
+  className = `button--big ${className}`.trim()
 
   return (
     <Button className={className} link={link} to={to} {...props}>
       {children}
     </Button>
-  );
+  )
 }
 
-export default BigButtonLink;
+export default BigButtonLink

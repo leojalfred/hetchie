@@ -10,12 +10,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import empty from '../utils/empty'
-import { email, getError, combinedError } from '../utils/validation'
-import { login } from '../actions/user'
-import Modal from './Modal'
-import Error from './Error'
-import Button from './BigButton'
+import empty from 'utils/empty'
+import { email, getError, combinedError } from 'utils/validation'
+import { login } from 'actions/user'
+import Modal from './components/Modal'
+import Error from 'components/Error/Error'
+import Button from 'components/Buttons/BigButton'
 
 function LoginModal({
   error,
