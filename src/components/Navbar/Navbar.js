@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import { Link, NavLink } from 'react-router-dom'
 import path from 'path'
 import { connect } from 'react-redux'
+import Container from 'components/Container'
 import Button from 'components/Buttons/Button'
 import Settings from './components/Settings'
 import './Navbar.scss'
@@ -38,25 +39,27 @@ function Navbar({
     }
   }, [user.loggedIn, openLoginModal, openSettingsModal, openPreferencesModal])
 
-  const classes = classNames('navbar', 'container', className)
+  const classes = classNames('navbar', className)
   return (
     <nav className={classes}>
-      <Link className="navbar__link navbar__link--brand" to={to}>
-        <img
-          className="navbar__brand-logo"
-          src={path.join(process.env.PUBLIC_URL, '/logo.png')}
-          alt="Logo"
-        />
-        <p className="navbar__brand-text">hetchie</p>
-      </Link>
-      <NavLink
-        className="navbar__link navbar__link--about"
-        activeClassName="navbar__link--active"
-        to="/about"
-      >
-        About
-      </NavLink>
-      {component}
+      <Container className="navbar__container">
+        <Link className="navbar__link navbar__link--brand" to={to}>
+          <img
+            className="navbar__brand-logo"
+            src={path.join(process.env.PUBLIC_URL, '/logo.png')}
+            alt="Logo"
+          />
+          <p className="navbar__brand-text">hetchie</p>
+        </Link>
+        <NavLink
+          className="navbar__link navbar__link--about"
+          activeClassName="navbar__link--active"
+          to="/about"
+        >
+          About
+        </NavLink>
+        {component}
+      </Container>
     </nav>
   )
 }

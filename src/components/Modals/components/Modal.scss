@@ -3,6 +3,7 @@
 
 .modal {
   height: 100%;
+  max-width: $max-width;
   outline: 0;
 
   &__overlay {

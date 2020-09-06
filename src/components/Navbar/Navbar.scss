@@ -2,13 +2,16 @@
 @import '../../styles/variables';
 
 .navbar {
-  align-items: center;
   background-color: #fff;
   box-shadow: $shadow-l;
-  display: flex;
-  padding-bottom: 1rem;
-  padding-top: 1rem;
   position: relative;
+
+  &__container {
+    align-items: center;
+    display: flex;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+  }
 
   &__link {
     color: $brand-2;
@@ -59,8 +62,10 @@
 
 .navbar {
   @include bp($s) {
-    padding-bottom: 2rem;
-    padding-top: 2rem;
+    &__container {
+      padding-bottom: 2rem;
+      padding-top: 2rem;
+    }
 
     &__link {
       font-size: 1rem;

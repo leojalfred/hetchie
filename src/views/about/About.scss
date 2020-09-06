@@ -58,8 +58,11 @@
 
 @include bp($m) {
   .about {
-    display: flex;
     text-align: left;
+
+    &__container {
+      display: flex;
+    }
 
     &__section {
       flex: 1.5;

@@ -1,0 +1,24 @@
+@import '../styles/mixins';
+@import '../styles/variables';
+
+.container {
+  margin: 0 auto;
+  max-width: $max-width;
+  padding: 2rem 1rem;
+
+  @include bp($s) {
+    padding: 2rem;
+  }
+
+  @include bp($m) {
+    padding: 2rem 3rem;
+  }
+
+  @include bp($l) {
+    padding: 4rem;
+  }
+
+  @include bp($xl) {
+    padding: 4rem 5rem;
+  }
+}

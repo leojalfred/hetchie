@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import empty from 'utils/empty'
 import rank from 'utils/firms'
 import { putLists } from 'actions/user'
+import Container from 'components/Container'
 import Select from 'components/Select'
 import IconButton from './components/IconButton'
 import Error from 'components/Error'
@@ -65,60 +66,62 @@ function Firms({ user, error }) {
   }, [listOptions])
 
   return (
-    <main className="firms container container--fixed">
-      <h1 className="firms__heading">Firms List</h1>
-      <div className="firms__topline">
-        <div className="firms__selectors">
-          <Select
-            className="firms__select"
-            options={listOptions}
-            placeholder="Firms list"
-            value={listOptions[0]}
-            onChange={onChange}
-          />
-          <button className="firms__recent">West Coast</button>
-          <button className="firms__recent">East Coast</button>
-          <button className="firms__recent">Reaches</button>
-        </div>
-        {(!onSearch || !empty(selectedIDs)) && (
-          <div className="firms__actions">
-            {!onSearch && (
-              <IconButton
-                className="firms__action--save firms__action"
-                icon={faSave}
-              />
-            )}
-            {!empty(selectedIDs) && (
-              <IconButton
-                className="firms__action--add firms__action"
-                icon={faPlusCircle}
-              />
-            )}
-            {!onSearch && (
-              <>
-                <IconButton
-                  className="firms__action--edit firms__action"
-                  icon={faPencilAlt}
-                />
-                <IconButton
-                  className="firms__action--delete firms__action"
-                  icon={faTrashAlt}
-                />
-              </>
-            )}
+    <main className="firms">
+      <Container>
+        <h1 className="firms__heading">Firms List</h1>
+        <div className="firms__topline">
+          <div className="firms__selectors">
+            <Select
+              className="firms__select"
+              options={listOptions}
+              placeholder="Firms list"
+              value={listOptions[0]}
+              onChange={onChange}
+            />
+            <button className="firms__recent">West Coast</button>
+            <button className="firms__recent">East Coast</button>
+            <button className="firms__recent">Reaches</button>
           </div>
-        )}
-      </div>
+          {(!onSearch || !empty(selectedIDs)) && (
+            <div className="firms__actions">
+              {!onSearch && (
+                <IconButton
+                  className="firms__action--save firms__action"
+                  icon={faSave}
+                />
+              )}
+              {!empty(selectedIDs) && (
+                <IconButton
+                  className="firms__action--add firms__action"
+                  icon={faPlusCircle}
+                />
+              )}
+              {!onSearch && (
+                <>
+                  <IconButton
+                    className="firms__action--edit firms__action"
+                    icon={faPencilAlt}
+                  />
+                  <IconButton
+                    className="firms__action--delete firms__action"
+                    icon={faTrashAlt}
+                  />
+                </>
+              )}
+            </div>
+          )}
+        </div>
 
-      {message && <Error message={message} />}
+        {message && <Error message={message} />}
 
-      <Table
-        firms={firms}
-        listData={list}
-        selectedIDs={selectedIDs}
-        setSelectedIDs={setSelectedIDs}
-        onSearch={onSearch}
-      />
+        <Table
+          firms={firms}
+          listData={list}
+          selectedIDs={selectedIDs}
+          setSelectedIDs={setSelectedIDs}
+          onSearch={onSearch}
+        />
+      </Container>
     </main>
   )
 }
