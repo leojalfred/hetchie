@@ -11,7 +11,7 @@ import {
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import empty from 'utils/empty'
-import { email, getError, combinedError } from 'utils/validation'
+import { email, getError, combinedError } from 'validation/shared'
 import { login } from 'actions/user'
 import Modal from './components/Modal'
 import Error from 'components/Error/Error'

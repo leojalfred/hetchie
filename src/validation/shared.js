@@ -1,5 +1,5 @@
 import { string } from 'yup'
-import empty from './empty'
+import empty from 'utils/empty'
 
 export const email = string()
   .required('Email is required.')
