@@ -26,20 +26,10 @@ export default function validateRegister(data) {
         excludeEmptyString: true,
       })
 
-  yup.addMethod(yup.string, 'equalTo', function (ref, msg) {
-    yup.mixed().test({
-      name: 'equalTo',
-      exclusive: false, // eslint-disable-next-line
-      message: msg || '${path} must be the same as ${reference}',
-      params: { reference: ref.path },
-      test: value => value === this.resolve(ref),
-    })
-  })
-
   const schema = yup.object().shape({
-    email,
     first: nameSchema('First'),
     last: nameSchema('Last'),
+    email,
     school: yup.string().required('School is required.'),
     year: yup
       .number()
@@ -47,8 +37,8 @@ export default function validateRegister(data) {
       .integer('Graduation year must be an integer.')
       .min(year, `Graduation year must be at least ${year}.`),
     password: passwordSchema('Password'),
-    confirm: passwordSchema('Confirm password').equalTo(
-      yup.ref('password'),
+    confirm: passwordSchema('Confirm password').oneOf(
+      [yup.ref('password'), null],
       'Passwords must match.'
     ),
   })
