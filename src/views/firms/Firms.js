@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { faSave, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
-import { faPlusCircle, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
 import empty from 'utils/empty'
 import rank from 'utils/firms'
 import { putLists } from 'actions/user'
 import Container from 'components/Container'
 import Select from 'components/Select'
-import IconButton from './components/IconButton'
+import Actions from './components/Actions'
 import Error from 'components/Error'
 import Table from './components/Table'
 import './Firms.scss'
@@ -69,6 +67,7 @@ function Firms({ user, error }) {
     <main className="firms">
       <Container>
         <h1 className="firms__heading">Firms List</h1>
+
         <div className="firms__topline">
           <div className="firms__selectors">
             <Select
@@ -82,34 +81,8 @@ function Firms({ user, error }) {
             <button className="firms__recent">East Coast</button>
             <button className="firms__recent">Reaches</button>
           </div>
-          {(!onSearch || !empty(selectedIDs)) && (
-            <div className="firms__actions">
-              {!onSearch && (
-                <IconButton
-                  className="firms__action--save firms__action"
-                  icon={faSave}
-                />
-              )}
-              {!empty(selectedIDs) && (
-                <IconButton
-                  className="firms__action--add firms__action"
-                  icon={faPlusCircle}
-                />
-              )}
-              {!onSearch && (
-                <>
-                  <IconButton
-                    className="firms__action--edit firms__action"
-                    icon={faPencilAlt}
-                  />
-                  <IconButton
-                    className="firms__action--delete firms__action"
-                    icon={faTrashAlt}
-                  />
-                </>
-              )}
-            </div>
-          )}
+
+          <Actions onSearch={onSearch} selectedIDs={selectedIDs} />
         </div>
 
         {message && <Error message={message} />}

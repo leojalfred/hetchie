@@ -40,12 +40,15 @@
 
   &__action {
     background-color: transparent;
+    border-style: solid;
+    border-width: 0.15rem;
 
     &:not(:last-child) {
-      margin-right: 0.25rem;
+      margin-right: 0.5rem;
     }
 
     &--save {
+      border-color: $blue;
       color: $blue;
 
       &:hover {
@@ -55,6 +58,7 @@
     }
 
     &--add {
+      border-color: $green;
       color: $green;
 
       &:hover {
@@ -64,6 +68,7 @@
     }
 
     &--edit {
+      border-color: $brand-1;
       color: $brand-1;
 
       &:hover {
@@ -73,6 +78,7 @@
     }
 
     &--delete {
+      border-color: $red;
       color: $red;
 
       &:hover {
