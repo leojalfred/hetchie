@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -26,7 +26,7 @@ function Settings({ user, openSettingsModal, openPreferencesModal, logout }) {
   function onClick() {
     if (dropdown === undefined) {
       setDropdown(
-        <Dropdown innerRef={dropdownRef}>
+        <Dropdown className="settings__dropdown" innerRef={dropdownRef}>
           <button
             className="settings__link"
             onClick={onLinkClick(openSettingsModal)}
