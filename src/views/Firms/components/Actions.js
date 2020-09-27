@@ -3,7 +3,6 @@ import { faSave, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import { faPlusCircle, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import IconButton from './IconButton'
 import empty from 'utils/empty'
-import './Actions.scss'
 
 export default function Actions({ onSearch, selectedIDs }) {
   return (

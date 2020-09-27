@@ -8,25 +8,9 @@ import {
   faCog,
 } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
-import './Settings.scss'
 import { logout } from 'actions/user'
-
-function useClose(ref, setComponent) {
-  useEffect(() => {
-    const handleClose = event => {
-      const body = document.querySelector('body')
-      if (
-        !body.classList.contains('body--modal-open') &&
-        ref.current &&
-        !ref.current.contains(event.target)
-      )
-        setComponent(undefined)
-    }
-
-    document.addEventListener('mousedown', handleClose)
-    return () => document.removeEventListener('mousedown', handleClose)
-  }, [ref, setComponent])
-}
+import { useClose } from 'utils/hooks'
+import './Settings.scss'
 
 function Settings({ user, openSettingsModal, openPreferencesModal, logout }) {
   const dropdownRef = useRef(null)
