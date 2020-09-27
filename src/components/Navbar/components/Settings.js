@@ -10,6 +10,7 @@ import {
 import { connect } from 'react-redux'
 import { logout } from 'actions/user'
 import { useClose } from 'utils/hooks'
+import Dropdown from 'components/Dropdown'
 import './Settings.scss'
 
 function Settings({ user, openSettingsModal, openPreferencesModal, logout }) {
@@ -25,7 +26,7 @@ function Settings({ user, openSettingsModal, openPreferencesModal, logout }) {
   function onClick() {
     if (dropdown === undefined) {
       setDropdown(
-        <div className="settings__dropdown" ref={dropdownRef}>
+        <Dropdown innerRef={dropdownRef}>
           <button
             className="settings__link"
             onClick={onLinkClick(openSettingsModal)}
@@ -44,7 +45,7 @@ function Settings({ user, openSettingsModal, openPreferencesModal, logout }) {
             <FontAwesomeIcon className="settings__icon" icon={faSignOutAlt} />
             Log out
           </button>
-        </div>
+        </Dropdown>
       )
     } else setDropdown(undefined)
   }

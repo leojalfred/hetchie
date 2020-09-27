@@ -1,10 +1,21 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import { faSave, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import { faPlusCircle, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import IconButton from './IconButton'
+import { useClose } from 'utils/hooks'
 import empty from 'utils/empty'
 
 export default function Actions({ onSearch, selectedIDs }) {
+  const dropdownRef = useRef(null)
+  const [dropdown, setDropdown] = useState()
+  useClose(dropdownRef, setDropdown)
+
+  function onSaveClick() {
+    if (dropdown === undefined) {
+      setDropdown(undefined)
+    } else setDropdown(undefined)
+  }
+
   return (
     <>
       {!onSearch && (
