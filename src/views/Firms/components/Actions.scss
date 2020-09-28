@@ -16,7 +16,8 @@
       border-color: $blue;
       color: $blue;
 
-      &:hover {
+      &:hover,
+      &.actions__action--active {
         background-color: $blue;
         color: #fff;
       }
@@ -26,7 +27,8 @@
       border-color: $green;
       color: $green;
 
-      &:hover {
+      &:hover,
+      &.actions__action--active {
         background-color: $green;
         color: #fff;
       }
@@ -36,7 +38,8 @@
       border-color: $brand-1;
       color: $brand-1;
 
-      &:hover {
+      &:hover,
+      &.actions__action--active {
         background-color: $brand-1;
         color: #fff;
       }
@@ -46,7 +49,8 @@
       border-color: $red;
       color: $red;
 
-      &:hover {
+      &:hover,
+      &.actions__action--active {
         background-color: $red;
         color: #fff;
       }
