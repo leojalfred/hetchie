@@ -77,12 +77,17 @@ function Firms({ user, error }) {
               value={listOptions[0]}
               onChange={onChange}
             />
+
             <button className="firms__recent">West Coast</button>
             <button className="firms__recent">East Coast</button>
             <button className="firms__recent">Reaches</button>
           </div>
 
-          <Actions onSearch={onSearch} selectedIDs={selectedIDs} />
+          <Actions
+            options={listOptions.slice(1)}
+            onSearch={onSearch}
+            selectedIDs={selectedIDs}
+          />
         </div>
 
         {message && <Error message={message} />}
