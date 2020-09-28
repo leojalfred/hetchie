@@ -10,6 +10,11 @@
   padding: 1rem;
   transition: box-shadow $time, opacity $time;
 
+  &--new {
+    box-shadow: none;
+    padding: 0;
+  }
+
   &:focus,
   &__handle:focus {
     outline: 0;
@@ -19,21 +24,16 @@
     margin: 0 1rem;
   }
 
+  &:not(&--new) > .select {
+    margin-right: 1rem;
+  }
+
   &__delete {
     cursor: pointer;
     transition: color 150ms;
 
     &:hover {
       color: red;
-    }
-  }
-
-  &--new {
-    box-shadow: none;
-    padding: 0;
-
-    > .rankable__input {
-      margin-right: 0;
     }
   }
 }

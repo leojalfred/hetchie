@@ -6,11 +6,6 @@
   border-bottom: 2px solid $brand-1;
   color: $brand-2;
   flex: 1 0 4rem;
-  margin-right: 1rem;
-
-  .rankable--new & {
-    margin-right: 0;
-  }
 
   & &__control {
     border: 0;
