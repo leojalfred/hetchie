@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react'
-import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faUserCog,
@@ -16,15 +15,20 @@ import './Settings.scss'
 function Settings({ user, openSettingsModal, openPreferencesModal, logout }) {
   const dropdownRef = useRef(null)
   const [dropdown, setDropdown] = useState()
-  useClose(dropdownRef, setDropdown)
+  const active = 'settings__button--active'
+  useClose(dropdownRef, active, setDropdown)
 
   const onLinkClick = openModal => () => {
     setDropdown(undefined)
     openModal()
   }
 
-  function onClick() {
-    if (dropdown === undefined) {
+  function onClick(event) {
+    const button = event.currentTarget
+    button.classList.toggle(active)
+
+    if (!button.classList.contains(active)) setDropdown(undefined)
+    else {
       setDropdown(
         <Dropdown className="settings__dropdown" innerRef={dropdownRef}>
           <button
@@ -47,16 +51,16 @@ function Settings({ user, openSettingsModal, openPreferencesModal, logout }) {
           </button>
         </Dropdown>
       )
-    } else setDropdown(undefined)
+    }
   }
 
-  const active = dropdown !== undefined
-  const classes = classNames('settings__button', {
-    'settings__button--active': active,
-  })
   return (
     <div className="settings navbar__link">
-      <FontAwesomeIcon className={classes} icon={faCog} onClick={onClick} />
+      <FontAwesomeIcon
+        className="settings__button"
+        icon={faCog}
+        onClick={onClick}
+      />
       {dropdown}
     </div>
   )

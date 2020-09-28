@@ -11,7 +11,8 @@ import './Actions.scss'
 export default function Actions({ options, onSearch, selectedIDs }) {
   const dropdownRef = useRef(null)
   const [dropdown, setDropdown] = useState()
-  useClose(dropdownRef, setDropdown)
+  const active = 'actions__action--active'
+  useClose(dropdownRef, active, setDropdown)
 
   function onChange(e) {
     console.log(e)
@@ -19,10 +20,10 @@ export default function Actions({ options, onSearch, selectedIDs }) {
 
   function onAddClick(event) {
     const button = event.currentTarget
-    const active = 'actions__action--active'
-    if (button.classList.contains(active)) {
-      setDropdown(undefined)
-    } else {
+    button.classList.toggle(active)
+
+    if (!button.classList.contains(active)) setDropdown(undefined)
+    else {
       setDropdown(
         <Dropdown className="actions__dropdown" innerRef={dropdownRef}>
           <h3 className="actions__heading">Create list</h3>
@@ -38,8 +39,6 @@ export default function Actions({ options, onSearch, selectedIDs }) {
         </Dropdown>
       )
     }
-
-    button.classList.toggle(active)
   }
 
   return (
