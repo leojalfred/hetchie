@@ -9,12 +9,16 @@ export function useClose(ref, active, setComponent) {
         ref.current &&
         !ref.current.contains(target)
       ) {
-        if (!target.classList.contains(active) && target.tagName !== 'path') {
+        const blocked = ['path', 'svg']
+        if (
+          !target.classList.contains(active) &&
+          !blocked.includes(target.tagName)
+        ) {
           const button = document.querySelector(`.${active}`)
           if (button) button.classList.remove(active)
-        }
 
-        setComponent(undefined)
+          setComponent(undefined)
+        }
       }
     }
 
