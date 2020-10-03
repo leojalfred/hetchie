@@ -1,14 +1,17 @@
 import React, { useRef, useState } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSave, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
-import { faPlusCircle, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
-import IconButton from './IconButton'
+import { faPlus, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { connect } from 'react-redux'
 import { useClose } from 'utils/hooks'
 import Dropdown from 'components/Dropdown'
 import Select from 'components/Select'
+import IconButton from './IconButton'
 import empty from 'utils/empty'
+import { putLists } from 'actions/user'
 import './Actions.scss'
 
-export default function Actions({ options, onSearch, selectedIDs }) {
+function Actions({ options, onSearch, selectedIDs }) {
   const dropdownRef = useRef(null)
   const [dropdown, setDropdown] = useState()
   const active = 'actions__action--active'
@@ -18,6 +21,12 @@ export default function Actions({ options, onSearch, selectedIDs }) {
     console.log(e)
   }
 
+  function onCreateOption(label) {
+    console.log(label)
+  }
+
+  function onAddSubmit(event) {}
+
   function onAddClick(event) {
     const button = event.currentTarget
     button.classList.toggle(active)
@@ -26,16 +35,27 @@ export default function Actions({ options, onSearch, selectedIDs }) {
     else {
       setDropdown(
         <Dropdown className="actions__dropdown" innerRef={dropdownRef}>
-          <h3 className="actions__heading">Create list</h3>
+          <h3 className="actions__heading">Add to lists</h3>
 
-          <Select
-            creatable
-            className="actions__select"
-            options={options}
-            placeholder="Firms list"
-            value={options[0]}
-            onChange={onChange}
-          />
+          <div className="actions__select-line">
+            <Select
+              creatable
+              isMulti
+              className="actions__select"
+              options={options}
+              placeholder="Firms list"
+              value={options[0]}
+              onChange={onChange}
+              onCreateOption={onCreateOption}
+            />
+
+            <button className="actions__submit" onClick={onAddSubmit}>
+              <FontAwesomeIcon
+                className="actions__submit-icon actions__submit-icon--add"
+                icon={faPlus}
+              />
+            </button>
+          </div>
         </Dropdown>
       )
     }
@@ -53,7 +73,7 @@ export default function Actions({ options, onSearch, selectedIDs }) {
         <IconButton
           className="actions__action--add actions__action"
           onClick={onAddClick}
-          icon={faPlusCircle}
+          icon={faPlus}
         />
       )}
       {!onSearch && (
@@ -73,3 +93,5 @@ export default function Actions({ options, onSearch, selectedIDs }) {
     </div>
   )
 }
+
+export default connect(null, { putLists })(Actions)

@@ -7,6 +7,7 @@ import './Select.scss'
 export default function HetchieSelect({
   creatable,
   className,
+  onCreateOption,
   name,
   options,
   isMulti,
@@ -14,7 +15,6 @@ export default function HetchieSelect({
   placeholder,
   value,
   onChange,
-  onKeyDown,
 }) {
   const Selector = creatable ? CreatableSelect : Select
   const classes = classNames('select', className)
@@ -22,6 +22,8 @@ export default function HetchieSelect({
     DropdownIndicator: () => null,
     IndicatorSeparator: () => null,
   }
+
+  const creatableProps = creatable ? { creatable, onCreateOption } : {}
 
   return (
     <Selector
@@ -36,7 +38,7 @@ export default function HetchieSelect({
       placeholder={placeholder}
       value={value}
       onChange={onChange}
-      onKeyDown={onKeyDown}
+      {...creatableProps}
     />
   )
 }

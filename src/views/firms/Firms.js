@@ -3,7 +3,6 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import empty from 'utils/empty'
 import rank from 'utils/firms'
-import { putLists } from 'actions/user'
 import Container from 'components/Container'
 import Select from 'components/Select'
 import Actions from './components/Actions'
@@ -105,4 +104,4 @@ function Firms({ user, error }) {
 }
 
 const mapStateToProps = ({ user, error }) => ({ user, error })
-export default connect(mapStateToProps, { putLists })(Firms)
+export default connect(mapStateToProps)(Firms)
