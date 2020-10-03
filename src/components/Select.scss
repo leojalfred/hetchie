@@ -44,4 +44,8 @@
       display: none !important;
     }
   }
+
+  & &__menu-notice--no-options {
+    text-align: left;
+  }
 }
