@@ -1,5 +1,5 @@
 import { object, string } from 'yup'
-import { email } from './shared'
+import { email, evaluate } from './shared'
 
 export default function validateLogin(data) {
   const schema = object().shape({
@@ -7,14 +7,5 @@ export default function validateLogin(data) {
     password: string().required('Password is required.'),
   })
 
-  let message = ''
-  let valid = false
-  try {
-    schema.validateSync(data)
-    valid = true
-  } catch (error) {
-    message = error.message
-  }
-
-  return { message, valid }
+  return evaluate(data, schema)
 }

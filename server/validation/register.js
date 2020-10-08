@@ -1,20 +1,11 @@
 import * as yup from 'yup'
-import { email } from './shared'
+import { name, email } from './shared'
 
 export default function validateRegister(data) {
-  const name = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+$/u
   const password = /.*(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[ !"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]).*/
   const date = new Date()
   const year = date.getUTCFullYear()
 
-  const nameSchema = label =>
-    yup
-      .string()
-      .required(`${label} name is required.`)
-      .matches(name, {
-        message: label + ' name is invalid.',
-        excludeEmptyString: true,
-      })
   const passwordSchema = label =>
     yup
       .string()
@@ -27,8 +18,8 @@ export default function validateRegister(data) {
       })
 
   const schema = yup.object().shape({
-    first: nameSchema('First'),
-    last: nameSchema('Last'),
+    first: name('First name'),
+    last: name('Last name'),
     email,
     school: yup.string().required('School is required.'),
     year: yup
@@ -43,14 +34,5 @@ export default function validateRegister(data) {
     ),
   })
 
-  let message = ''
-  let valid = false
-  try {
-    schema.validateSync(data)
-    valid = true
-  } catch (error) {
-    message = error.message
-  }
-
-  return { message, valid }
+  return evaluate(data, schema)
 }

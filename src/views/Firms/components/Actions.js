@@ -8,7 +8,7 @@ import Dropdown from 'components/Dropdown'
 import Select from 'components/Select'
 import IconButton from './IconButton'
 import empty from 'utils/empty'
-import { putLists } from 'actions/user'
+import { postList, putLists } from 'actions/user'
 import './Actions.scss'
 
 function Actions({ options, onSearch, selectedIDs }) {
@@ -94,4 +94,4 @@ function Actions({ options, onSearch, selectedIDs }) {
   )
 }
 
-export default connect(null, { putLists })(Actions)
+export default connect(null, { postList, putLists })(Actions)

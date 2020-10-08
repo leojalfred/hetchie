@@ -1,5 +1,5 @@
 import { object, string } from 'yup'
-import { idSchema, idArraySchema } from './shared'
+import { idSchema, idArraySchema, evaluate } from './shared'
 
 export default function validatePreferences(data) {
   const gpaPattern = /(([0-3]{1}\.\d{0,2})|([0-4]{1}))|[4]\.[0]{0,2}/
@@ -13,14 +13,5 @@ export default function validatePreferences(data) {
     practices: idArraySchema('Practices'),
   })
 
-  let message = ''
-  let valid = false
-  try {
-    schema.validateSync(data)
-    valid = true
-  } catch (error) {
-    message = error.message
-  }
-
-  return { message, valid }
+  return evaluate(data, schema)
 }

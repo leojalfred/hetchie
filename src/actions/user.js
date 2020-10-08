@@ -43,6 +43,8 @@ export const login = (user, history, closeModal) => async dispatch => {
     setState(dispatch, decoded)
 
     history.push('/firms')
+
+    setErrors(dispatch, {})
     closeModal()
   } catch ({ response }) {
     setErrors(dispatch, response.data)
@@ -59,6 +61,15 @@ export const logout = () => dispatch => {
 export const putPreferences = body => async dispatch => {
   try {
     const { data } = await axios.put('/api/users/preferences', body)
+    setState(dispatch, data)
+  } catch ({ response }) {
+    setErrors(dispatch, response.data)
+  }
+}
+
+export const postList = body => async dispatch => {
+  try {
+    const { data } = await axios.post('/api/users/list', body)
     setState(dispatch, data)
   } catch ({ response }) {
     setErrors(dispatch, response.data)
