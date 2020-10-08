@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { name, email } from './shared'
+import { name, email, evaluate } from './shared'
 
 export default function validateRegister(data) {
   const password = /.*(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[ !"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]).*/

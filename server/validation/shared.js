@@ -6,10 +6,9 @@ export const email = string()
 
 const namePattern = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+$/u
 export const name = label =>
-  yup
-    .string()
+  string()
     .required(`${label} is required.`)
-    .matches(name, {
+    .matches(namePattern, {
       message: `${label} is invalid.`,
       excludeEmptyString: true,
     })
