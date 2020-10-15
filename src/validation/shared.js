@@ -1,9 +1,27 @@
 import { string } from 'yup'
 import empty from 'utils/empty'
 
-export const email = string()
+export const emailSchema = string()
   .required('Email is required.')
   .email('Email is invalid.')
+
+const namePattern = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+$/u
+export const nameSchema = label =>
+  string()
+    .required(`${label} is required.`)
+    .matches(namePattern, {
+      message: `${label} is invalid.`,
+      excludeEmptyString: true,
+    })
+
+const hexPattern = /^[\da-f]+$/
+export const idSchema = schema =>
+  string()
+    .required(`${schema} ID is required.`)
+    .matches(hexPattern, {
+      message: `${schema} ID is invalid.`,
+      excludeEmptyString: true,
+    })
 
 export let combinedError = ''
 export function getError(serverError, clientErrors, touched) {

@@ -1,28 +1,38 @@
 import React, { useRef, useState } from 'react'
+import { object } from 'yup'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSave, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import { faPlus, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
+import { idSchema, nameSchema } from 'validation/shared'
 import { useClose } from 'utils/hooks'
 import Dropdown from 'components/Dropdown'
 import Select from 'components/Select'
 import IconButton from './IconButton'
 import empty from 'utils/empty'
-import { postList, putLists } from 'actions/user'
+import { put } from 'actions/user'
 import './Actions.scss'
 
-function Actions({ options, onSearch, selectedIDs }) {
+function Actions({ user, put, setMessage, options, onSearch, selectedIDs }) {
   const dropdownRef = useRef(null)
   const [dropdown, setDropdown] = useState()
   const active = 'actions__action--active'
   useClose(dropdownRef, active, setDropdown)
 
-  function onChange(e) {
-    console.log(e)
-  }
+  function onCreateOption(name) {
+    try {
+      const schema = object().shape({
+        _id: idSchema('User'),
+        name: nameSchema('List name'),
+      })
+      const body = { _id: user.data._id, name }
+      schema.validateSync(body)
 
-  function onCreateOption(label) {
-    console.log(label)
+      put('/api/users/list', body)
+    } catch (error) {
+      console.log(error)
+      setMessage(error)
+    }
   }
 
   function onAddSubmit(event) {}
@@ -44,8 +54,6 @@ function Actions({ options, onSearch, selectedIDs }) {
               className="actions__select"
               options={options}
               placeholder="Firms list"
-              value={options[0]}
-              onChange={onChange}
               onCreateOption={onCreateOption}
             />
 
@@ -94,4 +102,5 @@ function Actions({ options, onSearch, selectedIDs }) {
   )
 }
 
-export default connect(null, { postList, putLists })(Actions)
+const mapStateToProps = ({ user }) => ({ user })
+export default connect(mapStateToProps, { put })(Actions)

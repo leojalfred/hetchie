@@ -7,13 +7,14 @@ export default async ({ body }, response) => {
 
   try {
     const { _id, name } = body
-
     const user = await User.findById(_id)
-    if (user.lists && user.lists.some(list => list.name === name))
+
+    const nameTaken = list => list.name === name
+    if (user.lists.some(nameTaken))
       return response.status(409).send('List already exists.')
 
-    if (user.lists) user.lists.push({ name })
-    else user.lists = [{ name }]
+    if (!user.hasOwnProperty('lists')) user.lists = []
+    user.lists.push({ name, firms: [] })
 
     const savedUser = await user.save()
     response.json(savedUser)

@@ -6,14 +6,14 @@ import { faListOl, faUserGraduate } from '@fortawesome/free-solid-svg-icons'
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import { connect } from 'react-redux'
 import empty from 'utils/empty'
-import { putPreferences } from 'actions/user'
+import { put } from 'actions/user'
 import Modal from './components/Modal'
 import Error from 'components/Error'
 import Ranker from './components/Ranker'
 import Button from 'components/Buttons/BigButton'
 import './PreferencesModal.scss'
 
-function PreferencesModal({ user, error, putPreferences, isOpen, closeModal }) {
+function PreferencesModal({ user, error, put, isOpen, closeModal }) {
   const [message, setMessage] = useState('')
   useEffect(() => {
     if (!empty(error)) setMessage(error)
@@ -95,7 +95,7 @@ function PreferencesModal({ user, error, putPreferences, isOpen, closeModal }) {
       const locationIDs = userLocations.map(({ value }) => value)
       const practiceIDs = userPractices.map(({ value }) => value)
       const body = { _id, gpa, locations: locationIDs, practices: practiceIDs }
-      putPreferences(body)
+      put('/api/users/preferences', body)
 
       closeModal()
     } catch (error) {
@@ -187,4 +187,4 @@ function PreferencesModal({ user, error, putPreferences, isOpen, closeModal }) {
 }
 
 const mapStateToProps = ({ user, error }) => ({ user, error })
-export default connect(mapStateToProps, { putPreferences })(PreferencesModal)
+export default connect(mapStateToProps, { put })(PreferencesModal)

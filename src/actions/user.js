@@ -58,27 +58,9 @@ export const logout = () => dispatch => {
   dispatch(setUser({}))
 }
 
-export const putPreferences = body => async dispatch => {
+export const put = (url, body) => async dispatch => {
   try {
-    const { data } = await axios.put('/api/users/preferences', body)
-    setState(dispatch, data)
-  } catch ({ response }) {
-    setErrors(dispatch, response.data)
-  }
-}
-
-export const postList = body => async dispatch => {
-  try {
-    const { data } = await axios.post('/api/users/list', body)
-    setState(dispatch, data)
-  } catch ({ response }) {
-    setErrors(dispatch, response.data)
-  }
-}
-
-export const putLists = body => async dispatch => {
-  try {
-    const { data } = await axios.put('/api/users/lists', body)
+    const { data } = await axios.put(url, body)
     setState(dispatch, data)
   } catch ({ response }) {
     setErrors(dispatch, response.data)

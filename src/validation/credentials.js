@@ -1,19 +1,10 @@
 import * as yup from 'yup'
-import { email } from './shared'
+import { emailSchema, nameSchema } from './shared'
 
-const name = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+$/u
 const password = /.*(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[ !"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]).*/
 const date = new Date()
 const year = date.getUTCFullYear()
 
-const nameSchema = label =>
-  yup
-    .string()
-    .required(`${label} name is required.`)
-    .matches(name, {
-      message: label + ' name is invalid.',
-      excludeEmptyString: true,
-    })
 const passwordSchema = label =>
   yup
     .string()
@@ -28,7 +19,7 @@ const passwordSchema = label =>
 export default yup.object().shape({
   first: nameSchema('First'),
   last: nameSchema('Last'),
-  email,
+  email: emailSchema,
   school: yup.string().required('School is required.'),
   year: yup
     .number()

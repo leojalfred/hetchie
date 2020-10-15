@@ -13,7 +13,7 @@ router.get('/verify', verify)
 router.post('/login', login)
 router.put('/', put)
 router.put('/preferences', preferences)
-router.post('/list', putList)
+router.put('/list', putList)
 // router.put('/lists', putLists)
 
 export default router

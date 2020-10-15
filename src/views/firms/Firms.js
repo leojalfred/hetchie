@@ -33,24 +33,24 @@ function Firms({ user, error }) {
   const [listOptions, setListOptions] = useState([
     { value: -1, label: 'Search results' },
   ])
-  const [lists, setLists] = useState()
   useEffect(() => {
     let formattedListOptions = [{ value: -1, label: 'Search results' }]
     if (!empty(user.data.lists)) {
-      const entries = Object.entries(user.data.lists)
       const mappedListOptions = []
-      for (const [id, value] of entries) {
-        mappedListOptions.push({ value: id, label: value.name })
-      }
-      formattedListOptions = [...formattedListOptions, mappedListOptions]
-
-      setLists(new Map(entries))
+      for (const { _id, name } of user.data.lists)
+        mappedListOptions.push({ value: _id, label: name })
+      formattedListOptions = [...formattedListOptions, ...mappedListOptions]
     }
+
+    console.dir(formattedListOptions)
+
     setListOptions(formattedListOptions)
   }, [user.data.lists])
 
   function onChange({ value }) {
-    const list = lists.get(value).firms
+    const changedID = list => list._id === value
+    const list = user.data.lists.find(changedID).firms
+
     setList(list)
   }
 
@@ -83,6 +83,7 @@ function Firms({ user, error }) {
           </div>
 
           <Actions
+            setMessage={setMessage}
             options={listOptions.slice(1)}
             onSearch={onSearch}
             selectedIDs={selectedIDs}

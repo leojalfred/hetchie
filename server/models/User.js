@@ -4,6 +4,7 @@ const list = new Schema({
   name: { type: String, required: true },
   firms: [{ type: Schema.Types.ObjectId, ref: 'firms' }],
 })
+
 const user = new Schema({
   first: { type: String, required: true },
   last: { type: String, required: true },
@@ -17,7 +18,7 @@ const user = new Schema({
   gpa: Number,
   locations: [{ type: Schema.Types.ObjectId, ref: 'locations' }],
   practices: [{ type: Schema.Types.ObjectId, ref: 'practices' }],
-  lists: { type: Map, of: list },
+  lists: [list],
 })
 
 const User = mongoose.model('users', user)
