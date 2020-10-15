@@ -13,7 +13,7 @@ export default async ({ body }, response) => {
     if (user.lists.some(nameTaken))
       return response.status(409).send('List already exists.')
 
-    if (!user.hasOwnProperty('lists')) user.lists = []
+    if (!('lists' in user)) user.lists = []
     user.lists.push({ name, firms: [] })
 
     const savedUser = await user.save()
