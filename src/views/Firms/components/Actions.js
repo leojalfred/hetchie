@@ -1,71 +1,34 @@
 import React, { useRef, useState } from 'react'
-import { object } from 'yup'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSave, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import { faPlus, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
-import { connect } from 'react-redux'
-import { idSchema, nameSchema } from 'validation/shared'
 import { useClose } from 'utils/hooks'
 import Dropdown from 'components/Dropdown'
-import Select from 'components/Select'
 import IconButton from './IconButton'
 import empty from 'utils/empty'
-import { put } from 'actions/user'
+import Conditionals from './Conditionals'
 import './Actions.scss'
 
-function Actions({ user, put, setMessage, options, onSearch, selectedIDs }) {
+export default function Actions({
+  setMessage,
+  options,
+  onSearch,
+  selectedIDs,
+}) {
+  const [dropdownActive, setDropdownActive] = useState(false)
+  const [condition, setCondition] = useState()
+
   const dropdownRef = useRef(null)
-  const [dropdown, setDropdown] = useState()
-  const active = 'actions__action--active'
-  useClose(dropdownRef, active, setDropdown)
-
-  function onCreateOption(name) {
-    try {
-      const schema = object().shape({
-        _id: idSchema('User'),
-        name: nameSchema('List name'),
-      })
-      const body = { _id: user.data._id, name }
-      schema.validateSync(body)
-
-      put('/api/users/list', body)
-    } catch (error) {
-      console.log(error)
-      setMessage(error)
-    }
-  }
-
-  function onAddSubmit(event) {}
+  const activeClass = 'actions__action--active'
+  useClose(dropdownRef, activeClass, setDropdownActive)
 
   function onAddClick(event) {
     const button = event.currentTarget
-    button.classList.toggle(active)
+    button.classList.toggle(activeClass)
 
-    if (!button.classList.contains(active)) setDropdown(undefined)
+    if (!button.classList.contains(activeClass)) setDropdownActive(false)
     else {
-      setDropdown(
-        <Dropdown className="actions__dropdown" innerRef={dropdownRef}>
-          <h3 className="actions__heading">Add to lists</h3>
-
-          <div className="actions__select-line">
-            <Select
-              creatable
-              isMulti
-              className="actions__select"
-              options={options}
-              placeholder="Firms list"
-              onCreateOption={onCreateOption}
-            />
-
-            <button className="actions__submit" onClick={onAddSubmit}>
-              <FontAwesomeIcon
-                className="actions__submit-icon actions__submit-icon--add"
-                icon={faPlus}
-              />
-            </button>
-          </div>
-        </Dropdown>
-      )
+      setCondition('add')
+      setDropdownActive(true)
     }
   }
 
@@ -97,10 +60,16 @@ function Actions({ user, put, setMessage, options, onSearch, selectedIDs }) {
         </>
       )}
 
-      {dropdown}
+      {dropdownActive && (
+        <Dropdown className="actions__dropdown" innerRef={dropdownRef}>
+          <Conditionals
+            condition={condition}
+            setMessage={setMessage}
+            activeClass={activeClass}
+            options={options}
+          />
+        </Dropdown>
+      )}
     </div>
   )
 }
-
-const mapStateToProps = ({ user }) => ({ user })
-export default connect(mapStateToProps, { put })(Actions)

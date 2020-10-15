@@ -14,22 +14,35 @@ import './Settings.scss'
 
 function Settings({ user, openSettingsModal, openPreferencesModal, logout }) {
   const dropdownRef = useRef(null)
-  const [dropdown, setDropdown] = useState()
-  const active = 'settings__button--active'
-  useClose(dropdownRef, active, setDropdown)
+  const [dropdownActive, setDropdownActive] = useState(false)
+  const activeClass = 'settings__button--active'
+  useClose(dropdownRef, activeClass, setDropdownActive)
 
   const onLinkClick = openModal => () => {
-    setDropdown(undefined)
+    const button = document.querySelector('.settings__button')
+    button.classList.remove(activeClass)
+
+    setDropdownActive(false)
     openModal()
   }
 
   function onClick(event) {
     const button = event.currentTarget
-    button.classList.toggle(active)
+    button.classList.toggle(activeClass)
 
-    if (!button.classList.contains(active)) setDropdown(undefined)
-    else {
-      setDropdown(
+    if (!button.classList.contains(activeClass)) setDropdownActive(false)
+    else setDropdownActive(true)
+  }
+
+  return (
+    <div className="settings navbar__link">
+      <FontAwesomeIcon
+        className="settings__button"
+        icon={faCog}
+        onClick={onClick}
+      />
+
+      {dropdownActive && (
         <Dropdown className="settings__dropdown" innerRef={dropdownRef}>
           <button
             className="settings__link"
@@ -50,18 +63,7 @@ function Settings({ user, openSettingsModal, openPreferencesModal, logout }) {
             Log out
           </button>
         </Dropdown>
-      )
-    }
-  }
-
-  return (
-    <div className="settings navbar__link">
-      <FontAwesomeIcon
-        className="settings__button"
-        icon={faCog}
-        onClick={onClick}
-      />
-      {dropdown}
+      )}
     </div>
   )
 }

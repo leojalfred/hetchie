@@ -4,7 +4,6 @@ import './Dropdown.scss'
 
 export default function Dropdown({ className, innerRef, children }) {
   const classes = classNames(className, 'dropdown')
-
   return (
     <div className={classes} ref={innerRef}>
       {children}

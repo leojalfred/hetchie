@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-export function useClose(ref, active, setComponent) {
+export function useClose(ref, active, setActive) {
   useEffect(() => {
     const handleClose = ({ target }) => {
       const body = document.querySelector('body')
@@ -17,12 +17,12 @@ export function useClose(ref, active, setComponent) {
           const button = document.querySelector(`.${active}`)
           if (button) button.classList.remove(active)
 
-          setComponent(undefined)
+          setActive(false)
         }
       }
     }
 
     document.addEventListener('mousedown', handleClose)
     return () => document.removeEventListener('mousedown', handleClose)
-  }, [ref, active, setComponent])
+  }, [ref, active, setActive])
 }

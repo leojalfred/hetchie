@@ -30,21 +30,20 @@ function Firms({ user, error }) {
     getFirms()
   }, [user])
 
-  const [listOptions, setListOptions] = useState([
+  const [options, setOptions] = useState([
     { value: -1, label: 'Search results' },
   ])
   useEffect(() => {
-    let formattedListOptions = [{ value: -1, label: 'Search results' }]
+    let formattedOptions = [{ value: -1, label: 'Search results' }]
     if (!empty(user.data.lists)) {
-      const mappedListOptions = []
+      const mappedOptions = []
       for (const { _id, name } of user.data.lists)
-        mappedListOptions.push({ value: _id, label: name })
-      formattedListOptions = [...formattedListOptions, ...mappedListOptions]
+        mappedOptions.push({ value: _id, label: name })
+
+      formattedOptions = [...formattedOptions, ...mappedOptions]
     }
 
-    console.dir(formattedListOptions)
-
-    setListOptions(formattedListOptions)
+    setOptions(formattedOptions)
   }, [user.data.lists])
 
   function onChange({ value }) {
@@ -58,9 +57,9 @@ function Firms({ user, error }) {
 
   const [onSearch, setOnSearch] = useState(true)
   useEffect(() => {
-    const isOnSearch = listOptions[0].value === -1
+    const isOnSearch = options[0].value === -1
     setOnSearch(isOnSearch)
-  }, [listOptions])
+  }, [options])
 
   return (
     <main className="firms">
@@ -71,9 +70,9 @@ function Firms({ user, error }) {
           <div className="firms__selectors">
             <Select
               className="firms__select"
-              options={listOptions}
+              options={options}
               placeholder="Firms list"
-              value={listOptions[0]}
+              value={options[0]}
               onChange={onChange}
             />
 
@@ -84,7 +83,8 @@ function Firms({ user, error }) {
 
           <Actions
             setMessage={setMessage}
-            options={listOptions.slice(1)}
+            options={options}
+            setOptions={setOptions}
             onSearch={onSearch}
             selectedIDs={selectedIDs}
           />
