@@ -1,10 +1,9 @@
 export default function isEmpty(object) {
   if (object === null || object === undefined) return true
-  else if (Array.isArray(object) && object.length) return false
+  if (Array.isArray(object)) return !object.length
 
-  for (const property in object) {
+  for (const property in object)
     if (object.hasOwnProperty(property)) return false
-  }
 
   return JSON.stringify(object) === JSON.stringify({})
 }
