@@ -66,3 +66,15 @@ export const put = (url, body) => async dispatch => {
     setErrors(dispatch, response.data)
   }
 }
+
+export const putList = (body, setPutListOption) => async dispatch => {
+  try {
+    const { data } = await axios.put('/api/users/list', body)
+    const { putListOption, ...user } = data
+
+    setPutListOption(putListOption)
+    setState(dispatch, user)
+  } catch ({ response }) {
+    setErrors(dispatch, response.data)
+  }
+}

@@ -11,6 +11,7 @@ import './Actions.scss'
 export default function Actions({
   setMessage,
   options,
+  setOptions,
   onSearch,
   selectedIDs,
 }) {
@@ -65,8 +66,8 @@ export default function Actions({
           <Conditionals
             condition={condition}
             setMessage={setMessage}
-            activeClass={activeClass}
             options={options}
+            selectedIDs={selectedIDs}
           />
         </Dropdown>
       )}

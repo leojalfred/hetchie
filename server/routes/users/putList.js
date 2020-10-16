@@ -15,9 +15,12 @@ export default async ({ body }, response) => {
 
     if (!('lists' in user)) user.lists = []
     user.lists.push({ name, firms: [] })
-
     const savedUser = await user.save()
-    response.json(savedUser)
+
+    const putList = user.lists[user.lists.length - 1]
+    const putListOption = { value: putList._id, label: putList.name }
+    const data = { ...savedUser.toObject(), putListOption }
+    response.json(data)
   } catch (error) {
     console.log(error)
   }

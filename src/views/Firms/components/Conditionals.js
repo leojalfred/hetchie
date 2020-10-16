@@ -1,22 +1,35 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { object } from 'yup'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
-import { put } from 'actions/user'
+import empty from 'utils/empty'
+import { putList, put } from 'actions/user'
 import { idSchema, nameSchema } from 'validation/shared'
 import Select from 'components/Select'
 
 function Conditionals({
   condition,
   setMessage,
-  activeClass,
   options,
+  selectedIDs,
   user,
+  putList,
   put,
 }) {
+  const [selectedLists, setSelectedLists] = useState([])
+  const [putListOption, setPutListOption] = useState()
+  useEffect(() => {
+    if (!empty(putListOption)) {
+      setSelectedLists([...selectedLists, putListOption])
+      setPutListOption()
+    }
+  }, [selectedLists, putListOption])
+
   switch (condition) {
     case 'add':
+      const onChange = lists => setSelectedLists(lists)
+
       function onCreateOption(name) {
         try {
           const schema = object().shape({
@@ -26,7 +39,7 @@ function Conditionals({
           const body = { _id: user.data._id, name }
           schema.validateSync(body)
 
-          put('/api/users/list', body)
+          putList(body, setPutListOption)
         } catch (error) {
           setMessage(error)
         }
@@ -45,6 +58,8 @@ function Conditionals({
               className="actions__select"
               options={options.slice(1)}
               placeholder="Firms list"
+              value={selectedLists}
+              onChange={onChange}
               onCreateOption={onCreateOption}
             />
 
@@ -63,4 +78,4 @@ function Conditionals({
 }
 
 const mapStateToProps = ({ user }) => ({ user })
-export default connect(mapStateToProps, { put })(Conditionals)
+export default connect(mapStateToProps, { putList, put })(Conditionals)
