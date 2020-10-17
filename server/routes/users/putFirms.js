@@ -10,21 +10,19 @@ export default async ({ body }, response) => {
     const user = await User.findById(id)
 
     for (const list of lists) {
-      const i = user.lists.findIndex(element => element._id == list)
-      const putList = user.lists[i]
+      const matchingList = element => element._id == list
+      const i = user.lists.findIndex(matchingList)
 
       for (const firm of firms) {
-        if (!putList.firms.some(element => element._id === firm))
-          putList.firms.push(firm)
+        const matchingFirm = element => element._id == firm
+        if (!user.lists[i].firms.some(matchingFirm))
+          user.lists[i].firms.push(firm)
       }
-
-      user.lists[i] = putList
     }
 
     const savedUser = await user.save()
     response.json(savedUser)
   } catch (error) {
-    console.log('fuck')
-    console.error(error.message)
+    console.log(error)
   }
 }

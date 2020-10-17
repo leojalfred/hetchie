@@ -18,17 +18,20 @@ function Firms({ user, error }) {
   }, [error])
 
   const [firms, setFirms] = useState()
+  const [searchedFirms, setSearchedFirms] = useState()
   const [list, setList] = useState([])
   useEffect(() => {
     async function getFirms() {
       const { data } = await axios.get('/api/firms')
       setFirms(data)
 
-      const ranked = rank(user, data)
+      const ranked = rank(user.gpa, user.locations, user.practices, data)
+      setSearchedFirms(ranked)
       setList(ranked)
     }
+
     getFirms()
-  }, [user])
+  }, [user.gpa, user.locations, user.practices])
 
   const [options, setOptions] = useState([
     { value: -1, label: 'Search results' },
@@ -47,10 +50,13 @@ function Firms({ user, error }) {
   }, [user.data.lists])
 
   function onChange({ value }) {
-    const changedID = list => list._id === value
-    const list = user.data.lists.find(changedID).firms
+    if (value === -1) setList(searchedFirms)
+    else {
+      const changedID = list => list._id === value
+      const list = user.data.lists.find(changedID).firms
 
-    setList(list)
+      setList(list)
+    }
   }
 
   const [selectedIDs, setSelectedIDs] = useState([])

@@ -37,21 +37,21 @@ function scoreOther(user, firm) {
   return score
 }
 
-export default function rank({ data: user }, firms) {
+export default function rank(gpa, locations, practices, firms) {
   const ids = Object.keys(firms)
   ids.forEach(id => {
     const firm = firms[id]
 
     const has = (user, firm) => !empty(user) && !empty(firm)
-    const gpa = scoreGPA(user.gpa, firm.gpa)
-    const location = has(user.locations, firm.locations)
-      ? scoreOther(user.locations, firm.locations)
+    const gpaScore = scoreGPA(gpa, firm.gpa)
+    const location = has(locations, firm.locations)
+      ? scoreOther(locations, firm.locations)
       : scores[5]
-    const practice = has(user.practices, firm.practices)
-      ? scoreOther(user.practices, firm.practices)
+    const practice = has(practices, firm.practices)
+      ? scoreOther(practices, firm.practices)
       : scores[5]
 
-    firms[id].score = gpa * (location + practice)
+    firms[id].score = gpaScore * (location + practice)
   })
 
   ids.sort((a, b) => firms[b].score - firms[a].score)
