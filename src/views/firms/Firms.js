@@ -78,13 +78,13 @@ function Firms({ user, error }) {
               className="firms__select"
               options={options}
               placeholder="Firms list"
-              value={options[0]}
+              defaultValue={options[0]}
               onChange={onChange}
             />
 
-            <button className="firms__recent">West Coast</button>
+            {/* <button className="firms__recent">West Coast</button>
             <button className="firms__recent">East Coast</button>
-            <button className="firms__recent">Reaches</button>
+            <button className="firms__recent">Reaches</button> */}
           </div>
 
           <Actions

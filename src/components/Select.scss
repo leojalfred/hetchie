@@ -34,6 +34,7 @@
   & &__option {
     padding: 0.5rem;
 
+    &--is-selected,
     &--is-focused,
     &:active {
       background-color: $brand-1;

@@ -14,6 +14,7 @@ export default function HetchieSelect({
   isOptionDisabled,
   placeholder,
   value,
+  defaultValue,
   onChange,
 }) {
   const Selector = creatable ? CreatableSelect : Select
@@ -36,6 +37,7 @@ export default function HetchieSelect({
       isOptionDisabled={isOptionDisabled}
       isSearchable={true}
       placeholder={placeholder}
+      defaultValue={defaultValue}
       value={value}
       onChange={onChange}
       {...creatableProps}
