@@ -3,6 +3,7 @@
 .table {
   border-radius: $radius;
   border-spacing: 0;
+  box-shadow: $shadow-m;
   overflow: hidden;
   table-layout: fixed;
   user-select: none;
