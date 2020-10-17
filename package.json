@@ -58,7 +58,6 @@
     "@typescript-eslint/parser": "2.x",
     "babel-eslint": "10.x",
     "babel-preset-minify": "^0.5.1",
-    "defer-to-connect": "^2.0.0",
     "eslint": "6.x",
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-react-app": "5.2.1",

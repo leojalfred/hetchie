@@ -49,7 +49,7 @@ function Conditionals({
         try {
           const lists = selectedLists.map(list => list.value)
           const body = { id: user.data._id, lists, firms: selectedIDs }
-          // put('/api/users/lists', body)
+          put('/api/users/lists', body)
 
           setSelectedLists([])
         } catch (error) {
