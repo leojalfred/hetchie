@@ -98,7 +98,7 @@ function Firms({ user, error }) {
           />
         </div>
 
-        {message && <Error message={message} />}
+        <Error message={message} />
 
         <Table
           firms={firms}

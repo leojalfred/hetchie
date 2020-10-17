@@ -129,7 +129,7 @@ function PreferencesModal({ user, error, put, isOpen, closeModal }) {
           />
         </div>
 
-        {message && <Error message={message} />}
+        <Error message={message} />
 
         <form onSubmit={onSubmit}>
           <h3 className="preferences__title">GPA</h3>

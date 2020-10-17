@@ -1,4 +1,5 @@
 import React from 'react'
 import './Error.scss'
 
-export default ({ message }) => <p className="error">{message}</p>
+export default ({ message }) =>
+  message.length ? <p className="error">{message}</p> : null

@@ -48,7 +48,7 @@ function CredentialsForm({
       {({ errors, touched, isSubmitting }) => (
         <>
           {getError(serverError, errors, touched)}
-          {combinedError && <Error message={combinedError} />}
+          <Error message={combinedError} />
 
           <Form className="modal__form">
             <div className="modal__input-line">
