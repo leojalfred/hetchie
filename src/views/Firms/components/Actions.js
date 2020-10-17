@@ -23,6 +23,8 @@ export default function Actions({
   useClose(dropdownRef, activeClass, setDropdownActive)
 
   function onAddClick(event) {
+    event.preventDefault()
+
     const button = event.currentTarget
     button.classList.toggle(activeClass)
 
@@ -62,7 +64,11 @@ export default function Actions({
       )}
 
       {dropdownActive && (
-        <Dropdown className="actions__dropdown" innerRef={dropdownRef}>
+        <Dropdown
+          className="actions__dropdown"
+          innerRef={dropdownRef}
+          onClick={event => event.preventDefault()}
+        >
           <Conditionals
             condition={condition}
             setMessage={setMessage}
