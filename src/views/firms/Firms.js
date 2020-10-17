@@ -19,7 +19,7 @@ function Firms({ user, error }) {
 
   const [firms, setFirms] = useState()
   const [searchedFirms, setSearchedFirms] = useState()
-  const [list, setList] = useState([])
+  const [listFirms, setListFirms] = useState([])
   useEffect(() => {
     async function getFirms() {
       const { data } = await axios.get('/api/firms')
@@ -27,15 +27,15 @@ function Firms({ user, error }) {
 
       const ranked = rank(user.gpa, user.locations, user.practices, data)
       setSearchedFirms(ranked)
-      setList(ranked)
+      setListFirms(ranked)
     }
 
     getFirms()
   }, [user.gpa, user.locations, user.practices])
 
-  const [options, setOptions] = useState([
-    { value: -1, label: 'Search results' },
-  ])
+  const initialOption = { value: -1, label: 'Search results' }
+  const [selectedList, setSelectedList] = useState(initialOption)
+  const [options, setOptions] = useState([initialOption])
   useEffect(() => {
     let formattedOptions = [{ value: -1, label: 'Search results' }]
     if (!empty(user.data.lists)) {
@@ -49,13 +49,15 @@ function Firms({ user, error }) {
     setOptions(formattedOptions)
   }, [user.data.lists])
 
-  function onChange({ value }) {
-    if (value === -1) setList(searchedFirms)
+  function onChange(selected) {
+    setSelectedList(selected)
+
+    if (selected.value === -1) setListFirms(searchedFirms)
     else {
-      const changedID = list => list._id === value
+      const changedID = list => list._id === selected.value
       const list = user.data.lists.find(changedID).firms
 
-      setList(list)
+      setListFirms(list)
     }
   }
 
@@ -63,9 +65,9 @@ function Firms({ user, error }) {
 
   const [onSearch, setOnSearch] = useState(true)
   useEffect(() => {
-    const isOnSearch = options[0].value === -1
+    const isOnSearch = selectedList.value === -1
     setOnSearch(isOnSearch)
-  }, [options])
+  }, [selectedList.value])
 
   return (
     <main className="firms">
@@ -78,7 +80,7 @@ function Firms({ user, error }) {
               className="firms__select"
               options={options}
               placeholder="Firms list"
-              defaultValue={options[0]}
+              value={selectedList}
               onChange={onChange}
             />
 
@@ -100,7 +102,7 @@ function Firms({ user, error }) {
 
         <Table
           firms={firms}
-          listData={list}
+          listData={listFirms}
           selectedIDs={selectedIDs}
           setSelectedIDs={setSelectedIDs}
           onSearch={onSearch}
