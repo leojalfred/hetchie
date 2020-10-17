@@ -8,6 +8,10 @@ export default async ({ body }, response) => {
   try {
     const { id, lists, firms } = body
     const user = await User.findById(id)
+      .select('-verified -password -__v')
+      .populate('locations')
+      .populate('practices')
+      .exec()
 
     for (const list of lists) {
       const matchingList = element => element._id == list
