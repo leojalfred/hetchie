@@ -41,7 +41,7 @@ function Conditionals({
 
           putList(body, setPutListOption)
         } catch (error) {
-          setMessage(error)
+          setMessage(error.message)
         }
       }
 
@@ -53,7 +53,7 @@ function Conditionals({
 
           setSelectedLists([])
         } catch (error) {
-          setMessage(error)
+          setMessage(error.message)
         }
       }
 
