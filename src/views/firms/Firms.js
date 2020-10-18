@@ -19,7 +19,7 @@ function Firms({ user, error }) {
 
   const [firms, setFirms] = useState()
   const [searchedFirms, setSearchedFirms] = useState()
-  const [listFirms, setListFirms] = useState([])
+  const [listedFirms, setListedFirms] = useState([])
   useEffect(() => {
     async function getFirms() {
       const { data } = await axios.get('/api/firms')
@@ -32,7 +32,7 @@ function Firms({ user, error }) {
         data
       )
       setSearchedFirms(ranked)
-      setListFirms(ranked)
+      setListedFirms(ranked)
     }
 
     getFirms()
@@ -54,15 +54,20 @@ function Firms({ user, error }) {
     setOptions(formattedOptions)
   }, [user.data.lists])
 
+  function getListFirms(id) {
+    const matchID = list => list._id === id
+    const listedFirms = user.data.lists.find(matchID).firms
+
+    return listedFirms
+  }
+
   function onChange(selected) {
     setSelectedList(selected)
 
-    if (selected.value === -1) setListFirms(searchedFirms)
+    if (selected.value === -1) setListedFirms(searchedFirms)
     else {
-      const changedID = list => list._id === selected.value
-      const list = user.data.lists.find(changedID).firms
-
-      setListFirms(list)
+      const listedFirms = getListFirms(selected.value)
+      setListedFirms(listedFirms)
     }
   }
 
@@ -95,11 +100,13 @@ function Firms({ user, error }) {
           </div>
 
           <Actions
+            onSearch={onSearch}
+            getListFirms={getListFirms}
+            selectedListID={selectedList.value}
+            listedFirms={listedFirms}
+            selectedIDs={selectedIDs}
             setMessage={setMessage}
             options={options}
-            setOptions={setOptions}
-            onSearch={onSearch}
-            selectedIDs={selectedIDs}
           />
         </div>
 
@@ -107,7 +114,8 @@ function Firms({ user, error }) {
 
         <Table
           firms={firms}
-          listData={listFirms}
+          listedFirms={listedFirms}
+          setListedFirms={setListedFirms}
           selectedIDs={selectedIDs}
           setSelectedIDs={setSelectedIDs}
           onSearch={onSearch}

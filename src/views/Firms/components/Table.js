@@ -6,8 +6,9 @@ import Row from './Row'
 import './Table.scss'
 
 export default function Table({
-  listData,
   firms,
+  listedFirms,
+  setListedFirms,
   selectedIDs,
   setSelectedIDs,
   onSearch,
@@ -35,9 +36,6 @@ export default function Table({
     }
   }, [unselect])
 
-  const [list, setList] = useState(listData)
-  useEffect(() => setList(listData), [listData])
-
   const [draggingID, setDraggingID] = useState()
   function onDragStart({ draggableId }) {
     const selected = selectedIDs.find(id => id === draggableId)
@@ -56,8 +54,8 @@ export default function Table({
     )
       return
 
-    const ordered = multiReorder(list, selectedIDs, source, destination)
-    setList(ordered)
+    const ordered = multiReorder(listedFirms, selectedIDs, source, destination)
+    setListedFirms(ordered)
   }
 
   const getSelectedMap = memoizeOne(ids =>
@@ -89,7 +87,7 @@ export default function Table({
   }
 
   function multiSelectTo(id) {
-    const selected = multiSelect(list, selectedIDs, id)
+    const selected = multiSelect(listedFirms, selectedIDs, id)
     if (selected === null) return
 
     setSelectedIDs(selected)
@@ -115,7 +113,7 @@ export default function Table({
           <Droppable droppableId="firms">
             {({ innerRef, droppableProps, placeholder }) => (
               <tbody ref={innerRef} {...droppableProps}>
-                {list.map((firm, i) => (
+                {listedFirms.map((firm, i) => (
                   <Draggable
                     draggableId={firm}
                     key={firm}

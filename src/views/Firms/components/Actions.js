@@ -1,19 +1,22 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { faSave, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import { faPlus, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { useClose } from 'utils/hooks'
-import Dropdown from 'components/Dropdown'
+import arraysEqual from 'utils/arraysEqual'
 import IconButton from './IconButton'
 import empty from 'utils/empty'
+import Dropdown from 'components/Dropdown'
 import Conditionals from './Conditionals'
 import './Actions.scss'
 
 export default function Actions({
+  onSearch,
+  getListFirms,
+  selectedListID,
+  listedFirms,
+  selectedIDs,
   setMessage,
   options,
-  setOptions,
-  onSearch,
-  selectedIDs,
 }) {
   const [dropdownActive, setDropdownActive] = useState(false)
   const [condition, setCondition] = useState()
@@ -21,6 +24,23 @@ export default function Actions({
   const dropdownRef = useRef(null)
   const activeClass = 'actions__action--active'
   useClose(dropdownRef, activeClass, setDropdownActive)
+
+  const [showSave, setShowSave] = useState(false)
+  useEffect(() => {
+    if (selectedListID === -1) setShowSave(false)
+    else {
+      const initialListedFirms = getListFirms(selectedListID)
+      const listChanged = !arraysEqual(initialListedFirms, listedFirms)
+
+      setShowSave(listChanged)
+    }
+  }, [selectedListID, getListFirms, listedFirms])
+
+  const [showAdd, setShowAdd] = useState(false)
+  useEffect(() => {
+    const selected = !empty(selectedIDs)
+    setShowAdd(selected)
+  }, [selectedIDs])
 
   function onAddClick(event) {
     event.preventDefault()
@@ -37,13 +57,13 @@ export default function Actions({
 
   return (
     <div className="actions">
-      {!onSearch && (
+      {showSave && (
         <IconButton
           className="actions__action--save actions__action"
           icon={faSave}
         />
       )}
-      {!empty(selectedIDs) && (
+      {showAdd && (
         <IconButton
           className="actions__action--add actions__action"
           onClick={onAddClick}
