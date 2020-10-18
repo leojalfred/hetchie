@@ -36,7 +36,7 @@ function Firms({ user, error }) {
     }
 
     getFirms()
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [user.data.gpa, user.data.locations, user.data.practices])
 
   const initialOption = { value: -1, label: 'Search results' }
   const [selectedList, setSelectedList] = useState(initialOption)
