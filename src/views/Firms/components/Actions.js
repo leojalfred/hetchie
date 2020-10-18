@@ -36,13 +36,17 @@ export default function Actions({
     }
   }, [selectedListID, getListFirms, listedFirms])
 
+  function onSaveClick(event) {
+    event.preventDefault()
+  }
+
   const [showAdd, setShowAdd] = useState(false)
   useEffect(() => {
     const selected = !empty(selectedIDs)
     setShowAdd(selected)
   }, [selectedIDs])
 
-  function onAddClick(event) {
+  const onClick = condition => event => {
     event.preventDefault()
 
     const button = event.currentTarget
@@ -50,7 +54,7 @@ export default function Actions({
 
     if (!button.classList.contains(activeClass)) setDropdownActive(false)
     else {
-      setCondition('add')
+      setCondition(condition)
       setDropdownActive(true)
     }
   }
@@ -61,13 +65,14 @@ export default function Actions({
         <IconButton
           className="actions__action--save actions__action"
           icon={faSave}
+          onClick={onSaveClick}
         />
       )}
       {showAdd && (
         <IconButton
           className="actions__action--add actions__action"
-          onClick={onAddClick}
           icon={faPlus}
+          onClick={onClick('add')}
         />
       )}
       {!onSearch && (
@@ -75,10 +80,12 @@ export default function Actions({
           <IconButton
             className="actions__action--edit actions__action"
             icon={faPencilAlt}
+            onClick={onClick('edit')}
           />
           <IconButton
             className="actions__action--delete actions__action"
             icon={faTrashAlt}
+            onClick={onClick('delete')}
           />
         </>
       )}
