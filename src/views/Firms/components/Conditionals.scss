@@ -5,9 +5,10 @@
     margin: 0 0 1rem 0;
   }
 
-  &__select-line {
+  &__line {
     align-items: center;
     display: flex;
+    justify-content: space-between;
   }
 
   &__submit {
@@ -28,5 +29,13 @@
     &--add:hover {
       color: $green;
     }
+
+    &--remove:hover {
+      color: $red;
+    }
+  }
+
+  &__line-heading {
+    margin: 0;
   }
 }

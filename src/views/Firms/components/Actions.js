@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { faSave, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
-import { faPlus, faMinus, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
 import { useClose } from 'utils/hooks'
 import arraysEqual from 'utils/arraysEqual'
@@ -14,6 +14,7 @@ function Actions({
   onSearch,
   getListFirms,
   selectedListID,
+  switchList,
   listedFirms,
   setListedFirms,
   selectedIDs,
@@ -106,8 +107,8 @@ function Actions({
           {/* <IconButton
             className="actions__action--edit actions__action"
             icon={faPencilAlt}
-            onClick={onClick('edit')} */}
-          />
+            onClick={onClick('edit')}
+          /> */}
           <IconButton
             className="actions__action--delete actions__action"
             icon={faTrashAlt}
@@ -124,9 +125,12 @@ function Actions({
         >
           <Conditionals
             condition={condition}
+            setDropdownActive={setDropdownActive}
             setMessage={setMessage}
-            options={options}
             selectedIDs={selectedIDs}
+            selectedListID={selectedListID}
+            switchList={switchList}
+            options={options}
           />
         </Dropdown>
       )}

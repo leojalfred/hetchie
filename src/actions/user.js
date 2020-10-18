@@ -78,3 +78,12 @@ export const putList = (body, setPutListOption) => async dispatch => {
     setErrors(dispatch, response.data)
   }
 }
+
+export const deleteAction = (url, body) => async dispatch => {
+  try {
+    const { data } = await axios.delete(url, { data: body })
+    setState(dispatch, data)
+  } catch ({ response }) {
+    setErrors(dispatch, response.data)
+  }
+}

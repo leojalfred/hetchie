@@ -61,7 +61,7 @@ function Firms({ user, error }) {
     return listedFirms
   }
 
-  function onChange(selected) {
+  function switchList(selected) {
     setSelectedList(selected)
 
     if (selected.value === -1) setListedFirms(searchedFirms)
@@ -91,7 +91,7 @@ function Firms({ user, error }) {
               options={options}
               placeholder="Firms list"
               value={selectedList}
-              onChange={onChange}
+              onChange={switchList}
             />
 
             {/* <button className="firms__recent">West Coast</button>
@@ -103,6 +103,7 @@ function Firms({ user, error }) {
             onSearch={onSearch}
             getListFirms={getListFirms}
             selectedListID={selectedList.value}
+            switchList={switchList}
             listedFirms={listedFirms}
             setListedFirms={setListedFirms}
             selectedIDs={selectedIDs}
@@ -112,7 +113,7 @@ function Firms({ user, error }) {
           />
         </div>
 
-        <Error message={message} />
+        <Error className="firms__error" message={message} />
 
         <Table
           firms={firms}

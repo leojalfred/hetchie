@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from 'react'
-import { object } from 'yup'
+import { object, string } from 'yup'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import { connect } from 'react-redux'
 import empty from 'utils/empty'
-import { putList, put } from 'actions/user'
-import { idSchema, nameSchema } from 'validation/shared'
+import { putList, put, deleteAction } from 'actions/user'
+import { idSchema } from 'validation/shared'
 import Select from 'components/Select'
 import './Conditionals.scss'
 
 function Conditionals({
   condition,
+  setDropdownActive,
   setMessage,
-  options,
   selectedIDs,
+  selectedListID,
+  switchList,
+  options,
   user,
   putList,
   put,
+  deleteAction,
 }) {
   const [selectedLists, setSelectedLists] = useState([])
   const [putListOption, setPutListOption] = useState()
@@ -35,7 +40,7 @@ function Conditionals({
         try {
           const schema = object().shape({
             _id: idSchema('User'),
-            name: nameSchema('List name'),
+            name: string().required('List name is required.'),
           })
           const body = { _id: user.data._id, name }
           schema.validateSync(body)
@@ -62,7 +67,7 @@ function Conditionals({
         <>
           <h3 className="conditionals__heading">Add to lists</h3>
 
-          <div className="conditionals__select-line">
+          <div className="conditionals__line">
             <Select
               creatable
               isMulti
@@ -82,10 +87,36 @@ function Conditionals({
           </div>
         </>
       )
+    case 'delete':
+      function onDeleteSubmit(event) {
+        try {
+          const body = { id: user.data._id, list: selectedListID }
+          deleteAction('/api/users/list', body)
+
+          switchList({ value: -1, label: 'Search results' })
+          setDropdownActive()
+        } catch (error) {
+          setMessage(error.message)
+        }
+      }
+
+      return (
+        <div className="conditionals__line">
+          <h3 className="conditionals__line-heading">Delete this list?</h3>
+
+          <button className="conditionals__submit" onClick={onDeleteSubmit}>
+            <FontAwesomeIcon
+              className="conditionals__submit-icon conditionals__submit-icon--remove"
+              icon={faTrashAlt}
+            />
+          </button>
+        </div>
+      )
     default:
       return null
   }
 }
 
 const mapStateToProps = ({ user }) => ({ user })
-export default connect(mapStateToProps, { putList, put })(Conditionals)
+const mapDispatchToProps = { putList, put, deleteAction }
+export default connect(mapStateToProps, mapDispatchToProps)(Conditionals)

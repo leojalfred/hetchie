@@ -32,6 +32,10 @@
     display: none;
   }
 
+  &__error {
+    margin-bottom: 1rem;
+  }
+
   @include bp($s) {
     &__select {
       margin-right: 1rem;
