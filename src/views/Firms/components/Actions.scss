@@ -61,33 +61,4 @@
   &__dropdown {
     width: 14rem;
   }
-
-  &__heading {
-    margin: 0 0 1rem 0;
-  }
-
-  &__select-line {
-    align-items: center;
-    display: flex;
-  }
-
-  &__submit {
-    background: none;
-    color: $brand-2;
-    font-size: 1.4rem;
-    line-height: 0;
-    margin-left: 1rem;
-  }
-
-  &__submit-icon {
-    transition: color $time, transform $time;
-
-    &:active {
-      transform: translateY(0.1rem);
-    }
-
-    &--add:hover {
-      color: $green;
-    }
-  }
 }

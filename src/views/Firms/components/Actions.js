@@ -103,10 +103,10 @@ function Actions({
       )}
       {!onSearch && (
         <>
-          <IconButton
+          {/* <IconButton
             className="actions__action--edit actions__action"
             icon={faPencilAlt}
-            onClick={onClick('edit')}
+            onClick={onClick('edit')} */}
           />
           <IconButton
             className="actions__action--delete actions__action"

@@ -7,6 +7,7 @@ import empty from 'utils/empty'
 import { putList, put } from 'actions/user'
 import { idSchema, nameSchema } from 'validation/shared'
 import Select from 'components/Select'
+import './Conditionals.scss'
 
 function Conditionals({
   condition,
@@ -59,13 +60,12 @@ function Conditionals({
 
       return (
         <>
-          <h3 className="actions__heading">Add to lists</h3>
+          <h3 className="conditionals__heading">Add to lists</h3>
 
-          <div className="actions__select-line">
+          <div className="conditionals__select-line">
             <Select
               creatable
               isMulti
-              className="actions__select"
               options={options.slice(1)}
               placeholder="Firms list"
               value={selectedLists}
@@ -73,9 +73,9 @@ function Conditionals({
               onCreateOption={onCreateOption}
             />
 
-            <button className="actions__submit" onClick={onAddSubmit}>
+            <button className="conditionals__submit" onClick={onAddSubmit}>
               <FontAwesomeIcon
-                className="actions__submit-icon actions__submit-icon--add"
+                className="conditionals__submit-icon conditionals__submit-icon--add"
                 icon={faPlus}
               />
             </button>
