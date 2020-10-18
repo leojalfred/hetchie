@@ -1,15 +1,17 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { faSave, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import { faPlus, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { connect } from 'react-redux'
 import { useClose } from 'utils/hooks'
 import arraysEqual from 'utils/arraysEqual'
+import { put } from 'actions/user'
 import IconButton from './IconButton'
 import empty from 'utils/empty'
 import Dropdown from 'components/Dropdown'
 import Conditionals from './Conditionals'
 import './Actions.scss'
 
-export default function Actions({
+function Actions({
   onSearch,
   getListFirms,
   selectedListID,
@@ -17,6 +19,8 @@ export default function Actions({
   selectedIDs,
   setMessage,
   options,
+  user,
+  put,
 }) {
   const [dropdownActive, setDropdownActive] = useState(false)
   const [condition, setCondition] = useState()
@@ -38,6 +42,17 @@ export default function Actions({
 
   function onSaveClick(event) {
     event.preventDefault()
+
+    try {
+      const body = {
+        id: user.data._id,
+        list: selectedListID,
+        firms: listedFirms,
+      }
+      put('/api/users/save-list', body)
+    } catch (error) {
+      setMessage(error.message)
+    }
   }
 
   const [showAdd, setShowAdd] = useState(false)
@@ -107,3 +122,6 @@ export default function Actions({
     </div>
   )
 }
+
+const mapStateToProps = ({ user }) => ({ user })
+export default connect(mapStateToProps, { put })(Actions)

@@ -6,6 +6,7 @@ import put from './put'
 import preferences from './preferences'
 import putList from './putList'
 import putFirms from './putFirms'
+import saveList from './saveList'
 
 const router = Router()
 router.post('/register', register)
@@ -15,5 +16,6 @@ router.put('/', put)
 router.put('/preferences', preferences)
 router.put('/list', putList)
 router.put('/lists', putFirms)
+router.put('/save-list', saveList)
 
 export default router
