@@ -1,12 +1,11 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { faSave, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
-import { faPlus, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faMinus, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
 import { useClose } from 'utils/hooks'
 import arraysEqual from 'utils/arraysEqual'
 import { put } from 'actions/user'
 import IconButton from './IconButton'
-import empty from 'utils/empty'
 import Dropdown from 'components/Dropdown'
 import Conditionals from './Conditionals'
 import './Actions.scss'
@@ -16,7 +15,9 @@ function Actions({
   getListFirms,
   selectedListID,
   listedFirms,
+  setListedFirms,
   selectedIDs,
+  setSelectedIDs,
   setMessage,
   options,
   user,
@@ -55,12 +56,6 @@ function Actions({
     }
   }
 
-  const [showAdd, setShowAdd] = useState(false)
-  useEffect(() => {
-    const selected = !empty(selectedIDs)
-    setShowAdd(selected)
-  }, [selectedIDs])
-
   const onClick = condition => event => {
     event.preventDefault()
 
@@ -74,6 +69,15 @@ function Actions({
     }
   }
 
+  function onRemoveClick(event) {
+    event.preventDefault()
+
+    const notSelected = firm => !selectedIDs.includes(firm)
+    const newListedFirms = listedFirms.filter(notSelected)
+    setListedFirms(newListedFirms)
+    setSelectedIDs([])
+  }
+
   return (
     <div className="actions">
       {showSave && (
@@ -83,11 +87,18 @@ function Actions({
           onClick={onSaveClick}
         />
       )}
-      {showAdd && (
+      {Boolean(selectedIDs.length) && (
         <IconButton
           className="actions__action--add actions__action"
           icon={faPlus}
           onClick={onClick('add')}
+        />
+      )}
+      {!onSearch && Boolean(selectedIDs.length) && (
+        <IconButton
+          className="actions__action--remove actions__action"
+          icon={faMinus}
+          onClick={onRemoveClick}
         />
       )}
       {!onSearch && (

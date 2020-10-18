@@ -34,17 +34,7 @@
       }
     }
 
-    &--edit {
-      border-color: $brand-1;
-      color: $brand-1;
-
-      &:hover,
-      &.actions__action--active {
-        background-color: $brand-1;
-        color: #fff;
-      }
-    }
-
+    &--remove,
     &--delete {
       border-color: $red;
       color: $red;
@@ -52,6 +42,17 @@
       &:hover,
       &.actions__action--active {
         background-color: $red;
+        color: #fff;
+      }
+    }
+
+    &--edit {
+      border-color: $brand-1;
+      color: $brand-1;
+
+      &:hover,
+      &.actions__action--active {
+        background-color: $brand-1;
         color: #fff;
       }
     }

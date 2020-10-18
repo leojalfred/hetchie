@@ -8,6 +8,10 @@
   table-layout: fixed;
   user-select: none;
 
+  &__wrapper {
+    overflow-x: auto;
+  }
+
   &__heading {
     background-color: $dark-gray;
     color: #fff;

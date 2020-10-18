@@ -104,7 +104,9 @@ function Firms({ user, error }) {
             getListFirms={getListFirms}
             selectedListID={selectedList.value}
             listedFirms={listedFirms}
+            setListedFirms={setListedFirms}
             selectedIDs={selectedIDs}
+            setSelectedIDs={setSelectedIDs}
             setMessage={setMessage}
             options={options}
           />
