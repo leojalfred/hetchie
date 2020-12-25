@@ -16,22 +16,20 @@ function About() {
             <h2 className="about__section-heading">How We Can Help</h2>
           </div>
           <p className="about__text">
-            Law school is a big investment, and getting the right job out of law
-            school can be hard. hetchie was designed after a couple
+            Law school is a big investment and getting the right job out of law
+            school is hard. hetchie was designed when a couple
             engineers-turned-law students realized most of their classmates were
             creating similar tools and researching similar topics, all for the
             same firms, just to decide where to bid.
           </p>
           <p className="about__text">
-            hetchie streamlines your bidding process, starting with information
-            from you, such as your GPA and position preferences, and then giving
-            you a custom-tailored list for your bids. The list provides access
-            to other resources that will enable you to further refine your list,
-            making sure your bids reflect the firms that you're actually
-            interested in.
+            hetchie streamlines your bidding process, using your own preferences
+            to guide you to the best research for the most relevant firms. This
+            research enables you to improve the list in real time and develop
+            the perfect bid set for your On-Campus Interviews.
           </p>
           <p className="about__text">Don't waste your bids. Optimize them.</p>
-          <Button className="about__button">Request Consultation</Button>
+          <Button className="about__button">Request consultation</Button>
         </section>
         <section className="about__contact">
           <div className="about__section-topline">
@@ -39,7 +37,10 @@ function About() {
             <h2 className="about__section-heading">Contact Us</h2>
           </div>
           <p className="about__text">
-            Email: <a href="mailto:email@email.com">email@email.com</a>
+            Email:{' '}
+            <a className="about__link" href="mailto:contact@hetchie.com">
+              contact@hetchie.com
+            </a>
           </p>
         </section>
       </Container>

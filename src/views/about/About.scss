@@ -2,10 +2,16 @@
 @import '../../styles/variables';
 
 .about {
-  text-align: center;
+  background-attachment: fixed;
+  background-image: url(../../images/background.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #fff;
+  height: 100%;
 
   &__section-topline {
     align-items: center;
+    color: lighten($brand-2, 10%);
     display: flex;
     justify-content: center;
   }
@@ -24,18 +30,20 @@
   }
 
   &__button {
-    color: $brand-2;
-    border-color: $brand-2;
-    padding: 1rem;
+    color: #fff;
 
     &:hover {
-      background-color: $brand-2;
-      color: #fff;
+      background-color: #fff;
+      color: $brand-1;
     }
   }
 
   &__contact {
     margin: 4rem 0 2rem 0;
+  }
+
+  &__link {
+    color: $dark-cyan;
   }
 }
 
@@ -48,10 +56,6 @@
 
     &__text {
       font-size: 1.2rem;
-    }
-
-    &__button {
-      padding: 1rem 2rem;
     }
   }
 }

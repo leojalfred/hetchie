@@ -10,19 +10,16 @@ function Home({ user, openRegisterModal }) {
       <Container>
         <div className="home__main">
           <h1 className="home__heading">hetchie</h1>
+          <p className="home__text">Welcome to hetchie!</p>
           <p className="home__text">
-            Proident ex dolore aliqua enim magna reprehenderit elit proident do.
-            Fugiat adipisicing aliqua consectetur voluptate Lorem minim anim sit
-            reprehenderit aute enim adipisicing proident aute. Id fugiat magna
-            eiusmod in aliqua commodo do ad ad fugiat mollit. Minim cillum
-            cupidatat et pariatur ut sit laboris eu eu. Officia nostrud culpa
-            laborum nulla mollit aute occaecat est cupidatat ea nulla laborum
-            id. Velit culpa deserunt do velit duis mollit officia reprehenderit
-            quis quis do commodo.
+            hetchie is a revolutionary tool, designed to streamline your
+            preparation for On-Campus Interviews by sorting participating firms
+            by your interests and guiding you directly to the best resources
+            available.
           </p>
           {!user.loggedIn && (
             <Button className="home__button" onClick={openRegisterModal}>
-              Get Started
+              Get started
             </Button>
           )}
         </div>

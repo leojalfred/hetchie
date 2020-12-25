@@ -3,7 +3,7 @@
 
 .home {
   background-attachment: fixed;
-  background-image: url(../../images/background.jpg);
+  background-image: url(../../images/background.png);
   background-repeat: no-repeat;
   background-size: cover;
   height: 100%;
@@ -30,8 +30,8 @@
     margin: 0 auto;
 
     &:hover {
-      color: $brand-1;
       background-color: #fff;
+      color: $brand-1;
     }
   }
 }
