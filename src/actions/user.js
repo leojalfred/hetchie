@@ -8,7 +8,7 @@ export const setUser = decoded => ({
   payload: decoded,
 })
 
-const setErrors = (dispatch, payload) => dispatch({ type: SET_ERROR, payload })
+const setError = (dispatch, payload) => dispatch({ type: SET_ERROR, payload })
 export const putUser = (
   user,
   closeModal,
@@ -21,41 +21,42 @@ export const putUser = (
       dispatch(setUser(response.data))
     }
 
-    setErrors(dispatch, {})
+    setError(dispatch, '')
     closeModal()
   } catch ({ response }) {
-    setErrors(dispatch, response.data)
+    setError(dispatch, response.data)
   }
 }
 
-function setState(dispatch, data) {
-  dispatch(setUser(data))
-  setErrors(dispatch, {})
-}
 export const login = (user, history, closeModal) => async dispatch => {
   try {
     const response = await axios.post('/api/users/login', user)
     const { token } = response.data
-    localStorage.setItem('jwtToken', token)
+    sessionStorage.setItem('jwtToken', token)
     setToken(token)
 
     const decoded = jwt_decode(token)
-    setState(dispatch, decoded)
+    dispatch(setUser(decoded))
 
     history.push('/firms')
 
-    setErrors(dispatch, {})
+    setError(dispatch, '')
     closeModal()
   } catch ({ response }) {
-    setErrors(dispatch, response.data)
+    setError(dispatch, response.data)
   }
 }
 
 export const logout = () => dispatch => {
-  localStorage.removeItem('jwtToken')
+  sessionStorage.removeItem('jwtToken')
   setToken(false)
 
   dispatch(setUser({}))
+}
+
+function setState(dispatch, data) {
+  dispatch(setUser(data))
+  setError(dispatch, '')
 }
 
 export const put = (url, body) => async dispatch => {
@@ -63,7 +64,7 @@ export const put = (url, body) => async dispatch => {
     const { data } = await axios.put(url, body)
     setState(dispatch, data)
   } catch ({ response }) {
-    setErrors(dispatch, response.data)
+    setError(dispatch, response.data)
   }
 }
 
@@ -75,7 +76,7 @@ export const putList = (body, setPutListOption) => async dispatch => {
     setPutListOption(putListOption)
     setState(dispatch, user)
   } catch ({ response }) {
-    setErrors(dispatch, response.data)
+    setError(dispatch, response.data)
   }
 }
 
@@ -84,6 +85,6 @@ export const deleteAction = (url, body) => async dispatch => {
     const { data } = await axios.delete(url, { data: body })
     setState(dispatch, data)
   } catch ({ response }) {
-    setErrors(dispatch, response.data)
+    setError(dispatch, response.data)
   }
 }

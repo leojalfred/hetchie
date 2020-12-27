@@ -16,8 +16,8 @@ import PreferencesModal from 'components/Modals/PreferencesModal'
 import Navbar from 'components/Navbar/Navbar'
 import './App.scss'
 
-if (localStorage.jwtToken) {
-  const token = localStorage.jwtToken
+if (sessionStorage.getItem('jwtToken')) {
+  const token = sessionStorage.getItem('jwtToken')
   setToken(token)
 
   const decoded = jwt_decode(token)
