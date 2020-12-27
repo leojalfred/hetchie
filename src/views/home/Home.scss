@@ -9,7 +9,7 @@
   height: 100%;
 
   &__main {
-    color: #fff;
+    color: $brand-2;
     margin: 0 auto;
     max-width: 30rem;
     text-align: center;
@@ -25,13 +25,14 @@
     margin-bottom: 1.8rem;
   }
 
-  &__button {
-    color: #fff;
+  & &__button {
+    border-color: $brand-2;
+    color: $brand-2;
     margin: 0 auto;
 
     &:hover {
-      background-color: #fff;
-      color: $brand-1;
+      background-color: $brand-2;
+      color: #fff;
     }
   }
 }
@@ -49,7 +50,7 @@
       font-size: 1.2rem;
     }
 
-    &__button {
+    & &__button {
       margin: 0;
     }
   }

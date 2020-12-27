@@ -6,12 +6,11 @@
   background-image: url(../../images/background.png);
   background-repeat: no-repeat;
   background-size: cover;
-  color: #fff;
+  color: $brand-2;
   height: 100%;
 
   &__section-topline {
     align-items: center;
-    color: lighten($brand-2, 10%);
     display: flex;
     justify-content: center;
   }
@@ -30,11 +29,12 @@
   }
 
   &__button {
-    color: #fff;
+    border-color: $brand-2;
+    color: $brand-2;
 
     &:hover {
-      background-color: #fff;
-      color: $brand-1;
+      background-color: $brand-2;
+      color: #fff;
     }
   }
 

@@ -24,7 +24,7 @@
     }
   }
 
-  &__image {
+  &__side {
     display: none;
   }
 
@@ -155,11 +155,8 @@
       justify-content: center;
     }
 
-    &__image {
-      background-attachment: fixed;
-      background-image: url(../../../images/bg-alt.jpg);
-      background-repeat: no-repeat;
-      background-size: cover;
+    &__side {
+      background-color: $brand-1;
       display: block;
       flex: 1;
     }

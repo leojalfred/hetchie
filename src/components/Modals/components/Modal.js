@@ -32,7 +32,7 @@ export default function Modal({
       shouldCloseOnOverlayClick={true}
       closeTimeoutMS={200}
     >
-      <div className="modal__image">
+      <div className="modal__side">
         <FontAwesomeIcon className="modal__icon" icon={icon} />
       </div>
       <div className="modal__main">

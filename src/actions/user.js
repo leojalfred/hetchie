@@ -3,9 +3,9 @@ import jwt_decode from 'jwt-decode'
 import { SET_ERROR, SET_USER } from './types'
 import setToken from '../utils/authorization'
 
-export const setUser = decoded => ({
+export const setUser = user => ({
   type: SET_USER,
-  payload: decoded,
+  payload: user,
 })
 
 const setError = (dispatch, payload) => dispatch({ type: SET_ERROR, payload })
