@@ -115,14 +115,16 @@ function Firms({ user, error }) {
 
         <Error className="firms__error" message={message} />
 
-        <Table
-          firms={firms}
-          listedFirms={listedFirms}
-          setListedFirms={setListedFirms}
-          selectedIDs={selectedIDs}
-          setSelectedIDs={setSelectedIDs}
-          onSearch={onSearch}
-        />
+        {firms && (
+          <Table
+            firms={firms}
+            listedFirms={listedFirms}
+            setListedFirms={setListedFirms}
+            selectedIDs={selectedIDs}
+            setSelectedIDs={setSelectedIDs}
+            onSearch={onSearch}
+          />
+        )}
       </Container>
     </main>
   )
