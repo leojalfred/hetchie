@@ -54,6 +54,12 @@ export default function rank(gpa, locations, practices, firms) {
     firms[id].score = gpaScore * (location + practice)
   })
 
-  ids.sort((a, b) => firms[b].score - firms[a].score)
+  ids.sort((a, b) => {
+    if (firms[a].score === firms[b].score)
+      return firms[a].name < firms[b].name ? -1 : 1
+
+    return firms[b].score - firms[a].score
+  })
+
   return ids
 }

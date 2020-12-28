@@ -8,6 +8,10 @@ export default async ({ body }, response) => {
   try {
     const { _id, name } = body
     const user = await User.findById(_id)
+      .select('-verified -password -__v')
+      .populate('locations')
+      .populate('practices')
+      .exec()
 
     const nameTaken = list => list.name === name
     if (user.lists.some(nameTaken))
