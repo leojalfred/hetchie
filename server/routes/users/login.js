@@ -1,9 +1,9 @@
 import { RateLimiterMongo } from 'rate-limiter-flexible'
 import { connection } from 'mongoose'
 import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
 import validate from '../../validation/login'
 import User from '../../models/User'
+import signResponse from '../../utils/signResponse'
 
 export default async ({ ip, body }, response) => {
   const maxDailyFailedIP = 100
@@ -74,17 +74,11 @@ export default async ({ ip, body }, response) => {
         )
           await consecutiveLimiter.delete(key)
 
-        jwt.sign(
-          user.toObject(),
-          'secret',
-          { expiresIn: 31556926 },
-          (error, token) => {
-            response.json({
-              success: true,
-              token: `Bearer ${token}`,
-            })
-          }
-        )
+        const userResponse = user.toObject()
+        delete userResponse.verified
+        delete userResponse.password
+
+        signResponse(userResponse, response)
       } else {
         try {
           const promises = [dailyLimiter.consume(ip)]

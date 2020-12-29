@@ -52,8 +52,8 @@ const options = {
 }
 app.use(helmet(options))
 
-app.use(passport.initialize())
-config(passport)
+// app.use(passport.initialize())
+// config(passport)
 
 app.use('/api/users', users)
 app.use('/api/locations', locations)

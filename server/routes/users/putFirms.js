@@ -1,5 +1,6 @@
 import validate from '../../validation/putFirms'
 import User from '../../models/User'
+import signResponse from '../../utils/signResponse'
 
 export default async ({ body }, response) => {
   const { message, valid } = validate(body)
@@ -25,7 +26,7 @@ export default async ({ body }, response) => {
     }
 
     const savedUser = await user.save()
-    response.json(savedUser)
+    signResponse(savedUser.toObject(), response)
   } catch (error) {
     console.log(error)
   }

@@ -1,5 +1,6 @@
 import validate from '../../validation/preferences'
 import User from '../../models/User'
+import signResponse from '../../utils/signResponse'
 
 export default async ({ body }, response) => {
   const { message, valid } = validate(body)
@@ -16,7 +17,7 @@ export default async ({ body }, response) => {
       .populate('practices')
       .exec()
 
-    response.json(user)
+    signResponse(user.toObject(), response)
   } catch (error) {
     console.log(error)
   }

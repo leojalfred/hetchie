@@ -1,5 +1,4 @@
 import axios from 'axios'
-import jwt_decode from 'jwt-decode'
 import { SET_ERROR, SET_USER } from './types'
 import setToken from '../utils/authorization'
 
@@ -7,6 +6,12 @@ export const setUser = user => ({
   type: SET_USER,
   payload: user,
 })
+
+const updateUser = (data, token, dispatch) => {
+  sessionStorage.setItem('jwtToken', token)
+  setToken(token)
+  dispatch(setUser(data))
+}
 
 const setError = (dispatch, payload) => dispatch({ type: SET_ERROR, payload })
 export const putUser = (
@@ -18,7 +23,9 @@ export const putUser = (
     if (register) await axios.post('/api/users/register', user)
     else {
       const response = await axios.put('/api/users', user)
-      dispatch(setUser(response.data))
+      const { data, token } = response.data
+
+      updateUser(data, token, dispatch)
     }
 
     setError(dispatch, '')
@@ -31,16 +38,12 @@ export const putUser = (
 export const login = (user, history, closeModal) => async dispatch => {
   try {
     const response = await axios.post('/api/users/login', user)
-    const { token } = response.data
-    sessionStorage.setItem('jwtToken', token)
-    setToken(token)
+    const { data, token } = response.data
 
-    const decoded = jwt_decode(token)
-    dispatch(setUser(decoded))
+    updateUser(data, token, dispatch)
+    setError(dispatch, '')
 
     history.push('/firms')
-
-    setError(dispatch, '')
     closeModal()
   } catch ({ response }) {
     setError(dispatch, response.data)
@@ -49,20 +52,18 @@ export const login = (user, history, closeModal) => async dispatch => {
 
 export const logout = () => dispatch => {
   sessionStorage.removeItem('jwtToken')
-  setToken(false)
+  setToken()
 
   dispatch(setUser({}))
 }
 
-function setState(dispatch, data) {
-  dispatch(setUser(data))
-  setError(dispatch, '')
-}
-
 export const put = (url, body) => async dispatch => {
   try {
-    const { data } = await axios.put(url, body)
-    setState(dispatch, data)
+    const response = await axios.put(url, body)
+    const { data, token } = response.data
+
+    updateUser(data, token, dispatch)
+    setError(dispatch, '')
   } catch ({ response }) {
     setError(dispatch, response.data)
   }
@@ -70,11 +71,12 @@ export const put = (url, body) => async dispatch => {
 
 export const putList = (body, setPutListOption) => async dispatch => {
   try {
-    const { data } = await axios.put('/api/users/list', body)
-    const { putListOption, ...user } = data
+    const response = await axios.put('/api/users/list', body)
+    const { data, putListOption, token } = response.data
 
+    updateUser(data, token, dispatch)
     setPutListOption(putListOption)
-    setState(dispatch, user)
+    setError(dispatch, '')
   } catch ({ response }) {
     setError(dispatch, response.data)
   }
@@ -82,8 +84,11 @@ export const putList = (body, setPutListOption) => async dispatch => {
 
 export const deleteAction = (url, body) => async dispatch => {
   try {
-    const { data } = await axios.delete(url, { data: body })
-    setState(dispatch, data)
+    const response = await axios.delete(url, { data: body })
+    const { data, token } = response.data
+
+    updateUser(data, token, dispatch)
+    setError(dispatch, '')
   } catch ({ response }) {
     setError(dispatch, response.data)
   }

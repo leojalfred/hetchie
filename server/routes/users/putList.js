@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken'
 import validate from '../../validation/putList'
 import User from '../../models/User'
 
@@ -23,8 +24,11 @@ export default async ({ body }, response) => {
 
     const putList = user.lists[user.lists.length - 1]
     const putListOption = { value: putList._id, label: putList.name }
-    const data = { ...savedUser.toObject(), putListOption }
-    response.json(data)
+    const data = savedUser.toObject()
+
+    jwt.sign(data, 'secret', { expiresIn: '1h' }, (error, token) =>
+      response.json({ data, putListOption, token: `Bearer ${token}` })
+    )
   } catch (error) {
     console.log(error)
   }

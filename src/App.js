@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
 import { connect } from 'react-redux'
 import setToken from 'utils/authorization'
-import { setUser, logout } from 'actions/user'
+import { setUser } from 'actions/user'
 import store from 'store'
 import Home from 'views/Home/Home'
 import About from 'views/About/About'
@@ -22,12 +22,6 @@ if (sessionStorage.getItem('jwtToken')) {
 
   const decoded = jwt_decode(token)
   store.dispatch(setUser(decoded))
-
-  const currentTime = Date.now() / 1000
-  if (decoded.exp < currentTime) {
-    store.dispatch(logout())
-    window.location.href = '/'
-  }
 }
 
 function App({ user }) {
