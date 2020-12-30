@@ -46,9 +46,7 @@ export default async ({ ip, body }, response) => {
 
   const retryAfter = () => {
     response.set('Retry-After', String(retry))
-    response
-      .status(429)
-      .json({ limiter: 'Too many bad requests, please try again later.' })
+    response.status(429).send('Too many bad requests, please try again later.')
   }
 
   if (retry > 0) retryAfter()

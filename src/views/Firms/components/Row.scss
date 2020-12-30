@@ -1,6 +1,8 @@
 @import '../../../styles/variables';
 
 .row {
+  cursor: pointer;
+
   &:focus {
     outline: none;
   }
