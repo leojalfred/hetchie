@@ -2,7 +2,7 @@ import { SET_USER } from '../actions/types'
 import empty from '../utils/empty'
 
 const initialState = { loggedIn: false, data: {} }
-export default function (state = initialState, { type, payload }) {
+export default function user(state = initialState, { type, payload }) {
   switch (type) {
     case SET_USER:
       return {
