@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import empty from 'utils/empty'
@@ -17,6 +17,7 @@ function Firms({ user, error }) {
     else setMessage('')
   }, [error])
 
+  const initialized = useRef(false)
   const [firms, setFirms] = useState()
   const [searchedFirms, setSearchedFirms] = useState()
   const [listedFirms, setListedFirms] = useState([])
@@ -31,8 +32,12 @@ function Firms({ user, error }) {
         user.data.practices,
         data
       )
+
       setSearchedFirms(ranked)
-      setListedFirms(ranked)
+      if (!initialized.current) {
+        setListedFirms(ranked)
+        initialized.current = true
+      }
     }
 
     getFirms()
