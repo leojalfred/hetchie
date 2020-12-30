@@ -17,6 +17,28 @@ function Firms({ user, error }) {
     else setMessage('')
   }, [error])
 
+  const initialOption = { value: -1, label: 'Search results' }
+  const [selectedList, setSelectedList] = useState(initialOption)
+  const [options, setOptions] = useState([initialOption])
+  useEffect(() => {
+    let formattedOptions = [{ value: -1, label: 'Search results' }]
+    if (!empty(user.data.lists)) {
+      const mappedOptions = []
+      for (const { _id, name } of user.data.lists)
+        mappedOptions.push({ value: _id, label: name })
+
+      formattedOptions = [...formattedOptions, ...mappedOptions]
+    }
+
+    setOptions(formattedOptions)
+  }, [user.data.lists])
+
+  const [onSearch, setOnSearch] = useState(true)
+  useEffect(() => {
+    const isOnSearch = selectedList.value === -1
+    setOnSearch(isOnSearch)
+  }, [selectedList.value])
+
   const initialized = useRef(false)
   const [firms, setFirms] = useState()
   const [searchedFirms, setSearchedFirms] = useState()
@@ -34,30 +56,14 @@ function Firms({ user, error }) {
       )
 
       setSearchedFirms(ranked)
-      if (!initialized.current) {
+      if (!initialized.current || onSearch) {
         setListedFirms(ranked)
         initialized.current = true
       }
     }
 
     getFirms()
-  }, [user.data.gpa, user.data.locations, user.data.practices])
-
-  const initialOption = { value: -1, label: 'Search results' }
-  const [selectedList, setSelectedList] = useState(initialOption)
-  const [options, setOptions] = useState([initialOption])
-  useEffect(() => {
-    let formattedOptions = [{ value: -1, label: 'Search results' }]
-    if (!empty(user.data.lists)) {
-      const mappedOptions = []
-      for (const { _id, name } of user.data.lists)
-        mappedOptions.push({ value: _id, label: name })
-
-      formattedOptions = [...formattedOptions, ...mappedOptions]
-    }
-
-    setOptions(formattedOptions)
-  }, [user.data.lists])
+  }, [user.data.gpa, user.data.locations, user.data.practices, onSearch])
 
   function getListFirms(id) {
     const matchID = list => list._id === id
@@ -77,12 +83,6 @@ function Firms({ user, error }) {
   }
 
   const [selectedIDs, setSelectedIDs] = useState([])
-
-  const [onSearch, setOnSearch] = useState(true)
-  useEffect(() => {
-    const isOnSearch = selectedList.value === -1
-    setOnSearch(isOnSearch)
-  }, [selectedList.value])
 
   return (
     <main className="firms">
