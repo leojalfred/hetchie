@@ -1,8 +1,17 @@
 import { string, array } from 'yup'
 
+const date = new Date()
+const year = date.getUTCFullYear()
+const emailPattern = new RegExp(
+  `(?:\\w+\\.){2}(?:${year}|${year + 1}|${year + 2})@lawmail.usc.edu`
+)
+
 export const email = string()
   .required('Email is required.')
-  .email('Email is invalid.')
+  .matches(emailPattern, {
+    message: `Must be valid USC Law email.`,
+    excludeEmptyString: true,
+  })
 
 const namePattern = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+$/u
 export const name = label =>
