@@ -92,20 +92,57 @@ export default function Row({
 
   const salary = []
   if (!empty(firm.salary)) {
-    if (firm.salary.small)
-      salary.push(
-        <p className="row__badge-line" key="small">
+    if (firm.salary.small) {
+      const badge = (
+        <>
           <Badge className="row__badge row__badge--small">S</Badge>$
           {firm.salary.small}
+        </>
+      )
+
+      salary.push(
+        <p className="row__badge-line" key="small">
+          {!empty(firm.links.chambers) ? (
+            <a
+              className="row__link"
+              href={firm.links.chambers}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {badge}
+            </a>
+          ) : (
+            badge
+          )}
         </p>
       )
-    if (firm.salary.large)
-      salary.push(
-        <p className="row__badge-line" key="large">
+    }
+
+    if (firm.salary.large) {
+      const badge = (
+        <>
           <Badge className="row__badge row__badge--large">L</Badge>$
           {firm.salary.large}
+        </>
+      )
+
+      salary.push(
+        <p className="row__badge-line" key="large">
+          {!empty(firm.links.chambers) ? (
+            <a
+              className="row__link"
+              href={firm.links.chambers}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {badge}
+            </a>
+          ) : (
+            badge
+          )}
         </p>
       )
+    }
   }
 
   const rankings = firm.rankings.map(({ ranking, position }, i) => (

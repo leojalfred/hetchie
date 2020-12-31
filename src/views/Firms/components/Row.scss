@@ -128,8 +128,13 @@
   }
 
   &__link {
-    color: #000;
+    color: $brand-2;
     text-decoration: none;
+    transition: color $time;
+
+    &:hover {
+      color: $brand-1;
+    }
   }
 
   &__count-cell {
@@ -139,6 +144,6 @@
   }
 
   &__count {
-    background-color: $dark-gray;
+    background-color: $brand-2;
   }
 }
