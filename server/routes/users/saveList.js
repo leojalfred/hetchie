@@ -2,7 +2,7 @@ import validate from '../../validation/saveList'
 import User from '../../models/User'
 import signResponse from '../../utils/signResponse'
 
-export default async ({ body }, response) => {
+export default async function saveList({ body }, response) {
   const { message, valid } = validate(body)
   if (!valid) return response.status(400).send(message)
 

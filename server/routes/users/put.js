@@ -3,7 +3,7 @@ import validate from '../../validation/register'
 import User from '../../models/User'
 import signResponse from '../../utils/signResponse'
 
-export default async ({ body }, response) => {
+export default async function put({ body }, response) {
   const { message, valid } = validate(body)
   if (!valid) return response.status(400).send(message)
 

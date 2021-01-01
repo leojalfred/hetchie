@@ -1,7 +1,7 @@
 import { object, string } from 'yup'
 import { idSchema, evaluate } from './shared'
 
-export default function validate(data) {
+export default function validatePutList(data) {
   const schema = object().shape({
     _id: idSchema('User'),
     name: string().required('List name is required.'),

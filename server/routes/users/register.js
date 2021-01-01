@@ -4,7 +4,7 @@ import validate from '../../validation/register'
 import User from '../../models/User'
 import key from '../../config/key.json'
 
-export default async ({ body }, response) => {
+export default async function register({ body }, response) {
   const { message, valid } = validate(body)
   if (!valid) return response.status(400).send(message)
 

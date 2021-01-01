@@ -1,6 +1,6 @@
 import User from '../../models/User'
 
-export default async (request, response) => {
+export default async function verify(request, response) {
   const email = request.query.a
   const salt = request.query.b
 

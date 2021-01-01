@@ -7,7 +7,8 @@ import mongoose from 'mongoose'
 import sanitize from 'express-mongo-sanitize'
 import helmet from 'helmet'
 import passport from 'passport'
-import users from './routes/users/'
+import insecure from './routes/users/insecure'
+import secure from './routes/users/secure'
 import locations from './routes/locations'
 import practices from './routes/practices'
 import firms from './routes/firms'
@@ -52,13 +53,21 @@ const options = {
 }
 app.use(helmet(options))
 
-// app.use(passport.initialize())
-// config(passport)
+config(passport)
 
-app.use('/api/users', users)
-app.use('/api/locations', locations)
-app.use('/api/practices', practices)
-app.use('/api/firms', firms)
+app.use('/api/users', insecure)
+app.use('/api/users', passport.authenticate('jwt', { session: false }), secure)
+app.use(
+  '/api/locations',
+  passport.authenticate('jwt', { session: false }),
+  locations
+)
+app.use(
+  '/api/practices',
+  passport.authenticate('jwt', { session: false }),
+  practices
+)
+app.use('/api/firms', passport.authenticate('jwt', { session: false }), firms)
 
 if (process.env.NODE_ENV === 'production') {
   const filepath = path.join(__dirname, '../')

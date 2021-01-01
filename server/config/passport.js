@@ -1,22 +1,18 @@
 import { Strategy, ExtractJwt } from 'passport-jwt'
-import mongoose from 'mongoose'
 
-const User = mongoose.model('users')
-
-export default passport => {
+export default function configPassport(passport) {
   passport.use(
     new Strategy(
       {
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
         secretOrKey: 'secret',
       },
-      async ({ id }, done) => {
+      (user, done) => {
         try {
-          const user = await User.findById(id)
-          if (user) return done(null, user)
-          return done(null, false)
+          return done(null, user)
         } catch (error) {
           console.log(error)
+          return done(error)
         }
       }
     )

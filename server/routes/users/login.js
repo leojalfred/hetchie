@@ -5,7 +5,7 @@ import validate from '../../validation/login'
 import User from '../../models/User'
 import signResponse from '../../utils/signResponse'
 
-export default async ({ ip, body }, response) => {
+export default async function login({ ip, body }, response) {
   const maxDailyFailedIP = 100
   const maxConsecutiveFailed = 10
   const day = 86400

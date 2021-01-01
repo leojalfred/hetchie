@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import validate from '../../validation/putList'
 import User from '../../models/User'
 
-export default async ({ body }, response) => {
+export default async function putList({ body }, response) {
   const { message, valid } = validate(body)
   if (!valid) return response.status(400).send(message)
 

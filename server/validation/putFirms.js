@@ -1,7 +1,7 @@
 import { object } from 'yup'
 import { idSchema, idArraySchema, evaluate } from './shared'
 
-export default data => {
+export default function validatePutFirms(data) {
   const schema = object().shape({
     id: idSchema('User'),
     lists: idArraySchema('Lists'),
