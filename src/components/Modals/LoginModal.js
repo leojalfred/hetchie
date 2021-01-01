@@ -120,13 +120,15 @@ function LoginModal({
         </Formik>
       </div>
 
-      <button className="modal__button" type="button" onClick={switchModals}>
-        Create your account
-        <FontAwesomeIcon
-          className="modal__button-icon"
-          icon={faLongArrowAltRight}
-        />
-      </button>
+      <div className="modal__footer">
+        <button className="modal__button" type="button" onClick={switchModals}>
+          Create your account
+          <FontAwesomeIcon
+            className="modal__button-icon"
+            icon={faLongArrowAltRight}
+          />
+        </button>
+      </div>
     </Modal>
   )
 }

@@ -123,12 +123,32 @@
     }
   }
 
+  &__footer {
+    display: flex;
+    flex-direction: column;
+    margin: 3rem auto 2rem auto;
+  }
+
+  &__small {
+    font-size: 0.85rem;
+    margin: 0 0 0.5rem 0;
+  }
+
+  &__privacy {
+    background-color: transparent;
+    text-decoration: underline;
+    transition: color $time;
+
+    &:hover {
+      color: $brand-1;
+    }
+  }
+
   &__button {
     background-color: transparent;
     border: 0;
     color: $brand-2;
     font-weight: bold;
-    margin: 3rem auto 2rem auto;
     transition: color 0.15s;
 
     &:hover {
@@ -189,7 +209,7 @@
       display: none;
     }
 
-    &__button {
+    &__footer {
       margin: 5rem auto 0 auto;
     }
   }

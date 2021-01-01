@@ -61,13 +61,20 @@ export default function RegisterModal({
         />
       </div>
 
-      <button className="modal__button" type="button" onClick={switchModals}>
-        Log in
-        <FontAwesomeIcon
-          className="modal__button-icon"
-          icon={faLongArrowAltRight}
-        />
-      </button>
+      <div className="modal__footer">
+        <p className="modal__small">
+          By registering, you agree to our{' '}
+          <button className="modal__privacy">privacy policy</button>
+        </p>
+
+        <button className="modal__button" type="button" onClick={switchModals}>
+          Log in
+          <FontAwesomeIcon
+            className="modal__button-icon"
+            icon={faLongArrowAltRight}
+          />
+        </button>
+      </div>
     </Modal>
   )
 }
