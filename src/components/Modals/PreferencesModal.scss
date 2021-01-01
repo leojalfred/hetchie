@@ -6,10 +6,6 @@
     margin-bottom: 2rem;
   }
 
-  &__submit {
-    margin-top: 4rem;
-  }
-
   @include bp($l) {
     display: flex;
 

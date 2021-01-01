@@ -45,21 +45,7 @@ function App({ user }) {
 
   const [modals, setModals] = useState()
   useEffect(() => {
-    const unathorizedModals = (
-      <>
-        <RegisterModal
-          isOpen={registerIsOpen}
-          closeRegisterModal={closeRegisterModal}
-          openLoginModal={openLoginModal}
-        />
-        <LoginModal
-          isOpen={loginIsOpen}
-          closeLoginModal={closeLoginModal}
-          openRegisterModal={openRegisterModal}
-        />
-      </>
-    )
-    const authorizedModals = (
+    let displayedModals = user.loggedIn ? (
       <>
         <SettingsModal
           isOpen={settingsIsOpen}
@@ -70,10 +56,23 @@ function App({ user }) {
           closeModal={closePreferencesModal}
         />
       </>
+    ) : (
+      <>
+        <RegisterModal
+          isOpen={registerIsOpen}
+          closeRegisterModal={closeRegisterModal}
+          openLoginModal={openLoginModal}
+          openRegisterModal={openRegisterModal}
+        />
+        <LoginModal
+          isOpen={loginIsOpen}
+          closeLoginModal={closeLoginModal}
+          openRegisterModal={openRegisterModal}
+        />
+      </>
     )
 
-    if (!user.loggedIn) setModals(unathorizedModals)
-    else setModals(authorizedModals)
+    setModals(displayedModals)
   }, [
     user.loggedIn,
     registerIsOpen,

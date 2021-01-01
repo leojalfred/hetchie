@@ -173,11 +173,7 @@ function PreferencesModal({ user, error, put, isOpen, closeModal }) {
             </div>
           </div>
 
-          <Button
-            className="modal__submit preferences__submit"
-            type="submit"
-            disabled={submitting}
-          >
+          <Button className="modal__submit" type="submit" disabled={submitting}>
             Update
           </Button>
         </form>
