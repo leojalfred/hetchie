@@ -45,7 +45,7 @@ const options = {
       fontSrc: ['fonts.gstatic.com'],
       formAction: ['none'],
       frameAncestors: ["'none'"],
-      imgSrc: ["'self'"],
+      imgSrc: ["'self'", 'data:'],
       manifestSrc: ["'self'"],
       scriptSrc: [
         "'self'",
