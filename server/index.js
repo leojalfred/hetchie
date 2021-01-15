@@ -39,8 +39,14 @@ app.use(sanitize())
 const options = {
   contentSecurityPolicy: {
     directives: {
-      defaultSrc: ["'self'"],
+      baseUri: ["'none'"],
+      connectSrc: ["'self'"],
+      defaultSrc: ["'none'"],
       fontSrc: ['fonts.gstatic.com'],
+      formAction: ['none'],
+      frameAncestors: ["'none'"],
+      imgSrc: ["'self'"],
+      manifestSrc: ["'self'"],
       scriptSrc: [
         "'self'",
         "'unsafe-inline'",
@@ -50,6 +56,7 @@ const options = {
       styleSrc: ["'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
     },
   },
+  xssFilter: false,
 }
 app.use(helmet(options))
 
