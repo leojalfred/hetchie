@@ -1,7 +1,6 @@
 import 'regenerator-runtime/runtime.js'
 import express from 'express'
 import path from 'path'
-import cors from 'cors'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import sanitize from 'express-mongo-sanitize'
@@ -31,35 +30,32 @@ try {
 }
 
 const app = express()
-app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(sanitize())
-
-const options = {
-  contentSecurityPolicy: {
-    directives: {
-      baseUri: ["'none'"],
-      connectSrc: ["'self'"],
-      defaultSrc: ["'none'"],
-      fontSrc: ['fonts.gstatic.com'],
-      formAction: ['none'],
-      frameAncestors: ["'none'"],
-      imgSrc: ["'self'", 'data:'],
-      manifestSrc: ["'self'"],
-      scriptSrc: [
-        "'self'",
-        "'unsafe-inline'",
-        'ajax.cloudflare.com',
-        'static.cloudflareinsights.com',
-      ],
-      styleSrc: ["'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        baseUri: ["'none'"],
+        connectSrc: ["'self'"],
+        defaultSrc: ["'none'"],
+        fontSrc: ['fonts.gstatic.com'],
+        formAction: ['none'],
+        frameAncestors: ["'none'"],
+        imgSrc: ["'self'", 'data:'],
+        manifestSrc: ["'self'"],
+        scriptSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          'ajax.cloudflare.com',
+          'static.cloudflareinsights.com',
+        ],
+        styleSrc: ["'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
+      },
     },
-  },
-  xssFilter: false,
-}
-app.use(helmet(options))
-
+  })
+)
 config(passport)
 
 app.use('/api/users', insecure)
