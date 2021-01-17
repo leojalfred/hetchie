@@ -14,6 +14,7 @@ const user = new Schema({
   password: { type: String, required: true },
   date: { type: Date, default: Date.now },
   verified: { type: Boolean, default: false },
+  admin: { type: Boolean, default: false },
   salt: String,
   gpa: Number,
   locations: [{ type: Schema.Types.ObjectId, ref: 'locations' }],

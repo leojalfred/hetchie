@@ -21,7 +21,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "classnames": "^2.2.6",
-    "cors": "^2.8.5",
+    "csv-parse": "^4.14.2",
     "express": "^4.17.1",
     "express-mongo-sanitize": "^2.0.0",
     "formik": "^2.1.4",
@@ -57,9 +57,6 @@
     "babel-preset-minify": "^0.5.1",
     "node-sass": "^4.14.1",
     "snyk": "^1.413.3"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "keywords": [
     "hetchie",

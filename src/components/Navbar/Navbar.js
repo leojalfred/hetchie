@@ -51,14 +51,25 @@ function Navbar({
           />
           <p className="navbar__brand-text">hetchie</p>
         </Link>
-        <NavLink
-          className="navbar__link navbar__link--about"
-          activeClassName="navbar__link--active"
-          to="/about"
-        >
-          About
-        </NavLink>
-        {component}
+        <div className="navbar__links">
+          <NavLink
+            className="navbar__link"
+            activeClassName="navbar__link--active"
+            to="/about"
+          >
+            About
+          </NavLink>
+          {user.data.admin && (
+            <NavLink
+              className="navbar__link"
+              activeClassName="navbar__link--active"
+              to="/admin"
+            >
+              Admin
+            </NavLink>
+          )}
+          {component}
+        </div>
       </Container>
     </nav>
   )

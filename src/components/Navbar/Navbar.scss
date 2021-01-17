@@ -9,6 +9,7 @@
   &__container {
     align-items: center;
     display: flex;
+    justify-content: space-between;
     padding-bottom: 1rem;
     padding-top: 1rem;
   }
@@ -19,10 +20,6 @@
     text-decoration: none;
     transition: color $time;
 
-    &:nth-child(n + 3) {
-      margin-left: 1rem;
-    }
-
     &:hover,
     &--active {
       color: $brand-1;
@@ -31,10 +28,6 @@
     &--brand {
       display: flex;
       align-items: center;
-    }
-
-    &--about {
-      margin-left: auto;
     }
 
     &--login {
@@ -47,6 +40,10 @@
         border-color: $brand-1;
       }
     }
+
+    &:not(:last-child) {
+      margin-right: 1rem;
+    }
   }
 
   &__brand-logo {
@@ -57,6 +54,11 @@
     font-family: 'BioRhyme', serif;
     font-size: 1.4rem;
     margin: 0 0 0 1rem;
+  }
+
+  &__links {
+    align-items: center;
+    display: flex;
   }
 }
 

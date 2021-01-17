@@ -5,15 +5,17 @@ import { connect } from 'react-redux'
 import setToken from 'utils/authorization'
 import { setUser } from 'actions/user'
 import store from 'store'
+import SettingsModal from 'components/Modals/SettingsModal'
+import PreferencesModal from 'components/Modals/PreferencesModal'
+import RegisterModal from 'components/Modals/RegisterModal'
+import LoginModal from 'components/Modals/LoginModal'
+import Navbar from 'components/Navbar/Navbar'
 import Home from 'views/Home/Home'
 import About from 'views/About/About'
 import PrivateRoute from 'components/PrivateRoute'
 import Firms from 'views/Firms/Firms'
-import RegisterModal from 'components/Modals/RegisterModal'
-import LoginModal from 'components/Modals/LoginModal'
-import SettingsModal from 'components/Modals/SettingsModal'
-import PreferencesModal from 'components/Modals/PreferencesModal'
-import Navbar from 'components/Navbar/Navbar'
+import AdminRoute from 'components/AdminRoute'
+import Admin from 'views/Admin/Admin'
 import './App.scss'
 
 if (sessionStorage.getItem('jwtToken')) {
@@ -99,6 +101,7 @@ function App({ user }) {
         />
         <Route exact path="/about" component={About} />
         <PrivateRoute exact path="/firms" component={Firms} />
+        <AdminRoute exact path="/admin" component={Admin} />
       </Switch>
 
       {modals}

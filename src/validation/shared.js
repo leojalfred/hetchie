@@ -17,9 +17,9 @@ export const emailSchema = string()
 const namePattern = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+$/u
 export const nameSchema = label =>
   string()
-    .required(`${label} is required.`)
+    .required(`${label} name is required.`)
     .matches(namePattern, {
-      message: `${label} is invalid.`,
+      message: `${label} name is invalid.`,
       excludeEmptyString: true,
     })
 
