@@ -13,12 +13,7 @@ router.get('/', async (request, response) => {
       .populate('qualifications')
       .exec()
 
-    const firmsMap = firms.reduce((map, firm) => {
-      const { _id, ...data } = firm
-      map[`${_id}`] = data['_doc']
-      return map
-    }, {})
-    response.json(firmsMap)
+    response.json(firms)
   } catch (error) {
     console.log(error)
   }

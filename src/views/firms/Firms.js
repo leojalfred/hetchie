@@ -46,13 +46,18 @@ function Firms({ user, error }) {
   useEffect(() => {
     async function getFirms() {
       const { data } = await axios.get('/api/firms')
-      setFirms(data)
+      const firmsMap = data.reduce((map, firm) => {
+        const { _id } = firm
+        map[`${_id}`] = firm
+        return map
+      }, {})
+      setFirms(firmsMap)
 
       const ranked = rank(
         user.data.gpa,
         user.data.locations,
         user.data.practices,
-        data
+        firmsMap
       )
 
       setSearchedFirms(ranked)
