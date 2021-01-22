@@ -1,14 +1,14 @@
 import { Router } from 'express'
-import put from './put'
-import preferences from './preferences'
+import putUser from './putUser'
+import putPreferences from './putPreferences'
 import putList from './putList'
-import putFirms from './putFirms'
+import putFirms from './putUserFirms'
 import saveList from './saveList'
 import deleteList from './deleteList'
 
 const router = Router()
-router.put('/', put)
-router.put('/preferences', preferences)
+router.put('/', putUser)
+router.put('/preferences', putPreferences)
 router.put('/list', putList)
 router.put('/lists', putFirms)
 router.put('/save-list', saveList)

@@ -1,7 +1,7 @@
 import express from 'express'
-import Firm from '../models/Firm'
-import Ranking from '../models/Ranking'
-import Qualification from '../models/Qualification'
+import Firm from '../../models/Firm'
+import Ranking from '../../models/Ranking'
+import Qualification from '../../models/Qualification'
 
 const router = express.Router()
 router.get('/', async (request, response) => {

@@ -13,9 +13,56 @@ export default function Admin() {
     event.preventDefault()
 
     const reader = new FileReader()
-    reader.onloadend = () => {
-      const options = { columns: ['_id', 'name', 'firmLink', 'chambersLink', 'vaultLink', 'locations', 'practices', 'requiredGPA', 'preferredGPA', 'largeSalary', 'smallSalary', 'rankings', 'qualifications', 'date'] }
-      parse(reader.result, options, (error, records) => {
+    reader.onload = () => {
+      const options = {
+        cast: (value, { column }) => {
+          switch (column) {
+            case 'locations':
+            case 'practices':
+            case 'qualifications':
+              if (!value) return null
+              return value.split('; ')
+            case 'requiredGPA':
+            case 'preferredGPA':
+              if (!value) return null
+              return parseFloat(value)
+            case 'largeSalary':
+            case 'smallSalary':
+              if (!value) return null
+              return parseInt(value)
+            case 'rankings':
+              if (!value) return null
+              const rankings = value.split('; ')
+              return rankings.map(item => {
+                const [ranking, position] = item.split(': ')
+                return { position: parseInt(position), ranking }
+              })
+            case 'date':
+              if (!value) return null
+              return new Date(value)
+            default:
+              if (!value) return null
+              return value
+          }
+        },
+        columns: [
+          '_id',
+          'name',
+          'firmLink',
+          'chambersLink',
+          'vaultLink',
+          'locations',
+          'practices',
+          'requiredGPA',
+          'preferredGPA',
+          'largeSalary',
+          'smallSalary',
+          'rankings',
+          'qualifications',
+          'date',
+        ],
+      }
+      parse(reader.result, options, async (error, records) => {
         if (!error) {
           const data = records.map(record => ({
             _id: record._id,
@@ -23,23 +70,26 @@ export default function Admin() {
             links: {
               firm: record.firmLink,
               chambers: record.chambersLink,
-              vault: record.vaultLink
+              vault: record.vaultLink,
             },
             locations: record.locations,
             practices: record.practices,
             gpa: {
               required: record.requiredGPA,
-              band: record.preferredGPA
+              band: record.preferredGPA,
             },
             salary: {
               large: record.largeSalary,
-              small: record.smallSalary
+              small: record.smallSalary,
             },
             rankings: record.rankings,
             qualifications: record.qualifications,
-            date: record.date
+            date: record.date,
           }))
-          console.dir(data)
+          data.shift()
+
+          const { data: response } = await axios.put('/api/firms', data)
+          console.log(response)
         } else console.log(error)
       })
     }
@@ -131,7 +181,12 @@ export default function Admin() {
           <div className="admin__group">
             <h2 className="admin__subheading">Import firm data</h2>
             <form onSubmit={importFirms}>
-              <input className="admin__file" type="file" accept=".csv" ref={input} />
+              <input
+                className="admin__file"
+                type="file"
+                accept=".csv"
+                ref={input}
+              />
               <div className="admin__radios">
                 <div className="admin__radio-line">
                   <input
