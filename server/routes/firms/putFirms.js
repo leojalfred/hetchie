@@ -61,47 +61,47 @@ async function getOrCreateRankings(raw) {
   return rankings
 }
 
+async function getNewFirm(firm) {
+  const locationPromises = getOrCreate(firm.locations, Location)
+  const practicePromises = getOrCreate(firm.practices, Practice)
+  const rankingPromises = getOrCreateRankings(firm.rankings)
+  const qualificationPromises = getOrCreate(firm.qualifications, Qualification)
+
+  const [locations, practices, rankings, qualifications] = await Promise.all([
+    locationPromises,
+    practicePromises,
+    rankingPromises,
+    qualificationPromises,
+  ])
+
+  return {
+    name: firm.name,
+    links: firm.links,
+    locations,
+    practices,
+    gpa: firm.gpa,
+    salary: firm.salary,
+    rankings,
+    qualifications,
+    date: firm.date,
+  }
+}
+
 const router = express.Router()
 router.put('/', async ({ body }, response) => {
   try {
     if (body.action === 'add') {
       const firmPromises = []
       for (const firm of body.data) {
-        const locationPromises = getOrCreate(firm.locations, Location)
-        const practicePromises = getOrCreate(firm.practices, Practice)
-        const rankingPromises = getOrCreateRankings(firm.rankings)
-        const qualificationPromises = getOrCreate(
-          firm.qualifications,
-          Qualification
-        )
-
-        const [
-          locations,
-          practices,
-          rankings,
-          qualifications,
-        ] = await Promise.all([
-          locationPromises,
-          practicePromises,
-          rankingPromises,
-          qualificationPromises,
-        ])
-
-        const newFirmObject = {
-          name: firm.name,
-          links: firm.links,
-          locations,
-          practices,
-          gpa: firm.gpa,
-          salary: firm.salary,
-          rankings,
-          qualifications,
-          date: firm.date,
-        }
-
-        const foundFirm = await Firm.findOne({ name: firm.name }, '_id')
+        const newFirmPromise = getNewFirm(firm)
+        const foundFirmPromise = Firm.findOne({ name: firm.name }, '_id')
           .lean()
           .exec()
+        const [newFirmObject, foundFirm] = await Promise.all([
+          newFirmPromise,
+          foundFirmPromise,
+        ])
+
         if (foundFirm === null) {
           const newFirm = new Firm(newFirmObject)
           firmPromises.push(newFirm.save())
@@ -112,6 +112,7 @@ router.put('/', async ({ body }, response) => {
       }
 
       console.log(await Promise.all(firmPromises))
+    } else {
     }
 
     response.send('Done')
