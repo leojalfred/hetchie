@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useState, useRef } from 'react'
 import axios from 'axios'
 import parse from 'csv-parse'
 import stringify from 'csv-stringify'
@@ -8,6 +8,9 @@ import Container from 'components/Container'
 import Button from 'components/Buttons/Button'
 
 export default function Admin() {
+  const [action, setAction] = useState('add')
+  const handleRadio = event => setAction(event.currentTarget.value)
+
   const input = useRef()
   function importFirms(event) {
     event.preventDefault()
@@ -88,7 +91,8 @@ export default function Admin() {
           }))
           data.shift()
 
-          const { data: response } = await axios.put('/api/firms', data)
+          const payload = { data, action }
+          const { data: response } = await axios.put('/api/firms', payload)
           console.log(response)
         } else console.log(error)
       })
@@ -195,7 +199,8 @@ export default function Admin() {
                     type="radio"
                     name="action"
                     value="add"
-                    defaultChecked
+                    checked={action === 'add'}
+                    onChange={handleRadio}
                   />
                   <label htmlFor="add">Add</label>
                 </div>
@@ -206,6 +211,8 @@ export default function Admin() {
                     type="radio"
                     name="action"
                     value="replace"
+                    checked={action === 'replace'}
+                    onChange={handleRadio}
                   />
                   <label htmlFor="replace">Replace</label>
                 </div>
