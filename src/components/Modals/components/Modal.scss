@@ -132,7 +132,7 @@
     color: $dark-cyan;
   }
 
-  &__submit {
+  & &__submit {
     border-color: $brand-1;
     color: $brand-1;
     margin: 3rem 0 0 auto;
@@ -241,7 +241,7 @@
       display: none;
     }
 
-    &__submit {
+    & &__submit {
       margin-top: 5rem;
     }
 

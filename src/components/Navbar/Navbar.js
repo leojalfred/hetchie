@@ -59,7 +59,7 @@ function Navbar({
           >
             About
           </NavLink>
-          {user.data.admin && (
+          {user.data.role === 'admin' && (
             <NavLink
               className="navbar__link"
               activeClassName="navbar__link--active"

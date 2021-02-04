@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 const AdminRoute = ({ component: Component, user, ...rest }) => (
   <Route
     render={props =>
-      user.data.admin === true ? (
+      user.data.role === 'admin' ? (
         <Component {...props} {...rest} />
       ) : (
         <Redirect to="/" />

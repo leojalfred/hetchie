@@ -59,6 +59,7 @@ export default async function login({ ip, body }, response) {
         .select('-__v')
         .populate('locations')
         .populate('practices')
+        .lean()
         .exec()
       if (!user) response.status(404).send('Email not found.')
       else if (!user.verified) response.status(412).send('Email not confirmed.')
@@ -72,11 +73,9 @@ export default async function login({ ip, body }, response) {
         )
           await consecutiveLimiter.delete(key)
 
-        const userResponse = user.toObject()
-        delete userResponse.verified
-        delete userResponse.password
-
-        signResponse(userResponse, response)
+        delete user.verified
+        delete user.password
+        signResponse(user, response)
       } else {
         try {
           const promises = [dailyLimiter.consume(ip)]

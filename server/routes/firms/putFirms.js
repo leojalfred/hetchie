@@ -90,8 +90,8 @@ async function getNewFirm(firm) {
 const router = express.Router()
 router.put('/', async ({ body }, response) => {
   try {
+    const firmPromises = []
     if (body.action === 'add') {
-      const firmPromises = []
       for (const firm of body.data) {
         const newFirmPromise = getNewFirm(firm)
         const foundFirmPromise = Firm.findOne({ name: firm.name }, '_id')
@@ -110,11 +110,16 @@ router.put('/', async ({ body }, response) => {
             Firm.replaceOne({ _id: foundFirm._id }, newFirmObject)
           )
       }
-
-      console.log(await Promise.all(firmPromises))
     } else {
+      await Firm.deleteMany({})
+      // for (const firm of body.data) {
+      //   const newFirmObject = await getNewFirm(firm)
+      //   const newFirm = new Firm(newFirmObject)
+      //   firmPromises.push(newFirm.save())
+      // }
     }
 
+    await Promise.all(firmPromises)
     response.send('Done')
   } catch (error) {
     console.log(error)

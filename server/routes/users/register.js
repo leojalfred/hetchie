@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs'
 import nodemailer from 'nodemailer'
 import validate from '../../validation/register'
 import User from '../../models/User'
+import School from '../../models/School'
 import key from '../../config/key.json'
 
 export default async function register({ body }, response) {
@@ -17,12 +18,23 @@ export default async function register({ body }, response) {
       bcrypt.genSalt(10),
       bcrypt.genSalt(10),
     ])
-    const hash = await bcrypt.hash(password, hashSalt)
+
+    const schoolPromise = School.findOne({ name: school }, '_id').lean().exec()
+    const hashPromise = bcrypt.hash(password, hashSalt)
+    const [schoolObject, hash] = await Promise.all([schoolPromise, hashPromise])
+
+    let schoolID
+    if (schoolObject === null) {
+      const newSchool = new School({ name: school })
+      const savedSchool = await newSchool.save()
+      schoolID = savedSchool._id
+    } else schoolID = schoolObject._id
+
     const newUser = new User({
       first,
       last,
       email,
-      school,
+      school: schoolID,
       year,
       password: hash,
       salt: verificationSalt,

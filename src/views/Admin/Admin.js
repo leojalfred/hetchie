@@ -49,7 +49,6 @@ export default function Admin() {
           }
         },
         columns: [
-          '_id',
           'name',
           'firmLink',
           'chambersLink',
@@ -68,7 +67,6 @@ export default function Admin() {
       parse(reader.result, options, async (error, records) => {
         if (!error) {
           const data = records.map(record => ({
-            _id: record._id,
             name: record.name,
             links: {
               firm: record.firmLink,
@@ -133,7 +131,6 @@ export default function Admin() {
       const date = new Date(firm.date)
 
       return {
-        id: firm._id,
         name: firm.name,
         firmLink: firm.links.firm,
         chambersLink: firm.links.chambers,
@@ -153,7 +150,6 @@ export default function Admin() {
     const options = {
       header: true,
       columns: {
-        id: 'ID',
         name: 'Name',
         firmLink: 'Firm Link',
         chambersLink: 'Chambers Link',
