@@ -115,7 +115,7 @@ function PreferencesModal({ user, error, put, isOpen, closeModal }) {
       <div className="modal__content">
         <div className="modal__topline">
           <div className="modal__text">
-            <h2 className="modal__heading">Firm preferences</h2>
+            <h1 className="modal__heading">Firm preferences</h1>
             <p className="modal__description">
               Enter your GPA and rank your location and practice preferences to
               personalize your search results

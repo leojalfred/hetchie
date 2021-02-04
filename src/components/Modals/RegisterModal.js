@@ -53,7 +53,7 @@ export default function RegisterModal({
         <div className="modal__content">
           <div className="modal__topline">
             <div className="modal__text">
-              <h2 className="modal__heading">Get started</h2>
+              <h1 className="modal__heading">Get started</h1>
               <p className="modal__description">
                 Create an account to start optimizing your bids
               </p>
@@ -109,7 +109,7 @@ export default function RegisterModal({
         <div className="modal__content">
           <div className="modal__topline modal__topline--privacy">
             <div className="modal__text">
-              <h2 className="modal__heading">Privacy policy</h2>
+              <h1 className="modal__heading">Privacy policy</h1>
               <p className="modal__description">
                 We make sure to be transparent about how we treat your data
               </p>

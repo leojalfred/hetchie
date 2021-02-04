@@ -15,17 +15,12 @@
     justify-content: center;
   }
 
-  &__icon,
-  &__section-heading {
-    font-size: 1.6rem;
+  &__icon {
+    font-size: 1.3rem;
   }
 
   &__section-heading {
     margin: 0 0 0 1rem;
-  }
-
-  &__text {
-    font-size: 1.1rem;
   }
 
   &__button {
@@ -48,15 +43,8 @@
 }
 
 @include bp($s) {
-  .about {
-    &__icon,
-    &__section-heading {
-      font-size: 2rem;
-    }
-
-    &__text {
-      font-size: 1.2rem;
-    }
+  .about__icon {
+    font-size: 1.6rem;
   }
 }
 
@@ -76,9 +64,8 @@
       justify-content: left;
     }
 
-    &__icon,
-    &__section-heading {
-      font-size: 2.1rem;
+    &__icon {
+      font-size: 1.9rem;
     }
 
     &__contact {
@@ -90,13 +77,8 @@
 
 @include bp($l) {
   .about {
-    &__icon,
-    &__section-heading {
-      font-size: 2.4rem;
-    }
-
-    &__text {
-      font-size: 1.3rem;
+    &__icon {
+      font-size: 2.2rem;
     }
 
     &__contact {

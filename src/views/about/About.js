@@ -15,14 +15,14 @@ function About() {
             <FontAwesomeIcon className="about__icon" icon={faGavel} />
             <h2 className="about__section-heading">How We Can Help</h2>
           </div>
-          <p className="about__text">
+          <p>
             Law school is a big investment and getting the right job out of law
             school is hard. hetchie was designed when a couple
             engineers-turned-law students realized most of their classmates were
             creating similar tools and researching similar topics, all for the
             same firms, just to decide where to bid.
           </p>
-          <p className="about__text">
+          <p>
             hetchie streamlines your bidding process, using your own preferences
             to guide you to the best research for the most relevant firms. This
             research enables you to improve the list in real time and develop
@@ -36,7 +36,7 @@ function About() {
             <FontAwesomeIcon className="about__icon" icon={faEnvelopeOpen} />
             <h2 className="about__section-heading">Contact Us</h2>
           </div>
-          <p className="about__text">
+          <p>
             Email:{' '}
             <a className="about__link" href="mailto:contact@hetchie.com">
               contact@hetchie.com

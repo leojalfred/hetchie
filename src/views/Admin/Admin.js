@@ -176,10 +176,10 @@ export default function Admin() {
   return (
     <div className="admin">
       <Container>
-        <h1 className="admin__heading">Admin tools</h1>
+        <h1>Admin tools</h1>
         <div className="admin__main">
           <div className="admin__group">
-            <h2 className="admin__subheading">Import firm data</h2>
+            <h2>Import firm data</h2>
             <form onSubmit={importFirms}>
               <input
                 className="admin__file"
@@ -218,7 +218,7 @@ export default function Admin() {
           </div>
 
           <div className="admin__group">
-            <h2 className="admin__subheading">Export firm data</h2>
+            <h2>Export firm data</h2>
             <Button className="admin__button" onClick={exportFirms}>
               Export
             </Button>

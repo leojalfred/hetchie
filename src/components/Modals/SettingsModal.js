@@ -23,7 +23,7 @@ function SettingsModal({ user, isOpen, closeModal }) {
       <div className="modal__content">
         <div className="modal__topline">
           <div className="modal__text">
-            <h2 className="modal__heading">Update account</h2>
+            <h1 className="modal__heading">Update account</h1>
             <p className="modal__description">
               Edit this form to update your account information
             </p>

@@ -56,7 +56,7 @@ function LoginModal({
       <div className="modal__content">
         <div className="modal__topline">
           <div className="modal__text">
-            <h2 className="modal__heading">Welcome back</h2>
+            <h1 className="modal__heading">Welcome back</h1>
             <p className="modal__description">
               Log in to your account to optimize your bids
             </p>
