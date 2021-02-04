@@ -26,6 +26,7 @@
   &__button {
     border-color: $brand-2;
     color: $brand-2;
+    margin: 0 auto;
 
     &:hover {
       background-color: $brand-2;
@@ -35,6 +36,10 @@
 
   &__contact {
     margin: 4rem 0 2rem 0;
+  }
+
+  &__contact-text {
+    text-align: center;
   }
 
   &__link {
@@ -68,9 +73,17 @@
       font-size: 1.9rem;
     }
 
+    &__button {
+      margin: 0;
+    }
+
     &__contact {
       flex: 1;
       margin: 0 0 0 2rem;
+    }
+
+    &__contact-text {
+      text-align: left;
     }
   }
 }

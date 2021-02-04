@@ -1,6 +1,12 @@
+@import 'mixins';
+
 .button--big {
-  border-width: medium;
+  border-width: 2px;
   font-family: 'BioRhyme', serif;
-  font-size: 1.4rem;
-  padding: 0.5rem 3rem;
+
+  @include bp($s) {
+    border-width: medium;
+    font-size: 1.4rem;
+    padding: 0.5rem 3rem;
+  }
 }

@@ -16,7 +16,7 @@
 
   &__link {
     color: $brand-2;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     text-decoration: none;
     transition: color $time;
 
@@ -47,13 +47,11 @@
   }
 
   &__brand-logo {
-    width: 3rem;
+    width: 2.5rem;
   }
 
   &__brand-text {
-    font-family: 'BioRhyme', serif;
-    font-size: 1.4rem;
-    margin: 0 0 0 1rem;
+    display: none;
   }
 
   &__links {
@@ -73,8 +71,15 @@
       font-size: 1rem;
     }
 
+    &__brand-logo {
+      width: 3rem;
+    }
+
     &__brand-text {
+      display: block;
+      font-family: 'BioRhyme', serif;
       font-size: 2rem;
+      margin: 0 0 0 1rem;
     }
   }
 }

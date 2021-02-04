@@ -16,7 +16,7 @@
   }
 
   &__heading {
-    font-size: 4rem;
+    font-size: 3rem;
     margin: 0;
   }
 
@@ -44,6 +44,10 @@
     &__main {
       margin: 0;
       text-align: left;
+    }
+
+    &__heading {
+      font-size: 4rem;
     }
 
     &__text {

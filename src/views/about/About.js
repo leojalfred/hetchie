@@ -36,7 +36,7 @@ function About() {
             <FontAwesomeIcon className="about__icon" icon={faEnvelopeOpen} />
             <h2 className="about__section-heading">Contact Us</h2>
           </div>
-          <p>
+          <p className="about__contact-text">
             Email:{' '}
             <a className="about__link" href="mailto:contact@hetchie.com">
               contact@hetchie.com
