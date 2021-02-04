@@ -15,6 +15,7 @@ import About from 'views/About/About'
 import ConditionalRoute from 'components/ConditionalRoute'
 import Firms from 'views/Firms/Firms'
 import Admin from 'views/Admin/Admin'
+import School from 'views/School/School'
 import './App.scss'
 
 if (sessionStorage.getItem('jwtToken')) {
@@ -104,6 +105,12 @@ function App({ user }) {
           path="/firms"
           condition={user.loggedIn === true}
           component={Firms}
+        />
+        <ConditionalRoute
+          exact
+          path="/school"
+          condition={user.data.role === 'school'}
+          component={School}
         />
         <ConditionalRoute
           exact
