@@ -37,7 +37,7 @@ function LoginModal({
     password: string().required('Password is required.'),
   })
 
-  const onSubmit = async user => login(user, history, closeLoginModal)
+  const onSubmit = user => login(user, history, closeLoginModal)
 
   function switchModals() {
     closeLoginModal()
