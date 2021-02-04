@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import './Home.scss'
 import Container from 'components/Container'
-import Button from 'components/Buttons/BigButton'
+import Button from 'components/buttons/BigButton'
 
 function Home({ user, openRegisterModal }) {
   return (

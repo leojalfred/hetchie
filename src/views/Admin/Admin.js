@@ -5,7 +5,7 @@ import stringify from 'csv-stringify'
 import { saveAs } from 'file-saver'
 import './Admin.scss'
 import Container from 'components/Container'
-import Button from 'components/Buttons/Button'
+import Button from 'components/buttons/Button'
 
 export default function Admin() {
   const [action, setAction] = useState('add')

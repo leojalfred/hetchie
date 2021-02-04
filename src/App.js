@@ -5,16 +5,15 @@ import { connect } from 'react-redux'
 import setToken from 'utils/authorization'
 import { setUser } from 'actions/user'
 import store from 'store'
-import SettingsModal from 'components/Modals/SettingsModal'
-import PreferencesModal from 'components/Modals/PreferencesModal'
-import RegisterModal from 'components/Modals/RegisterModal'
-import LoginModal from 'components/Modals/LoginModal'
-import Navbar from 'components/Navbar/Navbar'
+import SettingsModal from 'components/modals/SettingsModal'
+import PreferencesModal from 'components/modals/PreferencesModal'
+import RegisterModal from 'components/modals/RegisterModal'
+import LoginModal from 'components/modals/LoginModal'
+import Navbar from 'components/navbar/Navbar'
 import Home from 'views/Home/Home'
 import About from 'views/About/About'
-import PrivateRoute from 'components/PrivateRoute'
+import ConditionalRoute from 'components/ConditionalRoute'
 import Firms from 'views/Firms/Firms'
-import AdminRoute from 'components/AdminRoute'
 import Admin from 'views/Admin/Admin'
 import './App.scss'
 
@@ -100,8 +99,18 @@ function App({ user }) {
           )}
         />
         <Route exact path="/about" component={About} />
-        <PrivateRoute exact path="/firms" component={Firms} />
-        <AdminRoute exact path="/admin" component={Admin} />
+        <ConditionalRoute
+          exact
+          path="/firms"
+          condition={user.loggedIn === true}
+          component={Firms}
+        />
+        <ConditionalRoute
+          exact
+          path="/admin"
+          condition={user.data.role === 'admin'}
+          component={Admin}
+        />
       </Switch>
 
       {modals}
