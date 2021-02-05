@@ -23,10 +23,9 @@ export function InputIcon({ className, icon }) {
   return <FontAwesomeIcon className={classes} icon={icon} />
 }
 
-export function Input(props) {
-  const { className, ...rest } = props
+export function Input({ className, field, form, ...rest }) {
   const classes = classNames(className, 'input')
-  return <input className={classes} {...rest} />
+  return <input className={classes} {...field} {...rest} />
 }
 
 export function Submit({ className, isSubmitting, children }) {

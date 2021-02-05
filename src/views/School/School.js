@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react'
 import { Formik, Form, Field } from 'formik'
-import { faGavel, faUserGraduate } from '@fortawesome/free-solid-svg-icons'
+import {
+  faGavel,
+  faMapMarkedAlt,
+  faBriefcase,
+  faUserGraduate,
+} from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
 import empty from 'utils/empty'
+import getData from 'utils/getData'
 import schema from 'validation/school'
 import { getError, combinedError } from 'validation/shared'
 import Container from 'components/Container'
@@ -15,6 +21,7 @@ import {
   Input,
   Submit,
 } from 'components/Inputs'
+import Select from 'components/Select'
 import './School.scss'
 
 function School({ error }) {
@@ -47,6 +54,13 @@ function School({ error }) {
     else setServerError('')
   }, [error])
 
+  const [locations, setLocations] = useState([])
+  const [practices, setPractices] = useState([])
+  useEffect(
+    () => getData(['locations', 'practices'], [setLocations, setPractices]),
+    []
+  )
+
   return (
     <div className="school">
       <Container>
@@ -73,6 +87,38 @@ function School({ error }) {
                     placeholder="Firm name"
                   />
                 </InputGroup>
+
+                <InputLine>
+                  <InputContainer>
+                    <h3>Locations</h3>
+                    <InputGroup>
+                      <InputIcon icon={faMapMarkedAlt} />
+                      <Field
+                        component={Select}
+                        options={locations}
+                        name="locations"
+                        placeholder="Locations"
+                        creatable
+                        isMulti
+                      />
+                    </InputGroup>
+                  </InputContainer>
+
+                  <InputContainer>
+                    <h3>Practices</h3>
+                    <InputGroup>
+                      <InputIcon icon={faBriefcase} />
+                      <Field
+                        component={Select}
+                        options={practices}
+                        name="practices"
+                        placeholder="Practices"
+                        creatable
+                        isMulti
+                      />
+                    </InputGroup>
+                  </InputContainer>
+                </InputLine>
 
                 <InputLine>
                   <InputContainer>

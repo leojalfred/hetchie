@@ -6,6 +6,7 @@ import { faListOl, faUserGraduate } from '@fortawesome/free-solid-svg-icons'
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import { connect } from 'react-redux'
 import empty from 'utils/empty'
+import getData from 'utils/getData'
 import { put } from 'actions/user'
 import Modal from './components/Modal'
 import Error from 'components/Error'
@@ -22,34 +23,10 @@ function PreferencesModal({ user, error, put, isOpen, closeModal }) {
 
   const [locations, setLocations] = useState()
   const [practices, setPractices] = useState()
-  useEffect(() => {
-    async function getData() {
-      const locationsResponse = await axios.get('/api/locations')
-      const locationsData = locationsResponse.data
-      const locationOptions = locationsData.map(({ _id, name }) => ({
-        value: _id,
-        label: name,
-      }))
-
-      function sort(a, b) {
-        if (a.label < b.label) return -1
-        if (a.label > b.label) return 1
-        return 0
-      }
-      const sortedLocations = locationOptions.sort(sort)
-      setLocations(sortedLocations)
-
-      const practicesResponse = await axios.get('/api/practices')
-      const practicesData = practicesResponse.data
-      const practiceOptions = practicesData.map(({ _id, name }) => ({
-        value: _id,
-        label: name,
-      }))
-      const sortedPractices = practiceOptions.sort(sort)
-      setPractices(sortedPractices)
-    }
-    getData()
-  }, [])
+  useEffect(
+    () => getData(['locations', 'practices'], [setLocations, setPractices]),
+    []
+  )
 
   const [gpa, setGPA] = useState('')
   const [userLocations, setUserLocations] = useState([])

@@ -44,11 +44,7 @@
   .input-line {
     display: flex;
 
-    &:not(:last-of-type) {
-      margin-bottom: 2rem;
-    }
-
-    .input-group:first-of-type {
+    > .input-container:first-of-type {
       margin-right: 2rem;
     }
   }
