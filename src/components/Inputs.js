@@ -1,0 +1,39 @@
+import classNames from 'classnames'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Button from 'components/buttons/BigButton'
+import './Inputs.scss'
+
+export function InputLine({ className, children }) {
+  const classes = classNames(className, 'input-line')
+  return <div className={classes}>{children}</div>
+}
+
+export function InputContainer({ className, children }) {
+  const classes = classNames(className, 'input-container')
+  return <div className={classes}>{children}</div>
+}
+
+export function InputGroup({ className, children }) {
+  const classes = classNames(className, 'input-group')
+  return <div className={classes}>{children}</div>
+}
+
+export function InputIcon({ className, icon }) {
+  const classes = classNames(className, 'input-icon')
+  return <FontAwesomeIcon className={classes} icon={icon} />
+}
+
+export function Input(props) {
+  const { className, ...rest } = props
+  const classes = classNames(className, 'input')
+  return <input className={classes} {...rest} />
+}
+
+export function Submit({ className, isSubmitting, children }) {
+  const classes = classNames(className, 'submit')
+  return (
+    <Button className={classes} disabled={isSubmitting}>
+      {children}
+    </Button>
+  )
+}

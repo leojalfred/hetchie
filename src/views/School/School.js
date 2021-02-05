@@ -1,12 +1,20 @@
 import { useState, useEffect } from 'react'
 import { Formik, Form, Field } from 'formik'
+import { faGavel, faUserGraduate } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
 import empty from 'utils/empty'
 import schema from 'validation/school'
 import { getError, combinedError } from 'validation/shared'
 import Container from 'components/Container'
 import Error from 'components/Error'
-import Button from 'components/buttons/BigButton'
+import {
+  InputLine,
+  InputContainer,
+  InputGroup,
+  InputIcon,
+  Input,
+  Submit,
+} from 'components/Inputs'
 import './School.scss'
 
 function School({ error }) {
@@ -14,12 +22,22 @@ function School({ error }) {
     firm: '',
     locations: [],
     practices: [],
+    gpa: {
+      required: 4,
+      band: 4,
+    },
+    salary: {
+      small: 150000,
+      large: 190000,
+    },
+    rankings: [],
     qualifications: [],
-    smallSalary: 150000,
-    largeSalary: 190000,
+    links: {
+      firm: '',
+      chambers: '',
+      vault: '',
+    },
     date: '',
-    requiredGPA: '',
-    preferredGPA: '',
   }
   const handleSubmit = () => {}
 
@@ -45,7 +63,50 @@ function School({ error }) {
               <Error message={combinedError} />
 
               <Form>
-                <Button disabled={isSubmitting}>Add firm</Button>
+                <h3>Firm name</h3>
+                <InputGroup>
+                  <InputIcon icon={faGavel} />
+                  <Field
+                    component={Input}
+                    type="text"
+                    name="firm"
+                    placeholder="Firm name"
+                  />
+                </InputGroup>
+
+                <InputLine>
+                  <InputContainer>
+                    <h3>Required GPA</h3>
+                    <InputGroup>
+                      <InputIcon icon={faUserGraduate} />
+                      <Field
+                        component={Input}
+                        type="number"
+                        name="gpa.required"
+                        placeholder="4.0"
+                        min="1"
+                        max="4"
+                      />
+                    </InputGroup>
+                  </InputContainer>
+
+                  <InputContainer>
+                    <h3>Preferred GPA</h3>
+                    <InputGroup>
+                      <InputIcon icon={faUserGraduate} />
+                      <Field
+                        component={Input}
+                        type="number"
+                        name="gpa.band"
+                        placeholder="4.0"
+                        min="1"
+                        max="4"
+                      />
+                    </InputGroup>
+                  </InputContainer>
+                </InputLine>
+
+                <Submit isSubmitting={isSubmitting}>Add firm</Submit>
               </Form>
             </>
           )}

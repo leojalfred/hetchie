@@ -1,0 +1,59 @@
+@import 'mixins';
+
+.input-container {
+  flex: 1;
+}
+
+.input-group {
+  align-items: center;
+  display: flex;
+  margin-bottom: 2rem;
+
+  > .input-icon {
+    font-size: 1.6rem;
+    margin-right: 1rem;
+    width: 2rem;
+  }
+}
+
+.input {
+  border: 0;
+  border-bottom: 2px solid $brand-1;
+  color: $brand-2;
+  padding: 0.5rem;
+  width: 100%;
+}
+
+.submit.button--big {
+  border-color: $brand-1;
+  color: $brand-1;
+  margin: 3rem 0 0 auto;
+
+  &:hover {
+    background-color: $brand-1;
+    color: #fff;
+  }
+
+  &:disabled {
+    background-color: transparent;
+    color: $brand-1;
+  }
+}
+
+@include bp($s) {
+  .input-line {
+    display: flex;
+
+    &:not(:last-of-type) {
+      margin-bottom: 2rem;
+    }
+
+    .input-group:first-of-type {
+      margin-right: 2rem;
+    }
+  }
+
+  .submit.button--big {
+    margin-top: 5rem;
+  }
+}

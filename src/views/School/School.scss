@@ -1,2 +1,13 @@
+@import 'variables';
+
 .school {
+  &__button {
+    border-color: $brand-1;
+    color: $brand-1;
+
+    &:hover {
+      background-color: $brand-1;
+      color: white;
+    }
+  }
 }
