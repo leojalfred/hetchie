@@ -4,7 +4,7 @@ import sort from 'utils/sort'
 import { setError } from './shared'
 import {
   SET_LOCATIONS_AND_PRACTICES,
-  SET_RANKINGS_AND_QUALIFICATIONS,
+  SET_QUALIFICATIONS,
   ADD_LOCATION,
   ADD_PRACTICE,
 } from './types'
@@ -12,8 +12,12 @@ import {
 export const getData = endpoints => async dispatch => {
   try {
     const promises = []
-    for (const endpoint of endpoints)
-      promises.push(axios.get(`/api/${endpoint}`))
+    if (typeof endpoints === 'object') {
+      for (const endpoint of endpoints)
+        promises.push(axios.get(`/api/${endpoint}`))
+    } else if (typeof endpoints === 'string') {
+      promises.push(axios.get(`/api/${endpoints}`))
+    }
 
     const responses = await Promise.all(promises)
     const payload = {}
@@ -31,8 +35,7 @@ export const getData = endpoints => async dispatch => {
     let type
     if (arraysEqual(endpoints, ['locations', 'practices']))
       type = SET_LOCATIONS_AND_PRACTICES
-    else if (arraysEqual(endpoints, ['rankings', 'qualifications']))
-      type = SET_RANKINGS_AND_QUALIFICATIONS
+    else if (endpoints === 'qualifications') type = SET_QUALIFICATIONS
     else return
 
     dispatch({ type, payload })

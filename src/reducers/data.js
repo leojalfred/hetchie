@@ -1,6 +1,6 @@
 import {
   SET_LOCATIONS_AND_PRACTICES,
-  SET_RANKINGS_AND_QUALIFICATIONS,
+  SET_QUALIFICATIONS,
   ADD_LOCATION,
   ADD_PRACTICE,
   CLEAR_DATA,
@@ -16,10 +16,9 @@ export default function data(state = initialState, { type, payload }) {
         locations: payload.locations,
         practices: payload.practices,
       }
-    case SET_RANKINGS_AND_QUALIFICATIONS:
+    case SET_QUALIFICATIONS:
       return {
         ...state,
-        rankings: payload.rankings,
         qualifications: payload.qualifications,
       }
     case ADD_LOCATION:

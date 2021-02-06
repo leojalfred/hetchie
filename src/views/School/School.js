@@ -85,7 +85,7 @@ function School({ hetchie, error, putName, getData }) {
     putName('qualification', name, qualifications, setQualifications)
 
   useEffect(() => {
-    getData(['rankings', 'qualifications'])
+    getData(['qualifications'])
   }, [getData])
 
   const minDate = new Date().toLocaleDateString('en-US')
