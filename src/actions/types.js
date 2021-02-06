@@ -1,3 +1,5 @@
 export const SET_USER = 'SET_USER'
 export const SET_LOCATIONS_AND_PRACTICES = 'SET_LOCATIONS_AND_PRACTICES'
+export const ADD_LOCATION = 'ADD_LOCATION'
+export const ADD_PRACTICE = 'ADD_PRACTICE'
 export const SET_ERROR = 'SET_ERROR'

@@ -8,6 +8,7 @@ import {
   faMoneyCheckAlt,
 } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
+import { putLocation } from 'actions/data'
 import empty from 'utils/empty'
 import schema from 'validation/school'
 import { getError, combinedError } from 'validation/shared'
@@ -24,7 +25,7 @@ import {
 import Select from 'components/Select'
 import './School.scss'
 
-function School({ hetchie, error }) {
+function School({ hetchie, error, putLocation }) {
   const initialValues = {
     firm: '',
     gpaRequired: '',
@@ -34,13 +35,13 @@ function School({ hetchie, error }) {
   }
 
   const [submitting, setSubmitting] = useState(false)
-  const [userLocations, setUserLocations] = useState([])
-  const [userPractices, setUserPractices] = useState([])
+  const [locations, setLocations] = useState([])
+  const [practices, setPractices] = useState([])
   const onSubmit = data => {
     setSubmitting(true)
 
-    data.locations = userLocations
-    data.practices = userPractices
+    data.locations = locations
+    data.practices = practices
     console.log(data)
 
     setSubmitting(false)
@@ -54,7 +55,9 @@ function School({ hetchie, error }) {
 
   const onChange = setter => selected => setter(selected)
 
-  const onCreateOption = name => {
+  const onCreateLocation = name => putLocation(name, locations, setLocations)
+
+  const onCreatePractice = name => {
     console.log(name)
   }
 
@@ -93,10 +96,11 @@ function School({ hetchie, error }) {
                       <Field
                         component={Select}
                         options={hetchie.locations}
+                        value={locations}
                         name="locations"
                         placeholder="Locations"
-                        onChange={onChange(setUserLocations)}
-                        onCreateOption={onCreateOption}
+                        onChange={onChange(setLocations)}
+                        onCreateOption={onCreateLocation}
                         creatable
                         isMulti
                       />
@@ -110,10 +114,11 @@ function School({ hetchie, error }) {
                       <Field
                         component={Select}
                         options={hetchie.practices}
+                        value={practices}
                         name="practices"
                         placeholder="Practices"
-                        onChange={onChange(setUserPractices)}
-                        onCreateOption={onCreateOption}
+                        onChange={onChange(setPractices)}
+                        onCreateOption={onCreatePractice}
                         creatable
                         isMulti
                       />
@@ -196,4 +201,4 @@ function School({ hetchie, error }) {
 }
 
 const mapStateToProps = ({ hetchie, error }) => ({ hetchie, error })
-export default connect(mapStateToProps)(School)
+export default connect(mapStateToProps, { putLocation })(School)
