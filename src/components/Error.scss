@@ -6,4 +6,12 @@
   color: #fff;
   margin-bottom: 2rem;
   padding: 1rem;
+
+  &__line {
+    margin: 0 0 1rem 0;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 }

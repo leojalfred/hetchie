@@ -15,23 +15,23 @@ export default yup.object({
       .min(0, 'Preferred GPA must be at least 0.')
       .max(4, 'Preferred GPA must be at most 4.'),
   }),
-  salary: yup.object({
-    small: yup.number(),
-    large: yup.number().required('Large market salary is required.'),
-  }),
-  rankings: yup.array().of(
-    yup.object({
-      position: yup.number().required('Ranking position is required.'),
-      ranking: yup.string().required('Ranking name is required.'),
-    })
-  ),
-  qualifications: yup
-    .array()
-    .of(yup.string().required('Qualification is required.')),
-  links: yup.object({
-    firm: yup.string(),
-    chambers: yup.string(),
-    vault: yup.string(),
-  }),
-  date: yup.date().required('Interview date is required.'),
+  // salary: yup.object({
+  //   small: yup.number(),
+  //   large: yup.number().required('Large market salary is required.'),
+  // }),
+  // rankings: yup.array().of(
+  //   yup.object({
+  //     position: yup.number().required('Ranking position is required.'),
+  //     ranking: yup.string().required('Ranking name is required.'),
+  //   })
+  // ),
+  // qualifications: yup
+  //   .array()
+  //   .of(yup.string().required('Qualification is required.')),
+  // links: yup.object({
+  //   firm: yup.string(),
+  //   chambers: yup.string(),
+  //   vault: yup.string(),
+  // }),
+  // date: yup.date().required('Interview date is required.'),
 })

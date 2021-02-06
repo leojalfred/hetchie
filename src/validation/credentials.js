@@ -23,6 +23,7 @@ export default yup.object().shape({
   school: yup.string().required('School is required.'),
   year: yup
     .number()
+    .typeError('Graduation year must be a number.')
     .required('Graduation year is required.')
     .integer('Graduation year must be an integer.')
     .min(year, `Graduation year must be at least ${year}.`),

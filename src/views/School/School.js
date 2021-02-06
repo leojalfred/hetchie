@@ -24,6 +24,14 @@ import Select from 'components/Select'
 import './School.scss'
 
 function School({ error, locations, practices }) {
+  const initialValues = {
+    firm: '',
+    gpa: {
+      required: '',
+      band: '',
+    },
+  }
+
   const [submitting, setSubmitting] = useState(false)
   const [userLocations, setUserLocations] = useState([])
   const [userPractices, setUserPractices] = useState([])
@@ -51,7 +59,7 @@ function School({ error, locations, practices }) {
         <h1>School Tools</h1>
         <h2>Add Firms</h2>
         <Formik
-          initialValues={{}}
+          initialValues={initialValues}
           validationSchema={schema}
           onSubmit={onSubmit}
         >

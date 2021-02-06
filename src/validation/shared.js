@@ -32,14 +32,18 @@ export const idSchema = schema =>
       excludeEmptyString: true,
     })
 
-export let combinedError = ''
+export let combinedError = []
 export function getError(serverError, clientErrors, touched) {
-  // console.log(clientErrors)
+  combinedError = []
   if (!empty(clientErrors)) {
     for (const [key, error] of Object.entries(clientErrors)) {
-      if (touched[key]) combinedError = error
-      return
+      if (typeof error === 'object') {
+        for (const [nestedKey, nestedError] of Object.entries(error)) {
+          if (touched[key][nestedKey] && !combinedError.includes(nestedError))
+            combinedError.push(nestedError)
+        }
+      } else if (touched[key] && !combinedError.includes(error))
+        combinedError.push(error)
     }
-  } else if (serverError) combinedError = serverError
-  else combinedError = ''
+  } else if (serverError) combinedError.push(serverError)
 }
