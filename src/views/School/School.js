@@ -5,6 +5,7 @@ import {
   faMapMarkedAlt,
   faBriefcase,
   faUserGraduate,
+  faMoneyCheckAlt,
 } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
 import empty from 'utils/empty'
@@ -26,10 +27,10 @@ import './School.scss'
 function School({ error, locations, practices }) {
   const initialValues = {
     firm: '',
-    gpa: {
-      required: '',
-      band: '',
-    },
+    gpaRequired: '',
+    gpaBand: '',
+    salaryLarge: '',
+    salarySmall: '',
   }
 
   const [submitting, setSubmitting] = useState(false)
@@ -122,7 +123,7 @@ function School({ error, locations, practices }) {
                       <Field
                         component={Input}
                         type="number"
-                        name="gpa.required"
+                        name="gpaRequired"
                         placeholder="4.0"
                         step="0.01"
                         min="1"
@@ -138,11 +139,41 @@ function School({ error, locations, practices }) {
                       <Field
                         component={Input}
                         type="number"
-                        name="gpa.band"
+                        name="gpaBand"
                         placeholder="4.0"
                         step="0.01"
                         min="1"
                         max="4"
+                      />
+                    </InputGroup>
+                  </InputContainer>
+                </InputLine>
+
+                <InputLine>
+                  <InputContainer>
+                    <h3>Large market salary</h3>
+                    <InputGroup>
+                      <InputIcon icon={faMoneyCheckAlt} />
+                      <Field
+                        component={Input}
+                        type="number"
+                        name="salaryLarge"
+                        placeholder="190000"
+                        min="0"
+                      />
+                    </InputGroup>
+                  </InputContainer>
+
+                  <InputContainer>
+                    <h3>Small market salary</h3>
+                    <InputGroup>
+                      <InputIcon icon={faMoneyCheckAlt} />
+                      <Field
+                        component={Input}
+                        type="number"
+                        name="salarySmall"
+                        placeholder="150000"
+                        min="0"
                       />
                     </InputGroup>
                   </InputContainer>

@@ -4,21 +4,20 @@ export default yup.object({
   firm: yup.string().required('Firm name is required'),
   locations: yup.array().of(yup.string().required('Location is required.')),
   practices: yup.array().of(yup.string().required('Practice is required.')),
-  gpa: yup.object({
-    required: yup
-      .number()
-      .required('Required GPA is required.')
-      .min(0, 'Required GPA must be at least 0.')
-      .max(4, 'Required GPA must be at most 4.'),
-    band: yup
-      .number()
-      .min(0, 'Preferred GPA must be at least 0.')
-      .max(4, 'Preferred GPA must be at most 4.'),
-  }),
-  // salary: yup.object({
-  //   small: yup.number(),
-  //   large: yup.number().required('Large market salary is required.'),
-  // }),
+  gpaRequired: yup
+    .number()
+    .required('Required GPA is required.')
+    .min(0, 'Required GPA must be at least 0.')
+    .max(4, 'Required GPA must be at most 4.'),
+  gpaBand: yup
+    .number()
+    .min(0, 'Preferred GPA must be at least 0.')
+    .max(4, 'Preferred GPA must be at most 4.'),
+  salaryLarge: yup
+    .number()
+    .required('Large market salary is required.')
+    .min(0, 'Large market salary must be at least $0.'),
+  salarySmall: yup.number().min(0, 'Small market salary must be at least $0.'),
   // rankings: yup.array().of(
   //   yup.object({
   //     position: yup.number().required('Ranking position is required.'),

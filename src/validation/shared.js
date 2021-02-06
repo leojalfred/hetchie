@@ -37,12 +37,7 @@ export function getError(serverError, clientErrors, touched) {
   combinedError = []
   if (!empty(clientErrors)) {
     for (const [key, error] of Object.entries(clientErrors)) {
-      if (typeof error === 'object') {
-        for (const [nestedKey, nestedError] of Object.entries(error)) {
-          if (touched[key][nestedKey] && !combinedError.includes(nestedError))
-            combinedError.push(nestedError)
-        }
-      } else if (touched[key] && !combinedError.includes(error))
+      if (touched[key] && !combinedError.includes(error))
         combinedError.push(error)
     }
   } else if (serverError) combinedError.push(serverError)

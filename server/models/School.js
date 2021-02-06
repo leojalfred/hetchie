@@ -13,8 +13,8 @@ const school = new Schema({
             { type: Schema.Types.ObjectId, ref: 'qualifications' },
           ],
           salary: {
-            small: Number,
             large: { type: Number, required: true },
+            small: Number,
           },
           date: { type: Date, required: true },
         },
