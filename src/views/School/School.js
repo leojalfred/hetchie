@@ -49,6 +49,7 @@ function School({ hetchie, error, putName, getData }) {
 
     data.locations = locations
     data.practices = practices
+    data.firm = selectedFirm
     console.log(data)
 
     setSubmitting(false)
