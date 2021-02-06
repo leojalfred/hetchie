@@ -5,7 +5,7 @@ const firm = new Schema({
   links: { firm: String, chambers: String, vault: String },
   rankings: [
     {
-      position: { type: Number, required: true },
+      position: { type: Number },
       ranking: { type: Schema.Types.ObjectId, ref: 'rankings', required: true },
     },
   ],

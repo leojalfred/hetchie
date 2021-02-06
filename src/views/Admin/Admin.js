@@ -1,8 +1,8 @@
 import { useState, useRef } from 'react'
 import axios from 'axios'
 import parse from 'csv-parse'
-import stringify from 'csv-stringify'
-import { saveAs } from 'file-saver'
+// import stringify from 'csv-stringify'
+// import { saveAs } from 'file-saver'
 import './Admin.scss'
 import Container from 'components/Container'
 import Button from 'components/buttons/Button'
@@ -17,52 +17,67 @@ export default function Admin() {
 
     const reader = new FileReader()
     reader.onload = () => {
+      // const options = {
+      //   cast: (value, { column }) => {
+      //     switch (column) {
+      //       case 'locations':
+      //       case 'practices':
+      //       case 'qualifications':
+      //         if (!value) return null
+      //         return value.split('; ')
+      //       case 'requiredGPA':
+      //       case 'preferredGPA':
+      //         if (!value) return null
+      //         return parseFloat(value)
+      //       case 'largeSalary':
+      //       case 'smallSalary':
+      //         if (!value) return null
+      //         return parseInt(value)
+      //       case 'rankings':
+      //         if (!value) return null
+      //         const rankings = value.split('; ')
+      //         return rankings.map(item => {
+      //           const [ranking, position] = item.split(': ')
+      //           return { position: parseInt(position), ranking }
+      //         })
+      //       case 'date':
+      //         if (!value) return null
+      //         return new Date(value)
+      //       default:
+      //         if (!value) return null
+      //         return value
+      //     }
+      //   },
+      //   columns: [
+      //     'name',
+      //     'firmLink',
+      //     'chambersLink',
+      //     'vaultLink',
+      //     'locations',
+      //     'practices',
+      //     'requiredGPA',
+      //     'preferredGPA',
+      //     'largeSalary',
+      //     'smallSalary',
+      //     'rankings',
+      //     'qualifications',
+      //     'date',
+      //   ],
+      // }
       const options = {
         cast: (value, { column }) => {
-          switch (column) {
-            case 'locations':
-            case 'practices':
-            case 'qualifications':
-              if (!value) return null
-              return value.split('; ')
-            case 'requiredGPA':
-            case 'preferredGPA':
-              if (!value) return null
-              return parseFloat(value)
-            case 'largeSalary':
-            case 'smallSalary':
-              if (!value) return null
-              return parseInt(value)
-            case 'rankings':
-              if (!value) return null
-              const rankings = value.split('; ')
-              return rankings.map(item => {
-                const [ranking, position] = item.split(': ')
-                return { position: parseInt(position), ranking }
-              })
-            case 'date':
-              if (!value) return null
-              return new Date(value)
-            default:
-              if (!value) return null
-              return value
+          if (!value) return null
+          else if (column === 'rankings') {
+            const rankings = value.split('; ')
+            return rankings.map(item => {
+              const [ranking, position] = item.split(': ')
+              return { position: parseInt(position), ranking }
+            })
           }
+
+          return value
         },
-        columns: [
-          'name',
-          'firmLink',
-          'chambersLink',
-          'vaultLink',
-          'locations',
-          'practices',
-          'requiredGPA',
-          'preferredGPA',
-          'largeSalary',
-          'smallSalary',
-          'rankings',
-          'qualifications',
-          'date',
-        ],
+        columns: ['name', 'firmLink', 'chambersLink', 'vaultLink', 'rankings'],
       }
       parse(reader.result, options, async (error, records) => {
         if (!error) {
@@ -73,19 +88,7 @@ export default function Admin() {
               chambers: record.chambersLink,
               vault: record.vaultLink,
             },
-            locations: record.locations,
-            practices: record.practices,
-            gpa: {
-              required: record.requiredGPA,
-              band: record.preferredGPA,
-            },
-            salary: {
-              large: record.largeSalary,
-              small: record.smallSalary,
-            },
             rankings: record.rankings,
-            qualifications: record.qualifications,
-            date: record.date,
           }))
           data.shift()
 
@@ -98,80 +101,80 @@ export default function Admin() {
     reader.readAsText(input.current.files[0])
   }
 
-  async function exportFirms() {
-    const { data: firms } = await axios.get('/api/firms')
-    const data = firms.map(firm => {
-      const getNames = array => {
-        const names = array.map(({ name }) => name)
-        return names.join('; ')
-      }
-      const locations = getNames(firm.locations)
-      const practices = getNames(firm.practices)
-      const qualifications = getNames(firm.qualifications)
+  // async function exportFirms() {
+  //   const { data: firms } = await axios.get('/api/firms')
+  //   const data = firms.map(firm => {
+  //     const getNames = array => {
+  //       const names = array.map(({ name }) => name)
+  //       return names.join('; ')
+  //     }
+  //     const locations = getNames(firm.locations)
+  //     const practices = getNames(firm.practices)
+  //     const qualifications = getNames(firm.qualifications)
 
-      let requiredGPA = null
-      let preferredGPA = null
-      if (firm.gpa) {
-        if (firm.gpa.required) requiredGPA = firm.gpa.required
-        if (firm.gpa.band) preferredGPA = firm.gpa.band
-      }
+  //     let requiredGPA = null
+  //     let preferredGPA = null
+  //     if (firm.gpa) {
+  //       if (firm.gpa.required) requiredGPA = firm.gpa.required
+  //       if (firm.gpa.band) preferredGPA = firm.gpa.band
+  //     }
 
-      let largeSalary = null
-      let smallSalary = null
-      if (firm.salary) {
-        if (firm.salary.large) largeSalary = firm.salary.large
-        if (firm.salary.small) smallSalary = firm.salary.small
-      }
+  //     let largeSalary = null
+  //     let smallSalary = null
+  //     if (firm.salary) {
+  //       if (firm.salary.large) largeSalary = firm.salary.large
+  //       if (firm.salary.small) smallSalary = firm.salary.small
+  //     }
 
-      const rankingsArray = firm.rankings.map(
-        ({ ranking, position }) => `${ranking.name}: ${position}`
-      )
-      const rankings = rankingsArray.join('; ')
+  //     const rankingsArray = firm.rankings.map(
+  //       ({ ranking, position }) => `${ranking.name}: ${position}`
+  //     )
+  //     const rankings = rankingsArray.join('; ')
 
-      const date = new Date(firm.date)
+  //     const date = new Date(firm.date)
 
-      return {
-        name: firm.name,
-        firmLink: firm.links.firm,
-        chambersLink: firm.links.chambers,
-        vaultLink: firm.links.vault,
-        locations,
-        practices,
-        requiredGPA,
-        preferredGPA,
-        largeSalary,
-        smallSalary,
-        rankings,
-        qualifications,
-        date: date.toLocaleDateString('en-US'),
-      }
-    })
+  //     return {
+  //       name: firm.name,
+  //       firmLink: firm.links.firm,
+  //       chambersLink: firm.links.chambers,
+  //       vaultLink: firm.links.vault,
+  //       locations,
+  //       practices,
+  //       requiredGPA,
+  //       preferredGPA,
+  //       largeSalary,
+  //       smallSalary,
+  //       rankings,
+  //       qualifications,
+  //       date: date.toLocaleDateString('en-US'),
+  //     }
+  //   })
 
-    const options = {
-      header: true,
-      columns: {
-        name: 'Name',
-        firmLink: 'Firm Link',
-        chambersLink: 'Chambers Link',
-        vaultLink: 'Vault Link',
-        locations: 'Locations',
-        practices: 'Practices',
-        requiredGPA: 'Required GPA',
-        preferredGPA: 'Preferred GPA',
-        largeSalary: 'Large Salary',
-        smallSalary: 'Small Salary',
-        rankings: 'Rankings',
-        qualifications: 'Qualifications',
-        date: 'Date',
-      },
-    }
-    stringify(data, options, (error, output) => {
-      if (!error) {
-        const blob = new Blob([output], { type: 'text/csv;charset=utf-8' })
-        saveAs(blob, 'firm-data.csv')
-      }
-    })
-  }
+  //   const options = {
+  //     header: true,
+  //     columns: {
+  //       name: 'Name',
+  //       firmLink: 'Firm Link',
+  //       chambersLink: 'Chambers Link',
+  //       vaultLink: 'Vault Link',
+  //       locations: 'Locations',
+  //       practices: 'Practices',
+  //       requiredGPA: 'Required GPA',
+  //       preferredGPA: 'Preferred GPA',
+  //       largeSalary: 'Large Salary',
+  //       smallSalary: 'Small Salary',
+  //       rankings: 'Rankings',
+  //       qualifications: 'Qualifications',
+  //       date: 'Date',
+  //     },
+  //   }
+  //   stringify(data, options, (error, output) => {
+  //     if (!error) {
+  //       const blob = new Blob([output], { type: 'text/csv;charset=utf-8' })
+  //       saveAs(blob, 'firm-data.csv')
+  //     }
+  //   })
+  // }
 
   return (
     <div className="admin">
@@ -217,12 +220,12 @@ export default function Admin() {
             </form>
           </div>
 
-          <div className="admin__group">
+          {/* <div className="admin__group">
             <h2>Export firm data</h2>
             <Button className="admin__button" onClick={exportFirms}>
               Export
             </Button>
-          </div>
+          </div> */}
         </div>
       </Container>
     </div>
