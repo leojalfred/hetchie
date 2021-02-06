@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { SET_ERROR, SET_USER } from './types'
+import { SET_USER } from './types'
+import { setError } from './shared'
 import setToken from '../utils/authorization'
 
 export const setUser = user => ({
@@ -13,7 +14,6 @@ const updateUser = (data, token, dispatch) => {
   dispatch(setUser(data))
 }
 
-const setError = (dispatch, payload) => dispatch({ type: SET_ERROR, payload })
 export const putUser = (
   user,
   closeModal,

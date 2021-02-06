@@ -5,12 +5,16 @@ import './Error.scss'
 export default function Error({ className, message }) {
   if (message.length) {
     const classes = classNames('error', className)
-    const items = message.map((item, i) => (
-      <p className="error__line" key={i}>
-        {item}
-      </p>
-    ))
-    return <div className={classes}>{items}</div>
+
+    if (typeof message === 'string') return <p className={classes}>{message}</p>
+    else if (typeof message === 'object') {
+      const items = message.map((item, i) => (
+        <p className="error__line" key={i}>
+          {item}
+        </p>
+      ))
+      return <div className={classes}>{items}</div>
+    }
   }
 
   return null

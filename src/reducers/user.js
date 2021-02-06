@@ -6,7 +6,6 @@ export default function user(state = initialState, { type, payload }) {
   switch (type) {
     case SET_USER:
       return {
-        ...state,
         loggedIn: !empty(payload),
         data: payload,
       }

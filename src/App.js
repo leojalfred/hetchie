@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import setToken from 'utils/authorization'
 import { setUser } from 'actions/user'
 import store from 'store'
-import getData from 'utils/getData'
+import { getLocationsAndPractices } from 'actions/data'
 import SettingsModal from 'components/modals/SettingsModal'
 import PreferencesModal from 'components/modals/PreferencesModal'
 import RegisterModal from 'components/modals/RegisterModal'
@@ -27,7 +27,7 @@ if (sessionStorage.getItem('jwtToken')) {
   store.dispatch(setUser(decoded))
 }
 
-function App({ user }) {
+function App({ user, getLocationsAndPractices }) {
   const [registerIsOpen, setRegisterIsOpen] = useState(false)
   const openRegisterModal = () => setRegisterIsOpen(true)
   const closeRegisterModal = () => setRegisterIsOpen(false)
@@ -46,12 +46,9 @@ function App({ user }) {
   const openPreferencesModal = () => setPreferencesIsOpen(true)
   const closePreferencesModal = () => setPreferencesIsOpen(false)
 
-  const [locations, setLocations] = useState([])
-  const [practices, setPractices] = useState([])
   useEffect(() => {
-    if (user.loggedIn)
-      getData(['locations', 'practices'], [setLocations, setPractices])
-  }, [user.loggedIn])
+    if (user.loggedIn) getLocationsAndPractices()
+  }, [user.loggedIn, getLocationsAndPractices])
 
   const [modals, setModals] = useState()
   useEffect(() => {
@@ -64,8 +61,6 @@ function App({ user }) {
         <PreferencesModal
           isOpen={preferencesIsOpen}
           closeModal={closePreferencesModal}
-          locations={locations}
-          practices={practices}
         />
       </>
     ) : (
@@ -91,8 +86,6 @@ function App({ user }) {
     loginIsOpen,
     settingsIsOpen,
     preferencesIsOpen,
-    locations,
-    practices,
   ])
 
   return (
@@ -123,8 +116,6 @@ function App({ user }) {
           path="/school"
           condition={user.data.role === 'school'}
           component={School}
-          locations={locations}
-          practices={practices}
         />
         <ConditionalRoute
           exact
@@ -140,4 +131,4 @@ function App({ user }) {
 }
 
 const mapStateToProps = ({ user }) => ({ user })
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps, { getLocationsAndPractices })(App)

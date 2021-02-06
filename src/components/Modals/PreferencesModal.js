@@ -12,15 +12,7 @@ import Ranker from './components/Ranker'
 import Button from 'components/buttons/BigButton'
 import './PreferencesModal.scss'
 
-function PreferencesModal({
-  user,
-  error,
-  put,
-  isOpen,
-  closeModal,
-  locations,
-  practices,
-}) {
+function PreferencesModal({ user, hetchie, error, put, isOpen, closeModal }) {
   const [message, setMessage] = useState('')
   useEffect(() => {
     if (!empty(error)) setMessage(error)
@@ -135,7 +127,7 @@ function PreferencesModal({
                 type="location"
                 userData={userLocations}
                 setUserData={setUserLocations}
-                options={locations}
+                options={hetchie.locations}
               />
             </div>
             <div className="preferences__ranker">
@@ -144,7 +136,7 @@ function PreferencesModal({
                 type="practice"
                 userData={userPractices}
                 setUserData={setUserPractices}
-                options={practices}
+                options={hetchie.practices}
               />
             </div>
           </div>
@@ -158,5 +150,5 @@ function PreferencesModal({
   )
 }
 
-const mapStateToProps = ({ user, error }) => ({ user, error })
+const mapStateToProps = ({ user, hetchie, error }) => ({ user, hetchie, error })
 export default connect(mapStateToProps, { put })(PreferencesModal)

@@ -24,7 +24,7 @@ import {
 import Select from 'components/Select'
 import './School.scss'
 
-function School({ error, locations, practices }) {
+function School({ hetchie, error }) {
   const initialValues = {
     firm: '',
     gpaRequired: '',
@@ -53,6 +53,10 @@ function School({ error, locations, practices }) {
   }, [error])
 
   const onChange = setter => selected => setter(selected)
+
+  const onCreateOption = name => {
+    console.log(name)
+  }
 
   return (
     <div className="school">
@@ -88,10 +92,11 @@ function School({ error, locations, practices }) {
                       <InputIcon icon={faMapMarkedAlt} />
                       <Field
                         component={Select}
-                        options={locations}
+                        options={hetchie.locations}
                         name="locations"
                         placeholder="Locations"
                         onChange={onChange(setUserLocations)}
+                        onCreateOption={onCreateOption}
                         creatable
                         isMulti
                       />
@@ -104,10 +109,11 @@ function School({ error, locations, practices }) {
                       <InputIcon icon={faBriefcase} />
                       <Field
                         component={Select}
-                        options={practices}
+                        options={hetchie.practices}
                         name="practices"
                         placeholder="Practices"
                         onChange={onChange(setUserPractices)}
+                        onCreateOption={onCreateOption}
                         creatable
                         isMulti
                       />
@@ -189,5 +195,5 @@ function School({ error, locations, practices }) {
   )
 }
 
-const mapStateToProps = ({ error }) => ({ error })
+const mapStateToProps = ({ hetchie, error }) => ({ hetchie, error })
 export default connect(mapStateToProps)(School)
