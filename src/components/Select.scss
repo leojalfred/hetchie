@@ -49,4 +49,8 @@
   & &__menu-notice--no-options {
     text-align: left;
   }
+
+  & &__placeholder {
+    color: $placeholder-gray;
+  }
 }
