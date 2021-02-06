@@ -9,13 +9,13 @@ const school = new Schema({
         {
           locations: [{ type: Schema.Types.ObjectId, ref: 'locations' }],
           practices: [{ type: Schema.Types.ObjectId, ref: 'practices' }],
-          qualifications: [
-            { type: Schema.Types.ObjectId, ref: 'qualifications' },
-          ],
           salary: {
             large: { type: Number, required: true },
             small: Number,
           },
+          qualifications: [
+            { type: Schema.Types.ObjectId, ref: 'qualifications' },
+          ],
           date: { type: Date, required: true },
         },
       ],

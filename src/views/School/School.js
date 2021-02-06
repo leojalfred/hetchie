@@ -6,6 +6,8 @@ import {
   faBriefcase,
   faUserGraduate,
   faMoneyCheckAlt,
+  faUserTie,
+  faCalendarAlt,
 } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
 import { putName, getData } from 'actions/data'
@@ -32,11 +34,13 @@ function School({ hetchie, error, putName, getData }) {
     gpaBand: '',
     salaryLarge: '',
     salarySmall: '',
+    date: '',
   }
 
   const [submitting, setSubmitting] = useState(false)
   const [locations, setLocations] = useState([])
   const [practices, setPractices] = useState([])
+  const [qualifications, setQualifications] = useState([])
   const onSubmit = data => {
     setSubmitting(true)
 
@@ -58,10 +62,17 @@ function School({ hetchie, error, putName, getData }) {
     putName('location', name, locations, setLocations)
   const onCreatePractice = name =>
     putName('practice', name, practices, setPractices)
+  const onCreateQualification = name =>
+    putName('qualification', name, qualifications, setQualifications)
 
   useEffect(() => {
     getData(['rankings', 'qualifications'])
   }, [getData])
+
+  const minDate = new Date().toLocaleDateString('en-US')
+  let maxDate = new Date()
+  maxDate.setFullYear(maxDate.getFullYear() + 3)
+  maxDate = maxDate.toLocaleDateString('en-US')
 
   return (
     <div className="school">
@@ -73,7 +84,7 @@ function School({ hetchie, error, putName, getData }) {
           validationSchema={schema}
           onSubmit={onSubmit}
         >
-          {({ errors, touched }) => (
+          {({ errors, touched, values }) => (
             <>
               {getError(serverError, errors, touched)}
               <Error message={combinedError} />
@@ -187,6 +198,41 @@ function School({ hetchie, error, putName, getData }) {
                         name="salarySmall"
                         placeholder="150000"
                         min="0"
+                      />
+                    </InputGroup>
+                  </InputContainer>
+                </InputLine>
+
+                <InputLine>
+                  <InputContainer>
+                    <h3>Qualifications</h3>
+                    <InputGroup>
+                      <InputIcon icon={faUserTie} />
+                      <Field
+                        component={Select}
+                        options={hetchie.qualifications}
+                        value={qualifications}
+                        name="qualifications"
+                        placeholder="Qualifications"
+                        onChange={onChange(setQualifications)}
+                        onCreateOption={onCreateQualification}
+                        creatable
+                        isMulti
+                      />
+                    </InputGroup>
+                  </InputContainer>
+
+                  <InputContainer>
+                    <h3>Date</h3>
+                    <InputGroup>
+                      <InputIcon icon={faCalendarAlt} />
+                      <Field
+                        component={Input}
+                        type="date"
+                        name="date"
+                        placeholder={minDate}
+                        min={minDate}
+                        max={maxDate}
                       />
                     </InputGroup>
                   </InputContainer>

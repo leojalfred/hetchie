@@ -3,9 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Button from 'components/buttons/BigButton'
 import './Inputs.scss'
 
-export function InputLine({ className, children }) {
+export function InputLine({ className, children, ...props }) {
   const classes = classNames(className, 'input-line')
-  return <div className={classes}>{children}</div>
+  return (
+    <div className={classes} {...props}>
+      {children}
+    </div>
+  )
 }
 
 export function InputContainer({ className, children }) {
