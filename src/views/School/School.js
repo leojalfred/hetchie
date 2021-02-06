@@ -8,7 +8,7 @@ import {
   faMoneyCheckAlt,
 } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
-import { putName } from 'actions/data'
+import { putName, getData } from 'actions/data'
 import empty from 'utils/empty'
 import schema from 'validation/school'
 import { getError, combinedError } from 'validation/shared'
@@ -25,7 +25,7 @@ import {
 import Select from 'components/Select'
 import './School.scss'
 
-function School({ hetchie, error, putName }) {
+function School({ hetchie, error, putName, getData }) {
   const initialValues = {
     firm: '',
     gpaRequired: '',
@@ -58,6 +58,10 @@ function School({ hetchie, error, putName }) {
     putName('location', name, locations, setLocations)
   const onCreatePractice = name =>
     putName('practice', name, practices, setPractices)
+
+  useEffect(() => {
+    getData(['rankings', 'qualifications'])
+  }, [getData])
 
   return (
     <div className="school">
@@ -199,4 +203,4 @@ function School({ hetchie, error, putName }) {
 }
 
 const mapStateToProps = ({ hetchie, error }) => ({ hetchie, error })
-export default connect(mapStateToProps, { putName })(School)
+export default connect(mapStateToProps, { putName, getData })(School)

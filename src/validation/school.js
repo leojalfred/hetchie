@@ -28,9 +28,9 @@ export default yup.object({
   //   .array()
   //   .of(yup.string().required('Qualification is required.')),
   // links: yup.object({
-  //   firm: yup.string(),
-  //   chambers: yup.string(),
-  //   vault: yup.string(),
+  //   firm: yup.string().url('Firm link must be valid URL.'),
+  //   chambers: yup.string().url('Chambers link must be valid URL.'),
+  //   vault: yup.string().url('Vault link must be valid URL.'),
   // }),
   // date: yup.date().required('Interview date is required.'),
 })
