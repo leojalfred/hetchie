@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import axios from 'axios'
 import { Formik, Form, Field } from 'formik'
 import {
   faGavel,
@@ -12,6 +13,7 @@ import {
 import { connect } from 'react-redux'
 import { putName, getData } from 'actions/data'
 import empty from 'utils/empty'
+import sort from 'utils/sort'
 import schema from 'validation/school'
 import { getError, combinedError } from 'validation/shared'
 import Container from 'components/Container'
@@ -38,6 +40,7 @@ function School({ hetchie, error, putName, getData }) {
   }
 
   const [submitting, setSubmitting] = useState(false)
+  const [selectedFirm, setSelectedFirm] = useState()
   const [locations, setLocations] = useState([])
   const [practices, setPractices] = useState([])
   const [qualifications, setQualifications] = useState([])
@@ -56,6 +59,21 @@ function School({ hetchie, error, putName, getData }) {
     if (!empty(error)) setServerError(error)
     else setServerError('')
   }, [error])
+
+  const [firms, setFirms] = useState([])
+  useEffect(() => {
+    async function getter() {
+      const { data } = await axios.get('/api/firms')
+      const firmOptions = data.map(({ _id, name }) => ({
+        value: _id,
+        label: name,
+      }))
+
+      setFirms(firmOptions.sort(sort))
+    }
+
+    getter()
+  }, [])
 
   const onChange = setter => selected => setter(selected)
   const onCreateLocation = name =>
@@ -94,10 +112,12 @@ function School({ hetchie, error, putName, getData }) {
                 <InputGroup>
                   <InputIcon icon={faGavel} />
                   <Field
-                    component={Input}
-                    type="text"
-                    name="firm"
+                    component={Select}
+                    options={firms}
+                    value={selectedFirm}
+                    name="firms"
                     placeholder="Firm name"
+                    onChange={onChange(setSelectedFirm)}
                   />
                 </InputGroup>
 

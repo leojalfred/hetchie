@@ -115,7 +115,10 @@ function App({ user, getData }) {
         <ConditionalRoute
           exact
           path="/school"
-          condition={!empty(user) && user.data.role === 'school'}
+          condition={
+            !empty(user) &&
+            (user.data.role === 'admin' || user.data.role === 'school')
+          }
           component={School}
         />
         <ConditionalRoute

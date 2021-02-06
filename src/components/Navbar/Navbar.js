@@ -69,15 +69,16 @@ function Navbar({
               Admin
             </NavLink>
           )}
-          {!empty(user) && user.data.role === 'school' && (
-            <NavLink
-              className="navbar__link"
-              activeClassName="navbar__link--active"
-              to="/school"
-            >
-              School
-            </NavLink>
-          )}
+          {!empty(user) &&
+            (user.data.role === 'admin' || user.data.role === 'school') && (
+              <NavLink
+                className="navbar__link"
+                activeClassName="navbar__link--active"
+                to="/school"
+              >
+                School
+              </NavLink>
+            )}
           {component}
         </div>
       </Container>
