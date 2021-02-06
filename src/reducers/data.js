@@ -1,5 +1,6 @@
 import {
   SET_LOCATIONS_AND_PRACTICES,
+  SET_RANKINGS_AND_QUALIFICATIONS,
   ADD_LOCATION,
   ADD_PRACTICE,
 } from '../actions/types'
@@ -13,6 +14,12 @@ export default function data(state = initialState, { type, payload }) {
         ...state,
         locations: payload.locations,
         practices: payload.practices,
+      }
+    case SET_RANKINGS_AND_QUALIFICATIONS:
+      return {
+        ...state,
+        rankings: payload.rankings,
+        qualifications: payload.qualifications,
       }
     case ADD_LOCATION:
       const locations = [...state.locations, payload].sort(sort)

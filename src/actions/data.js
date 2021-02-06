@@ -1,15 +1,16 @@
 import axios from 'axios'
+import arraysEqual from 'utils/arraysEqual'
 import sort from 'utils/sort'
 import { setError } from './shared'
 import {
   SET_LOCATIONS_AND_PRACTICES,
+  SET_RANKINGS_AND_QUALIFICATIONS,
   ADD_LOCATION,
   ADD_PRACTICE,
 } from './types'
 
-export const getLocationsAndPractices = () => async dispatch => {
+export const getData = endpoints => async dispatch => {
   try {
-    const endpoints = ['locations', 'practices']
     const promises = []
     for (const endpoint of endpoints)
       promises.push(axios.get(`/api/${endpoint}`))
@@ -27,11 +28,14 @@ export const getLocationsAndPractices = () => async dispatch => {
       payload[endpoints[i]] = sortedOptions
     }
 
-    dispatch({
-      type: SET_LOCATIONS_AND_PRACTICES,
-      payload,
-    })
+    let type
+    if (arraysEqual(endpoints, ['locations', 'practices']))
+      type = SET_LOCATIONS_AND_PRACTICES
+    else if (arraysEqual(endpoints, ['rankings', 'qualifications']))
+      type = SET_RANKINGS_AND_QUALIFICATIONS
+    else return
 
+    dispatch({ type, payload })
     setError(dispatch, '')
   } catch ({ response }) {
     setError(dispatch, response.data)

@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import setToken from 'utils/authorization'
 import { setUser } from 'actions/user'
 import store from 'store'
-import { getLocationsAndPractices } from 'actions/data'
+import { getData } from 'actions/data'
 import SettingsModal from 'components/modals/SettingsModal'
 import PreferencesModal from 'components/modals/PreferencesModal'
 import RegisterModal from 'components/modals/RegisterModal'
@@ -27,7 +27,7 @@ if (sessionStorage.getItem('jwtToken')) {
   store.dispatch(setUser(decoded))
 }
 
-function App({ user, getLocationsAndPractices }) {
+function App({ user, getData }) {
   const [registerIsOpen, setRegisterIsOpen] = useState(false)
   const openRegisterModal = () => setRegisterIsOpen(true)
   const closeRegisterModal = () => setRegisterIsOpen(false)
@@ -47,8 +47,8 @@ function App({ user, getLocationsAndPractices }) {
   const closePreferencesModal = () => setPreferencesIsOpen(false)
 
   useEffect(() => {
-    if (user.loggedIn) getLocationsAndPractices()
-  }, [user.loggedIn, getLocationsAndPractices])
+    if (user.loggedIn) getData(['locations', 'practices'])
+  }, [user.loggedIn, getData])
 
   const [modals, setModals] = useState()
   useEffect(() => {
@@ -131,4 +131,4 @@ function App({ user, getLocationsAndPractices }) {
 }
 
 const mapStateToProps = ({ user }) => ({ user })
-export default connect(mapStateToProps, { getLocationsAndPractices })(App)
+export default connect(mapStateToProps, { getData })(App)

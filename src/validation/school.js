@@ -18,12 +18,12 @@ export default yup.object({
     .required('Large market salary is required.')
     .min(0, 'Large market salary must be at least $0.'),
   salarySmall: yup.number().min(0, 'Small market salary must be at least $0.'),
-  // rankings: yup.array().of(
-  //   yup.object({
-  //     position: yup.number().required('Ranking position is required.'),
-  //     ranking: yup.string().required('Ranking name is required.'),
-  //   })
-  // ),
+  rankings: yup.array().of(
+    yup.object({
+      position: yup.number().required('Ranking position is required.'),
+      ranking: yup.string().required('Ranking name is required.'),
+    })
+  ),
   // qualifications: yup
   //   .array()
   //   .of(yup.string().required('Qualification is required.')),
