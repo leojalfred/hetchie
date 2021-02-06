@@ -1,7 +1,11 @@
 import axios from 'axios'
 import sort from 'utils/sort'
 import { setError } from './shared'
-import { SET_LOCATIONS_AND_PRACTICES, ADD_LOCATION } from './types'
+import {
+  SET_LOCATIONS_AND_PRACTICES,
+  ADD_LOCATION,
+  ADD_PRACTICE,
+} from './types'
 
 export const getLocationsAndPractices = () => async dispatch => {
   try {
@@ -34,17 +38,28 @@ export const getLocationsAndPractices = () => async dispatch => {
   }
 }
 
-export const putLocation = (
+const targets = {
+  location: {
+    endpoint: '/api/locations',
+    type: ADD_LOCATION,
+  },
+  practice: {
+    endpoint: '/api/practices',
+    type: ADD_PRACTICE,
+  },
+}
+export const putName = (
+  target,
   name,
-  locations,
-  setLocations
+  selected,
+  setSelected
 ) => async dispatch => {
   try {
-    const { data } = await axios.put('/api/locations', { name })
+    const { data } = await axios.put(targets[target].endpoint, { name })
     const payload = { value: data._id, label: data.name }
-    setLocations([...locations, payload])
+    setSelected([...selected, payload])
 
-    dispatch({ type: ADD_LOCATION, payload })
+    dispatch({ type: targets[target].type, payload })
     setError(dispatch, '')
   } catch ({ response }) {
     setError(dispatch, response.data)

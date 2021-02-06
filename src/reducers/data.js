@@ -22,9 +22,11 @@ export default function data(state = initialState, { type, payload }) {
         locations,
       }
     case ADD_PRACTICE:
+      const practices = [...state.practices, payload].sort(sort)
+
       return {
         ...state,
-        practices: [...state.practices, payload],
+        practices,
       }
     default:
       return state
