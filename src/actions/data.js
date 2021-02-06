@@ -29,6 +29,7 @@ export const getData = endpoints => async dispatch => {
     }
 
     let type
+    console.log(endpoints)
     if (arraysEqual(endpoints, ['locations', 'practices']))
       type = SET_LOCATIONS_AND_PRACTICES
     else if (arraysEqual(endpoints, ['rankings', 'qualifications']))
