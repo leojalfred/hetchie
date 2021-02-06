@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { SET_USER } from './types'
+import { SET_USER, CLEAR_USER, CLEAR_DATA } from './types'
 import { setError } from './shared'
 import setToken from '../utils/authorization'
 
@@ -54,7 +54,8 @@ export const logout = () => dispatch => {
   sessionStorage.removeItem('jwtToken')
   setToken()
 
-  dispatch(setUser({}))
+  dispatch({ type: CLEAR_USER })
+  dispatch({ type: CLEAR_DATA })
 }
 
 export const put = (url, body) => async dispatch => {

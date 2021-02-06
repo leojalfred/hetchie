@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import Container from 'components/Container'
 import Button from 'components/buttons/Button'
 import Settings from './components/Settings'
+import empty from 'utils/empty'
 import './Navbar.scss'
 
 function Navbar({
@@ -59,7 +60,7 @@ function Navbar({
           >
             About
           </NavLink>
-          {user.data.role === 'admin' && (
+          {!empty(user) && user.data.role === 'admin' && (
             <NavLink
               className="navbar__link"
               activeClassName="navbar__link--active"
@@ -68,7 +69,7 @@ function Navbar({
               Admin
             </NavLink>
           )}
-          {user.data.role === 'school' && (
+          {!empty(user) && user.data.role === 'school' && (
             <NavLink
               className="navbar__link"
               activeClassName="navbar__link--active"

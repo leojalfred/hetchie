@@ -14,6 +14,7 @@ import Navbar from 'components/navbar/Navbar'
 import Home from 'views/Home/Home'
 import About from 'views/About/About'
 import ConditionalRoute from 'components/ConditionalRoute'
+import empty from 'utils/empty'
 import Firms from 'views/Firms/Firms'
 import Admin from 'views/Admin/Admin'
 import School from 'views/School/School'
@@ -108,19 +109,19 @@ function App({ user, getData }) {
         <ConditionalRoute
           exact
           path="/firms"
-          condition={user.loggedIn === true}
+          condition={!empty(user) && user.loggedIn === true}
           component={Firms}
         />
         <ConditionalRoute
           exact
           path="/school"
-          condition={user.data.role === 'school'}
+          condition={!empty(user) && user.data.role === 'school'}
           component={School}
         />
         <ConditionalRoute
           exact
           path="/admin"
-          condition={user.data.role === 'admin'}
+          condition={!empty(user) && user.data.role === 'admin'}
           component={Admin}
         />
       </Switch>

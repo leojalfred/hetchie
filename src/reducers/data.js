@@ -3,6 +3,7 @@ import {
   SET_RANKINGS_AND_QUALIFICATIONS,
   ADD_LOCATION,
   ADD_PRACTICE,
+  CLEAR_DATA,
 } from '../actions/types'
 import sort from 'utils/sort'
 
@@ -35,6 +36,8 @@ export default function data(state = initialState, { type, payload }) {
         ...state,
         practices,
       }
+    case CLEAR_DATA:
+      return {}
     default:
       return state
   }
