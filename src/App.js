@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import setToken from 'utils/authorization'
 import { setUser } from 'actions/user'
 import store from 'store'
+import getData from 'utils/getData'
 import SettingsModal from 'components/modals/SettingsModal'
 import PreferencesModal from 'components/modals/PreferencesModal'
 import RegisterModal from 'components/modals/RegisterModal'
@@ -45,6 +46,13 @@ function App({ user }) {
   const openPreferencesModal = () => setPreferencesIsOpen(true)
   const closePreferencesModal = () => setPreferencesIsOpen(false)
 
+  const [locations, setLocations] = useState([])
+  const [practices, setPractices] = useState([])
+  useEffect(() => {
+    if (user.loggedIn)
+      getData(['locations', 'practices'], [setLocations, setPractices])
+  }, [user.loggedIn])
+
   const [modals, setModals] = useState()
   useEffect(() => {
     let displayedModals = user.loggedIn ? (
@@ -56,6 +64,8 @@ function App({ user }) {
         <PreferencesModal
           isOpen={preferencesIsOpen}
           closeModal={closePreferencesModal}
+          locations={locations}
+          practices={practices}
         />
       </>
     ) : (
@@ -81,6 +91,8 @@ function App({ user }) {
     loginIsOpen,
     settingsIsOpen,
     preferencesIsOpen,
+    locations,
+    practices,
   ])
 
   return (
@@ -111,6 +123,8 @@ function App({ user }) {
           path="/school"
           condition={user.data.role === 'school'}
           component={School}
+          locations={locations}
+          practices={practices}
         />
         <ConditionalRoute
           exact

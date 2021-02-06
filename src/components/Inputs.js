@@ -31,7 +31,7 @@ export function Input({ className, field, form, ...rest }) {
 export function Submit({ className, isSubmitting, children }) {
   const classes = classNames(className, 'submit')
   return (
-    <Button className={classes} disabled={isSubmitting}>
+    <Button className={classes} type="submit" disabled={isSubmitting}>
       {children}
     </Button>
   )

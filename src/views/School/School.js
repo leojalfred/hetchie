@@ -8,7 +8,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
 import empty from 'utils/empty'
-import getData from 'utils/getData'
 import schema from 'validation/school'
 import { getError, combinedError } from 'validation/shared'
 import Container from 'components/Container'
@@ -24,29 +23,19 @@ import {
 import Select from 'components/Select'
 import './School.scss'
 
-function School({ error }) {
-  const initialValues = {
-    firm: '',
-    locations: [],
-    practices: [],
-    gpa: {
-      required: 4,
-      band: 4,
-    },
-    salary: {
-      small: 150000,
-      large: 190000,
-    },
-    rankings: [],
-    qualifications: [],
-    links: {
-      firm: '',
-      chambers: '',
-      vault: '',
-    },
-    date: '',
+function School({ error, locations, practices }) {
+  const [submitting, setSubmitting] = useState(false)
+  const [userLocations, setUserLocations] = useState([])
+  const [userPractices, setUserPractices] = useState([])
+  const onSubmit = data => {
+    setSubmitting(true)
+
+    data.locations = userLocations
+    data.practices = userPractices
+    console.log(data)
+
+    setSubmitting(false)
   }
-  const handleSubmit = () => {}
 
   const [serverError, setServerError] = useState('')
   useEffect(() => {
@@ -54,12 +43,7 @@ function School({ error }) {
     else setServerError('')
   }, [error])
 
-  const [locations, setLocations] = useState([])
-  const [practices, setPractices] = useState([])
-  useEffect(
-    () => getData(['locations', 'practices'], [setLocations, setPractices]),
-    []
-  )
+  const onChange = setter => selected => setter(selected)
 
   return (
     <div className="school">
@@ -67,11 +51,11 @@ function School({ error }) {
         <h1>School Tools</h1>
         <h2>Add Firms</h2>
         <Formik
-          initialValues={initialValues}
+          initialValues={{}}
           validationSchema={schema}
-          onSubmit={handleSubmit}
+          onSubmit={onSubmit}
         >
-          {({ errors, touched, isSubmitting }) => (
+          {({ errors, touched }) => (
             <>
               {getError(serverError, errors, touched)}
               <Error message={combinedError} />
@@ -98,6 +82,7 @@ function School({ error }) {
                         options={locations}
                         name="locations"
                         placeholder="Locations"
+                        onChange={onChange(setUserLocations)}
                         creatable
                         isMulti
                       />
@@ -113,6 +98,7 @@ function School({ error }) {
                         options={practices}
                         name="practices"
                         placeholder="Practices"
+                        onChange={onChange(setUserPractices)}
                         creatable
                         isMulti
                       />
@@ -130,6 +116,7 @@ function School({ error }) {
                         type="number"
                         name="gpa.required"
                         placeholder="4.0"
+                        step="0.01"
                         min="1"
                         max="4"
                       />
@@ -145,6 +132,7 @@ function School({ error }) {
                         type="number"
                         name="gpa.band"
                         placeholder="4.0"
+                        step="0.01"
                         min="1"
                         max="4"
                       />
@@ -152,7 +140,7 @@ function School({ error }) {
                   </InputContainer>
                 </InputLine>
 
-                <Submit isSubmitting={isSubmitting}>Add firm</Submit>
+                <Submit isSubmitting={submitting}>Add firm</Submit>
               </Form>
             </>
           )}

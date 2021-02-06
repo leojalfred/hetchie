@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import { string } from 'yup'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faListOl, faUserGraduate } from '@fortawesome/free-solid-svg-icons'
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import { connect } from 'react-redux'
 import empty from 'utils/empty'
-import getData from 'utils/getData'
 import { put } from 'actions/user'
 import Modal from './components/Modal'
 import Error from 'components/Error'
@@ -14,19 +12,20 @@ import Ranker from './components/Ranker'
 import Button from 'components/buttons/BigButton'
 import './PreferencesModal.scss'
 
-function PreferencesModal({ user, error, put, isOpen, closeModal }) {
+function PreferencesModal({
+  user,
+  error,
+  put,
+  isOpen,
+  closeModal,
+  locations,
+  practices,
+}) {
   const [message, setMessage] = useState('')
   useEffect(() => {
     if (!empty(error)) setMessage(error)
     else setMessage('')
   }, [error])
-
-  const [locations, setLocations] = useState()
-  const [practices, setPractices] = useState()
-  useEffect(
-    () => getData(['locations', 'practices'], [setLocations, setPractices]),
-    []
-  )
 
   const [gpa, setGPA] = useState('')
   const [userLocations, setUserLocations] = useState([])

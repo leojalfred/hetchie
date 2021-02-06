@@ -34,6 +34,7 @@ export const idSchema = schema =>
 
 export let combinedError = ''
 export function getError(serverError, clientErrors, touched) {
+  // console.log(clientErrors)
   if (!empty(clientErrors)) {
     for (const [key, error] of Object.entries(clientErrors)) {
       if (touched[key]) combinedError = error
