@@ -15,7 +15,7 @@ import { emailSchema, getError, combinedError } from 'validation/shared'
 import { login } from 'actions/user'
 import Modal from './components/Modal'
 import Error from 'components/Error'
-import Button from 'components/Buttons/BigButton'
+import Button from 'components/buttons/BigButton'
 
 function LoginModal({
   error,

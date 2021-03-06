@@ -4,7 +4,7 @@ import { Link, NavLink } from 'react-router-dom'
 import path from 'path'
 import { connect } from 'react-redux'
 import Container from 'components/Container'
-import Button from 'components/Buttons/Button'
+import Button from 'components/buttons/Button'
 import Settings from './components/Settings'
 import './Navbar.scss'
 
@@ -59,7 +59,7 @@ function Navbar({
           >
             About
           </NavLink>
-          {user.data.admin && (
+          {user.data.role === 'admin' && (
             <NavLink
               className="navbar__link"
               activeClassName="navbar__link--active"

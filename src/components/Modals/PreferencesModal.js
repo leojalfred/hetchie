@@ -10,7 +10,7 @@ import { put } from 'actions/user'
 import Modal from './components/Modal'
 import Error from 'components/Error'
 import Ranker from './components/Ranker'
-import Button from 'components/Buttons/BigButton'
+import Button from 'components/buttons/BigButton'
 import './PreferencesModal.scss'
 
 function PreferencesModal({ user, error, put, isOpen, closeModal }) {

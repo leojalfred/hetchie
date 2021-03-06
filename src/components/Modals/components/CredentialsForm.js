@@ -15,7 +15,7 @@ import schema from 'validation/credentials'
 import { getError, combinedError } from 'validation/shared'
 import { putUser } from 'actions/user'
 import Error from 'components/Error'
-import Button from 'components/Buttons/BigButton'
+import Button from 'components/buttons/BigButton'
 import './CredentialsForm.scss'
 
 function CredentialsForm({

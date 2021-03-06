@@ -5,7 +5,7 @@ import stringify from 'csv-stringify'
 import { saveAs } from 'file-saver'
 import './Admin.scss'
 import Container from 'components/Container'
-import Button from 'components/Buttons/Button'
+import Button from 'components/buttons/Button'
 
 export default function Admin() {
   const [action, setAction] = useState('add')
@@ -49,7 +49,6 @@ export default function Admin() {
           }
         },
         columns: [
-          '_id',
           'name',
           'firmLink',
           'chambersLink',
@@ -68,7 +67,6 @@ export default function Admin() {
       parse(reader.result, options, async (error, records) => {
         if (!error) {
           const data = records.map(record => ({
-            _id: record._id,
             name: record.name,
             links: {
               firm: record.firmLink,
