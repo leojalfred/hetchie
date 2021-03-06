@@ -47,10 +47,29 @@ function School({ hetchie, error, putName, getData }) {
   const onSubmit = data => {
     setSubmitting(true)
 
-    data.locations = locations
-    data.practices = practices
-    data.firm = selectedFirm
-    console.log(data)
+    const firm = selectedFirm.value
+
+    const getID = ({ value }) => value
+    const locationIDs = locations.map(getID)
+    const practiceIDs = practices.map(getID)
+    const qualificationIDs = qualifications.map(getID)
+
+    const payload = {
+      firm,
+      locations: locationIDs,
+      practices: practiceIDs,
+      salary: {
+        large: data.salaryLarge,
+        small: data.salarySmall,
+      },
+      qualifications: qualificationIDs,
+      gpa: {
+        required: data.gpaRequired,
+        band: data.gpaBand,
+      },
+    }
+
+    console.log(payload)
 
     setSubmitting(false)
   }
@@ -63,7 +82,7 @@ function School({ hetchie, error, putName, getData }) {
 
   const [firms, setFirms] = useState([])
   useEffect(() => {
-    async function getter() {
+    async function getFirms() {
       const { data } = await axios.get('/api/firms')
       const firmOptions = data.map(({ _id, name }) => ({
         value: _id,
@@ -73,7 +92,7 @@ function School({ hetchie, error, putName, getData }) {
       setFirms(firmOptions.sort(sort))
     }
 
-    getter()
+    getFirms()
   }, [])
 
   const onChange = setter => selected => setter(selected)
@@ -85,7 +104,7 @@ function School({ hetchie, error, putName, getData }) {
     putName('qualification', name, qualifications, setQualifications)
 
   useEffect(() => {
-    getData(['qualifications'])
+    getData('qualifications')
   }, [getData])
 
   const minDate = new Date().toLocaleDateString('en-US')
@@ -259,7 +278,7 @@ function School({ hetchie, error, putName, getData }) {
                   </InputContainer>
                 </InputLine>
 
-                <Submit isSubmitting={submitting}>Add firm</Submit>
+                <Submit isSubmitting={submitting}>Add office</Submit>
               </Form>
             </>
           )}
