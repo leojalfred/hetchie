@@ -14,7 +14,7 @@ import { connect } from 'react-redux'
 import empty from 'utils/empty'
 import sort from 'utils/sort'
 import { putName, getData } from 'actions/data'
-import schema from 'validation/school'
+import schema from 'validation/office'
 import { getError, combinedError } from 'validation/shared'
 import Error from 'components/Error'
 import {
@@ -112,7 +112,7 @@ function OfficeForm({ hetchie, error, putName, getData }) {
 
   return (
     <div>
-      <h2>Add Firms</h2>
+      <h2>Add Offices</h2>
       <Formik
         initialValues={initialValues}
         validationSchema={schema}
