@@ -10,8 +10,8 @@ import Select from 'components/Select'
 
 function RankingLine({ hetchie }) {
   return (
-    <InputLine>
-      <InputGroup title="Position" type="4" icon={faSortNumericUp}>
+    <InputLine grid="3">
+      <InputGroup title="Position" type="sub" icon={faSortNumericUp}>
         <Field
           component={Input}
           type="number"
@@ -22,7 +22,7 @@ function RankingLine({ hetchie }) {
         />
       </InputGroup>
 
-      <InputGroup title="Ranking" type="4" icon={faUniversity}>
+      <InputGroup title="Ranking" type="sub" icon={faUniversity}>
         <Field
           component={Select}
           options={hetchie.rankings}
@@ -32,7 +32,7 @@ function RankingLine({ hetchie }) {
         />
       </InputGroup>
 
-      <InputGroup title="Link" type="4" icon={faLink}>
+      <InputGroup title="Link" type="sub" icon={faLink}>
         <Field
           component={Input}
           type="text"
