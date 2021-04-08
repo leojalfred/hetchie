@@ -1,18 +1,17 @@
 import { useState, useEffect } from 'react'
 import { Formik, Form, Field } from 'formik'
-import { faGavel, faLink } from '@fortawesome/free-solid-svg-icons'
+import {
+  faGavel,
+  faLink,
+  faInfo,
+  faSortNumericUp,
+} from '@fortawesome/free-solid-svg-icons'
 import empty from 'utils/empty'
 import schema from 'validation/firm'
 import { getError, combinedError } from 'validation/shared'
 import Error from 'components/Error'
-import {
-  InputLine,
-  InputContainer,
-  InputGroup,
-  InputIcon,
-  Input,
-  Submit,
-} from 'components/Inputs'
+import { InputLine, InputGroup, Input, Submit } from 'components/Inputs'
+import RankingLine from './RankingLine'
 
 function FirmForm({ error }) {
   const initialValues = {
@@ -52,32 +51,47 @@ function FirmForm({ error }) {
 
             <Form>
               <InputLine>
-                <InputContainer>
-                  <h3>Firm name</h3>
-                  <InputGroup>
-                    <InputIcon icon={faGavel} />
-                    <Field
-                      component={Input}
-                      type="text"
-                      name="name"
-                      placeholder="Firm name"
-                    />
-                  </InputGroup>
-                </InputContainer>
+                <InputGroup title="Firm name" icon={faGavel}>
+                  <Field
+                    component={Input}
+                    type="text"
+                    name="name"
+                    placeholder="Firm name"
+                  />
+                </InputGroup>
 
-                <InputContainer>
-                  <h3>Firm link</h3>
-                  <InputGroup>
-                    <InputIcon icon={faLink} />
-                    <Field
-                      component={Input}
-                      type="url"
-                      name="firmLink"
-                      placeholder="Firm link"
-                    />
-                  </InputGroup>
-                </InputContainer>
+                <InputGroup title="Firm link" icon={faLink}>
+                  <Field
+                    component={Input}
+                    type="url"
+                    name="firmLink"
+                    placeholder="Firm link"
+                  />
+                </InputGroup>
               </InputLine>
+
+              <InputLine>
+                <InputGroup title="Chambers link" icon={faInfo}>
+                  <Field
+                    component={Input}
+                    type="url"
+                    name="chambersLink"
+                    placeholder="Chambers link"
+                  />
+                </InputGroup>
+
+                <InputGroup title="Vault link" icon={faSortNumericUp}>
+                  <Field
+                    component={Input}
+                    type="url"
+                    name="vaultLink"
+                    placeholder="Vault link"
+                  />
+                </InputGroup>
+              </InputLine>
+
+              <h3 className="rankings-heading">Vault Rankings</h3>
+              <RankingLine />
 
               <Submit isSubmitting={submitting}>Add firm</Submit>
             </Form>

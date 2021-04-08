@@ -17,14 +17,7 @@ import { putName, getData } from 'actions/data'
 import schema from 'validation/office'
 import { getError, combinedError } from 'validation/shared'
 import Error from 'components/Error'
-import {
-  InputLine,
-  InputContainer,
-  InputGroup,
-  InputIcon,
-  Input,
-  Submit,
-} from 'components/Inputs'
+import { InputLine, InputGroup, Input, Submit } from 'components/Inputs'
 import Select from 'components/Select'
 
 function OfficeForm({ hetchie, error, putName, getData }) {
@@ -124,154 +117,122 @@ function OfficeForm({ hetchie, error, putName, getData }) {
             <Error message={combinedError} />
 
             <Form>
-              <h3>Firm name</h3>
-              <InputGroup>
-                <InputIcon icon={faGavel} />
-                <Field
-                  component={Select}
-                  options={firms}
-                  value={selectedFirm}
-                  name="firms"
-                  placeholder="Firm name"
-                  onChange={onChange(setSelectedFirm)}
-                />
-              </InputGroup>
-
               <InputLine>
-                <InputContainer>
-                  <h3>Locations</h3>
-                  <InputGroup>
-                    <InputIcon icon={faMapMarkedAlt} />
-                    <Field
-                      component={Select}
-                      options={hetchie.locations}
-                      value={locations}
-                      name="locations"
-                      placeholder="Locations"
-                      onChange={onChange(setLocations)}
-                      onCreateOption={onCreateLocation}
-                      creatable
-                      isMulti
-                    />
-                  </InputGroup>
-                </InputContainer>
-
-                <InputContainer>
-                  <h3>Practices</h3>
-                  <InputGroup>
-                    <InputIcon icon={faBriefcase} />
-                    <Field
-                      component={Select}
-                      options={hetchie.practices}
-                      value={practices}
-                      name="practices"
-                      placeholder="Practices"
-                      onChange={onChange(setPractices)}
-                      onCreateOption={onCreatePractice}
-                      creatable
-                      isMulti
-                    />
-                  </InputGroup>
-                </InputContainer>
+                <InputGroup title="Firm name" icon={faGavel}>
+                  <Field
+                    component={Select}
+                    options={firms}
+                    value={selectedFirm}
+                    name="firms"
+                    placeholder="Firm name"
+                    onChange={onChange(setSelectedFirm)}
+                  />
+                </InputGroup>
               </InputLine>
 
               <InputLine>
-                <InputContainer>
-                  <h3>Required GPA</h3>
-                  <InputGroup>
-                    <InputIcon icon={faUserGraduate} />
-                    <Field
-                      component={Input}
-                      type="number"
-                      name="gpaRequired"
-                      placeholder="4.0"
-                      step="0.01"
-                      min="1"
-                      max="4"
-                    />
-                  </InputGroup>
-                </InputContainer>
+                <InputGroup title="Locations" icon={faMapMarkedAlt}>
+                  <Field
+                    component={Select}
+                    options={hetchie.locations}
+                    value={locations}
+                    name="locations"
+                    placeholder="Locations"
+                    onChange={onChange(setLocations)}
+                    onCreateOption={onCreateLocation}
+                    creatable
+                    isMulti
+                  />
+                </InputGroup>
 
-                <InputContainer>
-                  <h3>Preferred GPA</h3>
-                  <InputGroup>
-                    <InputIcon icon={faUserGraduate} />
-                    <Field
-                      component={Input}
-                      type="number"
-                      name="gpaBand"
-                      placeholder="4.0"
-                      step="0.01"
-                      min="1"
-                      max="4"
-                    />
-                  </InputGroup>
-                </InputContainer>
+                <InputGroup title="Practices" icon={faBriefcase}>
+                  <Field
+                    component={Select}
+                    options={hetchie.practices}
+                    value={practices}
+                    name="practices"
+                    placeholder="Practices"
+                    onChange={onChange(setPractices)}
+                    onCreateOption={onCreatePractice}
+                    creatable
+                    isMulti
+                  />
+                </InputGroup>
               </InputLine>
 
               <InputLine>
-                <InputContainer>
-                  <h3>Large market salary</h3>
-                  <InputGroup>
-                    <InputIcon icon={faMoneyCheckAlt} />
-                    <Field
-                      component={Input}
-                      type="number"
-                      name="salaryLarge"
-                      placeholder="190000"
-                      min="0"
-                    />
-                  </InputGroup>
-                </InputContainer>
+                <InputGroup title="Required GPA" icon={faUserGraduate}>
+                  <Field
+                    component={Input}
+                    type="number"
+                    name="gpaRequired"
+                    placeholder="4.0"
+                    step="0.01"
+                    min="1"
+                    max="4"
+                  />
+                </InputGroup>
 
-                <InputContainer>
-                  <h3>Small market salary</h3>
-                  <InputGroup>
-                    <InputIcon icon={faMoneyCheckAlt} />
-                    <Field
-                      component={Input}
-                      type="number"
-                      name="salarySmall"
-                      placeholder="150000"
-                      min="0"
-                    />
-                  </InputGroup>
-                </InputContainer>
+                <InputGroup title="Preferred GPA" icon={faUserGraduate}>
+                  <Field
+                    component={Input}
+                    type="number"
+                    name="gpaBand"
+                    placeholder="4.0"
+                    step="0.01"
+                    min="1"
+                    max="4"
+                  />
+                </InputGroup>
               </InputLine>
 
               <InputLine>
-                <InputContainer>
-                  <h3>Qualifications</h3>
-                  <InputGroup>
-                    <InputIcon icon={faUserTie} />
-                    <Field
-                      component={Select}
-                      options={hetchie.qualifications}
-                      value={qualifications}
-                      name="qualifications"
-                      placeholder="Qualifications"
-                      onChange={onChange(setQualifications)}
-                      onCreateOption={onCreateQualification}
-                      creatable
-                      isMulti
-                    />
-                  </InputGroup>
-                </InputContainer>
+                <InputGroup title="Large market salary" icon={faMoneyCheckAlt}>
+                  <Field
+                    component={Input}
+                    type="number"
+                    name="salaryLarge"
+                    placeholder="190000"
+                    min="0"
+                  />
+                </InputGroup>
 
-                <InputContainer>
-                  <h3>Date</h3>
-                  <InputGroup>
-                    <InputIcon icon={faCalendarAlt} />
-                    <Field
-                      component={Input}
-                      type="date"
-                      name="date"
-                      placeholder={minDate}
-                      min={minDate}
-                      max={maxDate}
-                    />
-                  </InputGroup>
-                </InputContainer>
+                <InputGroup title="Small market salary" icon={faMoneyCheckAlt}>
+                  <Field
+                    component={Input}
+                    type="number"
+                    name="salarySmall"
+                    placeholder="150000"
+                    min="0"
+                  />
+                </InputGroup>
+              </InputLine>
+
+              <InputLine>
+                <InputGroup title="Qualifications" icon={faUserTie}>
+                  <Field
+                    component={Select}
+                    options={hetchie.qualifications}
+                    value={qualifications}
+                    name="qualifications"
+                    placeholder="Qualifications"
+                    onChange={onChange(setQualifications)}
+                    onCreateOption={onCreateQualification}
+                    creatable
+                    isMulti
+                  />
+                </InputGroup>
+
+                <InputGroup title="Date" icon={faCalendarAlt}>
+                  <Field
+                    component={Input}
+                    type="date"
+                    name="date"
+                    placeholder={minDate}
+                    min={minDate}
+                    max={maxDate}
+                  />
+                </InputGroup>
               </InputLine>
 
               <Submit isSubmitting={submitting}>Add office</Submit>
