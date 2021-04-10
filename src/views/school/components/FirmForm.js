@@ -19,6 +19,11 @@ function FirmForm({ error }) {
 
   const [rankings, setRankings] = useState([null])
   const onSubmit = data => {
+    if (rankings.some(ranking => ranking === null)) {
+      setServerError('Ranking must not be null.')
+      return
+    }
+
     setSubmitting(true)
     console.log(data)
     console.log(rankings)
@@ -90,6 +95,7 @@ function FirmForm({ error }) {
               <Rankings
                 rankings={rankings}
                 setRankings={setRankings}
+                setError={setServerError}
                 submitting={submitting}
               />
             </Form>

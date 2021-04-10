@@ -11,11 +11,19 @@ import Select from 'components/Select'
 import Button from 'components/buttons/Button'
 import './Rankings.scss'
 
-function RankingLine({ rankings, setRankings, hetchie, putName, submitting }) {
+function RankingLine({
+  rankings,
+  setRankings,
+  setError,
+  hetchie,
+  putName,
+  submitting,
+}) {
   const onChange = i => selected => {
     const newRankings = [...rankings]
     newRankings[i] = selected
 
+    if (!newRankings.some(ranking => ranking === null)) setError('')
     setRankings(newRankings)
   }
 
