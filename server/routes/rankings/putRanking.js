@@ -1,5 +1,5 @@
 import validate from '../../validation/ranking'
-import Ranking from '../../models/Practice'
+import Ranking from '../../models/Ranking'
 
 export default async function putRanking({ body }, response) {
   const { message, valid } = validate(body)

@@ -17,9 +17,11 @@ function FirmForm({ error }) {
     rankings: [{ position: '', link: '' }],
   }
 
+  const [rankings, setRankings] = useState([null])
   const onSubmit = data => {
     setSubmitting(true)
     console.log(data)
+    console.log(rankings)
     setSubmitting(false)
   }
 
@@ -29,7 +31,6 @@ function FirmForm({ error }) {
     else setServerError('')
   }, [error])
 
-  const [rankings, setRankings] = useState([''])
   const [submitting, setSubmitting] = useState(false)
 
   return (

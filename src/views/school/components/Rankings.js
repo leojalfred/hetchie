@@ -5,15 +5,26 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FieldArray, Field } from 'formik'
 import { connect } from 'react-redux'
+import { putName } from 'actions/data'
 import { InputLine, InputGroup, Input, Submit } from 'components/Inputs'
 import Select from 'components/Select'
 import Button from 'components/buttons/Button'
 import './Rankings.scss'
 
-function RankingLine({ hetchie, rankings, setRankings, submitting }) {
+function RankingLine({ rankings, setRankings, hetchie, putName, submitting }) {
+  const onChange = i => selected => {
+    const newRankings = [...rankings]
+    newRankings[i] = selected
+
+    setRankings(newRankings)
+  }
+
+  const onCreate = i => name =>
+    putName('ranking', name, rankings, setRankings, i)
+
   const addRanking = array => () => {
     array.push({ position: '', link: '' })
-    setRankings([...rankings, ''])
+    setRankings([...rankings, null])
   }
 
   return (
@@ -46,8 +57,10 @@ function RankingLine({ hetchie, rankings, setRankings, submitting }) {
                     <Field
                       component={Select}
                       options={hetchie.rankings}
-                      name={`rankings[${i}].name`}
                       placeholder="Ranking"
+                      value={rankings[i]}
+                      onChange={onChange(i)}
+                      onCreateOption={onCreate(i)}
                       creatable
                     />
                   </InputGroup>
@@ -84,4 +97,4 @@ function RankingLine({ hetchie, rankings, setRankings, submitting }) {
 }
 
 const mapStateToProps = ({ hetchie }) => ({ hetchie })
-export default connect(mapStateToProps)(RankingLine)
+export default connect(mapStateToProps, { putName })(RankingLine)

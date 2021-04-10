@@ -1,6 +1,12 @@
 import axios from 'axios'
 import sort from 'utils/sort'
-import { SET_DATA, ADD_LOCATION, ADD_PRACTICE } from './types'
+import {
+  SET_DATA,
+  ADD_LOCATION,
+  ADD_PRACTICE,
+  ADD_QUALIFICATION,
+  ADD_RANKING,
+} from './types'
 import { setError } from './shared'
 
 export const getData = () => async dispatch => {
@@ -45,17 +51,32 @@ const targets = {
     endpoint: '/api/practices',
     type: ADD_PRACTICE,
   },
+  qualification: {
+    endpoint: '/api/qualifications',
+    type: ADD_QUALIFICATION,
+  },
+  ranking: {
+    endpoint: '/api/rankings',
+    type: ADD_RANKING,
+  },
 }
 export const putName = (
   target,
   name,
   selected,
-  setSelected
+  setSelected,
+  i
 ) => async dispatch => {
   try {
     const { data } = await axios.put(targets[target].endpoint, { name })
     const payload = { value: data._id, label: data.name }
-    setSelected([...selected, payload])
+
+    if (i !== undefined) {
+      const newSelected = [...selected]
+      newSelected[i] = payload
+
+      setSelected(newSelected)
+    } else setSelected([...selected, payload])
 
     dispatch({ type: targets[target].type, payload })
     setError(dispatch, '')
