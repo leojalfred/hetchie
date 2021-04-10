@@ -2,7 +2,7 @@
 
 .button--big {
   border-width: 2px;
-  font-family: 'BioRhyme', serif;
+  font-family: $biorhyme;
 
   @include bp($s) {
     border-width: medium;

@@ -7,7 +7,6 @@ import { getError, combinedError } from 'validation/shared'
 import Error from 'components/Error'
 import { InputLine, InputGroup, Input } from 'components/Inputs'
 import Rankings from './Rankings'
-import './FirmForm.scss'
 
 function FirmForm({ error }) {
   const initialValues = {

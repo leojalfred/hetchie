@@ -1,5 +1,4 @@
-@import './mixins';
-@import './variables';
+@import 'mixins';
 
 body {
   -webkit-font-smoothing: antialiased;
@@ -9,7 +8,7 @@ body {
 body,
 button,
 input {
-  font-family: 'Cabin', sans-serif;
+  font-family: $cabin;
 }
 
 h1,
@@ -18,7 +17,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'BioRhyme', serif;
+  font-family: $biorhyme;
 }
 
 h1 {

@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import { InputLine, InputGroup, Input, Submit } from 'components/Inputs'
 import Select from 'components/Select'
 import Button from 'components/buttons/Button'
+import './Rankings.scss'
 
 function RankingLine({ hetchie, rankings, setRankings, submitting }) {
   const addRanking = array => () => {
