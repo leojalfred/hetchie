@@ -5,15 +5,19 @@ export default yup.object({
   firmLink: yup.string().url('Firm link must be valid URL.'),
   chambersLink: yup.string().url('Chambers link must be valid URL.'),
   vaultLink: yup.string().url('Vault link must be valid URL.'),
-  positions: yup.array(
-    yup
-      .number()
-      .typeError('Position must be a number.')
-      .integer('Position must be an integer.')
-      .min(1, 'Position year must be at least 1.')
-      .max(100, 'Position year must be at most 100.')
-  ),
-  rankingLinks: yup.array(
-    yup.string().url('Ranking link must be a valid URL.')
+  rankings: yup.array(
+    yup.object({
+      position: yup
+        .number()
+        .required('Ranking position is required.')
+        .typeError('Ranking position must be a number.')
+        .integer('Ranking position must be an integer.')
+        .min(1, 'Ranking position year must be at least 1.')
+        .max(100, 'Ranking position year must be at most 100.'),
+      link: yup
+        .string()
+        .required('Ranking link is required.')
+        .url('Ranking link must be a valid URL.'),
+    })
   ),
 })
