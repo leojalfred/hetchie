@@ -1,6 +1,5 @@
 import {
-  SET_LOCATIONS_AND_PRACTICES,
-  SET_QUALIFICATIONS,
+  SET_DATA,
   ADD_LOCATION,
   ADD_PRACTICE,
   CLEAR_DATA,
@@ -10,16 +9,14 @@ import sort from 'utils/sort'
 const initialState = { locations: [], practices: [] }
 export default function data(state = initialState, { type, payload }) {
   switch (type) {
-    case SET_LOCATIONS_AND_PRACTICES:
+    case SET_DATA:
       return {
         ...state,
+        firms: payload.firms,
         locations: payload.locations,
         practices: payload.practices,
-      }
-    case SET_QUALIFICATIONS:
-      return {
-        ...state,
         qualifications: payload.qualifications,
+        rankings: payload.rankings,
       }
     case ADD_LOCATION:
       const locations = [...state.locations, payload].sort(sort)

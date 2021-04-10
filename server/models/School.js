@@ -19,10 +19,7 @@ const school = new Schema({
           date: { type: Date, required: true },
         },
       ],
-      gpa: {
-        required: { type: Number, required: true },
-        band: Number,
-      },
+      gpa: { type: Number, required: true },
     },
   ],
   protected: { type: Boolean, default: false, required: true },

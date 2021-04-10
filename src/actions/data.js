@@ -1,23 +1,20 @@
 import axios from 'axios'
-import arraysEqual from 'utils/arraysEqual'
 import sort from 'utils/sort'
+import { SET_DATA, ADD_LOCATION, ADD_PRACTICE } from './types'
 import { setError } from './shared'
-import {
-  SET_LOCATIONS_AND_PRACTICES,
-  SET_QUALIFICATIONS,
-  ADD_LOCATION,
-  ADD_PRACTICE,
-} from './types'
 
-export const getData = endpoints => async dispatch => {
+export const getData = () => async dispatch => {
   try {
+    const endpoints = [
+      'firms',
+      'locations',
+      'practices',
+      'rankings',
+      'qualifications',
+    ]
     const promises = []
-    if (typeof endpoints === 'object') {
-      for (const endpoint of endpoints)
-        promises.push(axios.get(`/api/${endpoint}`))
-    } else if (typeof endpoints === 'string') {
-      promises.push(axios.get(`/api/${endpoints}`))
-    }
+    for (const endpoint of endpoints)
+      promises.push(axios.get(`/api/${endpoint}`))
 
     const responses = await Promise.all(promises)
     const payload = {}
@@ -32,13 +29,7 @@ export const getData = endpoints => async dispatch => {
       payload[endpoints[i]] = sortedOptions
     }
 
-    let type
-    if (arraysEqual(endpoints, ['locations', 'practices']))
-      type = SET_LOCATIONS_AND_PRACTICES
-    else if (endpoints === 'qualifications') type = SET_QUALIFICATIONS
-    else return
-
-    dispatch({ type, payload })
+    dispatch({ type: SET_DATA, payload })
     setError(dispatch, '')
   } catch ({ response }) {
     setError(dispatch, response.data)

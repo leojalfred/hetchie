@@ -5,15 +5,11 @@ const maxDate = new Date()
 maxDate.setFullYear(maxDate.getFullYear() + 3)
 
 export default yup.object({
-  gpaRequired: yup
+  gpa: yup
     .number()
-    .required('Required GPA is required.')
-    .min(0, 'Required GPA must be at least 0.')
-    .max(4, 'Required GPA must be at most 4.'),
-  gpaBand: yup
-    .number()
-    .min(0, 'Preferred GPA must be at least 0.')
-    .max(4, 'Preferred GPA must be at most 4.'),
+    .required('GPA is required.')
+    .min(0, 'GPA must be at least 0.')
+    .max(4, 'GPA must be at most 4.'),
   salaryLarge: yup
     .number()
     .required('Large market salary is required.')

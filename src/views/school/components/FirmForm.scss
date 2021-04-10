@@ -1,0 +1,38 @@
+@import 'variables';
+
+.rankings {
+  &__heading,
+  &__sub-heading {
+    margin-top: 0;
+  }
+
+  &__sub-headings {
+    display: flex;
+  }
+
+  &__sub-heading {
+    margin-right: auto;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__add-ranking {
+    border: 0.125rem solid $brand-2;
+    color: $brand-2;
+    font-size: 1rem;
+    height: 2rem;
+    line-height: 0;
+
+    &:hover {
+      background-color: $brand-2;
+      color: white;
+    }
+  }
+
+  &__add-firm.button--big {
+    margin: 0 0 0 1rem;
+  }
+}

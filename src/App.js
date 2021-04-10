@@ -48,7 +48,7 @@ function App({ user, getData }) {
   const closePreferencesModal = () => setPreferencesIsOpen(false)
 
   useEffect(() => {
-    if (user.loggedIn) getData(['locations', 'practices'])
+    if (user.loggedIn) getData()
   }, [user.loggedIn, getData])
 
   const [modals, setModals] = useState()

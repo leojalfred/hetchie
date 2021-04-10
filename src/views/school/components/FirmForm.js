@@ -1,17 +1,13 @@
 import { useState, useEffect } from 'react'
 import { Formik, Form, Field } from 'formik'
-import {
-  faGavel,
-  faLink,
-  faInfo,
-  faSortNumericUp,
-} from '@fortawesome/free-solid-svg-icons'
+import { faGavel, faLink } from '@fortawesome/free-solid-svg-icons'
 import empty from 'utils/empty'
 import schema from 'validation/firm'
 import { getError, combinedError } from 'validation/shared'
 import Error from 'components/Error'
-import { InputLine, InputGroup, Input, Submit } from 'components/Inputs'
-import RankingLine from './RankingLine'
+import { InputLine, InputGroup, Input } from 'components/Inputs'
+import Rankings from './Rankings'
+import './FirmForm.scss'
 
 function FirmForm({ error }) {
   const initialValues = {
@@ -19,12 +15,12 @@ function FirmForm({ error }) {
     firmLink: '',
     chambersLink: '',
     vaultLink: '',
-    positions: [],
-    rankingLinks: [],
+    rankings: [{ position: '', link: '' }],
   }
 
   const onSubmit = data => {
     setSubmitting(true)
+    console.log(data)
     setSubmitting(false)
   }
 
@@ -34,6 +30,7 @@ function FirmForm({ error }) {
     else setServerError('')
   }, [error])
 
+  const [rankings, setRankings] = useState([''])
   const [submitting, setSubmitting] = useState(false)
 
   return (
@@ -71,7 +68,7 @@ function FirmForm({ error }) {
               </InputLine>
 
               <InputLine>
-                <InputGroup title="Chambers link" icon={faInfo}>
+                <InputGroup title="Chambers link" icon={faLink}>
                   <Field
                     component={Input}
                     type="url"
@@ -80,7 +77,7 @@ function FirmForm({ error }) {
                   />
                 </InputGroup>
 
-                <InputGroup title="Vault link" icon={faSortNumericUp}>
+                <InputGroup title="Vault link" icon={faLink}>
                   <Field
                     component={Input}
                     type="url"
@@ -90,10 +87,11 @@ function FirmForm({ error }) {
                 </InputGroup>
               </InputLine>
 
-              <h3 className="rankings-heading">Vault Rankings</h3>
-              <RankingLine />
-
-              <Submit isSubmitting={submitting}>Add firm</Submit>
+              <Rankings
+                rankings={rankings}
+                setRankings={setRankings}
+                submitting={submitting}
+              />
             </Form>
           </>
         )}

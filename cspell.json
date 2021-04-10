@@ -6,6 +6,7 @@
     "formik",
     "hetchie",
     "mixins",
+    "rankable",
     "robocopy",
     "topline"
   ]
