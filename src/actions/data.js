@@ -55,10 +55,6 @@ const targets = {
     endpoint: '/api/qualifications',
     type: ADD_QUALIFICATION,
   },
-  ranking: {
-    endpoint: '/api/rankings',
-    type: ADD_RANKING,
-  },
 }
 export const putName = (
   target,
@@ -70,17 +66,31 @@ export const putName = (
   try {
     const { data } = await axios.put(targets[target].endpoint, { name })
     const payload = { value: data._id, label: data.name }
-
-    if (i !== undefined) {
-      const newSelected = [...selected]
-      newSelected[i] = payload
-
-      setSelected(newSelected)
-    } else setSelected([...selected, payload])
+    setSelected([...selected, payload])
 
     dispatch({ type: targets[target].type, payload })
     setError(dispatch, '')
   } catch ({ response }) {
     setError(dispatch, response.data)
+  }
+}
+
+export const putRanking = (ranking, setNotification) => async dispatch => {
+  try {
+    const { data } = await axios.put('/api/rankings', ranking)
+    const payload = { value: data._id, label: data.name }
+
+    setNotification({
+      type: 'success',
+      text: 'New ranking successfully created',
+    })
+    dispatch({ type: ADD_RANKING, payload })
+  } catch (error) {
+    setNotification({
+      type: 'failure',
+      text: 'Failed to create new ranking',
+    })
+
+    console.log(error)
   }
 }

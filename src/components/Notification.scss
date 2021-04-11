@@ -1,0 +1,60 @@
+@import 'mixins';
+
+.notification {
+  align-items: center;
+  border-radius: 2rem;
+  display: flex;
+  justify-content: center;
+  opacity: 1;
+  padding: 0.75rem 1.2rem 0.75rem 1rem;
+  transition: opacity $time;
+
+  &--success {
+    background-color: #d3f9d8;
+    color: #2b8a3e;
+  }
+
+  &--failure {
+    background-color: #ffc9c9;
+    color: #c92a2a;
+  }
+
+  &--hidden {
+    opacity: 0;
+  }
+
+  &__icon {
+    font-size: 1rem;
+    margin-right: 0.5rem;
+  }
+
+  &__text {
+    font-size: 0.8rem;
+  }
+}
+
+@include bp($s) {
+  .notification {
+    &__icon {
+      font-size: 1.2rem;
+      margin-right: 0.75rem;
+    }
+
+    &__text {
+      font-size: 1rem;
+    }
+  }
+}
+
+@include bp($m) {
+  .notification {
+    &__icon {
+      font-size: 1.5rem;
+      margin-right: 1rem;
+    }
+
+    &__text {
+      font-size: 1.1rem;
+    }
+  }
+}

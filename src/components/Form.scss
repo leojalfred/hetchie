@@ -1,0 +1,99 @@
+@import 'mixins';
+
+.topline__notification {
+  margin-bottom: 1.325rem;
+}
+
+.input-group {
+  align-items: center;
+  display: flex;
+  margin-bottom: 2rem;
+
+  &__icon {
+    font-size: 1.6rem;
+    margin-right: 1rem;
+    width: 2rem;
+  }
+}
+
+.input {
+  border: 0;
+  border-bottom: 2px solid $brand-1;
+  color: $brand-2;
+  height: 1rem;
+  padding: 0.5rem;
+  width: 100%;
+
+  @include placeholder() {
+    font-size: 1rem;
+  }
+}
+
+.submit.button--big {
+  border-color: $brand-1;
+  color: $brand-1;
+  margin: 3rem 0 0 auto;
+
+  &:hover {
+    background-color: $brand-1;
+    color: #fff;
+  }
+
+  &:disabled {
+    background-color: transparent;
+    color: $brand-1;
+  }
+}
+
+@include bp($s) {
+  .input-line {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 2rem;
+  }
+
+  .input-group {
+    margin-bottom: 0;
+
+    &__container:last-child:nth-child(2n - 1) {
+      grid-column: span 2;
+    }
+
+    &__heading {
+      margin-top: 0;
+    }
+  }
+
+  .submit.button--big {
+    margin-top: 5rem;
+  }
+}
+
+@include bp($m) {
+  .topline {
+    align-items: center;
+    display: flex;
+    height: 3rem;
+    justify-content: space-between;
+    margin-bottom: 1.75rem;
+
+    &__heading {
+      margin: 0;
+    }
+
+    &__notification {
+      margin-bottom: 0;
+    }
+  }
+}
+
+@include bp($l) {
+  .input-line--3 {
+    grid-template-columns: 1fr 1fr 1fr;
+
+    > .input-group__container:last-child:nth-child(2n - 1) {
+      grid-column: span 1;
+    }
+  }
+}

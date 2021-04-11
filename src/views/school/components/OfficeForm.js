@@ -15,7 +15,7 @@ import { putName } from 'actions/data'
 import schema from 'validation/office'
 import { getError, combinedError } from 'validation/shared'
 import Error from 'components/Error'
-import { InputLine, InputGroup, Input, Submit } from 'components/Inputs'
+import { InputLine, InputGroup, Input, Submit } from 'components/Form'
 import Select from 'components/Select'
 
 function OfficeForm({ hetchie, error, putName }) {

@@ -5,7 +5,7 @@ import empty from 'utils/empty'
 import schema from 'validation/firm'
 import { getError, combinedError } from 'validation/shared'
 import Error from 'components/Error'
-import { InputLine, InputGroup, Input } from 'components/Inputs'
+import { InputLine, InputGroup, Input } from 'components/Form'
 import Rankings from './Rankings'
 
 function FirmForm({ error }) {

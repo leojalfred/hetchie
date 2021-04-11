@@ -6,7 +6,7 @@ import {
 import { FieldArray, Field } from 'formik'
 import { connect } from 'react-redux'
 import { putName } from 'actions/data'
-import { InputLine, InputGroup, Input, Submit } from 'components/Inputs'
+import { InputLine, InputGroup, Input, Submit } from 'components/Form'
 import Select from 'components/Select'
 import Button from 'components/buttons/Button'
 import './Rankings.scss'
