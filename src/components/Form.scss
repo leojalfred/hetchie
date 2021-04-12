@@ -32,7 +32,8 @@
 .submit.button--big {
   border-color: $brand-1;
   color: $brand-1;
-  margin: 3rem 0 0 auto;
+  margin-left: auto;
+  width: 100%;
 
   &:hover {
     background-color: $brand-1;
@@ -66,7 +67,7 @@
   }
 
   .submit.button--big {
-    margin-top: 5rem;
+    width: auto;
   }
 }
 
@@ -84,16 +85,6 @@
 
     &__notification {
       margin-bottom: 0;
-    }
-  }
-}
-
-@include bp($l) {
-  .input-line--3 {
-    grid-template-columns: 1fr 1fr 1fr;
-
-    > .input-group__container:last-child:nth-child(2n - 1) {
-      grid-column: span 1;
     }
   }
 }

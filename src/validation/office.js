@@ -10,10 +10,7 @@ export default yup.object({
     .required('GPA is required.')
     .min(0, 'GPA must be at least 0.')
     .max(4, 'GPA must be at most 4.'),
-  salaryLarge: yup
-    .number()
-    .required('Large market salary is required.')
-    .min(0, 'Large market salary must be at least $0.'),
+  salaryLarge: yup.number().min(0, 'Large market salary must be at least $0.'),
   salarySmall: yup.number().min(0, 'Small market salary must be at least $0.'),
   date: yup
     .date()

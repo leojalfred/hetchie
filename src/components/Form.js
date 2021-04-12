@@ -20,9 +20,8 @@ export function TopLine({ heading, notification, setNotification }) {
 }
 
 export function InputLine({ grid, key, children }) {
-  const classes = classNames('input-line', { 'input-line--3': grid === '3' })
   return (
-    <div className={classes} key={key}>
+    <div className="input-line" key={key}>
       {children}
     </div>
   )

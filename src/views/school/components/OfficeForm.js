@@ -33,6 +33,11 @@ function OfficeForm({ hetchie, error, putName }) {
   const [practices, setPractices] = useState([])
   const [qualifications, setQualifications] = useState([])
   const onSubmit = data => {
+    if (selectedFirm === undefined) {
+      setServerError('Firm must be chosen.')
+      return
+    }
+
     setSubmitting(true)
 
     const firm = selectedFirm.value
@@ -79,7 +84,7 @@ function OfficeForm({ hetchie, error, putName }) {
   maxDate = maxDate.toLocaleDateString('en-US')
 
   return (
-    <div>
+    <div className="school__form">
       <h2>Add Offices</h2>
       <Formik
         initialValues={initialValues}

@@ -22,7 +22,7 @@ function RankingForm({ putRanking }) {
   }
 
   return (
-    <>
+    <div className="school__form">
       <TopLine
         heading="Add Rankings"
         notification={notification}
@@ -64,7 +64,7 @@ function RankingForm({ putRanking }) {
           </>
         )}
       </Formik>
-    </>
+    </div>
   )
 }
 

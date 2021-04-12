@@ -66,12 +66,14 @@ export const putName = (
   try {
     const { data } = await axios.put(targets[target].endpoint, { name })
     const payload = { value: data._id, label: data.name }
-    setSelected([...selected, payload])
+
+    if (selected === null) setSelected([payload])
+    else setSelected([...selected, payload])
 
     dispatch({ type: targets[target].type, payload })
     setError(dispatch, '')
-  } catch ({ response }) {
-    setError(dispatch, response.data)
+  } catch (error) {
+    console.log(error)
   }
 }
 

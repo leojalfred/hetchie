@@ -14,13 +14,13 @@ function FirmForm({ error }) {
     firmLink: '',
     chambersLink: '',
     vaultLink: '',
-    rankings: [{ position: '', link: '' }],
+    positions: [],
   }
 
-  const [rankings, setRankings] = useState([null])
+  const [rankings, setRankings] = useState([])
   const onSubmit = data => {
     if (rankings.some(ranking => ranking === null)) {
-      setServerError('Ranking must not be null.')
+      setServerError('Ranking must be chosen.')
       return
     }
 
@@ -39,7 +39,7 @@ function FirmForm({ error }) {
   const [submitting, setSubmitting] = useState(false)
 
   return (
-    <div>
+    <div className="school__form">
       <h2>Add Firms</h2>
       <Formik
         initialValues={initialValues}
