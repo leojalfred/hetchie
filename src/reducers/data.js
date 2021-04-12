@@ -1,9 +1,10 @@
 import {
   SET_DATA,
+  ADD_RANKING,
+  ADD_FIRM,
   ADD_LOCATION,
   ADD_PRACTICE,
   ADD_QUALIFICATION,
-  ADD_RANKING,
   CLEAR_DATA,
 } from '../actions/types'
 import sort from 'utils/sort'
@@ -19,6 +20,20 @@ export default function data(state = initialState, { type, payload }) {
         practices: payload.practices,
         qualifications: payload.qualifications,
         rankings: payload.rankings,
+      }
+    case ADD_RANKING:
+      const rankings = [...state.rankings, payload].sort(sort)
+
+      return {
+        ...state,
+        rankings,
+      }
+    case ADD_FIRM:
+      const firms = [...state.firms, payload].sort(sort)
+
+      return {
+        ...state,
+        firms,
       }
     case ADD_LOCATION:
       const locations = [...state.locations, payload].sort(sort)
@@ -40,13 +55,6 @@ export default function data(state = initialState, { type, payload }) {
       return {
         ...state,
         qualifications,
-      }
-    case ADD_RANKING:
-      const rankings = [...state.rankings, payload].sort(sort)
-
-      return {
-        ...state,
-        rankings,
       }
     case CLEAR_DATA:
       return {}

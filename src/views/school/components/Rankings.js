@@ -19,7 +19,7 @@ function RankingLine({ rankings, setRankings, setError, hetchie, submitting }) {
   }
 
   const addRanking = array => () => {
-    array.push({ position: '', link: '' })
+    array.push(1)
     setRankings([...rankings, null])
   }
 

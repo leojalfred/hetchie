@@ -1,14 +1,15 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Formik, Form, Field } from 'formik'
 import { faGavel, faLink } from '@fortawesome/free-solid-svg-icons'
-import empty from 'utils/empty'
+import { connect } from 'react-redux'
+import { postFirm } from 'actions/data'
 import schema from 'validation/firm'
 import { getError, combinedError } from 'validation/shared'
 import Error from 'components/Error'
-import { InputLine, InputGroup, Input } from 'components/Form'
+import { TopLine, InputLine, InputGroup, Input } from 'components/Form'
 import Rankings from './Rankings'
 
-function FirmForm({ error }) {
+function FirmForm({ postFirm }) {
   const initialValues = {
     name: '',
     firmLink: '',
@@ -18,37 +19,51 @@ function FirmForm({ error }) {
   }
 
   const [rankings, setRankings] = useState([])
-  const onSubmit = data => {
+  const [error, setError] = useState('')
+  const [notification, setNotification] = useState({ type: 'hidden', text: '' })
+
+  const onSubmit = async (data, action) => {
     if (rankings.some(ranking => ranking === null)) {
-      setServerError('Ranking must be chosen.')
+      setError('Ranking must be chosen.')
       return
     }
 
-    setSubmitting(true)
-    console.log(data)
-    console.log(rankings)
-    setSubmitting(false)
+    const zipped = data.positions.map((position, i) => ({
+      position,
+      ranking: rankings[i].value,
+    }))
+    const payload = {
+      name: data.name,
+      links: {
+        firm: data.firmLink,
+        chambers: data.chambersLink,
+        vault: data.vaultLink,
+      },
+      rankings: zipped,
+    }
+    postFirm(payload, setNotification)
+
+    action.resetForm()
+    setRankings([])
+
+    action.setSubmitting(false)
   }
-
-  const [serverError, setServerError] = useState('')
-  useEffect(() => {
-    if (!empty(error)) setServerError(error)
-    else setServerError('')
-  }, [error])
-
-  const [submitting, setSubmitting] = useState(false)
 
   return (
     <div className="school__form">
-      <h2>Add Firms</h2>
+      <TopLine
+        heading="Add Firms"
+        notification={notification}
+        setNotification={setNotification}
+      />
       <Formik
         initialValues={initialValues}
         validationSchema={schema}
         onSubmit={onSubmit}
       >
-        {({ errors, touched, values }) => (
+        {({ errors, touched, isSubmitting }) => (
           <>
-            {getError(serverError, errors, touched)}
+            {getError(error, errors, touched)}
             <Error message={combinedError} />
 
             <Form>
@@ -95,8 +110,8 @@ function FirmForm({ error }) {
               <Rankings
                 rankings={rankings}
                 setRankings={setRankings}
-                setError={setServerError}
-                submitting={submitting}
+                setError={setError}
+                submitting={isSubmitting}
               />
             </Form>
           </>
@@ -106,4 +121,4 @@ function FirmForm({ error }) {
   )
 }
 
-export default FirmForm
+export default connect(null, { postFirm })(FirmForm)

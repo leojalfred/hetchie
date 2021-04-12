@@ -1,6 +1,6 @@
 import validate from '../../validation/name'
 
-const putName = Model => async ({ body }, response) => {
+const postName = Model => async ({ body }, response) => {
   const { message, valid } = validate(body)
   if (!valid) return response.status(400).send(message)
 
@@ -15,4 +15,4 @@ const putName = Model => async ({ body }, response) => {
   }
 }
 
-export default putName
+export default postName

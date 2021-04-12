@@ -1,10 +1,10 @@
 import { Router } from 'express'
 import Location from '../models/Location'
 import get from './shared/get'
-import put from './shared/putName'
+import post from './shared/postName'
 
 const router = Router()
 router.get('/', get(Location))
-router.put('/', put(Location))
+router.post('/', post(Location))
 
 export default router

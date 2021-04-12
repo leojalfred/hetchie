@@ -1,10 +1,10 @@
 import { Router } from 'express'
 import Firm from '../../models/Firm'
 import get from '../shared/get'
-import put from './putFirms'
+import post from './postFirm'
 
 const router = Router()
 router.get('/', get(Firm))
-router.put('/', put)
+router.post('/', post)
 
 export default router

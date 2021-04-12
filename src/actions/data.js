@@ -2,10 +2,11 @@ import axios from 'axios'
 import sort from 'utils/sort'
 import {
   SET_DATA,
+  ADD_RANKING,
+  ADD_FIRM,
   ADD_LOCATION,
   ADD_PRACTICE,
   ADD_QUALIFICATION,
-  ADD_RANKING,
 } from './types'
 import { setError } from './shared'
 
@@ -42,6 +43,46 @@ export const getData = () => async dispatch => {
   }
 }
 
+export const postRanking = (ranking, setNotification) => async dispatch => {
+  try {
+    const { data } = await axios.post('/api/rankings', ranking)
+    const payload = { value: data._id, label: data.name }
+
+    setNotification({
+      type: 'success',
+      text: 'New ranking successfully created',
+    })
+    dispatch({ type: ADD_RANKING, payload })
+  } catch (error) {
+    setNotification({
+      type: 'failure',
+      text: 'Failed to create new ranking',
+    })
+
+    console.log(error)
+  }
+}
+
+export const postFirm = (firm, setNotification) => async dispatch => {
+  try {
+    const { data } = await axios.post('/api/firms', firm)
+    const payload = { value: data._id, label: data.name }
+
+    setNotification({
+      type: 'success',
+      text: 'New firm successfully created',
+    })
+    dispatch({ type: ADD_FIRM, payload })
+  } catch (error) {
+    setNotification({
+      type: 'failure',
+      text: 'Failed to create new firm',
+    })
+
+    console.log(error)
+  }
+}
+
 const targets = {
   location: {
     endpoint: '/api/locations',
@@ -56,7 +97,7 @@ const targets = {
     type: ADD_QUALIFICATION,
   },
 }
-export const putName = (
+export const postName = (
   target,
   name,
   selected,
@@ -64,7 +105,7 @@ export const putName = (
   i
 ) => async dispatch => {
   try {
-    const { data } = await axios.put(targets[target].endpoint, { name })
+    const { data } = await axios.post(targets[target].endpoint, { name })
     const payload = { value: data._id, label: data.name }
 
     if (selected === null) setSelected([payload])
@@ -73,26 +114,6 @@ export const putName = (
     dispatch({ type: targets[target].type, payload })
     setError(dispatch, '')
   } catch (error) {
-    console.log(error)
-  }
-}
-
-export const putRanking = (ranking, setNotification) => async dispatch => {
-  try {
-    const { data } = await axios.put('/api/rankings', ranking)
-    const payload = { value: data._id, label: data.name }
-
-    setNotification({
-      type: 'success',
-      text: 'New ranking successfully created',
-    })
-    dispatch({ type: ADD_RANKING, payload })
-  } catch (error) {
-    setNotification({
-      type: 'failure',
-      text: 'Failed to create new ranking',
-    })
-
     console.log(error)
   }
 }

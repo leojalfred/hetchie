@@ -11,14 +11,14 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
 import empty from 'utils/empty'
-import { putName } from 'actions/data'
+import { postName } from 'actions/data'
 import schema from 'validation/office'
 import { getError, combinedError } from 'validation/shared'
 import Error from 'components/Error'
 import { InputLine, InputGroup, Input, Submit } from 'components/Form'
 import Select from 'components/Select'
 
-function OfficeForm({ hetchie, error, putName }) {
+function OfficeForm({ hetchie, error, postName }) {
   const initialValues = {
     firm: '',
     gpa: '',
@@ -72,11 +72,11 @@ function OfficeForm({ hetchie, error, putName }) {
 
   const onChange = setter => selected => setter(selected)
   const onCreateLocation = name =>
-    putName('location', name, locations, setLocations)
+    postName('location', name, locations, setLocations)
   const onCreatePractice = name =>
-    putName('practice', name, practices, setPractices)
+    postName('practice', name, practices, setPractices)
   const onCreateQualification = name =>
-    putName('qualification', name, qualifications, setQualifications)
+    postName('qualification', name, qualifications, setQualifications)
 
   const minDate = new Date().toLocaleDateString('en-US')
   let maxDate = new Date()
@@ -211,4 +211,4 @@ function OfficeForm({ hetchie, error, putName }) {
 }
 
 const mapStateToProps = ({ hetchie, error }) => ({ hetchie, error })
-export default connect(mapStateToProps, { putName })(OfficeForm)
+export default connect(mapStateToProps, { postName })(OfficeForm)

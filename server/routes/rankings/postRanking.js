@@ -1,7 +1,7 @@
 import validate from '../../validation/ranking'
 import Ranking from '../../models/Ranking'
 
-export default async function putRanking({ body }, response) {
+export default async function postRanking({ body }, response) {
   const { message, valid } = validate(body)
   if (!valid) return response.status(400).send(message)
 
