@@ -66,7 +66,17 @@ function OfficeForm({ hetchie, user, error, postName }) {
 
     console.log(payload)
     try {
-      await axios.put('/api/schools', payload)
+      const { data: added } = await axios.put('/api/schools', payload)
+      if (added)
+        setNotification({
+          type: 'success',
+          text: 'New office successfully added!',
+        })
+      else
+        setNotification({
+          type: 'failure',
+          text: 'Failed to add new office.',
+        })
     } catch (error) {
       console.log(error)
     }

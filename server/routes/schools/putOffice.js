@@ -15,7 +15,9 @@ export default async function postFirm({ body }, response) {
     else school.firms.push({ firm, offices: [office] })
 
     await school.save()
+    response.send(true)
   } catch (error) {
     console.log(error)
+    response.send(false)
   }
 }
