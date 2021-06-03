@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import axios from 'axios'
 import { Formik, Form, Field } from 'formik'
 import {
   faGavel,
@@ -15,10 +16,12 @@ import { postName } from 'actions/data'
 import schema from 'validation/office'
 import { getError, combinedError } from 'validation/shared'
 import Error from 'components/Error'
-import { InputLine, InputGroup, Input, Submit } from 'components/Form'
+import { TopLine, InputLine, InputGroup, Input, Submit } from 'components/Form'
 import Select from 'components/Select'
 
-function OfficeForm({ hetchie, error, postName }) {
+function OfficeForm({ hetchie, user, error, postName }) {
+  const [notification, setNotification] = useState({ type: 'hidden', text: '' })
+
   const initialValues = {
     firm: '',
     gpa: '',
@@ -32,7 +35,7 @@ function OfficeForm({ hetchie, error, postName }) {
   const [locations, setLocations] = useState([])
   const [practices, setPractices] = useState([])
   const [qualifications, setQualifications] = useState([])
-  const onSubmit = data => {
+  const onSubmit = async data => {
     if (selectedFirm === undefined) {
       setServerError('Firm must be chosen.')
       return
@@ -48,18 +51,25 @@ function OfficeForm({ hetchie, error, postName }) {
     const qualificationIDs = qualifications.map(getID)
 
     const payload = {
+      id: user.data.school,
       firm,
       locations: locationIDs,
       practices: practiceIDs,
+      gpa: data.gpa,
       salary: {
         large: data.salaryLarge,
         small: data.salarySmall,
       },
       qualifications: qualificationIDs,
-      gpa: data.gpa,
+      date: new Date(data.date),
     }
 
     console.log(payload)
+    try {
+      await axios.put('/api/schools', payload)
+    } catch (error) {
+      console.log(error)
+    }
 
     setSubmitting(false)
   }
@@ -85,7 +95,11 @@ function OfficeForm({ hetchie, error, postName }) {
 
   return (
     <div className="school__form">
-      <h2>Add Offices</h2>
+      <TopLine
+        heading="Add Offices"
+        notification={notification}
+        setNotification={setNotification}
+      />
       <Formik
         initialValues={initialValues}
         validationSchema={schema}
@@ -210,5 +224,5 @@ function OfficeForm({ hetchie, error, postName }) {
   )
 }
 
-const mapStateToProps = ({ hetchie, error }) => ({ hetchie, error })
+const mapStateToProps = ({ hetchie, user, error }) => ({ hetchie, user, error })
 export default connect(mapStateToProps, { postName })(OfficeForm)

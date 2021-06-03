@@ -9,6 +9,7 @@ const school = new Schema({
         {
           locations: [{ type: Schema.Types.ObjectId, ref: 'locations' }],
           practices: [{ type: Schema.Types.ObjectId, ref: 'practices' }],
+          gpa: { type: Number, required: true },
           salary: {
             large: { type: Number, required: true },
             small: Number,
@@ -19,7 +20,6 @@ const school = new Schema({
           date: { type: Date, required: true },
         },
       ],
-      gpa: { type: Number, required: true },
     },
   ],
   protected: { type: Boolean, default: false, required: true },

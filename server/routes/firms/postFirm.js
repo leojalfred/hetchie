@@ -3,7 +3,6 @@ import Firm from '../../models/Firm'
 
 export default async function postFirm({ body }, response) {
   const { message, valid } = validate(body)
-  console.log(message)
   if (!valid) return response.status(400).send(message)
 
   try {

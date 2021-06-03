@@ -97,23 +97,18 @@ const targets = {
     type: ADD_QUALIFICATION,
   },
 }
-export const postName = (
-  target,
-  name,
-  selected,
-  setSelected,
-  i
-) => async dispatch => {
-  try {
-    const { data } = await axios.post(targets[target].endpoint, { name })
-    const payload = { value: data._id, label: data.name }
+export const postName =
+  (target, name, selected, setSelected, i) => async dispatch => {
+    try {
+      const { data } = await axios.post(targets[target].endpoint, { name })
+      const payload = { value: data._id, label: data.name }
 
-    if (selected === null) setSelected([payload])
-    else setSelected([...selected, payload])
+      if (selected === null) setSelected([payload])
+      else setSelected([...selected, payload])
 
-    dispatch({ type: targets[target].type, payload })
-    setError(dispatch, '')
-  } catch (error) {
-    console.log(error)
+      dispatch({ type: targets[target].type, payload })
+      setError(dispatch, '')
+    } catch (error) {
+      console.log(error)
+    }
   }
-}
