@@ -72,24 +72,6 @@ export default function Row({
     toggleSelectionInGroup(firm['_id'])
   }
 
-  const gpa = []
-  if (!empty(firm.gpa)) {
-    if (firm.gpa.required)
-      gpa.push(
-        <p className="row__badge-line" key="required">
-          <Badge className="row__badge row__badge--required">R</Badge>
-          {firm.gpa.required}
-        </p>
-      )
-    if (firm.gpa.band)
-      gpa.push(
-        <p className="row__badge-line" key="preferred">
-          <Badge className="row__badge row__badge--preferred">P</Badge>
-          {firm.gpa.band}
-        </p>
-      )
-  }
-
   const salary = []
   if (!empty(firm.salary)) {
     if (firm.salary.small) {
@@ -196,7 +178,7 @@ export default function Row({
       <td className="row__cell row__cell--practices">
         <Tags className="row__tags--practice" data={firm.practices} />
       </td>
-      <td className="row__cell row__cell--gpa">{gpa}</td>
+      <td className="row__cell row__cell--gpa">{firm.gpa}</td>
       <td className="row__cell row__cell--salary">{salary}</td>
       <td className="row__cell row__cell--rankings">{rankings}</td>
       <td className="row__cell row__cell--qualifications">

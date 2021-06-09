@@ -25,8 +25,9 @@ export default function validateName(data) {
         .min(0, 'Office large market salary must be at least 0.'),
       small: yup
         .number()
-        .typeError('Office large market salary must be a number.')
-        .min(0, 'Office large market salary must be at least 0.'),
+        .nullable(true)
+        .typeError('Office small market salary must be a number.')
+        .min(0, 'Office small market salary must be at least 0.'),
     }),
     qualifications: idArraySchema('Qualification'),
     date: yup

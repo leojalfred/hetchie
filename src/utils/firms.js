@@ -1,11 +1,9 @@
 import empty from './empty'
 
 const roundDown = x => Math.floor(x * 10) / 10
-function getFirmGPA(firm) {
-  if (empty(firm)) return 0
-
-  if (empty(firm.band)) return roundDown(firm.required)
-  return Math.min(roundDown(firm.required), roundDown(firm.band))
+function getFirmGPA(gpa) {
+  if (empty(gpa)) return 0
+  return roundDown(gpa)
 }
 
 function scoreGPA(user, firm) {
