@@ -35,7 +35,7 @@ function OfficeForm({ hetchie, user, error, postName }) {
   const [practices, setPractices] = useState([])
   const [qualifications, setQualifications] = useState([])
   const onSubmit = async (data, action) => {
-    if (selectedFirm === undefined) {
+    if (selectedFirm === null) {
       setServerError('Firm must be chosen.')
       return
     }
