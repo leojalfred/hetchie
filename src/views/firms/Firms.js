@@ -45,11 +45,23 @@ function Firms({ user, error }) {
   const [listedFirms, setListedFirms] = useState([])
   useEffect(() => {
     async function getFirms() {
-      const { data } = await axios.get('/api/firms')
-      const firmsMap = data.reduce((map, firm) => {
-        const { _id } = firm
-        map[`${_id}`] = firm
-        return map
+      const {
+        data: { firms },
+      } = await axios.get('/api/schools', {
+        params: { id: user.data.school },
+      })
+
+      const firmsMap = firms.reduce((firmsAccumulator, firm) => {
+        const { links, name, rankings } = firm.firm
+        const officesMap = firm.offices.reduce((officesAccumulator, office) => {
+          const { _id } = office
+          officesAccumulator[`${_id}`] = { name, links, ...office, rankings }
+
+          return officesAccumulator
+        }, {})
+
+        firmsAccumulator = { ...firmsAccumulator, ...officesMap }
+        return firmsAccumulator
       }, {})
       setFirms(firmsMap)
 
@@ -68,7 +80,13 @@ function Firms({ user, error }) {
     }
 
     getFirms()
-  }, [user.data.gpa, user.data.locations, user.data.practices, onSearch])
+  }, [
+    user.data.school,
+    user.data.gpa,
+    user.data.locations,
+    user.data.practices,
+    onSearch,
+  ])
 
   function getListFirms(id) {
     const matchID = list => list._id === id
