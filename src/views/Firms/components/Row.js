@@ -178,7 +178,7 @@ export default function Row({
       <td className="row__cell row__cell--practices">
         <Tags className="row__tags--practice" data={firm.practices} />
       </td>
-      <td className="row__cell row__cell--gpa">{firm.gpa}</td>
+      <td className="row__cell row__cell--gpa">{firm.gpa.toFixed(2)}</td>
       <td className="row__cell row__cell--salary">{salary}</td>
       <td className="row__cell row__cell--rankings">{rankings}</td>
       <td className="row__cell row__cell--qualifications">
