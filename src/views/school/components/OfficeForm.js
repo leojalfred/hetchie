@@ -30,18 +30,15 @@ function OfficeForm({ hetchie, user, error, postName }) {
     date: '',
   }
 
-  const [submitting, setSubmitting] = useState(false)
   const [selectedFirm, setSelectedFirm] = useState()
   const [locations, setLocations] = useState([])
   const [practices, setPractices] = useState([])
   const [qualifications, setQualifications] = useState([])
-  const onSubmit = async data => {
+  const onSubmit = async (data, action) => {
     if (selectedFirm === undefined) {
       setServerError('Firm must be chosen.')
       return
     }
-
-    setSubmitting(true)
 
     const firm = selectedFirm.value
 
@@ -64,15 +61,20 @@ function OfficeForm({ hetchie, user, error, postName }) {
       date: new Date(data.date),
     }
 
-    console.log(payload)
     try {
       const { data: added } = await axios.put('/api/schools', payload)
-      if (added)
+      if (added) {
         setNotification({
           type: 'success',
           text: 'New office successfully added!',
         })
-      else
+
+        action.resetForm()
+        setSelectedFirm(null)
+        setLocations([])
+        setPractices([])
+        setQualifications([])
+      } else
         setNotification({
           type: 'failure',
           text: 'Failed to add new office.',
@@ -81,7 +83,7 @@ function OfficeForm({ hetchie, user, error, postName }) {
       console.log(error)
     }
 
-    setSubmitting(false)
+    action.setSubmitting(false)
   }
 
   const [serverError, setServerError] = useState('')
@@ -115,7 +117,7 @@ function OfficeForm({ hetchie, user, error, postName }) {
         validationSchema={schema}
         onSubmit={onSubmit}
       >
-        {({ errors, touched, values }) => (
+        {({ errors, touched, values, isSubmitting }) => (
           <>
             {getError(serverError, errors, touched)}
             <Error message={combinedError} />
@@ -225,7 +227,7 @@ function OfficeForm({ hetchie, user, error, postName }) {
                 </InputGroup>
               </InputLine>
 
-              <Submit isSubmitting={submitting}>Add office</Submit>
+              <Submit isSubmitting={isSubmitting}>Add office</Submit>
             </Form>
           </>
         )}

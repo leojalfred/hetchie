@@ -2,6 +2,8 @@ import * as yup from 'yup'
 import { idSchema, idArraySchema, evaluate } from './shared'
 
 export default function validateName(data) {
+  const NaNtoNull = value => (isNaN(value) ? null : value)
+
   const minDate = new Date()
   const maxDate = new Date()
   maxDate.setFullYear(maxDate.getFullYear() + 3)
@@ -20,14 +22,16 @@ export default function validateName(data) {
     salary: yup.object({
       large: yup
         .number()
-        .required('Office large market salary is required.')
         .typeError('Office large market salary must be a number.')
-        .min(0, 'Office large market salary must be at least 0.'),
+        .min(0, 'Office large market salary must be at least 0.')
+        .transform(NaNtoNull)
+        .nullable(),
       small: yup
         .number()
-        .nullable(true)
         .typeError('Office small market salary must be a number.')
-        .min(0, 'Office small market salary must be at least 0.'),
+        .min(0, 'Office small market salary must be at least 0.')
+        .transform(NaNtoNull)
+        .nullable(),
     }),
     qualifications: idArraySchema('Qualification'),
     date: yup

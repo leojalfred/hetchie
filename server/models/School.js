@@ -11,7 +11,7 @@ const school = new Schema({
           practices: [{ type: Schema.Types.ObjectId, ref: 'practices' }],
           gpa: { type: Number, required: true },
           salary: {
-            large: { type: Number, required: true },
+            large: Number,
             small: Number,
           },
           qualifications: [
