@@ -35,7 +35,7 @@ function OfficeForm({ hetchie, user, error, postName }) {
   const [practices, setPractices] = useState([])
   const [qualifications, setQualifications] = useState([])
   const onSubmit = async (data, action) => {
-    if (selectedFirm === null) {
+    if (selectedFirm === null || selectedFirm === undefined) {
       setServerError('Firm must be chosen.')
       return
     }
@@ -92,6 +92,10 @@ function OfficeForm({ hetchie, user, error, postName }) {
     else setServerError('')
   }, [error])
 
+  const onFirmChange = selected => {
+    setSelectedFirm(selected)
+    setServerError('')
+  }
   const onChange = setter => selected => setter(selected)
   const onCreateLocation = name =>
     postName('location', name, locations, setLocations)
@@ -131,7 +135,7 @@ function OfficeForm({ hetchie, user, error, postName }) {
                     value={selectedFirm}
                     name="firms"
                     placeholder="Firm name"
-                    onChange={onChange(setSelectedFirm)}
+                    onChange={onFirmChange}
                   />
                 </InputGroup>
 
