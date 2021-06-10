@@ -13,7 +13,9 @@ function nth(n) {
 }
 
 export default function formatDate(unformatted) {
-  const parsed = new Date(unformatted)
+  const gmtDate = new Date(unformatted)
+  const pstDate = new Date(gmtDate.getTime() + 7 * 60 * 60 * 1000)
+
   const month = [
     'January',
     'February',
@@ -27,8 +29,8 @@ export default function formatDate(unformatted) {
     'October',
     'November',
     'December',
-  ][parsed.getMonth()]
-  const date = parsed.getDate()
+  ][pstDate.getMonth()]
+  const date = pstDate.getDate()
 
   return `${month} ${date + nth(date)}`
 }
