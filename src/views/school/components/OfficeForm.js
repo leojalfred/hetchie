@@ -142,7 +142,7 @@ function OfficeForm({ hetchie, user, error, postName }) {
                     name="gpa"
                     placeholder="4.0"
                     step="0.01"
-                    min="1"
+                    min="0"
                     max="4"
                   />
                 </InputGroup>

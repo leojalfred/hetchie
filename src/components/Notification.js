@@ -15,12 +15,11 @@ export default function Notification({
 }) {
   const notification = useRef()
   useEffect(() => {
-    const shown = notification.current !== null && type !== 'hidden'
-    if (shown) {
+    if (notification.current !== null && type !== 'hidden') {
       setTimeout(() => {
         notification.current.classList.remove('notification--hidden')
         setTimeout(() => {
-          if (shown) {
+          if (notification.current !== null && type !== 'hidden') {
             notification.current.classList.add('notification--hidden')
             setTimeout(() => setNotification({ type: 'hidden', text: '' }), 200)
           }
