@@ -121,12 +121,12 @@ function App({ user, getData }) {
           }
           component={School}
         />
-        <ConditionalRoute
+        {/* <ConditionalRoute
           exact
           path="/admin"
           condition={!empty(user) && user.data.role === 'admin'}
           component={Admin}
-        />
+        /> */}
       </Switch>
 
       {modals}
