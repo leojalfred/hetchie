@@ -16,7 +16,7 @@ import About from 'views/about/About'
 import ConditionalRoute from 'components/ConditionalRoute'
 import empty from 'utils/empty'
 import Firms from 'views/firms/Firms'
-import Admin from 'views/admin/Admin'
+// import Admin from 'views/admin/Admin'
 import School from 'views/school/School'
 import './App.scss'
 

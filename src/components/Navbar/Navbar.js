@@ -60,7 +60,7 @@ function Navbar({
           >
             About
           </NavLink>
-          {!empty(user) && user.data.role === 'admin' && (
+          {/* {!empty(user) && user.data.role === 'admin' && (
             <NavLink
               className="navbar__link"
               activeClassName="navbar__link--active"
@@ -68,7 +68,7 @@ function Navbar({
             >
               Admin
             </NavLink>
-          )}
+          )} */}
           {!empty(user) &&
             (user.data.role === 'admin' || user.data.role === 'school') && (
               <NavLink

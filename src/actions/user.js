@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { SET_USER, CLEAR_USER, CLEAR_DATA } from './types'
-import { setError } from './shared'
+// import { setError } from './shared'
 import setToken from '../utils/authorization'
 
 export const setUser = user => ({
@@ -14,26 +14,24 @@ const updateUser = (data, token, dispatch) => {
   dispatch(setUser(data))
 }
 
-export const putUser = (
-  user,
-  closeModal,
-  register = false
-) => async dispatch => {
-  try {
-    if (register) await axios.post('/api/users/register', user)
-    else {
-      const response = await axios.put('/api/users', user)
-      const { data, token } = response.data
+export const putUser =
+  (user, closeModal, register = false) =>
+  async dispatch => {
+    try {
+      if (register) await axios.post('/api/users/register', user)
+      else {
+        const response = await axios.put('/api/users', user)
+        const { data, token } = response.data
 
-      updateUser(data, token, dispatch)
+        updateUser(data, token, dispatch)
+      }
+
+      // setError(dispatch, '')
+      closeModal()
+    } catch ({ response }) {
+      // setError(dispatch, response.data)
     }
-
-    setError(dispatch, '')
-    closeModal()
-  } catch ({ response }) {
-    setError(dispatch, response.data)
   }
-}
 
 export const login = (user, history, closeModal) => async dispatch => {
   try {
@@ -41,12 +39,12 @@ export const login = (user, history, closeModal) => async dispatch => {
     const { data, token } = response.data
 
     updateUser(data, token, dispatch)
-    setError(dispatch, '')
+    // setError(dispatch, '')
 
     history.push('/firms')
     closeModal()
   } catch ({ response }) {
-    setError(dispatch, response.data)
+    // setError(dispatch, response.data)
   }
 }
 
@@ -64,9 +62,9 @@ export const put = (url, body) => async dispatch => {
     const { data, token } = response.data
 
     updateUser(data, token, dispatch)
-    setError(dispatch, '')
+    // setError(dispatch, '')
   } catch ({ response }) {
-    setError(dispatch, response.data)
+    // setError(dispatch, response.data)
   }
 }
 
@@ -77,9 +75,9 @@ export const putList = (body, setPutListOption) => async dispatch => {
 
     updateUser(data, token, dispatch)
     setPutListOption(putListOption)
-    setError(dispatch, '')
+    // setError(dispatch, '')
   } catch ({ response }) {
-    setError(dispatch, response.data)
+    // setError(dispatch, response.data)
   }
 }
 
@@ -89,8 +87,8 @@ export const deleteAction = (url, body) => async dispatch => {
     const { data, token } = response.data
 
     updateUser(data, token, dispatch)
-    setError(dispatch, '')
+    // setError(dispatch, '')
   } catch ({ response }) {
-    setError(dispatch, response.data)
+    // setError(dispatch, response.data)
   }
 }

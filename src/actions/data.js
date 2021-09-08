@@ -8,7 +8,7 @@ import {
   ADD_PRACTICE,
   ADD_QUALIFICATION,
 } from './types'
-import { setError } from './shared'
+// import { setError } from './shared'
 
 export const getData = () => async dispatch => {
   try {
@@ -37,9 +37,9 @@ export const getData = () => async dispatch => {
     }
 
     dispatch({ type: SET_DATA, payload })
-    setError(dispatch, '')
+    // setError(dispatch, '')
   } catch ({ response }) {
-    setError(dispatch, response.data)
+    // setError(dispatch, response.data)
   }
 }
 
@@ -107,7 +107,7 @@ export const postName =
       else setSelected([...selected, payload])
 
       dispatch({ type: targets[target].type, payload })
-      setError(dispatch, '')
+      // setError(dispatch, '')
     } catch (error) {
       console.log(error)
     }
