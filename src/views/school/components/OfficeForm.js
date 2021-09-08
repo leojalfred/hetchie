@@ -48,7 +48,7 @@ function OfficeForm({ hetchie, user, error, postName }) {
     const qualificationIDs = qualifications.map(getID)
 
     const payload = {
-      id: user.data.school,
+      id: user.data.school._id,
       firm,
       locations: locationIDs,
       practices: practiceIDs,

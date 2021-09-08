@@ -9,7 +9,12 @@ import CredentialsForm from './components/CredentialsForm'
 function SettingsModal({ user, isOpen, closeModal }) {
   const [userData, setUserData] = useState()
   useEffect(() => {
-    const credentials = { ...user.data, password: '', confirm: '' }
+    const credentials = {
+      ...user.data,
+      school: user.data.school.name,
+      password: '',
+      confirm: '',
+    }
     setUserData(credentials)
   }, [user])
 

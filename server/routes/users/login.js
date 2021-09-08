@@ -59,6 +59,7 @@ export default async function login({ ip, body }, response) {
         .select('-__v')
         .populate('locations')
         .populate('practices')
+        .populate('school')
         .lean()
         .exec()
       if (!user) response.status(404).send('Email not found.')
