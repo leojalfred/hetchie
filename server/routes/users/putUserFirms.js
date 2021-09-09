@@ -12,6 +12,7 @@ export default async function putFirms({ body }, response) {
       .select('-verified -password -__v')
       .populate('locations')
       .populate('practices')
+      .populate('school')
       .exec()
 
     for (const list of lists) {

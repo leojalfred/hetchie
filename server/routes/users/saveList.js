@@ -12,6 +12,7 @@ export default async function saveList({ body }, response) {
       .select('-verified -password -__v')
       .populate('locations')
       .populate('practices')
+      .populate('school')
       .exec()
 
     const matchingList = element => element._id == list

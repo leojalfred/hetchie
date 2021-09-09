@@ -12,6 +12,7 @@ export default async function deleteList({ body }, response) {
       .select('-verified -password -__v')
       .populate('locations')
       .populate('practices')
+      .populate('school')
       .exec()
 
     const deleteList = element => element._id != list

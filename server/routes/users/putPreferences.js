@@ -15,6 +15,7 @@ export default async function preferences({ body }, response) {
       .select('-verified -password -__v')
       .populate('locations')
       .populate('practices')
+      .populate('school')
       .exec()
 
     signResponse(user.toObject(), response)
