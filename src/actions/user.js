@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { SET_USER, CLEAR_USER, CLEAR_DATA } from './types'
-// import { setError } from './shared'
+import { setError } from './shared'
 import setToken from '../utils/authorization'
 
 export const setUser = user => ({
@@ -39,12 +39,12 @@ export const login = (user, history, closeModal) => async dispatch => {
     const { data, token } = response.data
 
     updateUser(data, token, dispatch)
-    // setError(dispatch, '')
+    setError(dispatch, '')
 
     history.push('/firms')
     closeModal()
   } catch ({ response }) {
-    // setError(dispatch, response.data)
+    setError(dispatch, response.data)
   }
 }
 
