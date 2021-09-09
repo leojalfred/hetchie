@@ -37,42 +37,17 @@
       padding-right: 0.5rem;
     }
 
-    &--rank {
-      width: 5%;
+    &--name {
+      min-width: 7rem;
     }
 
-    &--name {
-      width: 15%;
+    &--name,
+    &--gpa {
       padding-top: 0.65rem;
     }
 
-    &--locations {
-      width: 10%;
-    }
-
-    &--practices {
-      width: 10%;
-    }
-
-    &--gpa {
-      width: 5%;
-    }
-
-    &--salary {
-      width: 10%;
-    }
-
-    &--rankings {
-      width: 30%;
-    }
-
-    &--qualifications {
-      width: 10%;
-    }
-
     &--date {
-      white-space: nowrap;
-      width: 5%;
+      min-width: 6.5rem;
     }
   }
 
@@ -91,10 +66,11 @@
   }
 
   &__badge-line {
-    align-items: center;
-    display: flex;
     font-size: 0.9rem;
     margin: 0;
+    max-width: 18rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
 
     &:not(:last-child) {

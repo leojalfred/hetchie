@@ -159,7 +159,7 @@ export default function Row({
       onTouchEnd={onTouchEnd}
       onKeyDown={event => onKeyDown(event, provided, snapshot)}
     >
-      <td className="row__cell row__cell--rank">
+      <td className="row__cell">
         <Badge>{index + 1}</Badge>
       </td>
       <td className="row__cell row__cell--name">
@@ -172,16 +172,16 @@ export default function Row({
           {firm.name}
         </a>
       </td>
-      <td className="row__cell row__cell--locations">
+      <td className="row__cell">
         <Tags className="row__tags--location" data={firm.locations} />
       </td>
-      <td className="row__cell row__cell--practices">
+      <td className="row__cell">
         <Tags className="row__tags--practice" data={firm.practices} />
       </td>
       <td className="row__cell row__cell--gpa">{firm.gpa.toFixed(2)}</td>
-      <td className="row__cell row__cell--salary">{salary}</td>
-      <td className="row__cell row__cell--rankings">{rankings}</td>
-      <td className="row__cell row__cell--qualifications">
+      <td className="row__cell">{salary}</td>
+      <td className="row__cell row__cell-rankings">{rankings}</td>
+      <td className="row__cell">
         <Tags className="row__tags--qualification" data={firm.qualifications} />
       </td>
       <td className="row__cell row__cell--date">{dateElement}</td>
