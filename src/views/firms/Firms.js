@@ -49,7 +49,7 @@ function Firms({ user, error }) {
       const {
         data: { firms },
       } = await axios.get('/api/schools', {
-        params: { id: user.data.school._id },
+        params: { id: user.data.school },
       })
 
       const firmsMap = firms.reduce((firmsAccumulator, firm) => {

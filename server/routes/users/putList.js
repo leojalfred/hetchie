@@ -12,7 +12,6 @@ export default async function putList({ body }, response) {
       .select('-verified -password -__v')
       .populate('locations')
       .populate('practices')
-      .populate('school')
       .exec()
 
     const nameTaken = list => list.name === name

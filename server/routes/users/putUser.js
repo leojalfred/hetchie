@@ -24,7 +24,6 @@ export default async function put({ body }, response) {
       .select('-verified -password -__v')
       .populate('locations')
       .populate('practices')
-      .populate('school')
       .exec()
 
     signResponse(user.toObject(), response)
