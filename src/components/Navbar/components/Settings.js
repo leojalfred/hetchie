@@ -14,7 +14,8 @@ import './Settings.scss'
 
 function Settings({
   user,
-  /* openSettingsModal, */ openPreferencesModal,
+  /* openSettingsModal, */
+  openPreferencesModal,
   logout,
 }) {
   const dropdownRef = useRef(null)

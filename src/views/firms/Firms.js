@@ -8,6 +8,7 @@ import Select from 'components/Select'
 import Actions from './components/Actions'
 import Error from 'components/Error'
 import Table from './components/Table'
+import Loader from 'react-loader-spinner'
 import './Firms.scss'
 
 function Firms({ user, error }) {
@@ -121,11 +122,9 @@ function Firms({ user, error }) {
               value={selectedList}
               onChange={switchList}
             />
-
-            {/* <button className="firms__recent">West Coast</button>
-            <button className="firms__recent">East Coast</button>
-            <button className="firms__recent">Reaches</button> */}
           </div>
+
+          {!firms && <Loader type="ThreeDots" color="#ffa94d" width={30} />}
 
           <Actions
             onSearch={onSearch}
