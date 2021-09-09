@@ -1,7 +1,3 @@
-import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGavel } from '@fortawesome/free-solid-svg-icons'
-import { faEnvelopeOpen } from '@fortawesome/free-regular-svg-icons'
 import Container from 'components/Container'
 import Button from 'components/buttons/BigButton'
 import './About.scss'
@@ -11,10 +7,7 @@ function About() {
     <main className="about">
       <Container className="about__container">
         <section className="about__section">
-          <div className="about__section-topline">
-            <FontAwesomeIcon className="about__icon" icon={faGavel} />
-            <h2 className="about__section-heading">How We Can Help</h2>
-          </div>
+          <h2 className="about__section-heading">How We Can Help</h2>
           <p>
             Law school is a big investment and getting the right job out of law
             school is hard. hetchie was designed when a couple
@@ -29,13 +22,12 @@ function About() {
             the perfect bid set for your On-Campus Interviews.
           </p>
           <p className="about__text">Don't waste your bids. Optimize them.</p>
-          <Button className="about__button">Request consultation</Button>
+          <Button className="about__button" href="mailto:contact@hetchie.com">
+            Request consultation
+          </Button>
         </section>
         <section className="about__contact">
-          <div className="about__section-topline">
-            <FontAwesomeIcon className="about__icon" icon={faEnvelopeOpen} />
-            <h2 className="about__section-heading">Contact Us</h2>
-          </div>
+          <h2 className="about__section-heading">Contact Us</h2>
           <p className="about__contact-text">
             Email:{' '}
             <a className="about__link" href="mailto:contact@hetchie.com">
