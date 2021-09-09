@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  faUserCog,
+  // faUserCog,
   faBriefcase,
   faSignOutAlt,
   faCog,
@@ -12,7 +12,11 @@ import { useClose } from 'utils/hooks'
 import Dropdown from 'components/Dropdown'
 import './Settings.scss'
 
-function Settings({ user, openSettingsModal, openPreferencesModal, logout }) {
+function Settings({
+  user,
+  /* openSettingsModal, */ openPreferencesModal,
+  logout,
+}) {
   const dropdownRef = useRef(null)
   const [dropdownActive, setDropdownActive] = useState(false)
   const activeClass = 'settings__button--active'
@@ -44,13 +48,13 @@ function Settings({ user, openSettingsModal, openPreferencesModal, logout }) {
 
       {dropdownActive && (
         <Dropdown className="settings__dropdown" innerRef={dropdownRef}>
-          <button
+          {/* <button
             className="settings__link"
             onClick={onLinkClick(openSettingsModal)}
           >
             <FontAwesomeIcon className="settings__icon" icon={faUserCog} />
             Account settings
-          </button>
+          </button> */}
           <button
             className="settings__link"
             onClick={onLinkClick(openPreferencesModal)}

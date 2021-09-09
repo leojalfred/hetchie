@@ -12,7 +12,7 @@ import './Navbar.scss'
 function Navbar({
   user,
   openLoginModal,
-  openSettingsModal,
+  // openSettingsModal,
   openPreferencesModal,
   className,
 }) {
@@ -33,12 +33,16 @@ function Navbar({
       setTo('/firms')
       setComponent(
         <Settings
-          openSettingsModal={openSettingsModal}
+          // openSettingsModal={openSettingsModal}
           openPreferencesModal={openPreferencesModal}
         />
       )
     }
-  }, [user.loggedIn, openLoginModal, openSettingsModal, openPreferencesModal])
+  }, [
+    user.loggedIn,
+    openLoginModal,
+    /* openSettingsModal, */ openPreferencesModal,
+  ])
 
   const classes = classNames('navbar', className)
   return (

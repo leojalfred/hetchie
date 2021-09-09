@@ -6,7 +6,7 @@ import setToken from 'utils/authorization'
 import { setUser } from 'actions/user'
 import store from 'store'
 import { getData } from 'actions/data'
-import SettingsModal from 'components/modals/SettingsModal'
+// import SettingsModal from 'components/modals/SettingsModal'
 import PreferencesModal from 'components/modals/PreferencesModal'
 import RegisterModal from 'components/modals/RegisterModal'
 import LoginModal from 'components/modals/LoginModal'
@@ -39,9 +39,9 @@ function App({ user, getData }) {
   const openLoginModal = () => setLoginIsOpen(true)
   const closeLoginModal = () => setLoginIsOpen(false)
 
-  const [settingsIsOpen, setSettingsIsOpen] = useState(false)
-  const openSettingsModal = () => setSettingsIsOpen(true)
-  const closeSettingsModal = () => setSettingsIsOpen(false)
+  // const [settingsIsOpen, setSettingsIsOpen] = useState(false)
+  // const openSettingsModal = () => setSettingsIsOpen(true)
+  // const closeSettingsModal = () => setSettingsIsOpen(false)
 
   const [preferencesIsOpen, setPreferencesIsOpen] = useState(false)
   const openPreferencesModal = () => setPreferencesIsOpen(true)
@@ -55,10 +55,10 @@ function App({ user, getData }) {
   useEffect(() => {
     let displayedModals = user.loggedIn ? (
       <>
-        <SettingsModal
+        {/* <SettingsModal
           isOpen={settingsIsOpen}
           closeModal={closeSettingsModal}
-        />
+        /> */}
         <PreferencesModal
           isOpen={preferencesIsOpen}
           closeModal={closePreferencesModal}
@@ -85,7 +85,7 @@ function App({ user, getData }) {
     user.loggedIn,
     registerIsOpen,
     loginIsOpen,
-    settingsIsOpen,
+    // settingsIsOpen,
     preferencesIsOpen,
   ])
 
@@ -93,7 +93,7 @@ function App({ user, getData }) {
     <Router>
       <Navbar
         openLoginModal={openLoginModal}
-        openSettingsModal={openSettingsModal}
+        // openSettingsModal={openSettingsModal}
         openPreferencesModal={openPreferencesModal}
       />
 
