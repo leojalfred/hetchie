@@ -38,41 +38,41 @@
     }
 
     &--rank {
-      min-width: 2.1rem;
+      width: 5%;
     }
 
     &--name {
-      min-width: 7rem;
+      width: 15%;
       padding-top: 0.65rem;
     }
 
     &--locations {
-      min-width: 12.5rem;
+      width: 10%;
     }
 
     &--practices {
-      min-width: 12rem;
+      width: 10%;
     }
 
     &--gpa {
-      min-width: 3.2rem;
+      width: 5%;
     }
 
     &--salary {
-      min-width: 5.3rem;
+      width: 10%;
     }
 
     &--rankings {
-      min-width: 13.5rem;
+      width: 30%;
     }
 
     &--qualifications {
-      min-width: 10.4rem;
+      width: 10%;
     }
 
     &--date {
       white-space: nowrap;
-      min-width: 3.8rem;
+      width: 5%;
     }
   }
 
