@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useRef, useState } from 'react'
-import Loader from 'react-loader-spinner'
+import { ThreeDots } from 'react-loader-spinner'
 import { connect } from 'react-redux'
 import Container from '../../components/Container'
 import Error from '../../components/Error'
@@ -124,7 +124,7 @@ function Firms({ user, error }) {
             />
           </div>
 
-          {!firms && <Loader type="ThreeDots" color="#ffa94d" width={30} />}
+          {!firms && <ThreeDots color="#ffa94d" width={30} />}
 
           <Actions
             onSearch={onSearch}
