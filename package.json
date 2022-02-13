@@ -1,15 +1,15 @@
 {
   "author": "Leo Alfred <leojalfred@gmail.com> (http://leojalfred.com/)",
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ],
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
     ]
   },
   "dependencies": {
@@ -57,27 +57,27 @@
     "nodemon": "^2.0.15"
   },
   "keywords": [
-    "hetchie",
-    "client",
-    "law",
-    "school",
-    "OCI",
     "campus",
+    "client",
+    "firm",
+    "hetchie",
     "interview",
-    "firm"
+    "law",
+    "OCI",
+    "school"
   ],
   "license": "UNLICENSED",
   "name": "hetchie",
   "private": true,
   "proxy": "http://localhost:3001",
   "scripts": {
-    "begin": "npm build && npm clean && npm move",
+    "begin": "npm run build && npm run clean && npm run move",
     "build": "(if exist build rmdir /q /s build) && react-scripts build && babel server -d build/server",
     "clean": "if exist ..\\production\\node_modules rmdir /q /s ..\\production\\node_modules",
     "client": "react-scripts start",
-    "deploy": "npm begin && cd ../production && git add . && git commit -m \"Deploy\" && git push heroku master",
+    "deploy": "npm run begin && cd ../production && git add . && git commit -m \"Deploy\" && git push heroku master",
     "move": "(robocopy build ../production /s /purge /xf .gitignore package.json key.json /xd .git) & exit 0",
-    "production": "npm begin && cd ../production && npm && npm start",
+    "production": "npm run begin && cd ../production && npm install && npm start",
     "server": "nodemon --exec node_modules/.bin/babel-node server/index.js",
     "tunnel": "ngrok http --host-header=rewrite 3000"
   },
