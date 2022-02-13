@@ -6,11 +6,12 @@ export default async function getSchoolFirms({ query }, response) {
     const school = await School.findById(id)
       .select('firms offices')
       .populate({
-        path: 'firms.firm firms.offices',
-        populate: {
-          path: 'rankings.ranking locations practices qualifications',
-        },
+        path: 'firms.firm',
+        populate: { path: 'rankings.ranking' },
       })
+      .populate('firms.offices.locations')
+      .populate('firms.offices.practices')
+      .populate('firms.offices.qualifications')
       .lean()
       .exec()
 

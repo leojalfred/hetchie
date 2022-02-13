@@ -12,14 +12,7 @@ import routes from './routes'
 try {
   ;(async () => {
     const db = process.env.DEPLOYED ? 'production' : 'development'
-    await mongoose.connect(
-      `mongodb+srv://admin:FFPk4ASWQH1xwKH3@hetchie-l0pca.mongodb.net/${db}`,
-      {
-        useNewUrlParser: true,
-        useFindAndModify: false,
-        useUnifiedTopology: true,
-      }
-    )
+    await mongoose.connect(`mongodb+srv://admin:FFPk4ASWQH1xwKH3@hetchie-l0pca.mongodb.net/${db}`)
   })()
 } catch (error) {
   console.log(error)
