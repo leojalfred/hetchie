@@ -1,12 +1,12 @@
 import {
   faSortNumericUp,
-  faUniversity,
+  faUniversity
 } from '@fortawesome/free-solid-svg-icons'
-import { FieldArray, Field } from 'formik'
+import { Field, FieldArray } from 'formik'
 import { connect } from 'react-redux'
-import { InputLine, InputGroup, Input, Submit } from 'components/Form'
-import Select from 'components/Select'
-import Button from 'components/buttons/Button'
+import Button from '../../../components/buttons/Button'
+import { Input, InputGroup, InputLine, Submit } from '../../../components/Form'
+import Select from '../../../components/Select'
 import './Rankings.scss'
 
 function RankingLine({ rankings, setRankings, setError, hetchie, submitting }) {

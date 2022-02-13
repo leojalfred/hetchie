@@ -1,11 +1,11 @@
-import { useState, useRef } from 'react'
-import axios from 'axios'
-import parse from 'csv-parse'
+import { useRef, useState } from 'react'
+import Button from '../../../components/buttons/Button'
+import Container from '../../../components/Container'
+// import axios from 'axios'
+// import parse from 'csv-parse'
 // import stringify from 'csv-stringify'
 // import { saveAs } from 'file-saver'
 import './Admin.scss'
-import Container from 'components/Container'
-import Button from 'components/buttons/Button'
 
 export default function Admin() {
   const [action, setAction] = useState('add')
@@ -64,39 +64,39 @@ export default function Admin() {
       //     'date',
       //   ],
       // }
-      const options = {
-        cast: (value, { column }) => {
-          if (!value) return null
-          else if (column === 'rankings') {
-            const rankings = value.split('; ')
-            return rankings.map(item => {
-              const [ranking, position] = item.split(': ')
-              return { position: parseInt(position), ranking }
-            })
-          }
+      // const options = {
+      //   cast: (value, { column }) => {
+      //     if (!value) return null
+      //     else if (column === 'rankings') {
+      //       const rankings = value.split('; ')
+      //       return rankings.map(item => {
+      //         const [ranking, position] = item.split(': ')
+      //         return { position: parseInt(position), ranking }
+      //       })
+      //     }
 
-          return value
-        },
-        columns: ['name', 'firmLink', 'chambersLink', 'vaultLink', 'rankings'],
-      }
-      parse(reader.result, options, async (error, records) => {
-        if (!error) {
-          const data = records.map(record => ({
-            name: record.name,
-            links: {
-              firm: record.firmLink,
-              chambers: record.chambersLink,
-              vault: record.vaultLink,
-            },
-            rankings: record.rankings,
-          }))
-          data.shift()
+      //     return value
+      //   },
+      //   columns: ['name', 'firmLink', 'chambersLink', 'vaultLink', 'rankings'],
+      // }
+      // parse(reader.result, options, async (error, records) => {
+      //   if (!error) {
+      //     const data = records.map(record => ({
+      //       name: record.name,
+      //       links: {
+      //         firm: record.firmLink,
+      //         chambers: record.chambersLink,
+      //         vault: record.vaultLink,
+      //       },
+      //       rankings: record.rankings,
+      //     }))
+      //     data.shift()
 
-          const payload = { data, action }
-          const { data: response } = await axios.put('/api/firms', payload)
-          console.log(response)
-        } else console.log(error)
-      })
+      //     const payload = { data, action }
+      //     const { data: response } = await axios.put('/api/firms', payload)
+      //     console.log(response)
+      //   } else console.log(error)
+      // })
     }
     reader.readAsText(input.current.files[0])
   }

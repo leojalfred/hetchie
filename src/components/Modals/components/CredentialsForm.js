@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react'
-import { Formik, Form, Field } from 'formik'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons'
 import {
   faCheckCircle,
   faGraduationCap,
   faLock,
   faSchool,
-  faSignature,
+  faSignature
 } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Field, Form, Formik } from 'formik'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import empty from 'utils/empty'
-import schema from 'validation/credentials'
-import { getError, combinedError } from 'validation/shared'
-import { putUser } from 'actions/user'
-import Error from 'components/Error'
-import Button from 'components/buttons/BigButton'
+import { putUser } from '../../../actions/user'
+import Button from '../../../components/buttons/BigButton'
+import Error from '../../../components/Error'
+import empty from '../../../utils/empty'
+import schema from '../../../validation/credentials'
+import { combinedError, getError } from '../../../validation/shared'
 import './CredentialsForm.scss'
 
 function CredentialsForm({

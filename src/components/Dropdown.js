@@ -1,5 +1,5 @@
-import React from 'react'
 import classNames from 'classnames'
+import React from 'react'
 import './Dropdown.scss'
 
 export default function Dropdown({ className, innerRef, onClick, children }) {

@@ -1,12 +1,10 @@
 import axios from 'axios'
-import sort from 'utils/sort'
+import sort from '../utils/sort'
 import {
-  SET_DATA,
-  ADD_RANKING,
   ADD_FIRM,
   ADD_LOCATION,
   ADD_PRACTICE,
-  ADD_QUALIFICATION,
+  ADD_QUALIFICATION, ADD_RANKING, SET_DATA
 } from './types'
 // import { setError } from './shared'
 

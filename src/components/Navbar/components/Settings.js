@@ -1,15 +1,13 @@
-import React, { useRef, useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   // faUserCog,
-  faBriefcase,
-  faSignOutAlt,
-  faCog,
+  faBriefcase, faCog, faSignOutAlt
 } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useRef, useState } from 'react'
 import { connect } from 'react-redux'
-import { logout } from 'actions/user'
-import { useClose } from 'utils/hooks'
-import Dropdown from 'components/Dropdown'
+import { logout } from '../../../actions/user'
+import Dropdown from '../../../components/Dropdown'
+import { useClose } from '../../../utils/hooks'
 import './Settings.scss'
 
 function Settings({

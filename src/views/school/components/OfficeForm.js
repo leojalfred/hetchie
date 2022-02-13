@@ -1,23 +1,20 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios'
-import { Formik, Form, Field } from 'formik'
 import {
-  faGavel,
-  faMapMarkedAlt,
-  faBriefcase,
-  faUserGraduate,
-  faMoneyCheckAlt,
-  faUserTie,
-  faCalendarAlt,
+  faBriefcase, faCalendarAlt, faGavel,
+  faMapMarkedAlt, faMoneyCheckAlt, faUserGraduate, faUserTie
 } from '@fortawesome/free-solid-svg-icons'
+import axios from 'axios'
+import { Field, Form, Formik } from 'formik'
+import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import empty from 'utils/empty'
-import { postName } from 'actions/data'
-import schema from 'validation/office'
-import { getError, combinedError } from 'validation/shared'
-import Error from 'components/Error'
-import { TopLine, InputLine, InputGroup, Input, Submit } from 'components/Form'
-import Select from 'components/Select'
+import { postName } from '../../../actions/data'
+import Error from '../../../components/Error'
+import {
+  Input, InputGroup, InputLine, Submit, TopLine
+} from '../../../components/Form'
+import Select from '../../../components/Select'
+import empty from '../../../utils/empty'
+import schema from '../../../validation/office'
+import { combinedError, getError } from '../../../validation/shared'
 
 function OfficeForm({ hetchie, user, error, postName }) {
   const [notification, setNotification] = useState({ type: 'hidden', text: '' })

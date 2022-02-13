@@ -1,5 +1,5 @@
-import Container from 'components/Container'
-import Button from 'components/buttons/BigButton'
+import Button from '../../components/buttons/BigButton'
+import Container from '../../components/Container'
 import './About.scss'
 
 function About() {

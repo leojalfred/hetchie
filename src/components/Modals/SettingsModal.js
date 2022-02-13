@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import { faUserCog } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import Modal from './components/Modal'
 import CredentialsForm from './components/CredentialsForm'
+import Modal from './components/Modal'
 
 function SettingsModal({ user, isOpen, closeModal }) {
   const [userData, setUserData] = useState()

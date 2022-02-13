@@ -1,6 +1,6 @@
-import React from 'react'
 import classNames from 'classnames'
-import empty from 'utils/empty'
+import React from 'react'
+import empty from '../../../utils/empty'
 import './Tags.scss'
 
 export default function Tags({ className, data }) {

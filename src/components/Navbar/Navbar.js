@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
 import classNames from 'classnames'
-import { Link, NavLink } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import Container from 'components/Container'
-import Button from 'components/buttons/Button'
+import { Link, NavLink } from 'react-router-dom'
+import Button from '../../components/buttons/Button'
+import Container from '../../components/Container'
+import empty from '../../utils/empty'
 import Settings from './components/Settings'
-import empty from 'utils/empty'
 import './Navbar.scss'
 
 function Navbar({

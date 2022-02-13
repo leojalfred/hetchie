@@ -1,13 +1,11 @@
-import React, { useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import {
-  faUserPlus,
-  faLongArrowAltRight,
-  faUserShield,
+  faLongArrowAltRight, faUserPlus, faUserShield
 } from '@fortawesome/free-solid-svg-icons'
-import Modal from './components/Modal'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useState } from 'react'
 import CredentialsForm from './components/CredentialsForm'
+import Modal from './components/Modal'
 
 export default function RegisterModal({
   isOpen,

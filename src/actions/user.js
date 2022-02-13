@@ -1,7 +1,7 @@
 import axios from 'axios'
-import { SET_USER, CLEAR_USER, CLEAR_DATA } from './types'
-import { setError } from './shared'
 import setToken from '../utils/authorization'
+import { setError } from './shared'
+import { CLEAR_DATA, CLEAR_USER, SET_USER } from './types'
 
 export const setUser = user => ({
   type: SET_USER,

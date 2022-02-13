@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react'
-import { object, string } from 'yup'
-import { Formik, Form, Field } from 'formik'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import {
   faLock,
   faLongArrowAltRight,
-  faSignInAlt,
+  faSignInAlt
 } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Field, Form, Formik } from 'formik'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router'
-import empty from 'utils/empty'
-import { emailSchema, getError, combinedError } from 'validation/shared'
-import { login } from 'actions/user'
+import { withRouter } from 'react-router-dom'
+import { object, string } from 'yup'
+import { login } from '../../actions/user'
+import Button from '../../components/buttons/BigButton'
+import Error from '../../components/Error'
+import empty from '../../utils/empty'
+import { combinedError, emailSchema, getError } from '../../validation/shared'
 import Modal from './components/Modal'
-import Error from 'components/Error'
-import Button from 'components/buttons/BigButton'
 
 function LoginModal({
   error,

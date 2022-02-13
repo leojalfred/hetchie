@@ -1,10 +1,10 @@
-import React from 'react'
 import classNames from 'classnames'
-import empty from 'utils/empty'
-import formatDate from 'utils/formatDate'
-import Badge from 'components/Badge'
-import Tags from './Tags'
+import React from 'react'
+import Badge from '../../../components/Badge'
+import empty from '../../../utils/empty'
+import formatDate from '../../../utils/formatDate'
 import './Row.scss'
+import Tags from './Tags'
 
 export default function Row({
   snapshot,

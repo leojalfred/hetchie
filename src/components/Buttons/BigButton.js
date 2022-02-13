@@ -1,6 +1,6 @@
 import classNames from 'classnames'
-import Button from './Button'
 import './BigButton.scss'
+import Button from './Button'
 
 function BigButtonLink({ className, link = false, to, children, ...props }) {
   const classes = classNames(className, 'button--big')

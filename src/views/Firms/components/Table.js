@@ -1,7 +1,7 @@
-import React, { useCallback, useState, useEffect } from 'react'
 import memoizeOne from 'memoize-one'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import { multiReorder, multiSelect } from 'utils/dnd'
+import React, { useCallback, useEffect, useState } from 'react'
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
+import { multiReorder, multiSelect } from '../../../utils/dnd'
 import Row from './Row'
 import './Table.scss'
 

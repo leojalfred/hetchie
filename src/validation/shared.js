@@ -1,5 +1,5 @@
 import { string } from 'yup'
-import empty from 'utils/empty'
+import empty from '../utils/empty'
 
 const date = new Date()
 const year = date.getUTCFullYear()

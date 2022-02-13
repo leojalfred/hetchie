@@ -1,14 +1,14 @@
-import React, { useRef, useState, useEffect } from 'react'
 import { faSave, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
-import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
+import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
+import React, { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux'
-import { useClose } from 'utils/hooks'
-import arraysEqual from 'utils/arraysEqual'
-import { put } from 'actions/user'
-import IconButton from './IconButton'
-import Dropdown from 'components/Dropdown'
-import Conditionals from './Conditionals'
+import { put } from '../../../actions/user'
+import Dropdown from '../../../components/Dropdown'
+import arraysEqual from '../../../utils/arraysEqual'
+import { useClose } from '../../../utils/hooks'
 import './Actions.scss'
+import Conditionals from './Conditionals'
+import IconButton from './IconButton'
 
 function Actions({
   onSearch,

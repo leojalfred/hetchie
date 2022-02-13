@@ -1,7 +1,7 @@
-import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Notification from 'components/Notification'
-import Button from 'components/buttons/BigButton'
+import classNames from 'classnames'
+import Button from '../components/buttons/BigButton'
+import Notification from '../components/Notification'
 import './Form.scss'
 
 export function TopLine({ heading, notification, setNotification }) {

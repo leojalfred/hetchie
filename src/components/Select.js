@@ -1,7 +1,7 @@
-import React from 'react'
 import classNames from 'classnames'
-import CreatableSelect from 'react-select/creatable'
+import React from 'react'
 import ReactSelect from 'react-select'
+import CreatableSelect from 'react-select/creatable'
 import './Select.scss'
 
 export default function Select({ creatable, className, form, ...props }) {

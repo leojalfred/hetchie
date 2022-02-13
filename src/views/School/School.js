@@ -1,7 +1,7 @@
-import Container from 'components/Container'
-import RankingForm from './components/RankingForm'
+import Container from '../../components/Container'
 import FirmForm from './components/FirmForm'
 import OfficeForm from './components/OfficeForm'
+import RankingForm from './components/RankingForm'
 import './School.scss'
 
 export default function School() {

@@ -1,6 +1,6 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import ReactModal from 'react-modal'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './Modal.scss'
 
 export default function Modal({

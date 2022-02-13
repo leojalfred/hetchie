@@ -1,4 +1,4 @@
-import { SET_USER, CLEAR_USER } from '../actions/types'
+import { CLEAR_USER, SET_USER } from '../actions/types'
 import empty from '../utils/empty'
 
 const initialState = { loggedIn: false, data: {} }

@@ -1,12 +1,14 @@
+import { faLink, faUniversity } from '@fortawesome/free-solid-svg-icons'
+import { Field, Form, Formik } from 'formik'
 import { useState } from 'react'
-import { Formik, Form, Field } from 'formik'
-import { faUniversity, faLink } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
-import { postRanking } from 'actions/data'
-import schema from 'validation/ranking'
-import { getError, combinedError } from 'validation/shared'
-import Error from 'components/Error'
-import { TopLine, InputLine, InputGroup, Input, Submit } from 'components/Form'
+import { postRanking } from '../../../actions/data'
+import Error from '../../../components/Error'
+import {
+  Input, InputGroup, InputLine, Submit, TopLine
+} from '../../../components/Form'
+import schema from '../../../validation/ranking'
+import { combinedError, getError } from '../../../validation/shared'
 
 function RankingForm({ postRanking }) {
   const initialValues = {

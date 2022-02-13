@@ -1,10 +1,10 @@
-import { useRef, useEffect } from 'react'
-import classNames from 'classnames'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faCheckCircle,
-  faExclamationCircle,
+  faExclamationCircle
 } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import classNames from 'classnames'
+import { useEffect, useRef } from 'react'
 import './Notification.scss'
 
 export default function Notification({

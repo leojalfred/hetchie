@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import React, { useEffect, useRef, useState } from 'react'
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 import Rankable from './Rankable'
 
 export default function Ranker({ type, userData, setUserData, options }) {

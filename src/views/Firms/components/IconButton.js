@@ -1,6 +1,6 @@
-import React from 'react'
-import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import classNames from 'classnames'
+import React from 'react'
 import './IconButton.scss'
 
 export default function IconButton({ className, onClick, icon }) {

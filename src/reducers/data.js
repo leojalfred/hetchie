@@ -1,13 +1,10 @@
 import {
-  SET_DATA,
-  ADD_RANKING,
   ADD_FIRM,
   ADD_LOCATION,
   ADD_PRACTICE,
-  ADD_QUALIFICATION,
-  CLEAR_DATA,
+  ADD_QUALIFICATION, ADD_RANKING, CLEAR_DATA, SET_DATA
 } from '../actions/types'
-import sort from 'utils/sort'
+import sort from '../utils/sort'
 
 const initialState = { locations: [], practices: [] }
 export default function data(state = initialState, { type, payload }) {
