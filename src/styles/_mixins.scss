@@ -1,4 +1,4 @@
-@import './variables';
+@import '/src/styles/variables';
 
 @mixin bp($width, $height: null) {
   @if ($width and $height) {

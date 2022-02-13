@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import classNames from 'classnames'
 import { Link, NavLink } from 'react-router-dom'
-import path from 'path'
 import { connect } from 'react-redux'
 import Container from 'components/Container'
 import Button from 'components/buttons/Button'
@@ -51,7 +50,7 @@ function Navbar({
         <Link className="navbar__link navbar__link--brand" to={to}>
           <img
             className="navbar__brand-logo"
-            src={path.join(process.env.PUBLIC_URL, '/logo.png')}
+            src={`${process.env.PUBLIC_URL}/logo.png`}
             alt="Logo"
           />
           <p className="navbar__brand-text">hetchie</p>
